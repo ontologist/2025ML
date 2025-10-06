@@ -1,0 +1,35 @@
+# Node modules
+node_modules/
+npm-debug.log*
+
+# BMAD installation
+bmad-core/
+.bmad/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+
+# Bot data
+bot-config/logs/
+bot-config/sessions/
+bot-config/analytics/
+
+# Temporary files
+*.tmp
+*.bak
+*~
+
+# Student work (for instructor repo)
+# Uncomment if this is instructor repo:
+# student-submissions/

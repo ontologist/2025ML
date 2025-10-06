@@ -1,0 +1,30 @@
+{
+  "name": "2025ml-intro-course",
+  "version": "1.0.0",
+  "description": "Introduction to ML and Intelligence course for non-technical students using BMad BotEdu",
+  "main": "index.js",
+  "scripts": {
+    "install:bmad": "npx bmad-method install"
+  },
+  "keywords": [
+    "machine-learning",
+    "education",
+    "curriculum",
+    "bmad",
+    "bilingual",
+    "hands-on"
+  ],
+  "author": "Yuri Tijerino",
+  "license": "MIT",
+  "dependencies": {
+    "bmad-method": "latest"
+  },
+  "bmad": {
+    "expansionPacks": [
+      "bmad-botedu"
+    ],
+    "courseId": "ml-101",
+    "courseName": "Introduction to ML and Intelligence",
+    "language": "bilingual-en-ja"
+  }
+}

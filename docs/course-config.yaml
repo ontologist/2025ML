@@ -1,0 +1,74 @@
+# Course Configuration for ML-101
+# Introduction to ML and Intelligence
+
+course:
+  id: ml-101
+  name: Introduction to ML and Intelligence | ML・知能入門
+  year: 2025
+  semester: Spring
+  credits: 3
+
+target-audience:
+  level: undergraduate
+  technical-background: non-technical
+  prerequisites: none
+  language: bilingual-en-ja
+
+teaching-approach:
+  lecture-duration: 15-20 min
+  activity-duration: 40-60 min
+  hands-on-focus: true
+  programming-required: false
+  tools-based: true
+
+course-bot:
+  bot-id: ml-101-bot
+  bot-name: ML Guide | MLガイド
+  language: bilingual-en-ja
+  portal-url: TBD
+  rag-enabled: true
+  workflows-enabled: true
+
+ml-workflow-focus:
+  stages:
+    - data-source-identification
+    - web-scraping-setup
+    - data-collection
+    - data-cleaning
+    - data-preparation
+    - feature-engineering
+    - model-selection
+    - model-training
+    - prediction-classification
+    - results-interpretation
+
+project:
+  type: company-recommendation-system
+  approach: complete-ml-workflow
+  goal: classify-companies-by-student-interests
+  application: job-search-career-planning
+  deliverable: working-system-with-documentation
+
+assessment:
+  final-exam: false
+  activities: 40%
+  final-project: 50%
+  participation: 10%
+
+ai-policy:
+  chatbots-encouraged: true
+  transparency-required: true
+  prompt-sharing: mandatory
+  verification-documentation: mandatory
+  formal-assessment-exception: true
+
+tools:
+  web-scraping:
+    - no-code platforms
+    - visual workflow builders
+  ml-platforms:
+    - no-code ML tools
+    - visual model builders
+  data-tools:
+    - spreadsheet applications
+    - data visualization tools
