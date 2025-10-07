@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run install:bmad:*)",
+      "Read(//Users/yuritijerino/Documents/GitHub/BMAD-METHOD/expansion-packs/bmad-botedu/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

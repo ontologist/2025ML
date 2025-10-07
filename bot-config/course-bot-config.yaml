@@ -1,0 +1,236 @@
+# AI Tutoring Bot Configuration
+# Machine Learning and Intelligence Course - Spring 2025
+# Kwansei Gakuin University
+
+bot:
+  name: "ML Tutor Bot"
+  version: "1.0.0"
+  description: "AI-powered tutoring assistant for Machine Learning course"
+  
+  # Bot personality and behavior
+  personality:
+    tone: "friendly and encouraging"
+    style: "professional yet approachable"
+    patience: "high - handles repetitive questions gracefully"
+    expertise: "machine learning and data science education"
+  
+  # Language support
+  languages:
+    primary: "ja"  # Japanese
+    secondary: "en"  # English
+    code_comments: "bilingual"  # Both Japanese and English
+    
+  # Availability
+  availability:
+    status: "24/7 online"
+    response_time: "< 5 seconds"
+    maintenance_window: "none - always available"
+
+# Knowledge base configuration
+knowledge_base:
+  # Core ML concepts
+  ml_concepts:
+    - supervised_learning
+    - unsupervised_learning
+    - classification
+    - regression
+    - clustering
+    - feature_engineering
+    - model_evaluation
+    - overfitting_regularization
+    
+  # Technical skills
+  technical_skills:
+    - python_programming
+    - pandas_data_manipulation
+    - numpy_mathematical_operations
+    - matplotlib_visualization
+    - scikit_learn_algorithms
+    - web_scraping
+    - text_mining
+    - nlp_techniques
+    
+  # Course-specific content
+  course_content:
+    - mynavi_scraping
+    - japanese_text_processing
+    - job_preference_classification
+    - skeleton_code_explanations
+    - assignment_guidance
+    
+  # Tools and libraries
+  tools:
+    - conda_environment_management
+    - jupyter_notebooks
+    - vs_code_integration
+    - github_version_control
+    - assessment_platforms
+
+# Assessment capabilities
+assessment:
+  # Quiz types
+  quiz_types:
+    multiple_choice:
+      enabled: true
+      difficulty_adaptation: true
+      immediate_feedback: true
+      
+    open_ended:
+      enabled: true
+      nlp_evaluation: true
+      concept_extraction: true
+      
+    code_review:
+      enabled: true
+      syntax_checking: true
+      style_analysis: true
+      performance_suggestions: true
+      
+    conversational:
+      enabled: true
+      context_awareness: true
+      follow_up_questions: true
+  
+  # Assessment frequency
+  frequency:
+    daily_checkin: true
+    weekly_quiz: true
+    assignment_review: true
+    milestone_assessment: true
+    
+  # Feedback mechanisms
+  feedback:
+    immediate: true
+    detailed_explanations: true
+    resource_recommendations: true
+    progress_tracking: true
+
+# Interaction patterns
+interaction:
+  # Initial engagement
+  onboarding:
+    welcome_message: "Welcome to the ML course! I'm your AI tutor, here to help you succeed."
+    capability_explanation: true
+    preference_gathering: true
+    progress_setup: true
+    
+  # Ongoing support
+  support_patterns:
+    proactive_checkins: true
+    difficulty_detection: true
+    resource_suggestions: true
+    motivation_encouragement: true
+    
+  # Assessment integration
+  assessment_patterns:
+    seamless_quiz_admin: true
+    performance_analytics: true
+    improvement_suggestions: true
+    milestone_celebration: true
+
+# Response guidelines
+response_guidelines:
+  # Quality standards
+  accuracy: "high - verified against course materials"
+  completeness: "comprehensive - covers all aspects"
+  clarity: "clear and easy to understand"
+  relevance: "directly related to student needs"
+  
+  # Error handling
+  unclear_questions: "request clarification politely"
+  unknown_topics: "acknowledge limitations and suggest alternatives"
+  technical_errors: "provide debugging assistance"
+  escalation: "connect to human instructor when appropriate"
+  
+  # Personalization
+  learning_style_adaptation: true
+  pace_adjustment: true
+  interest_based_examples: true
+  cultural_sensitivity: true
+
+# Integration points
+integration:
+  # Course management
+  course_management:
+    student_enrollment: true
+    progress_tracking: true
+    assignment_submission: true
+    discussion_forum: true
+    
+  # External tools
+  external_tools:
+    jupyter_notebooks: true
+    github_repositories: true
+    mynavi_scraping_tools: true
+    assessment_platforms: true
+    
+  # Instructor interface
+  instructor_interface:
+    student_dashboards: true
+    common_question_analytics: true
+    intervention_recommendations: true
+    performance_trend_analysis: true
+
+# Success metrics
+success_metrics:
+  # Learning outcomes
+  learning_outcomes:
+    concept_mastery: "measured through quiz performance"
+    skill_development: "measured through code quality"
+    project_success: "measured through final classifier"
+    engagement_level: "measured through interaction frequency"
+    
+  # Operational metrics
+  operational_metrics:
+    response_accuracy: "> 95%"
+    student_satisfaction: "> 4.5/5"
+    instructor_workload_reduction: "> 40%"
+    course_completion_rate: "> 90%"
+
+# Continuous improvement
+improvement:
+  # Data collection
+  data_collection:
+    interaction_logs: true
+    performance_analytics: true
+    feedback_surveys: true
+    usage_patterns: true
+    
+  # Update mechanisms
+  updates:
+    knowledge_base_refresh: "weekly"
+    response_quality_monitoring: "daily"
+    student_feedback_incorporation: "bi-weekly"
+    performance_optimization: "monthly"
+
+# Security and privacy
+security:
+  # Data protection
+  data_protection:
+    student_privacy: "strictly protected"
+    data_encryption: "end-to-end"
+    access_controls: "role-based"
+    audit_logging: "comprehensive"
+    
+  # Ethical considerations
+  ethics:
+    bias_detection: "continuous monitoring"
+    fairness_ensurance: "algorithmic auditing"
+    transparency: "open about capabilities and limitations"
+    accountability: "clear responsibility chain"
+
+# Deployment configuration
+deployment:
+  # Infrastructure
+  infrastructure:
+    hosting: "cloud-based with high availability"
+    scalability: "auto-scaling based on demand"
+    backup_recovery: "automated daily backups"
+    monitoring: "24/7 system health monitoring"
+    
+  # Performance
+  performance:
+    response_time: "< 2 seconds average"
+    uptime: "> 99.9%"
+    concurrent_users: "unlimited"
+    resource_optimization: "efficient AI model usage"

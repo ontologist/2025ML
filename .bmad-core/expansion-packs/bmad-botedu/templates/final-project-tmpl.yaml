@@ -1,0 +1,151 @@
+# <!-- Powered by BMAD™ Core -->
+---
+template:
+  id: final-project-tmpl
+  name: Final Project Guidelines | 最終プロジェクトガイドライン
+  version: 1.0
+  description: Comprehensive final project (individual or group, no final exam) | 包括的な最終プロジェクト（個人またはグループ、最終試験なし）
+  output:
+    format: markdown
+    filename: "{{course-id}}-final-project.md"
+
+workflow:
+  elicitation: true
+  allow_skip: false
+
+sections:
+  - id: project_overview
+    title: Project Overview | プロジェクト概要
+    instruction: |
+      High-level project description (bilingual):
+      高レベルのプロジェクト説明（バイリンガル）:
+      - Project title and purpose | プロジェクトのタイトルと目的
+      - Connection to course learning outcomes | コース学習成果とのつながり
+      - Real-world application/relevance | 実世界での応用・関連性
+      - Why this project instead of final exam | 最終試験ではなくこのプロジェクトである理由
+    elicit: true
+
+  - id: learning_objectives
+    title: Project Learning Objectives | プロジェクト学習目標
+    instruction: |
+      What students will demonstrate (bilingual):
+      学生が示すもの（バイリンガル）:
+      - Skills applied in project | プロジェクトで適用されるスキル
+      - Knowledge demonstrated | 示される知識
+      - Competencies assessed | 評価される能力
+      - Format: "Students will demonstrate... | 学生は...を示します"
+    elicit: true
+
+  - id: project_options
+    title: Individual or Group Options | 個人またはグループオプション
+    instruction: |
+      Define work arrangements (bilingual):
+      作業体制を定義（バイリンガル）:
+      - Individual project option | 個人プロジェクトオプション
+      - Group project option (team size) | グループプロジェクトオプション（チームサイズ）
+      - How to form groups | グループの形成方法
+      - Individual responsibilities in groups | グループでの個人の責任
+      - How groups are evaluated | グループの評価方法
+    elicit: true
+
+  - id: project_requirements
+    title: Project Requirements | プロジェクト要件
+    instruction: |
+      Detailed requirements (bilingual):
+      詳細な要件（バイリンガル）:
+      - Technical/functional requirements | 技術的・機能的要件
+      - Documentation requirements | 文書化要件
+      - Presentation/demonstration requirements | プレゼンテーション・デモンストレーション要件
+      - Minimum quality standards | 最低品質基準
+      - Required components | 必要なコンポーネント
+    elicit: true
+
+  - id: ai_usage_policy
+    title: AI Chatbot Usage in Project | プロジェクトでのAIチャットボット使用
+    instruction: |
+      Define AI tool usage for project (bilingual):
+      プロジェクトのAIツール使用を定義（バイリンガル）:
+      - AI chatbots ARE ALLOWED | AIチャットボットは許可されます
+      - Can use for coding, writing, research | コーディング、執筆、調査に使用可能
+      - MUST document all AI interactions | すべてのAIインタラクションを文書化する必要があります
+      - MUST include: prompts used | 必須：使用したプロンプトを含める
+      - MUST include: AI responses received | 必須：受け取ったAI応答を含める
+      - MUST explain: verification process | 必須：検証プロセスを説明
+      - MUST explain: hallucination checks | 必須：幻覚チェックを説明
+    elicit: true
+
+  - id: deliverables
+    title: Project Deliverables | プロジェクト成果物
+    instruction: |
+      What students must submit (bilingual):
+      学生が提出しなければならないもの（バイリンガル）:
+      - Main project output (code, document, etc.) | 主なプロジェクト出力（コード、文書など）
+      - Project documentation | プロジェクト文書
+      - Presentation slides/video | プレゼンテーションスライド・動画
+      - AI interaction log (prompts + responses) | AIインタラクションログ（プロンプト+応答）
+      - Verification documentation | 検証文書
+      - Individual contribution statements (for groups) | 個人貢献声明（グループの場合）
+    elicit: true
+
+  - id: timeline_milestones
+    title: Timeline & Milestones | タイムラインとマイルストーン
+    instruction: |
+      Project schedule (bilingual):
+      プロジェクトスケジュール（バイリンガル）:
+      - Project announcement date | プロジェクト発表日
+      - Proposal/planning deadline | 提案・計画締切
+      - Mid-project checkpoint | プロジェクト中間チェックポイント
+      - Final submission deadline | 最終提出締切
+      - Presentation dates | プレゼンテーション日程
+      - Key milestones and deliverables | 主要マイルストーンと成果物
+    elicit: true
+
+  - id: evaluation_rubric
+    title: Evaluation Rubric | 評価ルーブリック
+    instruction: |
+      How project is graded (bilingual):
+      プロジェクトがどのように採点されるか（バイリンガル）:
+      - Technical quality (%) | 技術的品質（％）
+      - Creativity/innovation (%) | 創造性・革新性（％）
+      - Documentation quality (%) | 文書品質（％）
+      - Presentation/demonstration (%) | プレゼンテーション・デモンストレーション（％）
+      - AI transparency/verification (%) | AI透明性・検証（％）
+      - Individual/group collaboration (%) | 個人・グループコラボレーション（％）
+      - Detailed rubric with criteria | 基準を含む詳細なルーブリック
+    elicit: true
+
+  - id: submission_guidelines
+    title: Submission Guidelines | 提出ガイドライン
+    instruction: |
+      How and where to submit (bilingual):
+      どこに・どのように提出するか（バイリンガル）:
+      - Submission platform/method | 提出プラットフォーム・方法
+      - File formats accepted | 受け入れられるファイル形式
+      - Naming conventions | 命名規則
+      - Required folder structure | 必要なフォルダ構造
+      - Late submission policy | 遅延提出ポリシー
+    elicit: true
+
+  - id: presentation_guidelines
+    title: Presentation Guidelines | プレゼンテーションガイドライン
+    instruction: |
+      Project presentation requirements (bilingual):
+      プロジェクトプレゼンテーション要件（バイリンガル）:
+      - Presentation duration | プレゼンテーション時間
+      - Required content to cover | カバーすべき必要内容
+      - Demonstration expectations | デモンストレーションの期待
+      - Q&A handling | Q&A対応
+      - Individual presentation (for groups) | 個人プレゼンテーション（グループの場合）
+    elicit: true
+
+  - id: resources_support
+    title: Resources & Support | リソースとサポート
+    instruction: |
+      Help available to students (bilingual):
+      学生が利用できる支援（バイリンガル）:
+      - Office hours availability | オフィスアワーの利用可能性
+      - Course bot assistance | コースボット支援
+      - Peer collaboration guidelines | ピアコラボレーションガイドライン
+      - Technical support resources | 技術サポートリソース
+      - Example projects (if available) | 例示プロジェクト（利用可能な場合）
+    elicit: true

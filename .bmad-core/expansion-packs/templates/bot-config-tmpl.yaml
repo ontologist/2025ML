@@ -1,0 +1,153 @@
+# <!-- Powered by BMAD™ Core -->
+---
+template:
+  id: bot-config-tmpl
+  name: Course Bot Configuration | コースボット設定
+  version: 1.0
+  description: LLM+RAG bot configuration for course-specific learning assistance | コース固有学習支援のためのLLM+RAGボット設定
+  output:
+    format: yaml
+    filename: "{{course-id}}-bot-config.yaml"
+
+workflow:
+  elicitation: true
+  allow_skip: false
+
+sections:
+  - id: bot_identity
+    title: Bot Identity & Purpose | ボットアイデンティティと目的
+    instruction: |
+      Define bot persona (bilingual):
+      ボットペルソナを定義（バイリンガル）:
+      - Bot name (EN | JA) | ボット名（英語 | 日本語）
+      - Bot role/persona | ボットの役割・ペルソナ
+      - Teaching style | 教育スタイル
+      - Tone and language | トーンと言語
+      - Bilingual capabilities (EN-JA) | バイリンガル機能（英日）
+    elicit: true
+
+  - id: course_knowledge
+    title: Course-Specific Knowledge Base | コース固有の知識ベース
+    instruction: |
+      Define RAG knowledge sources:
+      RAG知識ソースを定義:
+      - Course syllabus and curriculum
+      - Lecture materials
+      - Activity instructions
+      - Reference materials
+      - Common FAQs
+      - Troubleshooting guides
+      - Example solutions
+    elicit: true
+
+  - id: llm_configuration
+    title: LLM Configuration | LLM設定
+    instruction: |
+      LLM model settings:
+      LLMモデル設定:
+      - Model selection (e.g., GPT-4, Claude, etc.)
+      - Temperature settings
+      - Max tokens
+      - System prompt template
+      - Context window management
+      - Bilingual response enforcement
+    elicit: true
+
+  - id: rag_setup
+    title: RAG System Setup | RAGシステム設定
+    instruction: |
+      Retrieval-Augmented Generation config:
+      検索拡張生成設定:
+      - Vector database selection
+      - Embedding model
+      - Chunk size and overlap
+      - Retrieval k (number of chunks)
+      - Similarity threshold
+      - Re-ranking strategy
+    elicit: true
+
+  - id: workflow_integration
+    title: BMAD Workflow Integration | BMADワークフロー統合
+    instruction: |
+      How bot executes BMAD workflows:
+      ボットがBMADワークフローをどう実行するか:
+      - Workflow file locations
+      - Workflow execution engine
+      - State management
+      - Step progression logic
+      - Error handling
+      - Workflow completion tracking
+    elicit: true
+
+  - id: bot_portal_config
+    title: Bot Portal Configuration | ボットポータル設定
+    instruction: |
+      Bot portal interface setup:
+      ボットポータルインターフェース設定:
+      - Portal URL/endpoint
+      - Authentication method
+      - User session management
+      - Chat interface design
+      - Bilingual UI (EN | JA)
+      - Accessibility features
+    elicit: true
+
+  - id: data_collection_config
+    title: Data Collection Configuration | データ収集設定
+    instruction: |
+      Learning analytics setup:
+      学習分析設定:
+      MACRO LEVEL (Course):
+      マクロレベル（コース）:
+      - Course completion rates
+      - Common difficulty points
+      - Activity effectiveness
+      - Overall learning patterns
+
+      MICRO LEVEL (Student):
+      マイクロレベル（学生）:
+      - Individual progress tracking
+      - Learning pace
+      - Struggle points
+      - Intervention needs
+      - Personalization data
+    elicit: true
+
+  - id: prompt_templates
+    title: Bot Prompt Templates | ボットプロンプトテンプレート
+    instruction: |
+      Standard bilingual prompt templates:
+      標準バイリンガルプロンプトテンプレート:
+      - Greeting message (EN | JA)
+      - Help request response (EN | JA)
+      - Encouragement messages (EN | JA)
+      - Error/retry messages (EN | JA)
+      - Scaffolding prompts (EN | JA)
+      - Completion messages (EN | JA)
+    elicit: true
+
+  - id: guardrails
+    title: Bot Behavior Guardrails | ボット動作ガードレール
+    instruction: |
+      Safety and ethical constraints:
+      安全性と倫理的制約:
+      - Never provide direct answers to assessments
+      - Guide through questions, don't solve
+      - Encourage critical thinking
+      - Detect and prevent cheating attempts
+      - Maintain academic integrity
+      - Privacy and data protection
+    elicit: true
+
+  - id: escalation_rules
+    title: Human Escalation Rules | 人間へのエスカレーションルール
+    instruction: |
+      When to escalate to instructor:
+      インストラクターへのエスカレーション時:
+      - Bot cannot answer question
+      - Student is stuck after N attempts
+      - Technical issues detected
+      - Inappropriate behavior
+      - Request for human assistance
+      - Escalation notification method
+    elicit: true

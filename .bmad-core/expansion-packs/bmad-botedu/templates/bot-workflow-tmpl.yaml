@@ -1,0 +1,93 @@
+# <!-- Powered by BMAD™ Core -->
+---
+template:
+  id: bot-workflow-tmpl
+  name: Bot-Guided Activity Workflow | ボットガイドアクティビティワークフロー
+  version: 1.0
+  description: BMAD method workflow for bot-guided learning activity | ボットガイド学習アクティビティのためのBMADメソッドワークフロー
+  output:
+    format: yaml
+    filename: "{{activity-id}}-bot-workflow.yaml"
+
+workflow:
+  elicitation: true
+  allow_skip: false
+
+sections:
+  - id: workflow_header
+    title: Workflow Identification | ワークフロー識別
+    instruction: |
+      Basic workflow info:
+      基本的なワークフロー情報:
+      - Workflow name | ワークフロー名
+      - Associated activity | 関連アクティビティ
+      - Learning objectives | 学習目標
+      - Estimated duration | 推定所要時間
+    elicit: true
+
+  - id: workflow_steps
+    title: BMAD Workflow Steps | BMADワークフローステップ
+    instruction: |
+      Define sequential workflow steps:
+      順次ワークフローステップを定義:
+      For each step:
+      各ステップについて:
+      - step_id: Unique identifier
+      - step_name (EN | JA): Step title
+      - bot_prompt (EN | JA): What bot says/asks
+      - student_action: What student does
+      - expected_input: Type of student response
+      - validation: How bot validates response
+      - feedback (EN | JA): Bot feedback to student
+      - next_step: Conditional routing logic
+      - data_capture: What data to log
+    elicit: true
+
+  - id: bot_prompts
+    title: Bilingual Bot Prompts | バイリンガルボットプロンプト
+    instruction: |
+      All bot prompts in bilingual format:
+      すべてのボットプロンプトをバイリンガル形式で:
+      For each prompt:
+      各プロンプトについて:
+      - English version
+      - Japanese version (日本語版)
+      - Context for when prompt appears
+      - Expected student response type
+    elicit: true
+
+  - id: decision_points
+    title: Workflow Decision Points | ワークフロー決定ポイント
+    instruction: |
+      Define conditional branching:
+      条件分岐を定義:
+      - Conditions that trigger different paths
+      - How bot adapts based on student responses
+      - Error handling and retry logic
+      - Scaffolding for struggling students
+      - Extensions for advanced students
+    elicit: true
+
+  - id: data_collection
+    title: Data Collection Points | データ収集ポイント
+    instruction: |
+      What data to capture:
+      キャプチャするデータ:
+      - Student response data
+      - Time spent on each step
+      - Number of retries/attempts
+      - Bot interventions provided
+      - Success/completion metrics
+      - Learning patterns identified
+    elicit: true
+
+  - id: completion_criteria
+    title: Workflow Completion | ワークフロー完了
+    instruction: |
+      How workflow ends:
+      ワークフローの終了方法:
+      - Success criteria
+      - Final bot message (EN | JA)
+      - Data summary to log
+      - Handoff to next activity
+    elicit: true

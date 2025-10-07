@@ -1,0 +1,143 @@
+# <!-- Powered by BMAD™ Core -->
+name: bmad-botedu
+version: 1.0.0
+short-title: Bot-Enhanced Bilingual Education | ボット強化型バイリンガル教育
+description: >-
+  Comprehensive AI-powered bilingual (English-Japanese) education framework with integrated
+  course-specific LLM+RAG bots for hands-on, activity-based learning. Designed for technology
+  courses with students who may have basic programming background. All student-facing materials
+  are bilingual EN-JA. Bot interactions follow BMAD workflows, capture learning data for
+  macro/micro curriculum adaptation, and encourage AI chatbot use with prompt transparency.
+
+  統合されたコース固有のLLM+RAGボットを備えた包括的なAI支援バイリンガル（英語・日本語）
+  教育フレームワーク。基本的なプログラミング背景を持つ可能性のある学生向けの技術コースに
+  設計されたハンズオン、アクティビティベースの学習。すべての学生向け教材はバイリンガル
+  （英語・日本語）。ボットインタラクションはBMADワークフローに従い、マクロ・マイクロ
+  カリキュラム適応のための学習データをキャプチャし、プロンプトの透明性を持つAIチャット
+  ボットの使用を奨励。
+
+author: Yuri Tijerino
+slashPrefix: bmad-botedu
+language: bilingual-en-ja
+target-audience: students-with-optional-basic-tech-background
+
+# Core Pedagogical Approach | 核心的教育アプローチ
+teaching-philosophy:
+  style: hands-on-activity-based | ハンズオンアクティビティベース
+  lecture-format: short-concept-introduction | 短いコンセプト紹介
+  learning-method: learning-by-doing | 実践による学習
+  assessment: no-final-exam-project-based | 最終試験なしプロジェクトベース
+  collaboration: individual-or-group-projects | 個人またはグループプロジェクト
+  ai-policy: encouraged-with-prompt-transparency | プロンプト透明性を持って奨励
+
+# Bot Integration Architecture | ボット統合アーキテクチャ
+bot-system:
+  architecture: course-specific-llm-rag | コース固有LLM-RAG
+  interaction-capture: bot-portal-integrated | ボットポータル統合
+  workflow-engine: bmad-method-workflows | BMADメソッドワークフロー
+  data-collection:
+    macro-level: course-success-metrics | コース成功メトリクス
+    micro-level: student-adaptation-data | 学生適応データ
+  activity-integration: all-except-assessments | 評価を除くすべて
+  prompt-tracking: required-for-ai-usage | AI使用に必須
+
+# Bilingual Requirements | バイリンガル要件
+bilingual-requirements:
+  student-materials: all-bilingual-en-ja | すべてバイリンガル英日
+  format: "English | 日本語"
+  includes:
+    - Curriculum & Syllabus | カリキュラムとシラバス
+    - Lesson Plans | レッスンプラン
+    - Lecture Materials | 講義資料
+    - Activities | アクティビティ
+    - Assessments | 評価
+    - Final Project Guidelines | 最終プロジェクトガイドライン
+    - Handouts | 配布資料
+    - Instructions | 指示
+    - Examples | 例
+    - Rubrics | ルーブリック
+    - Bot Interaction Prompts | ボットインタラクションプロンプト
+
+# Target Courses | 対象コース
+supported-courses:
+  - id: web-society
+    name: Web and Society | Webと社会
+    focus: student-presentations-current-events | 学生プレゼンテーション時事問題
+    topics:
+      - Influential people & companies | 影響力のある人々と企業
+      - Scientific advancements | 科学的進歩
+      - Technology news | 技術ニュース
+
+  - id: intro-ml
+    name: Introduction to Machine Learning | 機械学習入門
+    focus: tool-based-no-programming | ツールベース・プログラミング不要
+    project: web-scraper-for-job-search | 就職活動用Webスクレイパー
+
+  - id: beginner-gamedev-js
+    name: Beginner Game Development (JavaScript) | 初心者ゲーム開発（JavaScript）
+    tech-stack:
+      - JavaScript
+      - HTML5
+      - CSS3
+      - Canvas2D
+    project: basic-2d-game | 基本的な2Dゲーム
+
+  - id: basic-3d-gamedev
+    name: Basic 3D Game Development | 基本的な3Dゲーム開発
+    engines:
+      - Unity3D
+      - Godot
+    tools:
+      - Blender3D (asset-development) | Blender3D（アセット開発）
+    focus: game-development-process | ゲーム開発プロセス
+
+  - id: modern-hci
+    name: Modern Human-Machine Interaction | 現代のヒューマンマシンインタラクション
+    focus: ai-era-hci | AI時代のHCI
+    topics:
+      - AI Integration | AI統合
+      - Chatbots | チャットボット
+      - Mobile Platforms | モバイルプラットフォーム
+      - Accessibility | アクセシビリティ
+      - Modern HCI Concepts | 現代のHCIコンセプト
+
+# AI Chatbot Policy | AIチャットボットポリシー
+ai-usage-policy:
+  encouraged: true | 奨励
+  allowed-uses:
+    - Report writing | レポート作成
+    - Code assistance | コード支援
+    - Research | 調査
+    - Concept explanation | コンセプト説明
+    - Problem solving | 問題解決
+  required-transparency:
+    - Share prompts used | 使用したプロンプトを共有
+    - Share AI responses | AI応答を共有
+    - Document verification process | 検証プロセスを文書化
+    - Explain hallucination checks | 幻覚チェックを説明
+  exceptions:
+    - Formal assessments (no bot interaction) | 正式評価（ボットインタラクションなし）
+
+# Data Collection & Adaptation | データ収集と適応
+learning-analytics:
+  capture-through: bot-portal | ボットポータル経由でキャプチャ
+  macro-analysis:
+    - Course success rates | コース成功率
+    - Common learning challenges | 共通の学習課題
+    - Activity effectiveness | アクティビティ有効性
+    - Curriculum adaptation needs | カリキュラム適応ニーズ
+  micro-analysis:
+    - Individual student progress | 個別学生進捗
+    - Learning pattern recognition | 学習パターン認識
+    - Personalized support needs | 個別サポートニーズ
+    - Adaptive content delivery | 適応的コンテンツ配信
+
+# Assessment Structure | 評価構造
+assessment-approach:
+  final-exam: false | 最終試験なし
+  final-project: true | 最終プロジェクトあり
+  project-options:
+    - Individual | 個人
+    - Group | グループ
+  ongoing-assessments: true | 継続的評価
+  bot-usage: allowed-except-formal-assessments | 正式評価を除き許可

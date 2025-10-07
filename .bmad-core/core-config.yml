@@ -1,0 +1,60 @@
+# BMad Core Configuration
+# Machine Learning and Intelligence Course - Spring 2025
+# Kwansei Gakuin University
+
+project:
+  name: "2025 Machine Learning and Intelligence Course"
+  version: "1.0.0"
+  description: "Comprehensive ML curriculum with AI-assisted learning"
+  domain: "Education - Machine Learning"
+  
+agents:
+  primary: "course-developer"
+  secondary: ["ai-tutor", "assessment-bot", "code-assistant"]
+  
+workflows:
+  active: ["course-development", "student-assessment", "content-creation"]
+  
+devLoadAlwaysFiles:
+  - ".bmad-core/core-config.yml"
+  - "curriculum/2025-ml-intelligence-syllabus.md"
+  - "curriculum/weekly-curriculum.md"
+  
+devDebugLog: true
+
+course:
+  title: "Machine Learning and Intelligence"
+  institution: "Kwansei Gakuin University"
+  department: "School of Policy Studies - Applied Informatics"
+  semester: "Spring 2025"
+  duration: "12 weeks"
+  credits: 3
+  
+objectives:
+  primary: "Introduce students to ML workflows from data gathering to working classifiers"
+  secondary:
+    - "Hands-on experience with real-world ML applications"
+    - "Text mining and feature extraction skills"
+    - "AI-assisted learning and assessment"
+    - "Job preference prediction using mynavi.jp data"
+
+project_scope:
+  data_source: "mynavi.jp job portal"
+  classification_task: "Student job preference prediction"
+  approach: "Skeleton code with fill-in-the-blanks"
+  ai_assistance: "24/7 conversational AI tutor"
+  
+deliverables:
+  - "Complete 14-week curriculum"
+  - "Skeleton code for all exercises"
+  - "AI tutoring bot implementation"
+  - "Assessment framework"
+  - "Final project: mynavi.jp classifier"
+
+timeline:
+  weeks: 12
+  milestones:
+    - "Week 3: Basic scraper skeleton"
+    - "Week 6: Text mining implementation"
+    - "Week 9: Midterm project"
+    - "Week 12: Final classifier presentation"

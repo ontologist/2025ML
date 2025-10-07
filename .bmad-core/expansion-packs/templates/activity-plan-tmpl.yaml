@@ -1,0 +1,130 @@
+# <!-- Powered by BMAD™ Core -->
+---
+template:
+  id: activity-plan-tmpl
+  name: Hands-On Activity Plan | ハンズオンアクティビティプラン
+  version: 1.0
+  description: Bot-integrated hands-on learning activity with bilingual materials | バイリンガル教材を含むボット統合ハンズオン学習アクティビティ
+  output:
+    format: markdown
+    filename: "{{activity-id}}-activity-plan.md"
+
+workflow:
+  elicitation: true
+  allow_skip: false
+
+sections:
+  - id: activity_header
+    title: Activity Information | アクティビティ情報
+    instruction: |
+      Activity identification (bilingual):
+      アクティビティ識別（バイリンガル）:
+      - Activity title (EN | JA) | アクティビティタイトル（英語 | 日本語）
+      - Duration | 所要時間
+      - Learning objectives addressed | 対応する学習目標
+      - Prerequisites/preparation | 前提条件・準備
+    elicit: true
+
+  - id: learning_objectives
+    title: Activity Learning Objectives | アクティビティ学習目標
+    instruction: |
+      What students will learn/do (bilingual):
+      学生が学ぶ・行うこと（バイリンガル）:
+      - Specific skills to practice | 実践する特定のスキル
+      - Concepts to apply | 適用するコンセプト
+      - Outcomes in "Students will..." format | 「学生は...できるようになります」形式での成果
+      - Format: "English | 日本語"
+    elicit: true
+
+  - id: prior_lecture
+    title: Prior Lecture Connection | 事前講義とのつながり
+    instruction: |
+      How this activity connects to the short lecture (bilingual):
+      このアクティビティが短い講義とどうつながるか（バイリンガル）:
+      - Key concepts introduced in lecture | 講義で紹介された主要コンセプト
+      - How activity applies those concepts | アクティビティがそれらのコンセプトをどう適用するか
+      - Bridge from theory to practice | 理論から実践への橋渡し
+    elicit: true
+
+  - id: bot_integration
+    title: Bot Workflow Integration | ボットワークフロー統合
+    instruction: |
+      How course bot guides this activity (bilingual):
+      コースボットがこのアクティビティをどうガイドするか（バイリンガル）:
+      - Bot's role in guiding students | 学生をガイドするボットの役割
+      - BMAD workflow steps bot will follow | ボットが従うBMADワークフローステップ
+      - Bot portal interaction points | ボットポータルインタラクションポイント
+      - Data captured during bot interactions | ボットインタラクション中にキャプチャされるデータ
+    elicit: true
+
+  - id: activity_steps
+    title: Step-by-Step Instructions | ステップバイステップ指示
+    instruction: |
+      Detailed activity instructions (bilingual):
+      詳細なアクティビティ指示（バイリンガル）:
+      For each step:
+      各ステップについて:
+      - Step number and description (EN | JA) | ステップ番号と説明（英語 | 日本語）
+      - What students do | 学生が行うこと
+      - Bot guidance at this step (if applicable) | このステップでのボットガイダンス（該当する場合）
+      - Expected output/result | 期待される出力・結果
+      - Time allocation | 時間配分
+    elicit: true
+
+  - id: materials_resources
+    title: Materials & Resources | 教材とリソース
+    instruction: |
+      Everything students need (bilingual):
+      学生が必要とするすべて（バイリンガル）:
+      - Software/tools | ソフトウェア・ツール
+      - Files/datasets | ファイル・データセット
+      - Reference materials | 参考資料
+      - Bot portal access | ボットポータルアクセス
+      - External resources | 外部リソース
+    elicit: true
+
+  - id: ai_chatbot_guidance
+    title: AI Chatbot Usage for Activity | アクティビティのためのAIチャットボット使用
+    instruction: |
+      How students can use AI chatbots (bilingual):
+      学生がAIチャットボットをどのように使用できるか（バイリンガル）:
+      - What AI assistance is appropriate | どのAI支援が適切か
+      - Required: Share prompts used | 必須：使用したプロンプトを共有
+      - Required: Share AI responses | 必須：AI応答を共有
+      - Required: Document verification process | 必須：検証プロセスを文書化
+      - How to check for AI hallucinations | AI幻覚をチェックする方法
+    elicit: true
+
+  - id: deliverables
+    title: Activity Deliverables | アクティビティ成果物
+    instruction: |
+      What students submit (bilingual):
+      学生が提出するもの（バイリンガル）:
+      - Completed work/output | 完成した作業・出力
+      - Documentation of process | プロセスの文書化
+      - AI prompts and responses (if used) | AIプロンプトと応答（使用した場合）
+      - Verification of AI output | AI出力の検証
+      - Submission format and deadline | 提出形式と締切
+    elicit: true
+
+  - id: assessment_criteria
+    title: Assessment Criteria | 評価基準
+    instruction: |
+      How activity is evaluated (bilingual):
+      アクティビティがどのように評価されるか（バイリンガル）:
+      - Completion criteria | 完了基準
+      - Quality expectations | 品質の期待
+      - AI transparency requirements | AI透明性要件
+      - Points/grading rubric | ポイント・評価ルーブリック
+    elicit: true
+
+  - id: troubleshooting
+    title: Common Issues & Solutions | 一般的な問題と解決策
+    instruction: |
+      Help students overcome common obstacles (bilingual):
+      学生が一般的な障害を克服するのを助ける（バイリンガル）:
+      - Common problems students face | 学生が直面する一般的な問題
+      - Solutions or workarounds | 解決策または回避策
+      - When/how to ask for help | いつ・どのように助けを求めるか
+      - Bot assistance available | 利用可能なボット支援
+    elicit: true

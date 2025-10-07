@@ -1,0 +1,147 @@
+# <!-- Powered by BMAD™ Core -->
+---
+template:
+  id: curriculum-outline-tmpl
+  name: Curriculum Outline | カリキュラムアウトライン
+  version: 1.0
+  description: Comprehensive course curriculum with bot integration, hands-on activities, and project-based assessment | ボット統合、ハンズオンアクティビティ、プロジェクトベース評価を含む包括的なコースカリキュラム
+  output:
+    format: markdown
+    filename: "{{course-id}}-curriculum-outline.md"
+
+workflow:
+  elicitation: true
+  allow_skip: false
+
+sections:
+  - id: course_header
+    title: Course Information | コース情報
+    instruction: |
+      Basic course identification (bilingual):
+      基本的なコース識別（バイリンガル）:
+      - Course title (EN | JA) | コースタイトル（英語 | 日本語）
+      - Course code | コースコード
+      - Credits/contact hours | 単位・時間数
+      - Target audience | 対象者
+      - Prerequisites (if any) | 前提条件（ある場合）
+    elicit: true
+
+  - id: course_description
+    title: Course Description | コース説明
+    instruction: |
+      Provide comprehensive course overview (bilingual EN|JA):
+      包括的なコース概要を提供（バイリンガル英日）:
+      - Purpose and learning philosophy | 目的と学習哲学
+      - Key topics covered | 扱う主要トピック
+      - Why this course matters | このコースがなぜ重要か
+      - Connection to real-world applications | 実世界での応用とのつながり
+    elicit: true
+
+  - id: learning_outcomes
+    title: Learning Outcomes | 学習成果
+    instruction: |
+      Define measurable learning outcomes (bilingual):
+      測定可能な学習成果を定義（バイリンガル）:
+      - Upon completion, students will be able to... | 修了時、学生は以下ができるようになります...
+      - List 5-8 specific, measurable outcomes | 5-8個の具体的で測定可能な成果をリスト
+      - Each outcome in format: "English | 日本語"
+      - 各成果を次の形式で: "English | 日本語"
+    elicit: true
+
+  - id: teaching_approach
+    title: Teaching Approach | 教育アプローチ
+    instruction: |
+      Describe pedagogical methodology (bilingual):
+      教育方法論を説明（バイリンガル）:
+      - Short lectures (10-20 min) for concept introduction | コンセプト紹介のための短い講義（10-20分）
+      - Hands-on activities for learning by doing | 実践による学習のためのハンズオンアクティビティ
+      - Bot-integrated workflows for guided practice | ガイド付き実践のためのボット統合ワークフロー
+      - Ratio: Brief lecture → Extended hands-on activity | 比率：短い講義→長めのハンズオンアクティビティ
+    elicit: true
+
+  - id: bot_integration
+    title: Bot Integration Strategy | ボット統合戦略
+    instruction: |
+      Explain how course-specific bot will be integrated (bilingual):
+      コース固有のボットがどのように統合されるかを説明（バイリンガル）:
+      - Course bot purpose and capabilities | コースボットの目的と機能
+      - Activities that include bot workflows | ボットワークフローを含むアクティビティ
+      - How bot guides students through BMAD workflows | ボットがBMADワークフローを通じて学生をガイドする方法
+      - Data collected for course/student adaptation | コース・学生適応のために収集されるデータ
+      - Bot portal usage expectations | ボットポータル使用の期待
+    elicit: true
+
+  - id: weekly_schedule
+    title: Weekly Schedule | 週次スケジュール
+    instruction: |
+      Outline week-by-week structure (bilingual):
+      週ごとの構造をアウトライン（バイリンガル）:
+      For each week:
+      各週について:
+      - Week number and topics (EN | JA) | 週番号とトピック（英語 | 日本語）
+      - Short lecture topics | 短い講義トピック
+      - Hands-on activity descriptions | ハンズオンアクティビティの説明
+      - Bot workflow integration points | ボットワークフロー統合ポイント
+      - Deliverables/assessments | 成果物・評価
+    elicit: true
+
+  - id: assessment_structure
+    title: Assessment Structure | 評価構造
+    instruction: |
+      Define assessment approach (bilingual):
+      評価アプローチを定義（バイリンガル）:
+      - NO FINAL EXAM | 最終試験なし
+      - Ongoing assessments during course (%) | コース期間中の継続的評価（％）
+      - Final project (individual or group) (%) | 最終プロジェクト（個人またはグループ）（％）
+      - Participation/engagement (%) | 参加・エンゲージメント（％）
+      - Bot interaction data considerations | ボットインタラクションデータの考慮事項
+    elicit: true
+
+  - id: final_project
+    title: Final Project Overview | 最終プロジェクト概要
+    instruction: |
+      Describe final project requirements (bilingual):
+      最終プロジェクト要件を説明（バイリンガル）:
+      - Project goals and objectives | プロジェクトの目標と目的
+      - Individual or group options | 個人またはグループオプション
+      - Key deliverables | 主要成果物
+      - Real-world application focus | 実世界での応用に焦点
+      - Timeline and milestones | タイムラインとマイルストーン
+    elicit: true
+
+  - id: ai_chatbot_policy
+    title: AI Chatbot Usage Policy | AIチャットボット使用ポリシー
+    instruction: |
+      Define AI chatbot usage expectations (bilingual):
+      AIチャットボット使用の期待を定義（バイリンガル）:
+      - AI chatbots are ENCOURAGED | AIチャットボットは奨励されます
+      - Can use for reports, code, research | レポート、コード、調査に使用可能
+      - REQUIRED: Share prompts and responses | 必須：プロンプトと応答を共有
+      - REQUIRED: Document verification of AI output | 必須：AI出力の検証を文書化
+      - REQUIRED: Explain hallucination checks | 必須：幻覚チェックを説明
+      - EXCEPTION: No bot use in formal assessments | 例外：正式評価でのボット使用不可
+    elicit: true
+
+  - id: required_materials
+    title: Required Materials & Resources | 必要な教材とリソース
+    instruction: |
+      List all required materials (bilingual):
+      すべての必要な教材をリスト（バイリンガル）:
+      - Textbooks/readings | 教科書・読み物
+      - Software/tools | ソフトウェア・ツール
+      - Hardware requirements | ハードウェア要件
+      - Course bot portal access | コースボットポータルアクセス
+      - Other resources | その他のリソース
+    elicit: true
+
+  - id: course_policies
+    title: Course Policies | コースポリシー
+    instruction: |
+      Define key policies (bilingual):
+      主要なポリシーを定義（バイリンガル）:
+      - Attendance/participation | 出席・参加
+      - Late submissions | 遅延提出
+      - Academic integrity | 学術的誠実性
+      - AI tool transparency requirements | AIツール透明性要件
+      - Collaboration guidelines | コラボレーションガイドライン
+    elicit: true
