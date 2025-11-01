@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 7: Data Cleaning Fundamentals</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            color: #333;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            background: white;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px 80px;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide h1 {
+            font-size: 3em;
+            color: #2563eb;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .slide h2 {
+            font-size: 2.2em;
+            color: #7c3aed;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 10px;
+        }
+
+        .slide h3 {
+            font-size: 1.8em;
+            color: #2563eb;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .slide h4 {
+            font-size: 1.4em;
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .slide p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        .slide ul, .slide ol {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-left: 40px;
+            margin-bottom: 20px;
+        }
+
+        .slide li {
+            margin-bottom: 10px;
+        }
+
+        .bilingual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 20px 0;
+        }
+
+        .english, .japanese {
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .english {
+            background: #dbeafe;
+            border-left: 4px solid #2563eb;
+        }
+
+        .japanese {
+            background: #f3e8ff;
+            border-left: 4px solid #7c3aed;
+        }
+
+        .highlight-box {
+            background: #fef3cd;
+            border-left: 5px solid #f59e0b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .code-box {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: white;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:hover {
+            background: #2563eb;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-number {
+            position: fixed;
+            top: 70px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            color: #2563eb;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .title-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+
+        .title-slide h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .title-slide .subtitle {
+            font-size: 2em;
+            color: #7c3aed;
+            margin-bottom: 40px;
+        }
+
+        .title-slide .info {
+            font-size: 1.3em;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 1024px) {
+            .slide {
+                padding: 40px 50px;
+            }
+
+            .slide h1 {
+                font-size: 2.5em;
+            }
+
+            .slide h2 {
+                font-size: 2em;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .slide-container {
+                padding: 0;
+            }
+
+            .slide {
+                width: 100vw;
+                height: auto;
+                min-height: 100vh;
+                padding: 20px;
+                border-radius: 0;
+            }
+
+            .slide h1 {
+                font-size: 2em;
+            }
+
+            .slide h2 {
+                font-size: 1.6em;
+            }
+
+            .bilingual {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .title-slide h1 {
+                font-size: 2.5em;
+            }
+
+            .title-slide .subtitle {
+                font-size: 1.4em;
+            }
+
+            .navigation {
+                bottom: 15px;
+                gap: 10px;
+            }
+
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 0.95em;
+            }
+        }
+
+        .slides-nav {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+            padding: 10px 20px;
+        }
+
+        .slides-nav .container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .slides-nav a {
+            color: #1f2937;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .slides-nav a:hover {
+            color: #2563eb;
+        }
+
+        body {
+            padding-top: 50px;
+        }
+    </style>
+    <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+    <nav class="slides-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="lecture.html">Lecture Notes</a>
+            <a href="assignment.html">Assignment</a>
+        </div>
+    </nav>
+
+    <div class="slide-number" id="slideNumber">Slide 1 / 12</div>
+
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active title-slide">
+            <h1>Week 7</h1>
+            <p class="subtitle">Data Cleaning Fundamentals<br>データクリーニングの基礎</p>
+            <p class="info"><strong>Course:</strong> Machine Learning and Intelligence</p>
+            <p class="info"><strong>Instructor:</strong> Yuri Tijerino</p>
+            <p class="info"><strong>Duration:</strong> 15-20 minutes / 15-20分</p>
+        </div>
+
+        <!-- Slide 2: Today's Focus -->
+        <div class="slide">
+            <h2>Today's Focus</h2>
+            <h2>今日の焦点</h2>
+            <div class="bilingual">
+                <div class="english">
+                    <h3>What We'll Cover:</h3>
+                    <ul>
+                        <li>Common data quality issues in real datasets</li>
+                        <li>Python pandas functions for data cleaning</li>
+                        <li>Removing duplicates and standardizing text</li>
+                        <li>Handling data type issues</li>
+                        <li>Consistency checks and corrections</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <h3>カバーする内容:</h3>
+                    <ul>
+                        <li>実際のデータセットにおける一般的なデータ品質問題</li>
+                        <li>データクリーニングのためのPython pandas関数</li>
+                        <li>重複の削除とテキストの標準化</li>
+                        <li>データ型問題の処理</li>
+                        <li>一貫性チェックと修正</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Why Data Cleaning Matters -->
+        <div class="slide">
+            <h2>Why Data Cleaning Matters</h2>
+            <h2>なぜデータクリーニングが重要か</h2>
+            <div class="highlight-box">
+                <h3>"Garbage In, Garbage Out"</h3>
+                <p><strong>Your ML model is only as good as your data!</strong></p>
+                <p><strong>MLモデルはデータと同じくらい良いだけです！</strong></p>
+            </div>
+            <div class="two-column">
+                <div>
+                    <h4>Dirty Data Causes:</h4>
+                    <p><strong>汚いデータの原因:</strong></p>
+                    <ul>
+                        <li>Incorrect predictions</li>
+                        <li>Biased models</li>
+                        <li>Poor performance</li>
+                        <li>Wasted training time</li>
+                    </ul>
+                    <p>不正確な予測、偏ったモデル、悪いパフォーマンス、無駄なトレーニング時間</p>
+                </div>
+                <div>
+                    <h4>Clean Data Enables:</h4>
+                    <p><strong>クリーンなデータが可能にする:</strong></p>
+                    <ul>
+                        <li>Accurate predictions</li>
+                        <li>Reliable models</li>
+                        <li>Better insights</li>
+                        <li>Trustworthy results</li>
+                    </ul>
+                    <p>正確な予測、信頼できるモデル、より良い洞察、信頼できる結果</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Common Data Quality Issues -->
+        <div class="slide">
+            <h2>Common Data Quality Issues</h2>
+            <h2>一般的なデータ品質問題</h2>
+            <h3>What to Look For / 探すべきもの</h3>
+            <div class="code-box">1. DUPLICATES / 重複
+   → Same company listed multiple times
+   → 同じ企業が複数回リストされている
+
+2. MISSING VALUES / 欠損値
+   → Empty cells, NaN, null
+   → 空のセル、NaN、null
+
+3. INCONSISTENT FORMATTING / 一貫性のないフォーマット
+   → "Technology", "Tech", "IT" should be standardized
+   → 標準化すべき
+
+4. INCORRECT DATA TYPES / 不正確なデータ型
+   → Numbers stored as text
+   → テキストとして保存された数値
+
+5. WHITESPACE ISSUES / 空白の問題
+   → Extra spaces: " Sony " vs "Sony"
+   → 余分なスペース
+
+6. LOGICAL ERRORS / 論理エラー
+   → Founding year in the future, negative employee counts
+   → 未来の設立年、負の従業員数</div>
+        </div>
+
+        <!-- Slide 5: Data Cleaning Workflow -->
+        <div class="slide">
+            <h2>Data Cleaning Workflow</h2>
+            <h2>データクリーニングワークフロー</h2>
+            <div class="code-box">Step 1: ASSESS DATA QUALITY (10 min)
+        Load data, run diagnostics
+        ステップ1: データ品質評価 - データをロード、診断実行
+
+Step 2: REMOVE DUPLICATES & STANDARDIZE (12 min)
+        Clean text, standardize categories
+        ステップ2: 重複削除と標準化 - テキストをクリーン、カテゴリを標準化
+
+Step 3: FIX DATA TYPES (10 min)
+        Convert to appropriate types
+        ステップ3: データ型修正 - 適切な型に変換
+
+Step 4: CONSISTENCY CHECKS (13 min)
+        Find and fix logical errors
+        ステップ4: 一貫性チェック - 論理エラーを発見して修正
+
+Step 5: VALIDATE & DOCUMENT (15 min)
+        Final checks, create cleaning report
+        ステップ5: 検証と文書化 - 最終チェック、クリーニングレポート作成</div>
+        </div>
+
+        <!-- Slide 6: Python Tools for Cleaning -->
+        <div class="slide">
+            <h2>Python Tools for Data Cleaning</h2>
+            <h2>データクリーニングのためのPythonツール</h2>
+            <h3>Essential pandas Functions / 必須のpandas関数</h3>
+            <div class="code-box"># Load data / データをロード
+df = pd.read_csv('companies.csv')
+
+# View data / データを表示
+df.head()        # First 5 rows / 最初の5行
+df.info()        # Data types and nulls / データ型と欠損
+df.describe()    # Statistics / 統計
+
+# Remove duplicates / 重複を削除
+df = df.drop_duplicates()
+
+# Clean text / テキストをクリーン
+df['column'] = df['column'].str.strip()  # Remove spaces / スペース削除
+df['column'] = df['column'].str.lower()  # Lowercase / 小文字
+
+# Handle missing values / 欠損値を処理
+df.isnull().sum()  # Count missing / 欠損をカウント
+df.dropna()        # Remove rows with missing / 欠損行を削除
+df.fillna(value)   # Fill missing with value / 値で埋める</div>
+        </div>
+
+        <!-- Slide 7: Removing Duplicates -->
+        <div class="slide">
+            <h2>Removing Duplicates</h2>
+            <h2>重複の削除</h2>
+            <div class="bilingual">
+                <div class="english">
+                    <h4>Why Duplicates Are a Problem:</h4>
+                    <ul>
+                        <li>Skew statistics and analysis</li>
+                        <li>Give some companies unfair weight in ML training</li>
+                        <li>Waste computational resources</li>
+                    </ul>
+                    <h4>How to Handle:</h4>
+                    <div class="code-box"># Check for duplicates
+print(df.duplicated().sum())
+
+# Remove exact duplicates
+df = df.drop_duplicates()
+
+# Remove based on specific columns
+df = df.drop_duplicates(subset=['company_name'])</div>
+                </div>
+                <div class="japanese">
+                    <h4>重複が問題である理由:</h4>
+                    <ul>
+                        <li>統計と分析を歪める</li>
+                        <li>MLトレーニングで一部の企業に不公平な重みを与える</li>
+                        <li>計算リソースを無駄にする</li>
+                    </ul>
+                    <h4>処理方法:</h4>
+                    <div class="code-box"># 重複をチェック
+print(df.duplicated().sum())
+
+# 完全な重複を削除
+df = df.drop_duplicates()
+
+# 特定の列に基づいて削除
+df = df.drop_duplicates(subset=['company_name'])</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Standardizing Text -->
+        <div class="slide">
+            <h2>Standardizing Text</h2>
+            <h2>テキストの標準化</h2>
+            <h3>Common Text Issues / 一般的なテキスト問題</h3>
+            <div class="two-column">
+                <div>
+                    <h4>Before Cleaning:</h4>
+                    <div class="code-box">Industry column:
+"Technology"
+"Tech"
+"IT"
+"information technology"
+"TECHNOLOGY"
+
+Company names:
+" Sony Corp"
+"Sony Corporation "
+"SONY"</div>
+                </div>
+                <div>
+                    <h4>After Cleaning:</h4>
+                    <div class="code-box">Industry column:
+"technology"
+"technology"
+"technology"
+"technology"
+"technology"
+
+Company names:
+"Sony Corporation"
+"Sony Corporation"
+"Sony Corporation"</div>
+                </div>
+            </div>
+            <div class="code-box"># Standardize industry categories
+df['industry'] = df['industry'].str.strip().str.lower()
+df['industry'] = df['industry'].replace({
+    'tech': 'technology',
+    'it': 'technology',
+    'information technology': 'technology'
+})</div>
+        </div>
+
+        <!-- Slide 9: Fixing Data Types -->
+        <div class="slide">
+            <h2>Fixing Data Types</h2>
+            <h2>データ型の修正</h2>
+            <div class="bilingual">
+                <div class="english">
+                    <h4>Why Data Types Matter:</h4>
+                    <p>ML models need consistent numeric types for calculations. Text numbers like "100" can't be used in math operations.</p>
+                    <h4>Common Conversions:</h4>
+                    <div class="code-box"># Convert to numeric
+df['employee_count'] = pd.to_numeric(
+    df['employee_count'], 
+    errors='coerce'  # Invalid → NaN
+)
+
+# Convert to integer
+df['founding_year'] = df['founding_year'].astype('Int64')
+
+# Remove currency symbols
+df['revenue'] = df['revenue'].str.replace('[$¥,]', '', regex=True)
+df['revenue'] = pd.to_numeric(df['revenue'], errors='coerce')</div>
+                </div>
+                <div class="japanese">
+                    <h4>データ型が重要な理由:</h4>
+                    <p>MLモデルは計算のために一貫した数値型を必要とします。「100」のようなテキスト数値は数学演算に使用できません。</p>
+                    <h4>一般的な変換:</h4>
+                    <div class="code-box"># 数値に変換
+df['employee_count'] = pd.to_numeric(
+    df['employee_count'], 
+    errors='coerce'  # 無効 → NaN
+)
+
+# 整数に変換
+df['founding_year'] = df['founding_year'].astype('Int64')
+
+# 通貨記号を削除
+df['revenue'] = df['revenue'].str.replace('[$¥,]', '', regex=True)
+df['revenue'] = pd.to_numeric(df['revenue'], errors='coerce')</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Consistency Checks -->
+        <div class="slide">
+            <h2>Consistency Checks</h2>
+            <h2>一貫性チェック</h2>
+            <h3>Finding Logical Errors / 論理エラーの発見</h3>
+            <div class="code-box"># Check for impossible values / 不可能な値をチェック
+current_year = 2025
+
+# Founding year in future?
+invalid_years = df[df['founding_year'] > current_year]
+print(f"Companies with future founding: {len(invalid_years)}")
+
+# Negative employee counts?
+invalid_employees = df[df['employee_count'] < 0]
+print(f"Companies with negative employees: {len(invalid_employees)}")
+
+# Mark suspicious entries for review
+df['needs_review'] = False
+df.loc[df['founding_year'] > current_year, 'needs_review'] = True
+df.loc[df['employee_count'] < 0, 'needs_review'] = True</div>
+            <div class="highlight-box">
+                <p><strong>Best Practice:</strong> Mark uncertain data for review rather than automatically deleting it</p>
+                <p><strong>ベストプラクティス:</strong> 自動的に削除するのではなく、不確実なデータをレビュー用にマーク</p>
+            </div>
+        </div>
+
+        <!-- Slide 11: Today's Activity -->
+        <div class="slide">
+            <h2>Today's Activity Preview</h2>
+            <h2>今日のアクティビティプレビュー</h2>
+            <h3>What You'll Do (40-60 minutes)</h3>
+            <p><strong>あなたがすること（40-60分）</strong></p>
+            <ol>
+                <li><strong>Data Quality Assessment (10 min)</strong><br>
+                    Load your Week 6 dataset and run diagnostics<br>
+                    <em>データ品質評価 - 第6週データセットをロードして診断実行</em></li>
+                <li><strong>Remove Duplicates & Standardize (12 min)</strong><br>
+                    Clean text and standardize categories<br>
+                    <em>重複削除と標準化 - テキストをクリーンにしてカテゴリを標準化</em></li>
+                <li><strong>Fix Data Types (10 min)</strong><br>
+                    Convert columns to appropriate types<br>
+                    <em>データ型修正 - 列を適切な型に変換</em></li>
+                <li><strong>Consistency Checks (13 min)</strong><br>
+                    Find and correct logical errors<br>
+                    <em>一貫性チェック - 論理エラーを発見して修正</em></li>
+                <li><strong>Final Validation (15 min)</strong><br>
+                    Run quality checks and create cleaning report<br>
+                    <em>最終検証 - 品質チェックを実行しクリーニングレポート作成</em></li>
+            </ol>
+        </div>
+
+        <!-- Slide 12: Let's Clean Your Data! -->
+        <div class="slide">
+            <h2>Let's Clean Your Data!</h2>
+            <h2>データをクリーニングしましょう！</h2>
+            <div class="highlight-box">
+                <h3>"Clean data is the foundation of reliable ML models!"</h3>
+                <h3>「クリーンなデータは信頼できるMLモデルの基礎です！」</h3>
+            </div>
+            <h3>Key Takeaways / 重要なポイント</h3>
+            <div class="bilingual">
+                <div class="english">
+                    <ul>
+                        <li>Data cleaning is essential for ML success</li>
+                        <li>Common issues: duplicates, missing values, inconsistent formatting</li>
+                        <li>Python pandas provides powerful cleaning tools</li>
+                        <li>Always document your cleaning decisions</li>
+                        <li>The bot will guide you through each step</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <ul>
+                        <li>データクリーニングはML成功に不可欠</li>
+                        <li>一般的な問題：重複、欠損値、一貫性のないフォーマット</li>
+                        <li>Python pandasは強力なクリーニングツールを提供</li>
+                        <li>常にクリーニング決定を文書化</li>
+                        <li>ボットが各ステップをガイド</li>
+                    </ul>
+                </div>
+            </div>
+            <h3 style="text-align: center; margin-top: 40px;">Ready to Clean!</h3>
+            <p style="text-align: center; font-size: 1.2em;"><strong>Open Google Colab and begin Week 7 Activity</strong></p>
+            <p style="text-align: center; font-size: 1.2em;"><strong>Google Colabを開いて第7週アクティビティを開始</strong></p>
+        </div>
+
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">◀ Previous</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next ▶</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+
+            document.getElementById('slideNumber').textContent = `Slide ${currentSlide + 1} / ${totalSlides}`;
+
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (event.key === 'ArrowRight' || event.key === ' ') {
+                event.preventDefault();
+                changeSlide(1);
+            } else if (event.key === 'Home') {
+                showSlide(0);
+            } else if (event.key === 'End') {
+                showSlide(totalSlides - 1);
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>

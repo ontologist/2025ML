@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 6 Assignment: Building Your Company Dataset | ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .assignment-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .assignment-content h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .assignment-content h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .assignment-content h4 {
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .info-box {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color);
+            margin: 20px 0;
+        }
+        .warning-box {
+            background: #fef3cd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--warning);
+            margin: 20px 0;
+        }
+        .success-box {
+            background: #d1fae5;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--success);
+            margin: 20px 0;
+        }
+        .deliverable-box {
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid var(--border-color);
+        }
+        .rubric-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .rubric-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .rubric-table td {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .rubric-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        code {
+            background: var(--bg-light);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        @media (max-width: 768px) {
+            .assignment-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Week 6 Assignment</h1>
+            <p class="subtitle">Building Your Company Dataset<br>企業データセットの構築</p>
+            <p class="instructor">Instructor: Yuri Tijerino</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="lecture.html">Lecture Notes</a>
+            <a href="slides.html">Presentation Slides</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="assignment-content">
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="lecture.html" class="btn btn-primary">View Lecture</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+            </div>
+
+            <div class="info-box">
+                <h3>Assignment Overview / 課題概要</h3>
+                <p><strong>Course:</strong> Machine Learning and Intelligence | 機械学習と知能</p>
+                <p><strong>Week:</strong> 6 | 第6週</p>
+                <p><strong>Due Date:</strong> End of Week 6 class session | 第6週授業終了時</p>
+                <p><strong>Weight:</strong> 100 points (Part of 40% Weekly Activities grade) | 100点（週次アクティビティ評価40%の一部）</p>
+                <p><strong>Submission:</strong> Through ML-101 Bot Portal | ML-101ボットポータル経由</p>
+            </div>
+
+            <p>This assignment focuses on building a high-quality company dataset that will serve as the foundation for your ML recommendation system. You'll design a data schema, collect structured company data, and ensure quality and consistency.</p>
+            <p>この課題は、ML推薦システムの基礎となる高品質の企業データセットの構築に焦点を当てています。データスキーマを設計し、構造化された企業データを収集し、品質と一貫性を確保します。</p>
+
+            <h2>Learning Objectives / 学習目標</h2>
+
+            <p>By completing this assignment, you will be able to:</p>
+            <p>この課題を完了することで、以下ができるようになります：</p>
+
+            <ul>
+                <li>Design and implement a data schema for company information<br>
+                    企業情報のデータスキーマを設計して実装する</li>
+                <li>Collect structured company data from approved sources<br>
+                    承認されたソースから構造化された企業データを収集する</li>
+                <li>Organize collected data in a consistent, usable format<br>
+                    収集されたデータを一貫した使用可能な形式で整理する</li>
+                <li>Perform initial quality checks on collected data<br>
+                    収集されたデータの初期品質チェックを実行する</li>
+                <li>Document data collection methodology and decisions<br>
+                    データ収集方法論と決定を文書化する</li>
+            </ul>
+
+            <h2>Prerequisites / 前提条件</h2>
+
+            <ul>
+                <li>Attended Week 6 lecture (or reviewed lecture materials)<br>
+                    第6週講義に出席（または講義資料をレビュー）</li>
+                <li>Completed Week 5 (proficient with no-code scraping tools)<br>
+                    第5週を完了（ノーコードスクレイピングツールに習熟）</li>
+                <li>Access to ML-101 Bot portal<br>
+                    ML-101ボットポータルへのアクセス</li>
+                <li>Approved websites list from Week 4<br>
+                    第4週からの承認されたウェブサイトリスト</li>
+            </ul>
+
+            <h2>Assignment Deliverables / 課題成果物</h2>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 1: Data Schema Document (Required)</h3>
+                <h4>成果物1：データスキーマ文書（必須）</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Create a comprehensive data schema document defining the structure of your company dataset.</p>
+                <p>企業データセットの構造を定義する包括的なデータスキーマ文書を作成します。</p>
+
+                <h4>Schema Must Include:</h4>
+                <h4>スキーマに含める必要があるもの:</h4>
+
+                <ol>
+                    <li><strong>Field Definitions (5-8 fields minimum)</strong>
+                        <p>For each field, specify:</p>
+                        <ul>
+                            <li>Field name (e.g., company_name, industry)</li>
+                            <li>Data type (text, number, categorical, date, URL)</li>
+                            <li>Description (what information this field contains)</li>
+                            <li>Requirement level (Required, Recommended, Optional)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Justification for Included Fields</strong>
+                        <p>Explain why each field is important for the company recommendation project</p>
+                        <p>各フィールドが企業推薦プロジェクトにとって重要な理由を説明</p>
+                    </li>
+                    <li><strong>Standardization Rules</strong>
+                        <p>Document how you'll ensure consistency (e.g., "Industry will use 5 standard categories: Technology, Healthcare, Finance, Manufacturing, Other")</p>
+                        <p>一貫性をどのように確保するかを文書化</p>
+                    </li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>Required Fields (Must Include):</h4>
+                    <ul>
+                        <li>Company Name</li>
+                        <li>Industry</li>
+                        <li>Description</li>
+                    </ul>
+                    <h4>Recommended Fields (Choose at least 2-5):</h4>
+                    <ul>
+                        <li>Company Size</li>
+                        <li>Location</li>
+                        <li>Founding Year</li>
+                        <li>Website URL</li>
+                        <li>Employee Count</li>
+                        <li>Revenue</li>
+                        <li>Culture Keywords</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li><strong>Document format:</strong> PDF or Word document | 文書形式：PDFまたはWordドキュメント</li>
+                        <li><strong>Length:</strong> 1-2 pages | 長さ：1-2ページ</li>
+                        <li><strong>Use clear headings and tables</strong> for organization | 整理のために明確な見出しと表を使用</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (20 points) / 採点（20点）:</h4>
+                <ul>
+                    <li>5-8 fields defined with all required information: <strong>10 points</strong></li>
+                    <li>Clear justification for field choices: <strong>5 points</strong></li>
+                    <li>Standardization rules documented: <strong>5 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 2: Company Dataset CSV File (Required)</h3>
+                <h4>成果物2：企業データセットCSVファイル（必須）</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Collect and organize data for <strong>20-30 companies</strong> in CSV format.</p>
+                <p><strong>20-30社</strong>のデータをCSV形式で収集して整理します。</p>
+
+                <h4>Dataset Requirements:</h4>
+                <h4>データセット要件:</h4>
+
+                <ol>
+                    <li><strong>Number of Companies</strong>
+                        <p>Minimum: 20 companies | 最低：20社</p>
+                        <p>Target: 25-30 companies | 目標：25-30社</p>
+                    </li>
+                    <li><strong>Schema Compliance</strong>
+                        <p>All columns must match your defined schema</p>
+                        <p>すべての列は定義されたスキーマと一致する必要があります</p>
+                    </li>
+                    <li><strong>Data Completeness</strong>
+                        <p>Required fields: 90%+ complete</p>
+                        <p>Recommended fields: 70%+ complete</p>
+                        <p>必須フィールド：90%以上完全、推奨フィールド：70%以上完全</p>
+                    </li>
+                    <li><strong>Data Consistency</strong>
+                        <p>Apply standardization rules throughout</p>
+                        <p>全体で標準化ルールを適用</p>
+                    </li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li><strong>File format:</strong> CSV (.csv) | ファイル形式：CSV</li>
+                        <li><strong>Encoding:</strong> UTF-8 (supports Japanese characters) | エンコーディング：UTF-8</li>
+                        <li><strong>First row:</strong> Column headers matching schema field names | 最初の行：スキーマフィールド名と一致する列ヘッダー</li>
+                        <li><strong>File naming:</strong> Week06_YourName_CompanyDataset.csv</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (40 points) / 採点（40点）:</h4>
+                <ul>
+                    <li>20-30 companies collected: <strong>15 points</strong></li>
+                    <li>High field completeness (80%+ for required fields): <strong>10 points</strong></li>
+                    <li>Standardized and consistent formatting: <strong>10 points</strong></li>
+                    <li>No obvious errors or duplicates: <strong>5 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 3: Data Collection Documentation (Required)</h3>
+                <h4>成果物3：データ収集文書（必須）</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Document your data collection process, sources, and quality assessment.</p>
+                <p>データ収集プロセス、ソース、品質評価を文書化します。</p>
+
+                <h4>Documentation Must Include:</h4>
+                <h4>文書に含める必要があるもの:</h4>
+
+                <ol>
+                    <li><strong>Data Collection Strategy</strong>
+                        <p>Describe your approach to collecting company data</p>
+                        <ul>
+                            <li>Which fields did you prioritize?</li>
+                            <li>What was your collection order?</li>
+                        </ul>
+                    </li>
+                    <li><strong>Sources Used with URLs</strong>
+                        <p>List all websites used for data collection</p>
+                        <ul>
+                            <li>Primary source(s) with URL(s)</li>
+                            <li>Secondary sources with URL(s)</li>
+                            <li>Which fields came from which sources</li>
+                        </ul>
+                    </li>
+                    <li><strong>Collection Methodology</strong>
+                        <p>How did you collect the data?</p>
+                        <ul>
+                            <li>Tools used (scraping tool name)</li>
+                            <li>Process followed</li>
+                            <li>Any challenges encountered and how you addressed them</li>
+                        </ul>
+                    </li>
+                    <li><strong>Quality Check Results</strong>
+                        <p>Report completeness percentages for each field</p>
+                        <ul>
+                            <li>Example: "company_name: 100% complete (30/30)"</li>
+                            <li>Example: "founding_year: 80% complete (24/30)"</li>
+                        </ul>
+                    </li>
+                    <li><strong>Known Limitations and Challenges</strong>
+                        <p>What issues did you encounter?</p>
+                        <ul>
+                            <li>Missing data for certain fields</li>
+                            <li>Inconsistent source information</li>
+                            <li>Data that required manual research</li>
+                        </ul>
+                    </li>
+                    <li><strong>Dataset Metadata</strong>
+                        <ul>
+                            <li>Collection date</li>
+                            <li>Total number of companies</li>
+                            <li>Field completeness statistics</li>
+                            <li>Sources list</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li>Include in the same document as Deliverable 1 (Schema) or as separate file</li>
+                        <li>成果物1（スキーマ）と同じ文書に含めるか、別ファイルとして</li>
+                        <li><strong>Length:</strong> 2-3 pages | 長さ：2-3ページ</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (20 points) / 採点（20点）:</h4>
+                <ul>
+                    <li>Clear documentation of collection process: <strong>6 points</strong></li>
+                    <li>Proper source attribution with URLs: <strong>4 points</strong></li>
+                    <li>Quality check results included: <strong>5 points</strong></li>
+                    <li>Known limitations acknowledged: <strong>5 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 4: AI Transparency Log (If Applicable)</h3>
+                <h4>成果物4：AI透明性ログ（該当する場合）</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>If you used external AI chatbots (ChatGPT, Claude, Gemini, etc.) during data collection or documentation, provide complete documentation.</p>
+                <p>データ収集または文書化中に外部AIチャットボットを使用した場合、完全な文書を提供します。</p>
+
+                <h4>AI Transparency Log Must Include:</h4>
+                <ol>
+                    <li><strong>All AI Prompts Used</strong>
+                        <p>Copy the exact prompts you sent to AI tools</p>
+                        <p>AIツールに送信した正確なプロンプトをコピー</p>
+                    </li>
+                    <li><strong>All AI Responses</strong>
+                        <p>Copy complete AI suggestions and recommendations</p>
+                        <p>完全なAI提案と推薦をコピー</p>
+                    </li>
+                    <li><strong>Verification Process</strong>
+                        <p>How did you verify AI-provided information?</p>
+                        <ul>
+                            <li>If AI suggested company information, how did you verify it was accurate?</li>
+                            <li>Did you cross-reference AI-provided data with original sources?</li>
+                        </ul>
+                    </li>
+                    <li><strong>Hallucination Check</strong>
+                        <p>Document any instances where AI provided false information</p>
+                        <ul>
+                            <li>Did you verify all company data independently?</li>
+                            <li>Did AI suggest data fields that aren't practical to collect?</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>Appropriate AI Use:</h4>
+                    <ul>
+                        <li>Asking AI for suggestions on data schema design</li>
+                        <li>Getting help with data standardization strategies</li>
+                        <li>Researching specific company information to fill gaps</li>
+                        <li>Understanding data organization best practices</li>
+                    </ul>
+                    <h4>REQUIRED Documentation:</h4>
+                    <p>You MUST document and verify ALL AI assistance used</p>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li>Use provided AI transparency template (available in bot portal)</li>
+                        <li>提供されたAI透明性テンプレートを使用</li>
+                        <li>Include as separate section or file</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (20 points) / 採点（20点）:</h4>
+                <ul>
+                    <li>Complete documentation if AI was used: <strong>10 points</strong></li>
+                    <li>Proper verification of AI-provided information: <strong>10 points</strong></li>
+                    <li><strong>OR</strong> Clear statement that no external AI was used: <strong>20 points</strong></li>
+                </ul>
+            </div>
+
+            <h2>Submission Instructions / 提出指示</h2>
+
+            <div class="success-box">
+                <h3>How to Submit / 提出方法</h3>
+                <ol>
+                    <li><strong>Prepare your files:</strong>
+                        <ul>
+                            <li>Schema + Documentation (PDF or Word)</li>
+                            <li>Company Dataset (CSV file)</li>
+                            <li>AI Transparency Log (if applicable)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Name your files:</strong>
+                        <ul>
+                            <li><code>Week06_[YourName]_Schema.pdf</code></li>
+                            <li><code>Week06_[YourName]_CompanyDataset.csv</code></li>
+                            <li><code>Week06_[YourName]_AILog.pdf</code> (if applicable)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Upload through ML-101 Bot Portal:</strong>
+                        <ul>
+                            <li>Log in to bot portal</li>
+                            <li>Navigate to "Week 6 Assignment Submission"</li>
+                            <li>Upload all files</li>
+                            <li>Click "Submit"</li>
+                        </ul>
+                    </li>
+                    <li><strong>Confirm submission:</strong>
+                        <p>You should receive automated confirmation within 5 minutes</p>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="warning-box">
+                <h3>Submission Deadline / 提出期限</h3>
+                <p><strong>Due:</strong> End of Week 6 class session | <strong>期限:</strong> 第6週授業終了時</p>
+
+                <h4>Late Policy / 遅延ポリシー:</h4>
+                <ul>
+                    <li>Up to 24 hours late: <strong>-10 points</strong></li>
+                    <li>24-48 hours late: <strong>-20 points</strong></li>
+                    <li>More than 48 hours late: <strong>Not accepted</strong> without prior arrangement</li>
+                </ul>
+            </div>
+
+            <h2>Grading Rubric / 評価ルーブリック</h2>
+
+            <table class="rubric-table">
+                <thead>
+                    <tr>
+                        <th>Deliverable</th>
+                        <th>Points</th>
+                        <th>Criteria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Data Schema</strong><br>データスキーマ</td>
+                        <td><strong>20</strong></td>
+                        <td>5-8 fields, justification, standardization rules<br>5-8フィールド、正当化、標準化ルール</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Company Dataset</strong><br>企業データセット</td>
+                        <td><strong>40</strong></td>
+                        <td>20-30 companies, completeness, consistency, quality<br>20-30社、完全性、一貫性、品質</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Documentation</strong><br>文書化</td>
+                        <td><strong>20</strong></td>
+                        <td>Process, sources, quality check, limitations<br>プロセス、ソース、品質チェック、制限</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI Transparency</strong><br>AI透明性</td>
+                        <td><strong>20</strong></td>
+                        <td>Complete documentation or clear "not used" statement<br>完全な文書化または明確な「未使用」声明</td>
+                    </tr>
+                    <tr style="background: var(--primary-color); color: white; font-weight: bold;">
+                        <td><strong>TOTAL</strong><br>合計</td>
+                        <td><strong>100</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Common Questions / よくある質問</h2>
+
+            <div class="info-box">
+                <h4>Q: What if I can't find 20 companies?</h4>
+                <p><strong>A:</strong> Combine multiple approved sources. Use different search terms. The minimum is 20, but try for 25-30.</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Q: Is it OK if some fields are incomplete?</h4>
+                <p><strong>A:</strong> Yes. Required fields should be 90%+ complete, but optional fields can have gaps. Document what's missing.</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Q: Can I collect data manually instead of scraping?</h4>
+                <p><strong>A:</strong> Yes, manual collection is acceptable, especially for supplementing missing fields. Document your methodology.</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Q: How do I handle companies with Japanese names?</h4>
+                <p><strong>A:</strong> Use CSV with UTF-8 encoding. You can include both Japanese and English names if available.</p>
+            </div>
+
+            <h2>Getting Help / ヘルプを得る</h2>
+
+            <div class="success-box">
+                <h4>During Class Activity / 授業アクティビティ中:</h4>
+                <ul>
+                    <li>Ask the ML-101 Bot for guidance</li>
+                    <li>Raise your hand for instructor help</li>
+                    <li>Discuss strategies with classmates</li>
+                </ul>
+
+                <h4>Outside of Class / 授業外:</h4>
+                <ul>
+                    <li>Use the bot portal (available 24/7)</li>
+                    <li>Email instructor with specific questions</li>
+                    <li>Attend office hours</li>
+                </ul>
+            </div>
+
+            <div class="success-box" style="text-align: center; margin-top: 40px;">
+                <h2>Build a high-quality dataset - it's the foundation of your ML project!</h2>
+                <h2>高品質のデータセットを構築しましょう - それはMLプロジェクトの基礎です！</h2>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="lecture.html" class="btn btn-primary">View Lecture</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>著作権 &copy; 2025 Yuri Tijerino. 無断転載を禁じます。</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 8: Handling Missing Data and Outliers | ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .lecture-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .lecture-content h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .lecture-content h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .lecture-content h4 {
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .objectives-list {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .objectives-list ul {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+        .highlight-box {
+            background: #fef3cd;
+            border-left: 5px solid var(--warning);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-box {
+            background: var(--bg-light);
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary-color);
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            white-space: pre-wrap;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .bilingual-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        .english-col {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+        .japanese-col {
+            background: #f3e8ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        @media (max-width: 768px) {
+            .bilingual-section {
+                grid-template-columns: 1fr;
+            }
+            .lecture-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Week 8: Handling Missing Data and Outliers</h1>
+            <p class="subtitle">第8週：欠損データと外れ値の処理</p>
+            <p class="instructor">Instructor: Yuri Tijerino</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="slides.html">Presentation Slides</a>
+            <a href="assignment.html">Assignment</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="lecture-content">
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+                <a href="assignment.html" class="btn btn-accent">View Assignment</a>
+            </div>
+
+            <div class="objectives-list">
+                <h3>Learning Objectives / 学習目標</h3>
+                <p><strong>English:</strong> By the end of this lecture, students will be able to:</p>
+                <ul>
+                    <li>Explain why missing data is problematic for machine learning</li>
+                    <li>Analyze patterns and causes of missing data in datasets</li>
+                    <li>Apply appropriate strategies for handling missing values (deletion, imputation, flagging)</li>
+                    <li>Detect and treat outliers using statistical methods</li>
+                    <li>Validate dataset quality and ML-readiness</li>
+                </ul>
+                <p><strong>日本語:</strong> この講義の終了までに、学生は以下ができるようになります：</p>
+                <ul>
+                    <li>なぜ欠損データが機械学習にとって問題であるかを説明する</li>
+                    <li>データセット内の欠損データのパターンと原因を分析する</li>
+                    <li>欠損値を処理するための適切な戦略を適用する（削除、代入、フラグ付け）</li>
+                    <li>統計的方法を使用して外れ値を検出して処理する</li>
+                    <li>データセット品質とML準備状況を検証する</li>
+                </ul>
+            </div>
+
+            <h2>The Reality of Missing Data</h2>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h3>Real-World Data is Messy</h3>
+                    <p>In the real world, data is almost never perfect. When scraping company information from websites, collecting survey responses, or pulling data from databases, you'll inevitably encounter missing values.</p>
+                    <p><strong>Missing data appears as:</strong></p>
+                    <ul>
+                        <li>Empty cells in spreadsheets</li>
+                        <li>NULL values in databases</li>
+                        <li>NaN (Not a Number) in Python/pandas</li>
+                        <li>Blank fields in web scraping</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h3>実世界のデータは混乱している</h3>
+                    <p>実世界では、データはほぼ完璧ではありません。ウェブサイトから企業情報をスクレイピングしたり、調査回答を収集したり、データベースからデータを取得したりするとき、必然的に欠損値に遭遇します。</p>
+                    <p><strong>欠損データは以下のように現れます：</strong></p>
+                    <ul>
+                        <li>スプレッドシートの空のセル</li>
+                        <li>データベースのNULL値</li>
+                        <li>Python/pandasのNaN（数値ではない）</li>
+                        <li>ウェブスクレイピングの空白フィールド</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Why Data Goes Missing / データが欠落する理由</h3>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Common Causes:</h4>
+                    <ol>
+                        <li><strong>Information Not Available</strong><br>
+                            The data simply doesn't exist (e.g., new startup hasn't reported revenue yet)</li>
+                        <li><strong>Privacy/Confidentiality</strong><br>
+                            Companies choose not to share certain information (e.g., private company revenue)</li>
+                        <li><strong>Data Collection Errors</strong><br>
+                            Technical issues during scraping or data entry mistakes</li>
+                        <li><strong>Not Applicable</strong><br>
+                            Field doesn't apply to that record (e.g., "number of stores" for a software company)</li>
+                    </ol>
+                </div>
+                <div class="japanese-col">
+                    <h4>一般的な原因：</h4>
+                    <ol>
+                        <li><strong>情報が利用できない</strong><br>
+                            データが単に存在しない（例：新しいスタートアップがまだ収益を報告していない）</li>
+                        <li><strong>プライバシー/機密性</strong><br>
+                            企業が特定の情報を共有しないことを選択（例：非公開企業の収益）</li>
+                        <li><strong>データ収集エラー</strong><br>
+                            スクレイピング中の技術的問題またはデータ入力ミス</li>
+                        <li><strong>適用されない</strong><br>
+                            フィールドがそのレコードに適用されない（例：ソフトウェア企業の「店舗数」）</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h2>Why Missing Data Matters for Machine Learning</h2>
+
+            <div class="highlight-box">
+                <h3>The Core Problem / 核心的な問題</h3>
+                <p><strong>Most ML algorithms cannot process missing values directly.</strong></p>
+                <p><strong>ほとんどのMLアルゴリズムは欠損値を直接処理できません。</strong></p>
+            </div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Impact on ML Training:</h4>
+                    <ul>
+                        <li><strong>Algorithm Errors:</strong> Many ML algorithms will crash or throw errors when encountering NaN values</li>
+                        <li><strong>Reduced Dataset Size:</strong> If you delete all rows with any missing data, you might lose 50%+ of your dataset</li>
+                        <li><strong>Introduces Bias:</strong> If missing data isn't random, removing it can skew your results</li>
+                        <li><strong>Lost Information:</strong> Sometimes the fact that data is missing is itself informative</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>ML訓練への影響：</h4>
+                    <ul>
+                        <li><strong>アルゴリズムエラー：</strong> 多くのMLアルゴリズムはNaN値に遭遇するとクラッシュまたはエラーをスローします</li>
+                        <li><strong>データセットサイズの削減：</strong> 欠損データのあるすべての行を削除すると、データセットの50%以上を失う可能性があります</li>
+                        <li><strong>バイアスの導入：</strong> 欠損データがランダムでない場合、それを削除すると結果が歪む可能性があります</li>
+                        <li><strong>情報の損失：</strong> データが欠落しているという事実自体が情報である場合があります</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>Step 1: Analyzing Missing Data Patterns</h2>
+
+            <p>Before deciding how to handle missing data, you must first understand it.</p>
+            <p>欠損データを処理する方法を決定する前に、まずそれを理解する必要があります。</p>
+
+            <h3>Diagnostic Analysis / 診断分析</h3>
+
+            <div class="code-box">import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load your dataset
+df = pd.read_csv('companies_cleaned.csv')
+
+# Count missing values per column
+missing_counts = df.isnull().sum()
+missing_percent = (df.isnull().sum() / len(df)) * 100
+
+# Create summary
+missing_summary = pd.DataFrame({
+    'Missing_Count': missing_counts,
+    'Missing_Percent': missing_percent
+})
+
+# Show only columns with missing data
+print(missing_summary[missing_summary['Missing_Count'] > 0])
+
+# Visualize
+missing_summary[missing_summary['Missing_Count'] > 0].plot(
+    kind='bar',
+    y='Missing_Percent',
+    title='Missing Data by Column',
+    ylabel='Percentage Missing'
+)
+plt.show()</div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Questions to Ask:</h4>
+                    <ol>
+                        <li><strong>Which columns are affected?</strong><br>
+                            Focus on columns critical for your ML task</li>
+                        <li><strong>How much is missing?</strong><br>
+                            &lt;5% = minor issue<br>
+                            5-30% = needs strategy<br>
+                            &gt;30% = consider dropping column</li>
+                        <li><strong>Is it random or patterned?</strong><br>
+                            Check if certain types of companies have more missing data</li>
+                        <li><strong>Why is it missing?</strong><br>
+                            Understanding the cause helps choose the right strategy</li>
+                    </ol>
+                </div>
+                <div class="japanese-col">
+                    <h4>尋ねるべき質問：</h4>
+                    <ol>
+                        <li><strong>どの列が影響を受けていますか？</strong><br>
+                            MLタスクに重要な列に焦点を当てる</li>
+                        <li><strong>どのくらい欠落していますか？</strong><br>
+                            &lt;5% = 軽微な問題<br>
+                            5-30% = 戦略が必要<br>
+                            &gt;30% = 列の削除を検討</li>
+                        <li><strong>ランダムですか、それともパターンがありますか？</strong><br>
+                            特定のタイプの企業により多くの欠損データがあるかチェック</li>
+                        <li><strong>なぜ欠落していますか？</strong><br>
+                            原因を理解することで適切な戦略を選択できます</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h2>Strategy 1: Deletion</h2>
+
+            <div class="highlight-box">
+                <h3>Remove Data with Missing Values</h3>
+                <p><strong>Simplest approach, but can result in significant data loss</strong></p>
+                <p><strong>最もシンプルなアプローチですが、大幅なデータ損失につながる可能性があります</strong></p>
+            </div>
+
+            <h3>Option A: Delete Rows / 行を削除</h3>
+
+            <div class="code-box"># Delete rows where critical fields are missing
+df = df.dropna(subset=['company_name', 'industry'])
+
+# This removes any row where company_name OR industry is missing</div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>When to Use Row Deletion:</h4>
+                    <ul>
+                        <li>Critical field is missing (e.g., company name)</li>
+                        <li>Less than 5% of rows affected</li>
+                        <li>Large dataset (can afford to lose some rows)</li>
+                        <li>Missing data appears random</li>
+                    </ul>
+                    <h4>Advantages:</h4>
+                    <ul>
+                        <li>Simple and straightforward</li>
+                        <li>No risk of introducing artificial patterns</li>
+                        <li>Clean dataset with no missing values</li>
+                    </ul>
+                    <h4>Disadvantages:</h4>
+                    <ul>
+                        <li>Reduces dataset size</li>
+                        <li>May introduce bias if missing isn't random</li>
+                        <li>Loses potentially useful information</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>行削除をいつ使用するか：</h4>
+                    <ul>
+                        <li>重要なフィールドが欠落している（例：企業名）</li>
+                        <li>影響を受ける行が5%未満</li>
+                        <li>大規模なデータセット（一部の行を失う余裕がある）</li>
+                        <li>欠損データがランダムに見える</li>
+                    </ul>
+                    <h4>利点：</h4>
+                    <ul>
+                        <li>シンプルで直接的</li>
+                        <li>人工的なパターンを導入するリスクなし</li>
+                        <li>欠損値のないクリーンなデータセット</li>
+                    </ul>
+                    <h4>欠点：</h4>
+                    <ul>
+                        <li>データセットサイズを削減</li>
+                        <li>欠落がランダムでない場合、バイアスを導入する可能性</li>
+                        <li>潜在的に有用な情報を失う</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Option B: Delete Columns / 列を削除</h3>
+
+            <div class="code-box"># Check percentage missing
+if missing_percent['some_field'] > 30:
+    # Drop the entire column
+    df = df.drop('some_field', axis=1)
+    print(f"Dropped column 'some_field' due to {missing_percent['some_field']:.1f}% missing")</div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>When to Use Column Deletion:</h4>
+                    <ul>
+                        <li>More than 30% of values missing</li>
+                        <li>Non-essential field for your ML task</li>
+                        <li>Data is not recoverable</li>
+                        <li>Field has low predictive value anyway</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>列削除をいつ使用するか：</h4>
+                    <ul>
+                        <li>値の30%以上が欠落</li>
+                        <li>MLタスクに非必須のフィールド</li>
+                        <li>データが回復不可能</li>
+                        <li>フィールドの予測価値が低い</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Warning / 警告</h4>
+                <p><strong>Don't delete too much!</strong> Aim to retain at least 80% of your original data. If deletion would remove more than 20%, consider imputation instead.</p>
+                <p><strong>あまり削除しないでください！</strong> 元のデータの少なくとも80%を保持することを目指してください。削除が20%以上を削除する場合は、代わりに代入を検討してください。</p>
+            </div>
+
+            <h2>Strategy 2: Imputation</h2>
+
+            <div class="highlight-box">
+                <h3>Fill Missing Values with Reasonable Estimates</h3>
+                <h3>欠損値を合理的な推定値で埋める</h3>
+                <p><strong>Instead of deleting, replace missing values with calculated estimates</strong></p>
+                <p><strong>削除する代わりに、欠損値を計算された推定値で置き換える</strong></p>
+            </div>
+
+            <h3>For Numeric Data / 数値データの場合</h3>
+
+            <h4>Mean Imputation / 平均代入</h4>
+            <div class="code-box"># Fill with average value
+mean_value = df['employee_count'].mean()
+df['employee_count'].fillna(mean_value, inplace=True)
+
+# Alternative: one-line approach
+df['employee_count'].fillna(df['employee_count'].mean(), inplace=True)</div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <p><strong>When to use mean:</strong></p>
+                    <ul>
+                        <li>Data is normally distributed</li>
+                        <li>No significant outliers</li>
+                        <li>Want a "middle" value</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <p><strong>平均をいつ使用するか：</strong></p>
+                    <ul>
+                        <li>データが正規分布している</li>
+                        <li>重要な外れ値がない</li>
+                        <li>「中間」値が必要</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>Median Imputation / 中央値代入</h4>
+            <div class="code-box"># Fill with median (middle value when sorted)
+df['revenue'].fillna(df['revenue'].median(), inplace=True)</div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <p><strong>When to use median:</strong></p>
+                    <ul>
+                        <li>Data has outliers (median not affected by extremes)</li>
+                        <li>Skewed distribution</li>
+                        <li>More robust than mean</li>
+                    </ul>
+                    <p><strong>Example:</strong> If most companies have 50-200 employees, but one has 50,000, median is more representative than mean.</p>
+                </div>
+                <div class="japanese-col">
+                    <p><strong>中央値をいつ使用するか：</strong></p>
+                    <ul>
+                        <li>データに外れ値がある（中央値は極値の影響を受けない）</li>
+                        <li>歪んだ分布</li>
+                        <li>平均よりもロバスト</li>
+                    </ul>
+                    <p><strong>例：</strong> ほとんどの企業が50-200人の従業員を持っているが、1つが50,000人を持っている場合、中央値は平均よりも代表的です。</p>
+                </div>
+            </div>
+
+            <h3>For Categorical Data / カテゴリカルデータの場合</h3>
+
+            <h4>Mode Imputation / 最頻値代入</h4>
+            <div class="code-box"># Fill with most frequent value
+mode_value = df['industry'].mode()[0]  # [0] gets the first mode
+df['industry'].fillna(mode_value, inplace=True)</div>
+
+            <h4>Fixed Value Imputation / 固定値代入</h4>
+            <div class="code-box"># For categorical fields, create "Unknown" category
+df['location'].fillna('Unknown', inplace=True)
+
+# For text fields, use placeholder
+df['description'].fillna('No description available', inplace=True)</div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Choosing the Right Imputation Method:</h4>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr style="background: #dbeafe;">
+                            <th style="padding: 10px; border: 1px solid #ddd;">Data Type</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">Recommended Method</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">Numeric (normal)</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">Mean</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">Numeric (outliers)</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">Median</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">Categorical</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">Mode or "Unknown"</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">Text</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">Placeholder text</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="japanese-col">
+                    <h4>適切な代入方法の選択：</h4>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr style="background: #f3e8ff;">
+                            <th style="padding: 10px; border: 1px solid #ddd;">データタイプ</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">推奨方法</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">数値（正規）</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">平均</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">数値（外れ値）</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">中央値</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">カテゴリカル</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">最頻値または「不明」</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">テキスト</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">プレースホルダーテキスト</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Important Consideration / 重要な考慮事項</h4>
+                <p><strong>Imputation adds information that wasn't originally there.</strong> Be thoughtful about whether the imputed values make sense for your data.</p>
+                <p><strong>代入は元々そこになかった情報を追加します。</strong> 代入された値があなたのデータに意味があるかどうかについて慎重に考えてください。</p>
+                <p><strong>Example:</strong> Filling missing employee counts with the average might create unrealistic values (e.g., 247.3 employees). Consider rounding to whole numbers.</p>
+                <p><strong>例：</strong> 欠落している従業員数を平均で埋めると、非現実的な値（例：247.3人の従業員）を作成する可能性があります。整数に丸めることを検討してください。</p>
+            </div>
+
+            <h2>Strategy 3: Create Missing Indicators</h2>
+
+            <div class="highlight-box">
+                <h3>Preserve Information About Missingness</h3>
+                <h3>欠落に関する情報を保持する</h3>
+                <p><strong>Sometimes the fact that data is missing is itself informative</strong></p>
+                <p><strong>時々、データが欠落しているという事実自体が情報的です</strong></p>
+            </div>
+
+            <div class="code-box"># Create binary flag BEFORE imputation
+df['revenue_was_missing'] = df['revenue'].isnull().astype(int)
+
+# Now fill the missing values
+df['revenue'].fillna(df['revenue'].median(), inplace=True)
+
+# Result: You have both filled revenue AND a flag showing it was originally missing</div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>When to Use Missing Indicators:</h4>
+                    <ul>
+                        <li><strong>Missingness is meaningful:</strong> Missing revenue might indicate a private company</li>
+                        <li><strong>Pattern detection:</strong> ML might learn that "missing X" correlates with certain outcomes</li>
+                        <li><strong>Best of both worlds:</strong> You fill the value (enabling ML) AND preserve the information that it was missing</li>
+                    </ul>
+                    <p><strong>Example:</strong> If only tech companies tend to hide their revenue, the missing indicator becomes a useful feature for classification.</p>
+                </div>
+                <div class="japanese-col">
+                    <h4>欠損インジケーターをいつ使用するか：</h4>
+                    <ul>
+                        <li><strong>欠落が意味がある：</strong> 欠落している収益は非公開企業を示す可能性がある</li>
+                        <li><strong>パターン検出：</strong> MLは「欠落しているX」が特定の結果と相関していることを学習する可能性がある</li>
+                        <li><strong>両方の長所：</strong> 値を埋める（MLを有効にする）AND それが欠落していたという情報を保持する</li>
+                    </ul>
+                    <p><strong>例：</strong> テクノロジー企業だけが収益を隠す傾向がある場合、欠損インジケーターは分類のための有用な特徴になります。</p>
+                </div>
+            </div>
+
+            <h2>Understanding and Detecting Outliers</h2>
+
+            <div class="highlight-box">
+                <h3>What is an Outlier? / 外れ値とは？</h3>
+                <p><strong>A data point that is significantly different from other observations</strong></p>
+                <p><strong>他の観測値と大きく異なるデータポイント</strong></p>
+            </div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Example: Company Employee Counts</h4>
+                    <ul>
+                        <li>Most companies: 50-500 employees</li>
+                        <li>One company: 50,000 employees (Toyota)</li>
+                    </ul>
+                    <p><strong>Question:</strong> Is 50,000 an error or a legitimate value?</p>
+                    <p><strong>Answer:</strong> It's legitimate! Toyota is genuinely a very large company. This is a <em>legitimate outlier</em>.</p>
+                </div>
+                <div class="japanese-col">
+                    <h4>例：企業従業員数</h4>
+                    <ul>
+                        <li>ほとんどの企業：50-500人の従業員</li>
+                        <li>1つの企業：50,000人の従業員（トヨタ）</li>
+                    </ul>
+                    <p><strong>質問：</strong> 50,000はエラーですか、それとも正当な値ですか？</p>
+                    <p><strong>答え：</strong> それは正当です！トヨタは本当に非常に大きな企業です。これは<em>正当な外れ値</em>です。</p>
+                </div>
+            </div>
+
+            <h3>The IQR Method for Outlier Detection</h3>
+            <h3>外れ値検出のためのIQR方法</h3>
+
+            <p><strong>IQR = Interquartile Range = Q3 - Q1</strong></p>
+
+            <div class="code-box"># Calculate quartiles
+Q1 = df['employee_count'].quantile(0.25)  # 25th percentile
+Q3 = df['employee_count'].quantile(0.75)  # 75th percentile
+IQR = Q3 - Q1
+
+# Define outlier bounds
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+
+# Identify outliers
+outliers = df[(df['employee_count'] < lower_bound) |
+              (df['employee_count'] > upper_bound)]
+
+print(f"Found {len(outliers)} outliers")
+print(f"Lower bound: {lower_bound}")
+print(f"Upper bound: {upper_bound}")
+
+# See the outlier values
+print(outliers[['company_name', 'employee_count']])</div>
+
+            <h3>Visualizing Outliers with Box Plots</h3>
+            <h3>ボックスプロットで外れ値を可視化</h3>
+
+            <div class="code-box">import matplotlib.pyplot as plt
+
+# Create box plot
+df.boxplot(column='employee_count')
+plt.title('Employee Count Distribution')
+plt.ylabel('Number of Employees')
+plt.show()
+
+# Box plot shows:
+# - Box = IQR (middle 50% of data)
+# - Line in box = median
+# - Whiskers = 1.5 * IQR
+# - Dots beyond whiskers = outliers</div>
+
+            <h2>Treating Outliers</h2>
+
+            <p>Once you've identified outliers, you have three options:</p>
+            <p>外れ値を特定したら、3つのオプションがあります：</p>
+
+            <h3>Option 1: Keep Them / 保持する</h3>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>When to Keep Outliers:</h4>
+                    <ul>
+                        <li>They represent legitimate extreme values</li>
+                        <li>Example: Very large companies like Toyota, Sony</li>
+                        <li>Removing them would lose important information</li>
+                        <li>They're part of the real-world distribution</li>
+                    </ul>
+                    <p><strong>Decision:</strong> No action needed - keep the data as-is</p>
+                </div>
+                <div class="japanese-col">
+                    <h4>外れ値をいつ保持するか：</h4>
+                    <ul>
+                        <li>正当な極値を表している</li>
+                        <li>例：トヨタ、ソニーのような非常に大きな企業</li>
+                        <li>それらを削除すると重要な情報が失われる</li>
+                        <li>実世界の分布の一部である</li>
+                    </ul>
+                    <p><strong>決定：</strong> アクションは不要 - データをそのまま保持</p>
+                </div>
+            </div>
+
+            <h3>Option 2: Remove Them / 削除する</h3>
+
+            <div class="code-box"># Remove outliers that are clearly errors
+df = df[df['employee_count'] >= 0]  # Remove negative values (impossible)
+df = df[df['revenue'] >= 0]  # Remove negative revenue (error)</div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>When to Remove Outliers:</h4>
+                    <ul>
+                        <li>Clear data entry errors (negative employee count)</li>
+                        <li>Impossible values (revenue = $999,999,999,999)</li>
+                        <li>Values that make no sense in context</li>
+                    </ul>
+                    <p><strong>Warning:</strong> Only remove if you're confident it's an error!</p>
+                </div>
+                <div class="japanese-col">
+                    <h4>外れ値をいつ削除するか：</h4>
+                    <ul>
+                        <li>明確なデータ入力エラー（負の従業員数）</li>
+                        <li>不可能な値（収益 = $999,999,999,999）</li>
+                        <li>コンテキストで意味をなさない値</li>
+                    </ul>
+                    <p><strong>警告：</strong> エラーであると確信している場合にのみ削除してください！</p>
+                </div>
+            </div>
+
+            <h3>Option 3: Cap/Limit Them / 制限する</h3>
+
+            <div class="code-box"># Cap at 95th percentile
+upper_limit = df['employee_count'].quantile(0.95)
+df['employee_count'] = df['employee_count'].clip(upper=upper_limit)
+
+# Or cap at a specific value
+df['employee_count'] = df['employee_count'].clip(upper=10000)</div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>When to Cap Outliers:</h4>
+                    <ul>
+                        <li>Want to reduce extreme influence on ML model</li>
+                        <li>Values are legitimate but skewing results</li>
+                        <li>Keep the information that company is "large" without extreme numbers</li>
+                    </ul>
+                    <p><strong>Result:</strong> Values above the limit are set to the limit</p>
+                </div>
+                <div class="japanese-col">
+                    <h4>外れ値をいつ制限するか：</h4>
+                    <ul>
+                        <li>MLモデルへの極端な影響を減らしたい</li>
+                        <li>値は正当だが結果を歪めている</li>
+                        <li>極端な数値なしで企業が「大きい」という情報を保持する</li>
+                    </ul>
+                    <p><strong>結果：</strong> 制限を超える値は制限に設定されます</p>
+                </div>
+            </div>
+
+            <h2>ML-Readiness Validation</h2>
+
+            <div class="highlight-box">
+                <h3>Final Quality Check / 最終品質チェック</h3>
+                <p><strong>Before training your ML model, validate that your dataset is ready</strong></p>
+                <p><strong>MLモデルを訓練する前に、データセットが準備完了であることを検証する</strong></p>
+            </div>
+
+            <div class="code-box">print("=== ML-Readiness Validation ===")
+print(f"Total companies: {len(df)}")
+print(f"Shape: {df.shape}")
+print(f"\nMissing values:\n{df.isnull().sum()}")
+print(f"\nData types:\n{df.dtypes}")
+print(f"\nDuplicate rows: {df.duplicated().sum()}")
+print(f"\nBasic statistics:\n{df.describe()}")</div>
+
+            <h3>ML-Readiness Checklist / ML準備状況チェックリスト</h3>
+
+            <div class="objectives-list">
+                <h4>Your dataset should meet these criteria:</h4>
+                <ul>
+                    <li>✓ <strong>Minimum 20 companies</strong> (rows) for training<br>
+                        訓練のための最低20社（行）</li>
+                    <li>✓ <strong>Required fields &gt;90% complete</strong><br>
+                        必須フィールド&gt;90%完全</li>
+                    <li>✓ <strong>No duplicate rows</strong><br>
+                        重複行なし</li>
+                    <li>✓ <strong>Appropriate data types</strong> (numeric fields are numeric, etc.)<br>
+                        適切なデータ型（数値フィールドは数値など）</li>
+                    <li>✓ <strong>Reasonable value ranges</strong> (outliers handled)<br>
+                        合理的な値の範囲（外れ値が処理されている）</li>
+                    <li>✓ <strong>Missing data addressed</strong> with documented strategy<br>
+                        文書化された戦略で欠損データが対処されている</li>
+                </ul>
+            </div>
+
+            <h2>Key Takeaways</h2>
+
+            <div class="objectives-list">
+                <h4>Remember / 覚えておいてください</h4>
+                <ul>
+                    <li><strong>Missing data is normal</strong> - almost all real-world datasets have it<br>
+                        欠損データは正常 - ほぼすべての実世界のデータセットにある</li>
+                    <li><strong>Analyze before acting</strong> - understand patterns before choosing a strategy<br>
+                        行動する前に分析 - 戦略を選択する前にパターンを理解</li>
+                    <li><strong>Three main strategies:</strong> delete, impute, or flag<br>
+                        3つの主な戦略：削除、代入、またはフラグ</li>
+                    <li><strong>Outliers aren't always bad</strong> - investigate before removing<br>
+                        外れ値は常に悪いわけではない - 削除する前に調査</li>
+                    <li><strong>Document your decisions</strong> - explain why you chose each approach<br>
+                        決定を文書化 - なぜ各アプローチを選択したかを説明</li>
+                    <li><strong>Validate before training</strong> - ensure dataset meets ML requirements<br>
+                        訓練前に検証 - データセットがML要件を満たすことを確認</li>
+                </ul>
+            </div>
+
+            <h2>Next Steps</h2>
+
+            <ol style="font-size: 1.2em; line-height: 2;">
+                <li>Open your Week 7 cleaned dataset / 第7週のクリーニング済みデータセットを開く</li>
+                <li>Begin Week 8 hands-on activity with ML-101 Bot / ML-101ボットで第8週ハンズオンアクティビティを開始</li>
+                <li>Analyze missing data patterns / 欠損データパターンを分析</li>
+                <li>Apply appropriate handling strategies / 適切な処理戦略を適用</li>
+                <li>Detect and treat outliers / 外れ値を検出して処理</li>
+                <li>Validate final dataset quality / 最終データセット品質を検証</li>
+            </ol>
+
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+                <a href="assignment.html" class="btn btn-accent">View Assignment</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>著作権 &copy; 2025 Yuri Tijerino. 無断転載を禁じます。</p>
+        </div>
+    </footer>
+</body>
+</html>

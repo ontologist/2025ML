@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 7: Data Cleaning Fundamentals | ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .lecture-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .lecture-content h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .lecture-content h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .lecture-content h4 {
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .objectives-list {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .objectives-list ul {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+        .highlight-box {
+            background: #fef3cd;
+            border-left: 5px solid var(--warning);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-box {
+            background: var(--bg-light);
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary-color);
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            white-space: pre-wrap;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .bilingual-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        .english-col {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+        .japanese-col {
+            background: #f3e8ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        @media (max-width: 768px) {
+            .bilingual-section {
+                grid-template-columns: 1fr;
+            }
+            .lecture-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Week 7: Data Cleaning Fundamentals</h1>
+            <p class="subtitle">第7週：データクリーニングの基礎</p>
+            <p class="instructor">Instructor: Yuri Tijerino</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="slides.html">Presentation Slides</a>
+            <a href="assignment.html">Assignment</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="lecture-content">
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+                <a href="assignment.html" class="btn btn-accent">View Assignment</a>
+            </div>
+
+            <div class="objectives-list">
+                <h3>Learning Objectives / 学習目標</h3>
+                <p><strong>English:</strong> By the end of this lecture, students will be able to:</p>
+                <ul>
+                    <li>Identify common data quality issues in real datasets</li>
+                    <li>Apply Python pandas functions to clean and standardize data</li>
+                    <li>Remove duplicates, inconsistencies, and formatting errors</li>
+                    <li>Document data cleaning decisions and transformations</li>
+                </ul>
+                <p><strong>日本語:</strong> この講義の終了までに、学生は以下ができるようになります：</p>
+                <ul>
+                    <li>実際のデータセットにおける一般的なデータ品質問題を特定する</li>
+                    <li>Pythonのpandas関数を適用してデータをクリーニングおよび標準化する</li>
+                    <li>重複、不整合、フォーマットエラーを削除する</li>
+                    <li>データクリーニングの決定と変換を文書化する</li>
+                </ul>
+            </div>
+
+            <h2>Why Data Cleaning Matters</h2>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h3>The Reality of Data</h3>
+                    <p><strong>Real-world data is messy!</strong> It contains errors, inconsistencies, missing values, duplicates, and formatting problems.</p>
+                    <p>Data scientists spend <strong>60-80% of their time</strong> cleaning and preparing data. This isn't wasted time - clean data is essential for accurate ML models.</p>
+                </div>
+                <div class="japanese-col">
+                    <h3>データの現実</h3>
+                    <p><strong>実世界のデータは乱雑です！</strong> エラー、不整合、欠損値、重複、フォーマット問題が含まれています。</p>
+                    <p>データサイエンティストは<strong>時間の60-80%</strong>をデータのクリーニングと準備に費やします。これは無駄な時間ではありません - クリーンなデータは正確なMLモデルに不可欠です。</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>The Golden Rule of ML / MLの黄金律</h4>
+                <p><strong>"Garbage in, garbage out"</strong></p>
+                <p><strong>「ゴミを入れれば、ゴミが出る」</strong></p>
+                <p>If you train your model on messy data, you'll get messy predictions. Clean data = Better models.</p>
+                <p>乱雑なデータでモデルを訓練すれば、乱雑な予測が得られます。クリーンなデータ = より良いモデル。</p>
+            </div>
+
+            <h2>Common Data Quality Issues</h2>
+
+            <h3>1. Duplicate Records / 重複レコード</h3>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <p><strong>What it is:</strong> Same company or entry appears multiple times in your dataset.</p>
+                    <p><strong>Why it's a problem:</strong> Duplicates skew your analysis and give certain data points more weight than they deserve.</p>
+                    <p><strong>Example:</strong> "Toyota Motor Corporation" appears 3 times with slightly different spellings.</p>
+                </div>
+                <div class="japanese-col">
+                    <p><strong>それは何か:</strong> 同じ企業またはエントリがデータセットに複数回表示されます。</p>
+                    <p><strong>なぜ問題か:</strong> 重複は分析を歪め、特定のデータポイントに本来以上の重みを与えます。</p>
+                    <p><strong>例:</strong> 「トヨタ自動車株式会社」が微妙に異なるスペルで3回表示される。</p>
+                </div>
+            </div>
+
+            <h3>2. Inconsistent Formatting / 不一致なフォーマット</h3>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <p><strong>What it is:</strong> Same information written in different ways.</p>
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li>"Technology" vs "Tech" vs "IT"</li>
+                        <li>"Tokyo, Japan" vs "Tokyo" vs "tokyo"</li>
+                        <li>"1000" vs "1,000" vs "$1000"</li>
+                    </ul>
+                    <p><strong>Why it's a problem:</strong> ML treats these as different categories when they're actually the same thing.</p>
+                </div>
+                <div class="japanese-col">
+                    <p><strong>それは何か:</strong> 同じ情報が異なる方法で書かれている。</p>
+                    <p><strong>例:</strong></p>
+                    <ul>
+                        <li>「テクノロジー」vs「技術」vs「IT」</li>
+                        <li>「東京、日本」vs「東京」vs「tokyo」</li>
+                        <li>「1000」vs「1,000」vs「¥1000」</li>
+                    </ul>
+                    <p><strong>なぜ問題か:</strong> MLは実際には同じものであるにもかかわらず、これらを異なるカテゴリとして扱います。</p>
+                </div>
+            </div>
+
+            <h3>3. Data Type Problems / データ型の問題</h3>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <p><strong>What it is:</strong> Numbers stored as text, or dates in wrong format.</p>
+                    <p><strong>Example:</strong> Employee count stored as "100 employees" instead of the number 100.</p>
+                    <p><strong>Why it's a problem:</strong> ML models need consistent numeric types for calculations.</p>
+                </div>
+                <div class="japanese-col">
+                    <p><strong>それは何か:</strong> 数値がテキストとして保存されている、または日付が間違ったフォーマットになっている。</p>
+                    <p><strong>例:</strong> 従業員数が数値100ではなく「100人の従業員」として保存されている。</p>
+                    <p><strong>なぜ問題か:</strong> MLモデルは計算のために一貫した数値型を必要とします。</p>
+                </div>
+            </div>
+
+            <h3>4. Extra Whitespace / 余分な空白</h3>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <p><strong>What it is:</strong> Leading, trailing, or extra spaces in text fields.</p>
+                    <p><strong>Example:</strong> "Sony  " (with trailing spaces) vs "Sony" appear as different entries.</p>
+                    <p><strong>Why it's a problem:</strong> Creates false duplicates and matching issues.</p>
+                </div>
+                <div class="japanese-col">
+                    <p><strong>それは何か:</strong> テキストフィールドの先頭、末尾、または余分なスペース。</p>
+                    <p><strong>例:</strong> 「Sony  」（末尾にスペース）vs「Sony」が異なるエントリとして表示される。</p>
+                    <p><strong>なぜ問題か:</strong> 誤った重複とマッチングの問題を作成します。</p>
+                </div>
+            </div>
+
+            <h2>Essential Pandas Cleaning Functions</h2>
+
+            <h3>1. Checking for Issues / 問題のチェック</h3>
+            <div class="code-box"># View first few rows
+df.head()
+
+# Get dataset information
+df.info()  # Shows data types, null counts
+
+# Get statistics
+df.describe()  # Summary statistics for numeric columns
+
+# Check for duplicates
+df.duplicated().sum()  # Count duplicate rows
+
+# Check for missing values
+df.isnull().sum()  # Count nulls per column
+
+# View unique values
+df['column_name'].unique()  # See all distinct values</div>
+
+            <h3>2. Removing Duplicates / 重複の削除</h3>
+            <div class="code-box"># Remove exact duplicates
+df = df.drop_duplicates()
+
+# Remove duplicates based on specific columns
+df = df.drop_duplicates(subset=['company_name'])
+
+# Keep first or last occurrence
+df = df.drop_duplicates(keep='first')  # or 'last'</div>
+
+            <h3>3. Standardizing Text / テキストの標準化</h3>
+            <div class="code-box"># Remove leading/trailing whitespace
+df['company_name'] = df['company_name'].str.strip()
+
+# Convert to lowercase
+df['industry'] = df['industry'].str.lower()
+
+# Convert to title case
+df['company_name'] = df['company_name'].str.title()
+
+# Replace variations with standard term
+df['industry'] = df['industry'].replace({
+    'tech': 'technology',
+    'it': 'technology',
+    'info tech': 'technology'
+})</div>
+
+            <h3>4. Converting Data Types / データ型の変換</h3>
+            <div class="code-box"># Convert to numeric (errors='coerce' converts invalid to NaN)
+df['employee_count'] = pd.to_numeric(df['employee_count'], errors='coerce')
+
+# Convert to integer (Int64 allows NaN)
+df['founding_year'] = df['founding_year'].astype('Int64')
+
+# Remove currency symbols before converting
+df['revenue'] = df['revenue'].str.replace('[$¥,]', '', regex=True)
+df['revenue'] = pd.to_numeric(df['revenue'], errors='coerce')</div>
+
+            <h3>5. Consistency Checks / 一貫性チェック</h3>
+            <div class="code-box"># Find logical inconsistencies
+current_year = 2025
+invalid_years = df[df['founding_year'] > current_year]
+
+# Find negative values
+negative_employees = df[df['employee_count'] < 0]
+
+# Mark suspicious entries
+df['needs_review'] = False
+df.loc[df['employee_count'] < 0, 'needs_review'] = True</div>
+
+            <h2>Data Cleaning Workflow</h2>
+
+            <div class="highlight-box">
+                <h3>The Systematic Approach / 体系的なアプローチ</h3>
+                <ol>
+                    <li><strong>Assess:</strong> Understand what issues exist / 評価：どのような問題が存在するかを理解</li>
+                    <li><strong>Prioritize:</strong> Address most critical issues first / 優先順位付け：最も重要な問題を最初に処理</li>
+                    <li><strong>Clean:</strong> Apply appropriate techniques / クリーニング：適切な技術を適用</li>
+                    <li><strong>Validate:</strong> Verify improvements / 検証：改善を確認</li>
+                    <li><strong>Document:</strong> Record all decisions / 文書化：すべての決定を記録</li>
+                </ol>
+            </div>
+
+            <h3>Step 1: Initial Assessment / 初期評価</h3>
+            <div class="code-box">import pandas as pd
+
+# Load data
+df = pd.read_csv('companies.csv')
+
+# Quick overview
+print("Dataset shape:", df.shape)
+print("\nFirst few rows:")
+print(df.head())
+print("\nData types and null counts:")
+print(df.info())
+print("\nDuplicate count:", df.duplicated().sum())</div>
+
+            <h3>Step 2: Remove Duplicates / 重複の削除</h3>
+            <div class="code-box"># Before
+print(f"Rows before: {len(df)}")
+
+# Remove duplicates
+df = df.drop_duplicates()
+
+# After
+print(f"Rows after: {len(df)}")
+print(f"Removed: {len(df) - len(df)} duplicates")</div>
+
+            <h3>Step 3: Standardize Text / テキストの標準化</h3>
+            <div class="code-box"># Standardize company names
+df['company_name'] = df['company_name'].str.strip().str.title()
+
+# Standardize industry categories
+df['industry'] = df['industry'].str.strip().str.lower()
+df['industry'] = df['industry'].replace({
+    'tech': 'technology',
+    'it': 'technology'
+})</div>
+
+            <h3>Step 4: Fix Data Types / データ型の修正</h3>
+            <div class="code-box"># Convert numeric columns
+df['employee_count'] = pd.to_numeric(df['employee_count'], errors='coerce')
+df['founding_year'] = df['founding_year'].astype('Int64')
+
+# Verify
+print(df.dtypes)</div>
+
+            <h3>Step 5: Consistency Checks / 一貫性チェック</h3>
+            <div class="code-box"># Check for logical issues
+print("Invalid founding years:", len(df[df['founding_year'] > 2025]))
+print("Negative employee counts:", len(df[df['employee_count'] < 0]))</div>
+
+            <h3>Step 6: Final Validation / 最終検証</h3>
+            <div class="code-box"># Final quality check
+print("\n=== CLEANED DATASET ===")
+print("Shape:", df.shape)
+print("\nMissing values:")
+print(df.isnull().sum())
+print("\nDuplicates:", df.duplicated().sum())
+print("\nData types:")
+print(df.dtypes)
+
+# Export
+df.to_csv('companies_cleaned.csv', index=False)</div>
+
+            <h2>Documentation Best Practices</h2>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h3>What to Document</h3>
+                    <ul>
+                        <li><strong>Issues identified:</strong> What problems did you find?</li>
+                        <li><strong>Decisions made:</strong> Why did you choose specific cleaning methods?</li>
+                        <li><strong>Operations performed:</strong> What cleaning steps did you apply?</li>
+                        <li><strong>Impact:</strong> How did each operation improve the data?</li>
+                        <li><strong>Remaining issues:</strong> What problems still exist?</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h3>文書化すべきこと</h3>
+                    <ul>
+                        <li><strong>特定された問題:</strong> どのような問題を見つけましたか？</li>
+                        <li><strong>行われた決定:</strong> なぜ特定のクリーニング方法を選択しましたか？</li>
+                        <li><strong>実行された操作:</strong> どのクリーニングステップを適用しましたか？</li>
+                        <li><strong>影響:</strong> 各操作はデータをどのように改善しましたか？</li>
+                        <li><strong>残りの問題:</strong> どのような問題がまだ存在しますか？</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Documentation Example / 文書化の例</h3>
+            <div class="code-box">### Data Cleaning Log
+
+**Original Dataset:**
+- 32 companies
+- 5 duplicates found
+- 12 missing values in employee_count
+- Inconsistent industry formatting
+
+**Cleaning Operations:**
+1. Removed 5 exact duplicates → 27 companies remain
+2. Standardized company names (strip + title case)
+3. Standardized industry categories (lowercase + replacements)
+4. Converted employee_count to numeric (3 invalid → NaN)
+5. Marked 2 companies with founding_year > 2025 for review
+
+**Results:**
+- 27 unique companies
+- 15 missing values total (12 original + 3 from conversion)
+- Consistent text formatting
+- Correct data types</div>
+
+            <h2>Common Mistakes to Avoid</h2>
+
+            <div class="highlight-box">
+                <h4>1. Not saving intermediate results</h4>
+                <p>Save your work at each major step. Use version control or save intermediate CSV files.</p>
+                <p>主要なステップごとに作業を保存します。バージョン管理を使用するか、中間CSVファイルを保存します。</p>
+
+                <h4>2. Not documenting decisions</h4>
+                <p>Write down WHY you made each cleaning decision, not just WHAT you did.</p>
+                <p>何をしたかだけでなく、なぜ各クリーニング決定を下したかを書き留めます。</p>
+
+                <h4>3. Over-cleaning</h4>
+                <p>Don't delete data unless you're sure it's wrong. Sometimes imperfect data is better than no data.</p>
+                <p>間違っていると確信していない限り、データを削除しないでください。時には不完全なデータの方がデータがないよりも良いです。</p>
+
+                <h4>4. Not validating results</h4>
+                <p>Always check the impact of cleaning operations. Did they actually improve the data?</p>
+                <p>常にクリーニング操作の影響をチェックします。実際にデータを改善しましたか？</p>
+            </div>
+
+            <h2>Today's Activity Preview</h2>
+
+            <p>After this lecture, you'll work with the ML-101 Bot to clean your Week 6 company dataset.</p>
+            <p>この講義の後、ML-101ボットと協力して第6週の企業データセットをクリーニングします。</p>
+
+            <h3>What You'll Do / 今日すること</h3>
+            <ol>
+                <li><strong>Data Quality Assessment (10 min)</strong><br>
+                    Identify issues in your company dataset<br>
+                    <em>データ品質評価 - 企業データセットの問題を特定</em></li>
+                <li><strong>Remove Duplicates and Standardize Text (12 min)</strong><br>
+                    Clean company names and industry categories<br>
+                    <em>重複の削除とテキストの標準化 - 企業名と業界カテゴリをクリーニング</em></li>
+                <li><strong>Handle Data Type Issues (10 min)</strong><br>
+                    Convert columns to appropriate types<br>
+                    <em>データ型問題の処理 - 列を適切な型に変換</em></li>
+                <li><strong>Consistency Checks (13 min)</strong><br>
+                    Find and fix logical inconsistencies<br>
+                    <em>一貫性チェック - 論理的不整合を見つけて修正</em></li>
+                <li><strong>Final Validation (15 min)</strong><br>
+                    Document all cleaning steps and results<br>
+                    <em>最終検証 - すべてのクリーニングステップと結果を文書化</em></li>
+            </ol>
+
+            <h2>Key Takeaways</h2>
+
+            <div class="objectives-list">
+                <h4>Remember / 覚えておいてください</h4>
+                <ul>
+                    <li>Real-world data is messy - cleaning is essential / 実世界のデータは乱雑 - クリーニングは不可欠</li>
+                    <li>Common issues: duplicates, formatting, data types, whitespace / 一般的な問題：重複、フォーマット、データ型、空白</li>
+                    <li>Use pandas functions systematically / pandas関数を体系的に使用</li>
+                    <li>Always document your decisions / 常に決定を文書化</li>
+                    <li>Validate results after cleaning / クリーニング後に結果を検証</li>
+                </ul>
+                <p style="margin-top: 20px;"><strong>Remember:</strong> Clean data leads to better models!</p>
+                <p><strong>覚えておいてください:</strong> クリーンなデータはより良いモデルにつながります！</p>
+            </div>
+
+            <h2>Next Steps</h2>
+
+            <ol style="font-size: 1.2em; line-height: 2;">
+                <li>Open Google Colab / Google Colabを開く</li>
+                <li>Upload your Week 6 company dataset / 第6週企業データセットをアップロード</li>
+                <li>Follow ML-101 Bot guidance / ML-101ボットのガイダンスに従う</li>
+                <li>Complete cleaning and documentation / クリーニングと文書化を完了</li>
+                <li>Submit your work / 作業を提出</li>
+            </ol>
+
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+                <a href="assignment.html" class="btn btn-accent">View Assignment</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>著作権 &copy; 2025 Yuri Tijerino. 無断転載を禁じます。</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 8 Assignment: Handling Missing Data | ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .assignment-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .assignment-content h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .assignment-content h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .assignment-content h4 {
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .info-box {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color);
+            margin: 20px 0;
+        }
+        .warning-box {
+            background: #fef3cd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--warning);
+            margin: 20px 0;
+        }
+        .success-box {
+            background: #d1fae5;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--success);
+            margin: 20px 0;
+        }
+        .deliverable-box {
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid var(--border-color);
+        }
+        .rubric-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .rubric-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .rubric-table td {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .rubric-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+        .example-box {
+            background: #f3e8ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--secondary-color);
+            margin: 20px 0;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        code {
+            background: var(--bg-light);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        @media (max-width: 768px) {
+            .assignment-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Week 8 Assignment</h1>
+            <p class="subtitle">Handling Missing Data and Outliers<br>欠損データと外れ値の処理</p>
+            <p class="instructor">Instructor: Yuri Tijerino</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="lecture.html">Lecture Notes</a>
+            <a href="slides.html">Presentation Slides</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="assignment-content">
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="lecture.html" class="btn btn-primary">View Lecture</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+            </div>
+
+            <div class="info-box">
+                <h3>Assignment Overview / 課題概要</h3>
+                <p><strong>Course:</strong> Machine Learning and Intelligence | 機械学習と知能</p>
+                <p><strong>Week:</strong> 8 | 第8週</p>
+                <p><strong>Title:</strong> Applying Missing Data Strategies and Data Validation | 欠損データ戦略の適用とデータ検証</p>
+                <p><strong>Duration:</strong> 40-60 minutes | 40-60分</p>
+                <p><strong>Due Date:</strong> End of Week 8 class session | 第8週授業終了時</p>
+                <p><strong>Weight:</strong> Part of 40% Weekly Activities grade | 週次アクティビティ評価40%の一部</p>
+                <p><strong>Submission:</strong> Through ML-101 Bot Portal | ML-101ボットポータル経由</p>
+            </div>
+
+            <p>This assignment applies missing data handling strategies and outlier detection techniques to your company dataset. You'll analyze missing patterns, implement appropriate strategies, and validate your dataset for ML readiness.</p>
+            <p>この課題は、欠損データ処理戦略と外れ値検出技術をあなたの企業データセットに適用します。欠損パターンを分析し、適切な戦略を実装し、ML準備のためにデータセットを検証します。</p>
+
+            <h2>Learning Objectives / 学習目標</h2>
+
+            <p>By completing this assignment, you will be able to:</p>
+            <p>この課題を完了することで、以下ができるようになります：</p>
+
+            <ul>
+                <li>Analyze patterns and causes of missing data in datasets<br>
+                    データセット内の欠損データのパターンと原因を分析する</li>
+                <li>Apply appropriate strategies for handling missing values<br>
+                    欠損値を処理するための適切な戦略を適用する</li>
+                <li>Identify and handle outliers in numeric data<br>
+                    数値データ内の外れ値を特定して処理する</li>
+                <li>Validate dataset quality and ML-readiness<br>
+                    データセット品質とML準備状況を検証する</li>
+            </ul>
+
+            <h2>Prerequisites / 前提条件</h2>
+
+            <ul>
+                <li>Completed Week 7 - Data Cleaning assignment<br>
+                    第7週完了 - データクリーニング課題</li>
+                <li>Week 7 cleaned company dataset available<br>
+                    第7週クリーニング済み企業データセットが利用可能</li>
+                <li>Google Colab access<br>
+                    Google Colabアクセス</li>
+                <li>Access to ML-101 Bot portal<br>
+                    ML-101ボットポータルへのアクセス</li>
+            </ul>
+
+            <h2>Assignment Activities / 課題アクティビティ</h2>
+
+            <div class="deliverable-box">
+                <h3>Activity 1: Missing Data Analysis (12 minutes)</h3>
+                <h4>アクティビティ1：欠損データ分析（12分）</h4>
+
+                <p><strong>What to Do:</strong></p>
+                <ol>
+                    <li>Load your Week 7 cleaned dataset in Google Colab<br>
+                        Google Colabで第7週クリーニング済みデータセットをロード</li>
+                    <li>Calculate missing value statistics for each column<br>
+                        各列の欠損値統計を計算</li>
+                    <li>Visualize missing data patterns using bar plots<br>
+                        棒グラフを使用して欠損データパターンを可視化</li>
+                    <li>Analyze and categorize missing data by importance<br>
+                        重要性で欠損データを分析および分類</li>
+                </ol>
+
+                <div class="example-box">
+                    <h4>Example Code / コード例:</h4>
+                    <pre><code># Count missing values per column
+missing_counts = df.isnull().sum()
+missing_percent = (df.isnull().sum() / len(df)) * 100
+
+missing_summary = pd.DataFrame({
+    'Missing_Count': missing_counts,
+    'Missing_Percent': missing_percent
+})
+print(missing_summary[missing_summary['Missing_Count'] > 0])
+
+# Visualize
+missing_summary[missing_summary['Missing_Count'] > 0].plot(
+    kind='bar', y='Missing_Percent'
+)
+plt.title('Missing Data by Column')
+plt.ylabel('Percentage Missing')
+plt.show()</code></pre>
+                </div>
+
+                <p><strong>Expected Output:</strong></p>
+                <ul>
+                    <li>Missing data summary table<br>欠損データ要約表</li>
+                    <li>Visualization of missing percentages<br>欠損パーセンテージの可視化</li>
+                    <li>Categorization of fields by importance<br>重要性によるフィールドの分類</li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Activity 2: Strategy Selection (10 minutes)</h3>
+                <h4>アクティビティ2：戦略選択（10分）</h4>
+
+                <p><strong>What to Do:</strong></p>
+                <ol>
+                    <li>For each column with missing data, decide on a strategy:<br>
+                        欠損データを持つ各列について、戦略を決定：
+                        <ul>
+                            <li><strong>Deletion:</strong> Remove rows/columns with missing critical data</li>
+                            <li><strong>Imputation:</strong> Fill with mean, median, mode, or fixed value</li>
+                            <li><strong>Flagging:</strong> Create indicator before imputing</li>
+                        </ul>
+                    </li>
+                    <li>Document your rationale for each decision<br>
+                        各決定の根拠を文書化</li>
+                    <li>Create a strategy plan table<br>
+                        戦略計画表を作成</li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>Decision Guidelines / 決定ガイドライン:</h4>
+                    <ul>
+                        <li>If &lt;5% missing and not critical: delete rows</li>
+                        <li>If numeric: consider mean/median imputation</li>
+                        <li>If categorical: use mode or add "Unknown" category</li>
+                        <li>If &gt;30% missing: question if field is needed</li>
+                    </ul>
+                </div>
+
+                <p><strong>Expected Output:</strong></p>
+                <ul>
+                    <li>Strategy plan document with clear rationale<br>明確な根拠を含む戦略計画文書</li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Activity 3: Implementing Missing Data Strategies (15 minutes)</h3>
+                <h4>アクティビティ3：欠損データ戦略の実装（15分）</h4>
+
+                <p><strong>What to Do:</strong></p>
+                <ol>
+                    <li>Implement your chosen strategies using Python<br>
+                        Pythonを使用して選択した戦略を実装</li>
+                    <li>Apply deletion, imputation, and/or indicator creation<br>
+                        削除、代入、および/またはインジケーター作成を適用</li>
+                    <li>Verify implementation by checking missing values after<br>
+                        後で欠損値をチェックして実装を検証</li>
+                    <li>Document what was done for each field<br>
+                        各フィールドで何が行われたかを文書化</li>
+                </ol>
+
+                <div class="example-box">
+                    <h4>Example Code / コード例:</h4>
+                    <pre><code># Deletion
+df = df.dropna(subset=['company_name', 'industry'])
+
+# Numeric imputation
+df['employee_count'].fillna(df['employee_count'].median(), inplace=True)
+
+# Categorical imputation
+df['location'].fillna('Unknown', inplace=True)
+
+# Create indicator
+df['revenue_was_missing'] = df['revenue'].isnull().astype(int)
+df['revenue'].fillna(df['revenue'].median(), inplace=True)
+
+# Verify
+print("Missing values after handling:")
+print(df.isnull().sum())</code></pre>
+                </div>
+
+                <p><strong>Expected Output:</strong></p>
+                <ul>
+                    <li>Dataset with missing data handled<br>欠損データが処理されたデータセット</li>
+                    <li>Significantly reduced missing values<br>大幅に削減された欠損値</li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Activity 4: Outlier Detection and Treatment (13 minutes)</h3>
+                <h4>アクティビティ4：外れ値の検出と処理（13分）</h4>
+
+                <p><strong>What to Do:</strong></p>
+                <ol>
+                    <li>Identify numeric columns for outlier analysis<br>
+                        外れ値分析のための数値列を特定</li>
+                    <li>Detect outliers using IQR method<br>
+                        IQR方法を使用して外れ値を検出</li>
+                    <li>Visualize outliers using box plots<br>
+                        ボックスプロットを使用して外れ値を可視化</li>
+                    <li>Decide treatment for each outlier (keep, remove, or cap)<br>
+                        各外れ値の処理を決定（保持、削除、または制限）</li>
+                    <li>Implement treatments with justification<br>
+                        正当化を伴う処理を実装</li>
+                </ol>
+
+                <div class="example-box">
+                    <h4>Example Code / コード例:</h4>
+                    <pre><code># Calculate IQR
+Q1 = df['employee_count'].quantile(0.25)
+Q3 = df['employee_count'].quantile(0.75)
+IQR = Q3 - Q1
+
+# Define outlier bounds
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+
+# Find outliers
+outliers = df[(df['employee_count'] < lower_bound) |
+              (df['employee_count'] > upper_bound)]
+print(f"Found {len(outliers)} outliers")
+
+# Visualize
+df.boxplot(column='employee_count')
+plt.title('Employee Count Distribution')
+plt.show()
+
+# Treatment example: remove clear errors
+df = df[df['employee_count'] >= 0]  # Remove negatives</code></pre>
+                </div>
+
+                <p><strong>Expected Output:</strong></p>
+                <ul>
+                    <li>Outlier analysis report<br>外れ値分析レポート</li>
+                    <li>Box plot visualizations<br>ボックスプロット可視化</li>
+                    <li>Treated dataset with justifications<br>正当化を伴う処理されたデータセット</li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Activity 5: Final Validation and ML-Readiness (10 minutes)</h3>
+                <h4>アクティビティ5：最終検証とML準備状況（10分）</h4>
+
+                <p><strong>What to Do:</strong></p>
+                <ol>
+                    <li>Run comprehensive data quality validation<br>
+                        包括的なデータ品質検証を実行</li>
+                    <li>Check ML-readiness criteria<br>
+                        ML準備状況基準をチェック</li>
+                    <li>Create before/after comparison (Weeks 6 → 7 → 8)<br>
+                        前後比較を作成（第6週 → 第7週 → 第8週）</li>
+                    <li>Export final validated dataset<br>
+                        最終検証済みデータセットをエクスポート</li>
+                    <li>Document complete data preparation journey<br>
+                        完全なデータ準備の旅を文書化</li>
+                </ol>
+
+                <div class="example-box">
+                    <h4>Example Code / コード例:</h4>
+                    <pre><code>print("=== Final Dataset Quality Report ===")
+print(f"Total companies: {len(df)}")
+print(f"\nShape: {df.shape}")
+print(f"\nMissing values:\n{df.isnull().sum()}")
+print(f"\nData types:\n{df.dtypes}")
+print(f"\nDuplicate rows: {df.duplicated().sum()}")
+print(f"\nBasic statistics:\n{df.describe()}")
+
+# Export
+df.to_csv('companies_final.csv', index=False)</code></pre>
+                </div>
+
+                <div class="success-box">
+                    <h4>ML-Readiness Checklist / ML準備状況チェックリスト:</h4>
+                    <ul>
+                        <li>✓ Minimum 20 companies | 最低20社</li>
+                        <li>✓ Required fields &gt;90% complete | 必須フィールド&gt;90%完全</li>
+                        <li>✓ No duplicates | 重複なし</li>
+                        <li>✓ Appropriate data types | 適切なデータ型</li>
+                        <li>✓ Reasonable value ranges | 合理的な値の範囲</li>
+                    </ul>
+                </div>
+
+                <p><strong>Expected Output:</strong></p>
+                <ul>
+                    <li>Comprehensive quality report<br>包括的な品質レポート</li>
+                    <li>Validated ML-ready dataset<br>検証済みML準備完了データセット</li>
+                </ul>
+            </div>
+
+            <h2>Assignment Deliverables / 課題成果物</h2>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 1: Final Validated Dataset (Required)</h3>
+                <h4>成果物1：最終検証済みデータセット（必須）</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <ul>
+                    <li>CSV file with all missing data handled<br>すべての欠損データが処理されたCSVファイル</li>
+                    <li>Outliers addressed appropriately<br>外れ値が適切に対処されている</li>
+                    <li>ML-ready quality<br>ML準備完了品質</li>
+                </ul>
+
+                <p><strong>Format:</strong> CSV file | 形式：CSVファイル</p>
+                <p><strong>Filename:</strong> <code>Week08_[YourName]_companies_final.csv</code></p>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 2: Missing Data Handling Notebook (Required)</h3>
+                <h4>成果物2：欠損データ処理ノートブック（必須）</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <ul>
+                    <li>Complete Colab notebook with all analysis and code<br>すべての分析とコードを含む完全なColabノートブック</li>
+                    <li>Missing data analysis and visualizations<br>欠損データ分析と可視化</li>
+                    <li>Strategy implementation code<br>戦略実装コード</li>
+                    <li>Outlier detection and treatment<br>外れ値の検出と処理</li>
+                    <li>Final validation<br>最終検証</li>
+                </ul>
+
+                <p><strong>Format:</strong> .ipynb file | 形式：.ipynbファイル</p>
+                <p><strong>Filename:</strong> <code>Week08_[YourName]_MissingData.ipynb</code></p>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 3: Data Preparation Report (Required)</h3>
+                <h4>成果物3：データ準備レポート（必須）</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <ul>
+                    <li>Missing data analysis summary<br>欠損データ分析要約</li>
+                    <li>Strategy plan with rationale for each column<br>各列の根拠を含む戦略計画</li>
+                    <li>Outlier treatment decisions<br>外れ値処理の決定</li>
+                    <li>Before/after comparison (Weeks 6 → 7 → 8)<br>前後比較（第6週 → 第7週 → 第8週）</li>
+                    <li>ML-readiness validation results<br>ML準備状況検証結果</li>
+                    <li>Complete data preparation journey documentation<br>完全なデータ準備の旅の文書化</li>
+                </ul>
+
+                <p><strong>Format:</strong> Word/PDF or markdown in notebook | 形式：Word/PDFまたはノートブック内のマークダウン</p>
+                <p><strong>Filename:</strong> <code>Week08_[YourName]_Report.pdf</code></p>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 4: AI Transparency Log (If Applicable)</h3>
+                <h4>成果物4：AI透明性ログ（該当する場合）</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>If you used external AI chatbots (ChatGPT, Claude, Gemini) in addition to the ML-101 Bot:</p>
+                <ul>
+                    <li>All AI prompts and responses<br>すべてのAIプロンプトと応答</li>
+                    <li>Verification documentation<br>検証文書</li>
+                    <li>What you learned independently vs with AI<br>独立して学習したこと vs AIで学習したこと</li>
+                </ul>
+
+                <p><strong>Format:</strong> Use provided template | 形式：提供されたテンプレートを使用</p>
+            </div>
+
+            <h2>Submission Instructions / 提出指示</h2>
+
+            <div class="success-box">
+                <h3>How to Submit / 提出方法</h3>
+                <ol>
+                    <li><strong>Organize your files:</strong><br>
+                        ファイルを整理：
+                        <ul>
+                            <li>Week08_[YourName]_companies_final.csv</li>
+                            <li>Week08_[YourName]_MissingData.ipynb</li>
+                            <li>Week08_[YourName]_Report.pdf</li>
+                            <li>Week08_[YourName]_AILog.pdf (if applicable)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Upload through ML-101 Bot Portal:</strong><br>
+                        ML-101ボットポータルを通じてアップロード：
+                        <ul>
+                            <li>Log in to bot portal</li>
+                            <li>Navigate to "Week 8 Assignment Submission"</li>
+                            <li>Upload all files</li>
+                            <li>Click "Submit"</li>
+                        </ul>
+                    </li>
+                    <li><strong>Confirm submission:</strong><br>
+                        提出を確認：
+                        <ul>
+                            <li>Receive automated confirmation</li>
+                            <li>If no confirmation within 5 minutes, contact instructor</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="warning-box">
+                <h3>Submission Deadline / 提出期限</h3>
+                <p><strong>Due:</strong> End of Week 8 class session | <strong>期限:</strong> 第8週授業終了時</p>
+
+                <h4>Late Policy / 遅延ポリシー:</h4>
+                <ul>
+                    <li>Submissions up to 24 hours late: <strong>-10%</strong></li>
+                    <li>Submissions 24-48 hours late: <strong>-20%</strong></li>
+                    <li>Submissions more than 48 hours late: <strong>Not accepted</strong> without prior arrangement</li>
+                </ul>
+            </div>
+
+            <h2>Grading Rubric / 評価ルーブリック</h2>
+
+            <table class="rubric-table">
+                <thead>
+                    <tr>
+                        <th>Component / 要素</th>
+                        <th>Points / 点数</th>
+                        <th>Criteria / 基準</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Missing Data Analysis</strong><br>欠損データ分析</td>
+                        <td><strong>20 points</strong></td>
+                        <td>
+                            - Comprehensive analysis (10 pts)<br>
+                            - Appropriate categorization (5 pts)<br>
+                            - Clear visualizations (5 pts)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Strategy Implementation</strong><br>戦略実装</td>
+                        <td><strong>40 points</strong></td>
+                        <td>
+                            - Appropriate strategies chosen (15 pts)<br>
+                            - Clear rationale documented (10 pts)<br>
+                            - Correct Python implementation (10 pts)<br>
+                            - Significant reduction in missing data (5 pts)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Outlier Treatment</strong><br>外れ値処理</td>
+                        <td><strong>20 points</strong></td>
+                        <td>
+                            - Outliers correctly identified (10 pts)<br>
+                            - Appropriate treatment decisions (5 pts)<br>
+                            - Justifications provided (5 pts)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Validation & Documentation</strong><br>検証と文書化</td>
+                        <td><strong>20 points</strong></td>
+                        <td>
+                            - Meets ML-readiness criteria (10 pts)<br>
+                            - Comprehensive quality report (5 pts)<br>
+                            - Complete AI transparency log if used (5 pts)
+                        </td>
+                    </tr>
+                    <tr style="background: var(--primary-color); color: white; font-weight: bold;">
+                        <td><strong>TOTAL</strong><br>合計</td>
+                        <td><strong>100</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Tips for Success / 成功のためのヒント</h2>
+
+            <div class="info-box">
+                <h4>Best Practices / ベストプラクティス:</h4>
+                <ul>
+                    <li>Start with analysis before making decisions<br>決定を下す前に分析から始める</li>
+                    <li>Document your rationale for each strategy choice<br>各戦略選択の根拠を文書化する</li>
+                    <li>Use the ML-101 Bot for guidance and validation<br>ガイダンスと検証にML-101ボットを使用する</li>
+                    <li>Verify your work at each step<br>各ステップで作業を検証する</li>
+                    <li>Aim to retain 80%+ of your original data<br>元のデータの80%以上を保持することを目指す</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>Common Mistakes to Avoid / 避けるべきよくある間違い:</h4>
+                <ul>
+                    <li>❌ Deleting too much data without considering alternatives<br>代替案を考慮せずにあまりにも多くのデータを削除する</li>
+                    <li>❌ Using imputation methods that create unrealistic values<br>非現実的な値を作成する代入方法を使用する</li>
+                    <li>❌ Removing all outliers without investigating if they're legitimate<br>正当かどうかを調査せずにすべての外れ値を削除する</li>
+                    <li>❌ Not documenting decisions and rationale<br>決定と根拠を文書化しない</li>
+                </ul>
+            </div>
+
+            <h2>Getting Help / ヘルプを得る</h2>
+
+            <div class="success-box">
+                <h4>During Class Activity / 授業アクティビティ中:</h4>
+                <ul>
+                    <li>Use the ML-101 Bot for step-by-step guidance</li>
+                    <li>Raise your hand for instructor help</li>
+                    <li>Discuss approaches with classmates</li>
+                </ul>
+
+                <h4>Outside of Class / 授業外:</h4>
+                <ul>
+                    <li>Use the bot portal (available 24/7)</li>
+                    <li>Email instructor: [instructor email]</li>
+                    <li>Office hours: [office hours schedule]</li>
+                </ul>
+            </div>
+
+            <div class="success-box" style="text-align: center; margin-top: 40px;">
+                <h2>Good luck preparing your ML-ready dataset!</h2>
+                <h2>ML準備完了データセットの準備を頑張ってください！</h2>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="lecture.html" class="btn btn-primary">View Lecture</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>著作権 &copy; 2025 Yuri Tijerino. 無断転載を禁じます。</p>
+        </div>
+    </footer>
+</body>
+</html>

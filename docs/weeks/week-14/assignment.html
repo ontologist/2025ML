@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 14 Assignment: Final Presentations | ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .assignment-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .assignment-content h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .assignment-content h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .assignment-content h4 {
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .info-box {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color);
+            margin: 20px 0;
+        }
+        .warning-box {
+            background: #fef3cd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--warning);
+            margin: 20px 0;
+        }
+        .success-box {
+            background: #d1fae5;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--success);
+            margin: 20px 0;
+        }
+        .celebration-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 5px solid #10b981;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .deliverable-box {
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid var(--border-color);
+        }
+        .rubric-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .rubric-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .rubric-table td {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .rubric-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+        .example-box {
+            background: #f3e8ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--secondary-color);
+            margin: 20px 0;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        code {
+            background: var(--bg-light);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        @media (max-width: 768px) {
+            .assignment-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Week 14 Assignment</h1>
+            <p class="subtitle">Final Presentations and Course Reflection<br>最終プレゼンテーションとコース振り返り</p>
+            <p class="instructor">Instructor: Yuri Tijerino</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="lecture.html">Lecture Notes</a>
+            <a href="slides.html">Presentation Slides</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="assignment-content">
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="lecture.html" class="btn btn-primary">View Lecture</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+            </div>
+
+            <div class="celebration-box">
+                <h2 style="text-align: center; color: #10b981;">Final Week - Celebrate Your Achievement!</h2>
+                <h2 style="text-align: center; color: #10b981;">最終週 - あなたの達成を祝いましょう！</h2>
+                <p style="text-align: center; font-size: 1.2em; margin-top: 15px;">You've built a complete ML system from scratch. Now share your work!</p>
+                <p style="text-align: center; font-size: 1.2em;">ゼロから完全なMLシステムを構築しました。今、あなたの作業を共有しましょう！</p>
+            </div>
+
+            <div class="info-box">
+                <h3>Assignment Overview / 課題概要</h3>
+                <p><strong>Course:</strong> Machine Learning and Intelligence | 機械学習と知能</p>
+                <p><strong>Week:</strong> 14 (Final Week) | 第14週（最終週）</p>
+                <p><strong>Due Date:</strong> End of Week 14 class session | 第14週授業終了時</p>
+                <p><strong>Weight:</strong> Part of 35% Final Project + 15% Bot Assessment grades | 最終プロジェクト35% + ボット査定15%の一部</p>
+                <p><strong>Submission:</strong> In-class presentations + ML-101 Bot Portal | クラス内プレゼンテーション + ML-101ボットポータル</p>
+            </div>
+
+            <p>This final week brings together everything you've learned and built over 14 weeks. You'll present your complete ML project, participate in a final assessment interview, and reflect on your learning journey.</p>
+            <p>この最終週は、14週間にわたって学び、構築したすべてをまとめます。完全なMLプロジェクトを提示し、最終評価インタビューに参加し、学習の旅を振り返ります。</p>
+
+            <h2>Learning Objectives / 学習目標</h2>
+
+            <p>By completing this assignment, you will be able to:</p>
+            <p>この課題を完了することで、以下ができるようになります：</p>
+
+            <ul>
+                <li>Present a complete ML project professionally to peers<br>
+                    プロフェッショナルにピアに完全なMLプロジェクトを提示する</li>
+                <li>Articulate ML workflow understanding through demonstration<br>
+                    実演を通じてMLワークフロー理解を明確にする</li>
+                <li>Provide and receive constructive feedback on ML projects<br>
+                    MLプロジェクトに関する建設的なフィードバックを提供および受け取る</li>
+                <li>Demonstrate comprehensive ML understanding in assessment interview<br>
+                    評価インタビューで包括的なML理解を実証する</li>
+                <li>Reflect critically on personal learning and future ML applications<br>
+                    個人的な学習と将来のML応用について批判的に振り返る</li>
+            </ul>
+
+            <h2>Prerequisites / 前提条件</h2>
+
+            <ul>
+                <li>Completed Week 13 presentation slides (already submitted)<br>
+                    第13週プレゼンテーションスライドを完了（すでに提出済み）</li>
+                <li>Complete company recommendation system project<br>
+                    完全な企業推薦システムプロジェクト</li>
+                <li>All project documentation from Weeks 1-13<br>
+                    第1-13週からのすべてのプロジェクト文書</li>
+            </ul>
+
+            <h2>Assignment Deliverables / 課題成果物</h2>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 1: Live Presentation (Required)</h3>
+                <h4>成果物1：ライブプレゼンテーション（必須）</h4>
+
+                <p><strong>Format / 形式:</strong> 5-minute in-class presentation + 2-minute Q&A</p>
+                <p><strong>形式:</strong> 5分のクラス内プレゼンテーション + 2分のQ&A</p>
+
+                <h4>Required Content / 必要な内容:</h4>
+
+                <p>Present your company recommendation system project following this 7-part structure:</p>
+                <p>この7部構成に従って企業推薦システムプロジェクトを提示します：</p>
+
+                <ol>
+                    <li>
+                        <strong>Introduction (30 seconds) / イントロダクション（30秒）</strong>
+                        <ul>
+                            <li>Project overview and motivation</li>
+                            <li>プロジェクト概要と動機</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>The Problem (30 seconds) / 問題（30秒）</strong>
+                        <ul>
+                            <li>Why company recommendations matter</li>
+                            <li>企業推薦がなぜ重要か</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Data Collection (1 minute) / データ収集（1分）</strong>
+                        <ul>
+                            <li>Sources, scraping process, dataset overview</li>
+                            <li>ソース、スクレイピングプロセス、データセット概要</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>ML Workflow (2 minutes) / MLワークフロー（2分）</strong>
+                        <ul>
+                            <li>Data cleaning and preparation</li>
+                            <li>Feature engineering decisions</li>
+                            <li>Model training and algorithms used</li>
+                            <li>Evaluation metrics and process</li>
+                        </ul>
+                        <ul>
+                            <li>データクリーニングと準備</li>
+                            <li>特徴量エンジニアリングの決定</li>
+                            <li>モデル訓練と使用したアルゴリズム</li>
+                            <li>評価メトリクスとプロセス</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Results (45 seconds) / 結果（45秒）</strong>
+                        <ul>
+                            <li>Model performance metrics</li>
+                            <li>Example predictions</li>
+                            <li>What worked well</li>
+                        </ul>
+                        <ul>
+                            <li>モデル性能メトリクス</li>
+                            <li>予測の例</li>
+                            <li>何がうまくいったか</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Learnings (45 seconds) / 学習（45秒）</strong>
+                        <ul>
+                            <li>Key insights from your project</li>
+                            <li>Challenges you overcame</li>
+                            <li>What surprised you</li>
+                        </ul>
+                        <ul>
+                            <li>プロジェクトからの主要な洞察</li>
+                            <li>克服した課題</li>
+                            <li>何があなたを驚かせたか</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Conclusion (30 seconds) / 結論（30秒）</strong>
+                        <ul>
+                            <li>How you'll apply this knowledge</li>
+                            <li>Future improvements or extensions</li>
+                        </ul>
+                        <ul>
+                            <li>この知識をどのように適用するか</li>
+                            <li>将来の改善または拡張</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>Presentation Requirements / プレゼンテーション要件:</h4>
+                    <ul>
+                        <li><strong>Time limit:</strong> Strictly 5 minutes (bot will provide time warnings)<br>
+                            <strong>時間制限:</strong> 厳密に5分（ボットが時間警告を提供）</li>
+                        <li><strong>Slides:</strong> Use your Week 13 presentation slides<br>
+                            <strong>スライド:</strong> 第13週プレゼンテーションスライドを使用</li>
+                        <li><strong>Q&A:</strong> Answer 2-3 questions from peers and instructor<br>
+                            <strong>Q&A:</strong> ピアとインストラクターからの2-3の質問に答える</li>
+                        <li><strong>Language:</strong> Either English or Japanese (bilingual welcome)<br>
+                            <strong>言語:</strong> 英語または日本語（バイリンガル歓迎）</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (40 points total) / 採点（合計40点）:</h4>
+                <table class="rubric-table">
+                    <thead>
+                        <tr>
+                            <th>Criteria</th>
+                            <th>Points</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Structure & Organization<br>構造と整理</td>
+                            <td>10</td>
+                            <td>Clear flow, all 7 sections covered, within time limit<br>明確な流れ、7つのセクションすべてカバー、時間制限内</td>
+                        </tr>
+                        <tr>
+                            <td>Technical Content<br>技術的内容</td>
+                            <td>15</td>
+                            <td>Complete ML workflow explained, accurate technical details<br>完全なMLワークフロー説明、正確な技術詳細</td>
+                        </tr>
+                        <tr>
+                            <td>Communication<br>コミュニケーション</td>
+                            <td>10</td>
+                            <td>Clear speaking, effective slides, engaging delivery<br>明確な発言、効果的なスライド、魅力的な配信</td>
+                        </tr>
+                        <tr>
+                            <td>Q&A Performance<br>Q&A性能</td>
+                            <td>5</td>
+                            <td>Thoughtful responses to questions, demonstrates understanding<br>質問への思慮深い回答、理解を実証</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 2: Peer Feedback (Required)</h3>
+                <h4>成果物2：ピアフィードバック（必須）</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Provide constructive feedback on <strong>at least 3 peer presentations</strong></p>
+                <p><strong>少なくとも3つのピアプレゼンテーション</strong>に建設的なフィードバックを提供</p>
+
+                <h4>For each presentation, include:</h4>
+                <h4>各プレゼンテーションについて、以下を含めます：</h4>
+
+                <ol>
+                    <li>
+                        <strong>One Strength / 1つの強み</strong>
+                        <p>What did they do well? Be specific.<br>
+                        何をうまくやりましたか？具体的にしてください。</p>
+                        <p><em>Example: "Your explanation of feature engineering was very clear. I especially liked how you showed examples of the features you created."</em></p>
+                    </li>
+                    <li>
+                        <strong>One Interesting Insight / 1つの興味深い洞察</strong>
+                        <p>What did you learn from their presentation?<br>
+                        プレゼンテーションから何を学びましたか？</p>
+                        <p><em>Example: "I learned that using company size as a feature significantly improved model accuracy. I didn't consider that in my project."</em></p>
+                    </li>
+                    <li>
+                        <strong>One Suggestion / 1つの提案</strong>
+                        <p>How could they improve or extend their work?<br>
+                        どのように作業を改善または拡張できますか？</p>
+                        <p><em>Example: "Have you considered adding industry sector as a feature? That might help the model make even better recommendations."</em></p>
+                    </li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>Submission Format / 提出形式:</h4>
+                    <ul>
+                        <li>Submit through ML-101 Bot Portal feedback form<br>
+                            ML-101ボットポータルフィードバックフォームから提出</li>
+                        <li>Feedback should be constructive, specific, and respectful<br>
+                            フィードバックは建設的で、具体的で、敬意を持ったものであるべき</li>
+                        <li>Submit during or immediately after class<br>
+                            クラス中またはクラス直後に提出</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (20 points total) / 採点（合計20点）:</h4>
+                <ul>
+                    <li>Three presentations reviewed: <strong>12 points</strong> (4 points each)</li>
+                    <li>Quality and specificity of feedback: <strong>5 points</strong></li>
+                    <li>Constructive and respectful tone: <strong>3 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 3: Final Bot Assessment Interview (Required)</h3>
+                <h4>成果物3：最終ボット評価インタビュー（必須）</h4>
+
+                <p><strong>Format / 形式:</strong> 10-minute one-on-one conversational interview with ML-101 Bot</p>
+                <p><strong>形式:</strong> ML-101ボットとの10分の1対1会話インタビュー</p>
+
+                <p><strong>What to Expect / 何を期待するか:</strong></p>
+                <p>The bot will conduct a personalized interview based on your project and learning journey. This is NOT a test you can fail—it's a conversation to demonstrate your understanding.</p>
+                <p>ボットはあなたのプロジェクトと学習の旅に基づいてパーソナライズされたインタビューを実施します。これは失敗できるテストではありません—あなたの理解を実証するための会話です。</p>
+
+                <h4>Topics Covered / カバーされるトピック:</h4>
+
+                <div class="example-box">
+                    <h5>1. Technical Understanding / 技術的理解</h5>
+                    <p><strong>Sample Questions / サンプル質問:</strong></p>
+                    <ul>
+                        <li>"Walk me through your complete ML workflow"<br>
+                            「完全なMLワークフローを通して説明してください」</li>
+                        <li>"What was the most challenging aspect of your project?"<br>
+                            「プロジェクトの最も挑戦的な側面は何でしたか？」</li>
+                        <li>"How did you decide which features to create?"<br>
+                            「どの特徴量を作成するかをどのように決定しましたか？」</li>
+                        <li>"Explain what your model learned from your training data"<br>
+                            「モデルが訓練データから何を学んだかを説明してください」</li>
+                    </ul>
+
+                    <h5>2. Critical Thinking / 批判的思考</h5>
+                    <p><strong>Sample Questions / サンプル質問:</strong></p>
+                    <ul>
+                        <li>"What are the limitations of your ML system?"<br>
+                            「MLシステムの限界は何ですか？」</li>
+                        <li>"How could biases in your training data affect predictions?"<br>
+                            「訓練データのバイアスが予測にどのように影響する可能性がありますか？」</li>
+                        <li>"Would you trust this system for real career decisions? Why or why not?"<br>
+                            「実際のキャリア決定のためにこのシステムを信頼しますか？なぜ、またはなぜしないのですか？」</li>
+                    </ul>
+
+                    <h5>3. Personal Growth / 個人的成長</h5>
+                    <p><strong>Sample Questions / サンプル質問:</strong></p>
+                    <ul>
+                        <li>"What did you learn about ML that surprised you?"<br>
+                            「あなたを驚かせたMLについて何を学びましたか？」</li>
+                        <li>"How has your understanding of AI changed since Week 1?"<br>
+                            「第1週以来、AIに関するあなたの理解はどのように変わりましたか？」</li>
+                        <li>"How will you apply this knowledge in your career?"<br>
+                            「キャリアでこの知識をどのように適用しますか？」</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Interview Guidelines / インタビューガイドライン:</h4>
+                    <ul>
+                        <li>Answer thoughtfully and honestly<br>
+                            思慮深く正直に答える</li>
+                        <li>If you don't know something, explain your thought process<br>
+                            何かがわからない場合は、思考プロセスを説明する</li>
+                        <li>The bot adapts to your level—no trick questions<br>
+                            ボットはあなたのレベルに適応—トリック質問なし</li>
+                        <li>It's okay to ask for clarification<br>
+                            説明を求めることは大丈夫</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (30 points total) / 採点（合計30点）:</h4>
+                <table class="rubric-table">
+                    <thead>
+                        <tr>
+                            <th>Criteria</th>
+                            <th>Points</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Technical Understanding<br>技術的理解</td>
+                            <td>12</td>
+                            <td>Demonstrates comprehensive ML workflow understanding<br>包括的なMLワークフロー理解を実証</td>
+                        </tr>
+                        <tr>
+                            <td>Critical Thinking<br>批判的思考</td>
+                            <td>10</td>
+                            <td>Thoughtful consideration of limitations, biases, ethics<br>限界、バイアス、倫理についての思慮深い考察</td>
+                        </tr>
+                        <tr>
+                            <td>Personal Reflection<br>個人的振り返り</td>
+                            <td>8</td>
+                            <td>Clear articulation of learning journey and growth<br>学習の旅と成長の明確な明確化</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 4: Course Reflection Survey (Required)</h3>
+                <h4>成果物4：コース振り返り調査（必須）</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Complete the course reflection survey addressing the following questions:</p>
+                <p>以下の質問に対応するコース振り返り調査を完了します：</p>
+
+                <ol>
+                    <li>
+                        <strong>Most Valuable Learning Experience / 最も価値のある学習経験</strong>
+                        <p>What was the single most valuable thing you learned in ML-101? (100-150 words)</p>
+                        <p>ML-101で学んだ最も価値のあることは何でしたか？（100-150語）</p>
+                    </li>
+                    <li>
+                        <strong>Greatest Challenge / 最大の課題</strong>
+                        <p>What was the most challenging aspect of the course, and how did you overcome it? (100-150 words)</p>
+                        <p>コースの最も挑戦的な側面は何で、それをどのように克服しましたか？（100-150語）</p>
+                    </li>
+                    <li>
+                        <strong>Future Application / 将来の応用</strong>
+                        <p>How will you use ML knowledge in your future career or life? (100-150 words)</p>
+                        <p>将来のキャリアまたは生活でML知識をどのように使用しますか？（100-150語）</p>
+                    </li>
+                    <li>
+                        <strong>Course Improvement Suggestions / コース改善の提案</strong>
+                        <p>What suggestions do you have for improving ML-101? (Optional, but appreciated)</p>
+                        <p>ML-101を改善するためのどのような提案がありますか？（オプションですが、感謝されます）</p>
+                    </li>
+                    <li>
+                        <strong>Future Learning Interests / 将来の学習興味</strong>
+                        <p>What ML topics or applications would you like to explore next? (Optional)</p>
+                        <p>次に探索したいMLトピックまたはアプリケーションは何ですか？（オプション）</p>
+                    </li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>Submission Format / 提出形式:</h4>
+                    <ul>
+                        <li>Submit through ML-101 Bot Portal survey form<br>
+                            ML-101ボットポータル調査フォームから提出</li>
+                        <li>Be honest and thoughtful in your responses<br>
+                            回答において正直で思慮深くあること</li>
+                        <li>Deadline: End of Week 14<br>
+                            期限：第14週末</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (10 points total) / 採点（合計10点）:</h4>
+                <ul>
+                    <li>Completion of all required questions: <strong>6 points</strong></li>
+                    <li>Thoughtfulness and depth of reflection: <strong>4 points</strong></li>
+                </ul>
+            </div>
+
+            <h2>Submission Instructions / 提出指示</h2>
+
+            <div class="success-box">
+                <h3>How to Submit / 提出方法</h3>
+
+                <h4>Deliverable 1: Live Presentation</h4>
+                <ul>
+                    <li><strong>When:</strong> During Week 14 class session<br>
+                        <strong>いつ:</strong> 第14週授業セッション中</li>
+                    <li><strong>How:</strong> Present in person with your slides<br>
+                        <strong>方法:</strong> スライドを使用して対面でプレゼンテーション</li>
+                    <li><strong>Note:</strong> Slides already submitted in Week 13 (no resubmission needed)<br>
+                        <strong>注意:</strong> スライドは第13週にすでに提出済み（再提出不要）</li>
+                </ul>
+
+                <h4>Deliverable 2: Peer Feedback</h4>
+                <ul>
+                    <li><strong>When:</strong> During or immediately after presentations<br>
+                        <strong>いつ:</strong> プレゼンテーション中またはプレゼンテーション直後</li>
+                    <li><strong>How:</strong> Submit through ML-101 Bot Portal feedback form<br>
+                        <strong>方法:</strong> ML-101ボットポータルフィードバックフォームから提出</li>
+                </ul>
+
+                <h4>Deliverable 3: Bot Assessment Interview</h4>
+                <ul>
+                    <li><strong>When:</strong> Scheduled during Week 14 class<br>
+                        <strong>いつ:</strong> 第14週授業中にスケジュール</li>
+                    <li><strong>How:</strong> One-on-one with ML-101 Bot (bot records responses automatically)<br>
+                        <strong>方法:</strong> ML-101ボットと1対1（ボットが自動的に応答を記録）</li>
+                </ul>
+
+                <h4>Deliverable 4: Course Reflection Survey</h4>
+                <ul>
+                    <li><strong>When:</strong> By end of Week 14<br>
+                        <strong>いつ:</strong> 第14週末まで</li>
+                    <li><strong>How:</strong> Complete online survey through ML-101 Bot Portal<br>
+                        <strong>方法:</strong> ML-101ボットポータルを通じてオンライン調査を完了</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h3>Important Notes / 重要な注意事項</h3>
+                <ul>
+                    <li><strong>AI Chatbot Policy:</strong> NO external AI chatbots allowed during presentations or bot assessment interview. This is a formal evaluation requiring independent work.<br>
+                        <strong>AIチャットボットポリシー:</strong> プレゼンテーション中またはボット評価インタビュー中に外部AIチャットボットは許可されていません。これは独立した作業を必要とする正式な評価です。</li>
+                    <li><strong>Attendance:</strong> Attendance for presentations is mandatory. If you cannot attend, contact instructor IMMEDIATELY.<br>
+                        <strong>出席:</strong> プレゼンテーションへの出席は必須です。出席できない場合は、すぐにインストラクターに連絡してください。</li>
+                    <li><strong>Time Management:</strong> Presentations will be strictly timed. Practice beforehand!<br>
+                        <strong>時間管理:</strong> プレゼンテーションは厳密に時間管理されます。事前に練習してください！</li>
+                </ul>
+            </div>
+
+            <h2>Grading Rubric / 評価ルーブリック</h2>
+
+            <table class="rubric-table">
+                <thead>
+                    <tr>
+                        <th>Deliverable</th>
+                        <th>Points</th>
+                        <th>Criteria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Live Presentation</strong><br>ライブプレゼンテーション</td>
+                        <td><strong>40</strong></td>
+                        <td>Structure (10), Technical content (15), Communication (10), Q&A (5)<br>構造（10）、技術的内容（15）、コミュニケーション（10）、Q&A（5）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Peer Feedback</strong><br>ピアフィードバック</td>
+                        <td><strong>20</strong></td>
+                        <td>3 reviews (12), Quality (5), Constructive tone (3)<br>3つのレビュー（12）、品質（5）、建設的なトーン（3）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bot Assessment Interview</strong><br>ボット評価インタビュー</td>
+                        <td><strong>30</strong></td>
+                        <td>Technical understanding (12), Critical thinking (10), Reflection (8)<br>技術的理解（12）、批判的思考（10）、振り返り（8）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Course Reflection Survey</strong><br>コース振り返り調査</td>
+                        <td><strong>10</strong></td>
+                        <td>Completion (6), Thoughtfulness (4)<br>完了（6）、思慮深さ（4）</td>
+                    </tr>
+                    <tr style="background: var(--primary-color); color: white; font-weight: bold;">
+                        <td><strong>TOTAL</strong><br>合計</td>
+                        <td><strong>100</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Tips for Success / 成功のためのヒント</h2>
+
+            <h3>Presentation Tips / プレゼンテーションのヒント</h3>
+            <ul>
+                <li><strong>Practice with a timer</strong> - 5 minutes goes fast!<br>
+                    <strong>タイマーで練習</strong> - 5分は早く過ぎます！</li>
+                <li><strong>Focus on YOUR journey</strong> - Share what YOU learned, not just what the project does<br>
+                    <strong>あなたの旅に焦点を当てる</strong> - プロジェクトが何をするかだけでなく、あなたが学んだことを共有</li>
+                <li><strong>Show examples</strong> - Visual examples make your work more concrete<br>
+                    <strong>例を示す</strong> - 視覚的な例はあなたの作業をより具体的にします</li>
+                <li><strong>Be honest about challenges</strong> - Talking about what was difficult shows growth<br>
+                    <strong>課題について正直であること</strong> - 困難だったことについて話すことは成長を示します</li>
+                <li><strong>Speak to your peers</strong> - Make eye contact, speak clearly<br>
+                    <strong>ピアに話しかける</strong> - アイコンタクトをする、明確に話す</li>
+            </ul>
+
+            <h3>Bot Interview Tips / ボットインタビューのヒント</h3>
+            <ul>
+                <li><strong>Be yourself</strong> - The bot is conversational, not interrogational<br>
+                    <strong>自分自身であること</strong> - ボットは会話的で、尋問的ではありません</li>
+                <li><strong>Think out loud</strong> - If unsure, explain your thought process<br>
+                    <strong>声に出して考える</strong> - 不確かな場合は、思考プロセスを説明</li>
+                <li><strong>Ask for clarification</strong> - If a question is unclear, ask the bot to rephrase<br>
+                    <strong>説明を求める</strong> - 質問が不明確な場合は、ボットに言い換えを依頼</li>
+                <li><strong>Be honest</strong> - There are no trick questions; genuine understanding is what matters<br>
+                    <strong>正直であること</strong> - トリック質問はありません；真の理解が重要です</li>
+            </ul>
+
+            <h3>Common Mistakes to Avoid / 避けるべきよくある間違い</h3>
+            <ul>
+                <li><strong>Going over time</strong> - Practice beforehand to stay within 5 minutes<br>
+                    <strong>時間超過</strong> - 5分以内に収まるように事前に練習</li>
+                <li><strong>Too much technical jargon</strong> - Explain concepts clearly<br>
+                    <strong>専門用語が多すぎる</strong> - コンセプトを明確に説明</li>
+                <li><strong>Reading slides verbatim</strong> - Use slides as visual aids, not a script<br>
+                    <strong>スライドをそのまま読む</strong> - スライドを台本ではなく視覚補助として使用</li>
+                <li><strong>Forgetting your journey</strong> - Share YOUR learnings and insights<br>
+                    <strong>あなたの旅を忘れる</strong> - あなた自身の学習と洞察を共有</li>
+                <li><strong>Generic peer feedback</strong> - Be specific and constructive<br>
+                    <strong>一般的なピアフィードバック</strong> - 具体的で建設的であること</li>
+            </ul>
+
+            <h2>Getting Help / ヘルプを得る</h2>
+
+            <div class="info-box">
+                <h4>Questions or Concerns? / 質問や懸念？</h4>
+                <ul>
+                    <li><strong>Technical issues:</strong> Contact instructor before class<br>
+                        <strong>技術的問題:</strong> 授業前にインストラクターに連絡</li>
+                    <li><strong>Presentation nervousness:</strong> Remember, everyone is in the same situation. Your peers want you to succeed!<br>
+                        <strong>プレゼンテーション緊張:</strong> 覚えておいてください、誰もが同じ状況にあります。あなたのピアはあなたの成功を望んでいます！</li>
+                    <li><strong>Cannot attend:</strong> Contact instructor IMMEDIATELY to arrange alternative<br>
+                        <strong>出席できない:</strong> すぐにインストラクターに連絡して代替を手配</li>
+                </ul>
+            </div>
+
+            <div class="celebration-box" style="text-align: center; margin-top: 40px;">
+                <h2>You've Come So Far!</h2>
+                <h2>あなたは遠くまで来ました！</h2>
+                <p style="font-size: 1.3em; margin-top: 20px;">From "What is ML?" to building a complete ML system</p>
+                <p style="font-size: 1.3em;">「MLとは？」から完全なMLシステムを構築するまで</p>
+                <p style="font-size: 1.3em; margin-top: 20px;"><strong>Be proud of what you've accomplished!</strong></p>
+                <p style="font-size: 1.3em;"><strong>達成したことを誇りに思ってください！</strong></p>
+                <p style="font-size: 1.3em; margin-top: 20px;"><strong>Good luck with your presentations!</strong></p>
+                <p style="font-size: 1.3em;"><strong>プレゼンテーション頑張ってください！</strong></p>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="lecture.html" class="btn btn-primary">View Lecture</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>著作権 &copy; 2025 Yuri Tijerino. 無断転載を禁じます。</p>
+        </div>
+    </footer>
+</body>
+</html>
