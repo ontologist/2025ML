@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5: No-Code Web Scraping Tools - ML-101</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slide {
+            background: white;
+            border-radius: 20px;
+            padding: 60px;
+            max-width: 1200px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            display: none;
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            border-bottom: 4px solid #764ba2;
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin: 25px 0 15px 0;
+        }
+
+        .japanese {
+            color: #666;
+            font-size: 0.9em;
+            display: block;
+            margin-top: 5px;
+        }
+
+        ul {
+            list-style-position: inside;
+            margin: 20px 0;
+            line-height: 1.8;
+        }
+
+        li {
+            margin: 15px 0;
+            font-size: 1.2rem;
+        }
+
+        .highlight {
+            background: #fef3c7;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #f59e0b;
+            margin: 20px 0;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #10b981;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .box {
+            background: #f3f4f6;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .box h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .checkmark {
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .process-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0;
+            background: #f3f4f6;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .process-step {
+            text-align: center;
+            flex: 1;
+        }
+
+        .process-step h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .arrow {
+            font-size: 2rem;
+            color: #764ba2;
+            margin: 0 10px;
+        }
+
+        .example-box {
+            background: #ecfdf5;
+            border: 2px solid #10b981;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.8rem;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .navigation {
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-counter">
+        <span id="current-slide">1</span> / <span id="total-slides">13</span>
+    </div>
+
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>Week 5: No-Code Web Scraping Tools</h1>
+            <span class="japanese">第5週：ノーコードWebスクレイピングツール</span>
+
+            <div style="margin-top: 50px;">
+                <p style="font-size: 1.3rem;"><strong>Course:</strong> Machine Learning and Intelligence | 機械学習と知能</p>
+                <p style="font-size: 1.3rem;"><strong>Instructor:</strong> Yuri Tijerino</p>
+                <p style="font-size: 1.3rem;"><strong>Duration:</strong> 15-20 minutes</p>
+            </div>
+
+            <div class="highlight" style="margin-top: 40px;">
+                <h3>Today's Objectives | 今日の目標</h3>
+                <ul>
+                    <li>Understand what no-code scraping tools are | ノーコードスクレイピングツールとは何かを理解する</li>
+                    <li>Learn why they're useful for beginners | 初心者にとってなぜ有用かを学ぶ</li>
+                    <li>See how point-and-click scraping works | ポイント＆クリックスクレイピングの仕組みを見る</li>
+                    <li>Preview the tools we'll use today | 今日使用するツールをプレビューする</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 2: What Are No-Code Scraping Tools? -->
+        <div class="slide">
+            <h2>What Are No-Code Scraping Tools?</h2>
+            <span class="japanese">ノーコードスクレイピングツールとは？</span>
+
+            <div class="highlight" style="margin-top: 30px;">
+                <h3>No-Code Tools = Scraping Without Programming</h3>
+                <span class="japanese">ノーコードツール = プログラミングなしのスクレイピング</span>
+            </div>
+
+            <div class="grid-2" style="margin-top: 40px;">
+                <div class="box">
+                    <h4>Traditional (With Code):</h4>
+                    <div class="code-block" style="margin-top: 15px;">
+import requests<br>
+from bs4 import BeautifulSoup<br>
+# ... many lines of code ...
+                    </div>
+                    <ul style="font-size: 1rem; margin-top: 15px;">
+                        <li>Requires programming knowledge<br><span class="japanese">プログラミング知識が必要</span></li>
+                        <li>More flexible but complex<br><span class="japanese">より柔軟だが複雑</span></li>
+                    </ul>
+                </div>
+
+                <div class="box">
+                    <h4>No-Code (Point & Click):</h4>
+                    <ul style="font-size: 1.1rem; margin-top: 15px;">
+                        <li><span class="checkmark">✅</span> Click on data you want<br><span class="japanese">必要なデータをクリック</span></li>
+                        <li><span class="checkmark">✅</span> Tool learns the pattern<br><span class="japanese">ツールがパターンを学習</span></li>
+                        <li><span class="checkmark">✅</span> Export to CSV<br><span class="japanese">CSVにエクスポート</span></li>
+                        <li><span class="checkmark">✅</span> No programming required!<br><span class="japanese">プログラミング不要！</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Why No-Code Tools? -->
+        <div class="slide">
+            <h2>Why No-Code Tools?</h2>
+            <span class="japanese">なぜノーコードツール？</span>
+
+            <h3 style="margin-top: 30px;">Perfect for Getting Started | 始めるのに最適</h3>
+
+            <div class="grid-2" style="margin-top: 30px;">
+                <div>
+                    <div class="box">
+                        <h4><span class="checkmark">✅</span> Fast Setup</h4>
+                        <p style="margin-top: 10px;">Install and start in minutes<br><span class="japanese">数分でインストールして開始</span></p>
+                        <p>No environment configuration<br><span class="japanese">環境設定不要</span></p>
+                    </div>
+                    <div class="box" style="margin-top: 20px;">
+                        <h4><span class="checkmark">✅</span> Intuitive Interface</h4>
+                        <p style="margin-top: 10px;">Visual, point-and-click<br><span class="japanese">ビジュアル、ポイント＆クリック</span></p>
+                        <p>See exactly what you're scraping<br><span class="japanese">スクレイピングしているものを正確に確認</span></p>
+                    </div>
+                </div>
+                <div>
+                    <div class="box">
+                        <h4><span class="checkmark">✅</span> Good for Simple Tasks</h4>
+                        <p style="margin-top: 10px;">Company listings | 企業リスト</p>
+                        <p>Product catalogs | 製品カタログ</p>
+                        <p>Job postings | 求人投稿</p>
+                    </div>
+                    <div class="box" style="margin-top: 20px;">
+                        <h4><span class="checkmark">✅</span> Great Learning Tool</h4>
+                        <p style="margin-top: 10px;">Understand scraping concepts<br><span class="japanese">スクレイピングコンセプトを理解</span></p>
+                        <p>See HTML structure visually<br><span class="japanese">HTML構造を視覚的に見る</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight" style="margin-top: 30px;">
+                <strong>Later:</strong> We'll also learn Python scraping for more complex tasks!<br>
+                <span class="japanese">後で：より複雑なタスクのためにPythonスクレイピングも学びます！</span>
+            </div>
+        </div>
+
+        <!-- Slide 4: Popular No-Code Scraping Tools -->
+        <div class="slide">
+            <h2>Popular No-Code Scraping Tools</h2>
+            <span class="japanese">人気のノーコードスクレイピングツール</span>
+
+            <h3 style="margin-top: 30px;">Tools We Might Use | 使用する可能性のあるツール</h3>
+
+            <div style="margin-top: 30px;">
+                <div class="box" style="margin-bottom: 20px;">
+                    <h4>1. Octoparse</h4>
+                    <ul style="font-size: 1.1rem;">
+                        <li>Desktop application | デスクトップアプリケーション</li>
+                        <li>User-friendly interface | ユーザーフレンドリーなインターフェース</li>
+                        <li>Free tier available | 無料ティア利用可能</li>
+                        <li><strong>Best for:</strong> Comprehensive features, good for beginners</li>
+                    </ul>
+                </div>
+
+                <div class="box" style="margin-bottom: 20px;">
+                    <h4>2. ParseHub</h4>
+                    <ul style="font-size: 1.1rem;">
+                        <li>Handles complex websites | 複雑なウェブサイトを処理</li>
+                        <li>Good for pagination | ページネーションに適している</li>
+                        <li>Free for small projects | 小規模プロジェクトには無料</li>
+                        <li><strong>Best for:</strong> JavaScript-heavy sites, visual interface</li>
+                    </ul>
+                </div>
+
+                <div class="box">
+                    <h4>3. Web Scraper (Chrome Extension)</h4>
+                    <ul style="font-size: 1.1rem;">
+                        <li>Works in browser | ブラウザで動作</li>
+                        <li>Quick setup | クイックセットアップ</li>
+                        <li>Good for simple scraping | シンプルなスクレイピングに適している</li>
+                        <li><strong>Best for:</strong> Quick setup, no download required</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight" style="margin-top: 30px;">
+                <strong>Today:</strong> The bot will recommend the best tool for your system!<br>
+                <span class="japanese">今日：ボットがあなたのシステムに最適なツールを推奨します！</span>
+            </div>
+        </div>
+
+        <!-- Slide 5: How No-Code Scraping Works -->
+        <div class="slide">
+            <h2>How No-Code Scraping Works</h2>
+            <span class="japanese">ノーコードスクレイピングの仕組み</span>
+
+            <h3 style="margin-top: 30px;">The Point-and-Click Process | ポイント＆クリックプロセス</h3>
+
+            <div class="process-flow">
+                <div class="process-step">
+                    <div style="font-size: 3rem;">🌐</div>
+                    <h4>1. LOAD WEBSITE</h4>
+                    <span class="japanese">ウェブサイトロード</span>
+                    <p style="margin-top: 10px;">Enter URL</p>
+                </div>
+                <div class="arrow">→</div>
+                <div class="process-step">
+                    <div style="font-size: 3rem;">🖱️</div>
+                    <h4>2. SELECT DATA</h4>
+                    <span class="japanese">データ選択</span>
+                    <p style="margin-top: 10px;">Click elements</p>
+                </div>
+                <div class="arrow">→</div>
+                <div class="process-step">
+                    <div style="font-size: 3rem;">🤖</div>
+                    <h4>3. TOOL LEARNS</h4>
+                    <span class="japanese">ツール学習</span>
+                    <p style="margin-top: 10px;">Pattern found</p>
+                </div>
+                <div class="arrow">→</div>
+                <div class="process-step">
+                    <div style="font-size: 3rem;">💾</div>
+                    <h4>4. EXPORT</h4>
+                    <span class="japanese">エクスポート</span>
+                    <p style="margin-top: 10px;">Save CSV</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px;">Step-by-Step:</h3>
+            <ul style="font-size: 1.1rem;">
+                <li><strong>Open the tool and enter website URL</strong> | ツールを開いてウェブサイトURLを入力<br>
+                Tool loads the website | ツールがウェブサイトをロード</li>
+                <li><strong>Click on data elements you want</strong> | 必要なデータ要素をクリック<br>
+                Company name, industry, description | 企業名、業界、説明</li>
+                <li><strong>Tool identifies the pattern</strong> | ツールがパターンを特定<br>
+                "Oh, you want all company names!" | 「ああ、すべての企業名が必要なのですね！」</li>
+                <li><strong>Run the scraper</strong> | スクレイパーを実行<br>
+                Collects all matching data | すべての一致するデータを収集</li>
+                <li><strong>Export to CSV or Excel</strong> | CSVまたはExcelにエクスポート<br>
+                Ready for analysis! | 分析の準備完了！</li>
+            </ul>
+        </div>
+
+        <!-- Slide 6: Example - Scraping Company Data -->
+        <div class="slide">
+            <h2>Example - Scraping Company Data</h2>
+            <span class="japanese">例 - 企業データのスクレイピング</span>
+
+            <h3 style="margin-top: 30px;">Visual Walkthrough | ビジュアルウォークスルー</h3>
+
+            <div class="example-box" style="margin-top: 30px;">
+                <h4>What You See on Screen:</h4>
+                <div class="code-block" style="margin-top: 15px; background: #f9fafb; color: #333; border: 2px solid #e5e7eb;">
+[Company Listing Page]<br><br>
+<strong>ABC Corporation</strong><br>
+Industry: Technology | Employees: 500<br>
+Description: Leading software company...<br><br>
+<strong>XYZ Inc</strong><br>
+Industry: Finance | Employees: 1200<br>
+Description: Innovative financial services...
+                </div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <h4>What You Do:</h4>
+                <ul style="font-size: 1.1rem;">
+                    <li><strong>1.</strong> Click on "ABC Corporation" | 「ABC Corporation」をクリック</li>
+                    <li><strong>2.</strong> Tool asks: "Select another similar item" | ツールが尋ねる：「別の類似アイテムを選択」</li>
+                    <li><strong>3.</strong> Click on "XYZ Inc" | 「XYZ Inc」をクリック</li>
+                    <li><strong>4.</strong> Tool recognizes pattern: "All company names!" | ツールがパターンを認識：「すべての企業名！」</li>
+                    <li><strong>5.</strong> Repeat for industry, employees, description | 業界、従業員、説明に対して繰り返す</li>
+                </ul>
+            </div>
+
+            <div class="highlight" style="margin-top: 30px;">
+                <strong>Result:</strong> CSV file with all company data organized!<br>
+                <span class="japanese">結果：すべての企業データが整理されたCSVファイル！</span>
+            </div>
+        </div>
+
+        <!-- Slide 7: Handling Pagination -->
+        <div class="slide">
+            <h2>Handling Pagination</h2>
+            <span class="japanese">ページネーションの処理</span>
+
+            <div class="highlight" style="margin-top: 30px;">
+                <h3>Pagination = Multiple Pages of Results</h3>
+                <span class="japanese">ページネーション = 複数ページの結果</span>
+            </div>
+
+            <h3 style="margin-top: 40px;">Why This Matters | なぜ重要か</h3>
+            <p style="font-size: 1.2rem; margin-top: 15px;">Most websites don't show all data on one page:<br>
+            <span class="japanese">ほとんどのウェブサイトは1ページにすべてのデータを表示しません：</span></p>
+
+            <div class="code-block" style="margin-top: 20px; background: #f3f4f6; color: #333; border: 2px solid #e5e7eb;">
+Page 1: Companies 1-20<br>
+Page 2: Companies 21-40<br>
+Page 3: Companies 41-60<br>
+...
+            </div>
+
+            <h3 style="margin-top: 40px;">No-Code Tools Handle This! | ノーコードツールがこれを処理！</h3>
+
+            <div class="box" style="margin-top: 20px;">
+                <h4>Setup Pagination:</h4>
+                <ul style="font-size: 1.1rem;">
+                    <li><strong>1.</strong> Scrape data from first page | 最初のページからデータをスクレイプ</li>
+                    <li><strong>2.</strong> Tell tool to click "Next Page" button | ツールに「次のページ」ボタンをクリックするよう指示</li>
+                    <li><strong>3.</strong> Tool repeats on all pages | ツールがすべてのページで繰り返す</li>
+                    <li><strong>4.</strong> Combines all data automatically | すべてのデータを自動的に結合</li>
+                </ul>
+            </div>
+
+            <div class="highlight" style="margin-top: 30px;">
+                <strong>Today's Activity:</strong> You'll practice this!<br>
+                <span class="japanese">今日のアクティビティ：これを練習します！</span>
+            </div>
+        </div>
+
+        <!-- Slide 8: Best Practices -->
+        <div class="slide">
+            <h2>Best Practices for No-Code Scraping</h2>
+            <span class="japanese">ノーコードスクレイピングのベストプラクティス</span>
+
+            <h3 style="margin-top: 30px;">Do's and Don'ts | すべきこととすべきでないこと</h3>
+
+            <div class="grid-2" style="margin-top: 30px;">
+                <div class="box" style="background: #ecfdf5; border-color: #10b981;">
+                    <h4 style="color: #10b981;"><span class="checkmark">✅</span> DO:</h4>
+                    <ul style="font-size: 1rem; margin-top: 15px;">
+                        <li><strong>Start with simple websites</strong><br>
+                        <span class="japanese">シンプルなウェブサイトから始める</span><br>
+                        Practice sites first | まず練習サイト</li>
+                        <li><strong>Test on small samples</strong><br>
+                        <span class="japanese">小さなサンプルでテスト</span><br>
+                        Scrape 5-10 items first | まず5-10アイテムをスクレイプ</li>
+                        <li><strong>Verify data quality</strong><br>
+                        <span class="japanese">データ品質を検証</span><br>
+                        Check if all fields have data | すべてのフィールドにデータがあるか確認</li>
+                        <li><strong>Save your workflows</strong><br>
+                        <span class="japanese">ワークフローを保存</span><br>
+                        Reuse for similar sites | 類似サイトに再利用</li>
+                    </ul>
+                </div>
+
+                <div class="box" style="background: #fef2f2; border-color: #ef4444;">
+                    <h4 style="color: #ef4444;">❌ DON'T:</h4>
+                    <ul style="font-size: 1rem; margin-top: 15px;">
+                        <li><strong>Skip ethical checks</strong><br>
+                        <span class="japanese">倫理チェックをスキップする</span><br>
+                        Always verify robots.txt and ToS! | 常にrobots.txtとToSを検証！</li>
+                        <li><strong>Scrape too aggressively</strong><br>
+                        <span class="japanese">積極的にスクレイプしすぎる</span><br>
+                        Respect rate limits | レート制限を尊重</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Exporting and Using Scraped Data -->
+        <div class="slide">
+            <h2>Exporting and Using Scraped Data</h2>
+            <span class="japanese">スクレイプされたデータのエクスポートと使用</span>
+
+            <h3 style="margin-top: 30px;">Getting Data Ready for Analysis | 分析のためのデータ準備</h3>
+
+            <div style="margin-top: 30px;">
+                <h4>Export Formats | エクスポート形式</h4>
+
+                <div class="box" style="margin-top: 20px;">
+                    <h4>CSV (Recommended)</h4>
+                    <ul style="font-size: 1rem;">
+                        <li>Opens in Excel, Google Sheets | Excel、Googleスプレッドシートで開く</li>
+                        <li>Easy to import into Python | Pythonに簡単にインポート</li>
+                        <li>Compatible with ML tools | MLツールと互換性</li>
+                    </ul>
+                </div>
+
+                <div class="box" style="margin-top: 15px;">
+                    <h4>JSON</h4>
+                    <ul style="font-size: 1rem;">
+                        <li>Structured data format | 構造化データ形式</li>
+                        <li>Good for nested information | ネストされた情報に適している</li>
+                    </ul>
+                </div>
+
+                <div class="box" style="margin-top: 15px;">
+                    <h4>Excel</h4>
+                    <ul style="font-size: 1rem;">
+                        <li>Familiar spreadsheet format | 馴染みのあるスプレッドシート形式</li>
+                        <li>Good for manual inspection | 手動検査に適している</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight" style="margin-top: 30px;">
+                <h4>Next Steps After Scraping:</h4>
+                <ol style="font-size: 1.1rem; margin-top: 15px;">
+                    <li>Export to CSV | CSVにエクスポート</li>
+                    <li>Open in spreadsheet to verify | スプレッドシートで開いて検証</li>
+                    <li>Import into Python for cleaning (Week 7) | クリーニングのためにPythonにインポート（第7週）</li>
+                    <li>Use for ML training (Weeks 10-12) | MLトレーニングに使用（第10-12週）</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 10: Troubleshooting -->
+        <div class="slide">
+            <h2>Troubleshooting Common Issues</h2>
+            <span class="japanese">一般的な問題のトラブルシューティング</span>
+
+            <h3 style="margin-top: 30px;">What to Do When Things Go Wrong | うまくいかないときにすべきこと</h3>
+
+            <div style="margin-top: 30px;">
+                <div class="box" style="margin-bottom: 15px;">
+                    <h4>Problem 1: Tool Can't Find Data</h4>
+                    <span class="japanese">ツールがデータを見つけられない</span>
+                    <p style="margin-top: 10px;"><span class="checkmark">✓</span> Make sure you clicked similar items to establish pattern<br>
+                    <span class="japanese">パターンを確立するために類似アイテムをクリックしたことを確認</span></p>
+                </div>
+
+                <div class="box" style="margin-bottom: 15px;">
+                    <h4>Problem 2: Getting Wrong Data</h4>
+                    <span class="japanese">間違ったデータを取得している</span>
+                    <p style="margin-top: 10px;"><span class="checkmark">✓</span> Use selector editing to be more specific<br>
+                    <span class="japanese">より具体的にするためにセレクター編集を使用</span></p>
+                </div>
+
+                <div class="box" style="margin-bottom: 15px;">
+                    <h4>Problem 3: Missing Data from Some Rows</h4>
+                    <span class="japanese">一部の行からデータが欠落</span>
+                    <p style="margin-top: 10px;"><span class="checkmark">✓</span> Website structure may be inconsistent - this is normal<br>
+                    <span class="japanese">ウェブサイト構造が一貫していない可能性 - これは正常</span></p>
+                </div>
+
+                <div class="box">
+                    <h4>Problem 4: Tool Crashes or Freezes</h4>
+                    <span class="japanese">ツールがクラッシュまたはフリーズ</span>
+                    <p style="margin-top: 10px;"><span class="checkmark">✓</span> Start with smaller sample size<br>
+                    <span class="japanese">より小さいサンプルサイズから始める</span></p>
+                </div>
+            </div>
+
+            <div class="highlight" style="margin-top: 30px;">
+                <strong>Remember:</strong> The bot will help troubleshoot during the activity!<br>
+                <span class="japanese">覚えておいてください：ボットがアクティビティ中のトラブルシューティングを支援します！</span>
+            </div>
+        </div>
+
+        <!-- Slide 11: Today's Activity Preview -->
+        <div class="slide">
+            <h2>Today's Activity Preview</h2>
+            <span class="japanese">今日のアクティビティプレビュー</span>
+
+            <h3 style="margin-top: 30px;">What You'll Do Today | 今日すること</h3>
+
+            <div class="highlight" style="margin-top: 30px;">
+                <h4>40-60 Minute Hands-On Activity:</h4>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <div class="box" style="margin-bottom: 15px;">
+                    <h4>1. Tool Setup (12 min)</h4>
+                    <p>Install and configure scraping tool<br>
+                    <span class="japanese">ツールセットアップ</span></p>
+                </div>
+
+                <div class="box" style="margin-bottom: 15px;">
+                    <h4>2. Simple Practice Scrape (13 min)</h4>
+                    <p>Scrape book listings from practice site<br>
+                    <span class="japanese">シンプルな練習スクレイプ</span></p>
+                </div>
+
+                <div class="box" style="margin-bottom: 15px;">
+                    <h4>3. Intermediate Scraping (15 min)</h4>
+                    <p>Handle pagination and multiple attributes<br>
+                    <span class="japanese">中級スクレイピング</span></p>
+                </div>
+
+                <div class="box" style="margin-bottom: 15px;">
+                    <h4>4. Company Data Practice (12 min)</h4>
+                    <p>Scrape real company data sample<br>
+                    <span class="japanese">企業データ練習</span></p>
+                </div>
+
+                <div class="box">
+                    <h4>5. Documentation (8 min)</h4>
+                    <p>Save and document your work<br>
+                    <span class="japanese">文書化</span></p>
+                </div>
+            </div>
+
+            <div class="highlight" style="margin-top: 30px;">
+                <strong>The ML-101 Bot will guide you through each tool feature!</strong><br>
+                <span class="japanese">ML-101ボットが各ツール機能を通じてガイドします！</span>
+            </div>
+        </div>
+
+        <!-- Slide 12: Key Takeaways -->
+        <div class="slide">
+            <h2>Key Takeaways</h2>
+            <span class="japanese">重要なポイント</span>
+
+            <h3 style="margin-top: 30px;">Remember | 覚えておいてください</h3>
+
+            <ul style="font-size: 1.2rem; margin-top: 30px;">
+                <li><span class="checkmark">✅</span> <strong>No-code tools = scraping without programming</strong><br>
+                <span class="japanese">ノーコードツール = プログラミングなしのスクレイピング</span></li>
+
+                <li><span class="checkmark">✅</span> <strong>Point-and-click</strong> to select data<br>
+                <span class="japanese">データを選択するためのポイント＆クリック</span></li>
+
+                <li><span class="checkmark">✅</span> <strong>Tool learns patterns</strong> from your selections<br>
+                <span class="japanese">ツールがあなたの選択からパターンを学習</span></li>
+
+                <li><span class="checkmark">✅</span> <strong>Handle pagination</strong> for multi-page data<br>
+                <span class="japanese">マルチページデータのためのページネーション処理</span></li>
+
+                <li><span class="checkmark">✅</span> <strong>Export to CSV</strong> for analysis<br>
+                <span class="japanese">分析のためにCSVにエクスポート</span></li>
+
+                <li><span class="checkmark">✅</span> <strong>Ethics still apply</strong> - check robots.txt and ToS!<br>
+                <span class="japanese">倫理は依然として適用される - robots.txtとToSを確認！</span></li>
+            </ul>
+        </div>
+
+        <!-- Slide 13: Let's Get Started! -->
+        <div class="slide">
+            <h2>Let's Get Started!</h2>
+            <span class="japanese">始めましょう！</span>
+
+            <div class="highlight" style="margin-top: 50px; text-align: center; font-size: 1.5rem;">
+                <strong>"Now let's set up the tool and practice scraping real data!"</strong><br>
+                <span class="japanese">「では、ツールをセットアップして実際のデータをスクレイピングする練習をしましょう！」</span>
+            </div>
+
+            <h3 style="margin-top: 50px;">Next Steps | 次のステップ</h3>
+
+            <div style="margin-top: 30px;">
+                <div class="box" style="margin-bottom: 15px;">
+                    <h4>1. Open the ML-101 Bot portal</h4>
+                    <span class="japanese">ML-101ボットポータルを開く</span>
+                </div>
+
+                <div class="box" style="margin-bottom: 15px;">
+                    <h4>2. Begin Week 5 Activity</h4>
+                    <span class="japanese">第5週アクティビティを開始</span>
+                </div>
+
+                <div class="box" style="margin-bottom: 15px;">
+                    <h4>3. Install the recommended scraping tool</h4>
+                    <span class="japanese">推奨されるスクレイピングツールをインストール</span>
+                </div>
+
+                <div class="box" style="margin-bottom: 15px;">
+                    <h4>4. Start with practice websites</h4>
+                    <span class="japanese">練習ウェブサイトから始める</span>
+                </div>
+
+                <div class="box">
+                    <h4>5. Collect your first dataset!</h4>
+                    <span class="japanese">最初のデータセットを収集！</span>
+                </div>
+            </div>
+
+            <div class="highlight" style="margin-top: 40px; text-align: center;">
+                <strong>Remember:</strong> Start simple, practice, then move to real company data!<br>
+                <span class="japanese">覚えておいてください：シンプルに始め、練習し、それから実際の企業データに移る！</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()">← Previous</button>
+        <button class="nav-btn" onclick="nextSlide()">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+    </script>
+</body>
+</html>

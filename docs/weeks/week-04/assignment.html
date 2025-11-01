@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 4 Assignment: Introduction to Web Scraping</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .assignment-header {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 50px 0;
+            margin-bottom: 40px;
+        }
+
+        .assignment-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .assignment-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .meta-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .meta-value {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .nav-breadcrumb {
+            background-color: #f9fafb;
+            padding: 15px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .nav-breadcrumb a {
+            color: #2563eb;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .nav-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .content-section {
+            background-color: white;
+            padding: 40px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .content-section h2 {
+            font-size: 2rem;
+            color: #1f2937;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #10b981;
+            padding-bottom: 10px;
+        }
+
+        .content-section h3 {
+            font-size: 1.5rem;
+            color: #059669;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content-section h4 {
+            font-size: 1.2rem;
+            color: #2563eb;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .deliverable-box {
+            background-color: #f0fdf4;
+            border-left: 5px solid #10b981;
+            padding: 30px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+
+        .deliverable-box h3 {
+            color: #059669;
+            margin-top: 0;
+            font-size: 1.8rem;
+        }
+
+        .warning-box {
+            background-color: #fef2f2;
+            border-left: 5px solid #dc2626;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box h3 {
+            color: #dc2626;
+            margin-top: 0;
+        }
+
+        .info-box {
+            background-color: #eff6ff;
+            border-left: 5px solid #2563eb;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+
+        .info-box h3 {
+            color: #2563eb;
+            margin-top: 0;
+        }
+
+        .tip-box {
+            background-color: #fef3c7;
+            border-left: 5px solid #f59e0b;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+
+        .tip-box h3 {
+            color: #f59e0b;
+            margin-top: 0;
+        }
+
+        .japanese {
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        code {
+            background-color: #f3f4f6;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+
+        pre {
+            background-color: #1f2937;
+            color: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+        }
+
+        table th {
+            background-color: #10b981;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        table tr:hover {
+            background-color: #f9fafb;
+        }
+
+        .scoring-table th {
+            background-color: #f59e0b;
+        }
+
+        .checklist ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+
+        .checklist li::before {
+            content: "✅ ";
+            margin-right: 10px;
+        }
+
+        .example-box {
+            background-color: #f9fafb;
+            border: 2px solid #e5e7eb;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .example-box h4 {
+            margin-top: 0;
+            color: #059669;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .highlight {
+            background-color: #fef3c7;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .requirements-list {
+            background-color: #f0fdf4;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .requirements-list h4 {
+            margin-top: 0;
+            color: #059669;
+        }
+
+        .faq-item {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-weight: bold;
+            color: #2563eb;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .faq-answer {
+            color: #4b5563;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .assignment-meta {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Breadcrumb Navigation -->
+    <div class="nav-breadcrumb">
+        <div class="container">
+            <a href="../../index.html">ML-101 Home</a> /
+            <a href="../../index.html#curriculum">Curriculum</a> /
+            <a href="lecture.html">Week 4 Lecture</a> /
+            <span>Assignment</span>
+        </div>
+    </div>
+
+    <!-- Assignment Header -->
+    <div class="assignment-header">
+        <div class="container">
+            <h1>Week 4 Assignment: Introduction to Web Scraping</h1>
+            <p style="font-size: 1.3rem; margin-bottom: 20px;">第4週課題：Webスクレイピング入門</p>
+
+            <div class="assignment-meta">
+                <div class="meta-item">
+                    <span class="meta-label">Course</span>
+                    <span class="meta-value">ML-101: Machine Learning and Intelligence</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Week</span>
+                    <span class="meta-value">Week 4 | 第4週</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Due Date</span>
+                    <span class="meta-value">End of Week 4 class session</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Weight</span>
+                    <span class="meta-value">Part of 40% Weekly Activities</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Submission</span>
+                    <span class="meta-value">Through ML-101 Bot Portal</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Total Points</span>
+                    <span class="meta-value">100 points</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Overview -->
+        <div class="content-section">
+            <h2>Assignment Overview | 課題概要</h2>
+
+            <p>This assignment develops your understanding of web scraping fundamentals, HTML structure, and ethical/legal considerations. You'll examine web page structures, evaluate data sources, and create a scraping feasibility plan for the course project.</p>
+
+            <p class="japanese">この課題は、Webスクレイピングの基礎、HTML構造、倫理的/法的考慮事項の理解を発展させます。Webページ構造を調査し、データソースを評価し、コースプロジェクトのスクレイピング実現可能性計画を作成します。</p>
+
+            <div class="warning-box">
+                <h3>⚠️ Important Note</h3>
+                <p><strong>This is a planning and analysis assignment - you will NOT write scraping code this week.</strong></p>
+                <p>You will learn to use scraping tools in Week 5 and implement actual scraping in Week 6.</p>
+                <p class="japanese">これは計画と分析の課題です - 今週はスクレイピングコードを書きません。</p>
+            </div>
+
+            <div class="action-buttons">
+                <a href="lecture.html" class="btn btn-primary">📖 Review Lecture Notes</a>
+                <a href="slides.html" class="btn btn-secondary">📊 View Slides</a>
+            </div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="content-section">
+            <h2>Learning Objectives | 学習目標</h2>
+
+            <p>By completing this assignment, you will be able to:</p>
+            <p class="japanese">この課題を完了することで、以下ができるようになります：</p>
+
+            <div class="checklist">
+                <ul>
+                    <li>Understand HTML structure and identify data-containing elements</li>
+                    <li>Use browser developer tools to inspect web pages</li>
+                    <li>Apply ethical and legal frameworks to web scraping decisions</li>
+                    <li>Interpret robots.txt files and Terms of Service</li>
+                    <li>Evaluate websites for scraping feasibility and appropriateness</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Prerequisites -->
+        <div class="content-section">
+            <h2>Prerequisites | 前提条件</h2>
+
+            <div class="checklist">
+                <ul>
+                    <li>Attended Week 4 lecture (or reviewed lecture slides)</li>
+                    <li>Completed Week 3 assignment</li>
+                    <li>Completed Week 2 data source identification</li>
+                    <li>Web browser with developer tools (Chrome, Firefox, Safari)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Deliverable 1 -->
+        <div class="content-section">
+            <div class="deliverable-box">
+                <h3>Deliverable 1: HTML Element Identification Document</h3>
+                <p class="japanese">成果物1：HTML要素識別文書</p>
+                <p><strong>Points:</strong> 20 / 100</p>
+            </div>
+
+            <h3>Required Content</h3>
+            <p>Using browser developer tools, identify and document <strong>at least 5 different HTML elements</strong> from a company profile webpage.</p>
+
+            <div class="requirements-list">
+                <h4>For each HTML element identified, provide:</h4>
+
+                <p><strong>A. Element Type</strong> | 要素タイプ</p>
+                <ul>
+                    <li>Name the HTML tag (e.g., <code>&lt;h1&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;div&gt;</code>, <code>&lt;span&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;table&gt;</code>)</li>
+                </ul>
+
+                <p><strong>B. Purpose/Function</strong> | 目的/機能</p>
+                <ul>
+                    <li>What is this element used for on the page?</li>
+                    <li>Example: "Heading tag used for company name"</li>
+                </ul>
+
+                <p><strong>C. Data Contained</strong> | 含まれるデータ</p>
+                <ul>
+                    <li>What information does this element hold?</li>
+                    <li>Example: "Contains company name: Toyota Motor Corporation"</li>
+                </ul>
+
+                <p><strong>D. HTML Code Sample</strong> | HTMLコードサンプル</p>
+                <ul>
+                    <li>Copy the actual HTML code from developer tools</li>
+                    <li>Example: <code>&lt;h1 class="company-name"&gt;Toyota Motor Corporation&lt;/h1&gt;</code></li>
+                </ul>
+
+                <p><strong>E. Screenshot</strong> | スクリーンショット</p>
+                <ul>
+                    <li>Include screenshot showing element highlighted in developer tools</li>
+                </ul>
+            </div>
+
+            <h3>Minimum Expected Elements</h3>
+            <p>You should identify at least these 5 types:</p>
+            <ol>
+                <li>Heading tags (company name) | 見出しタグ（企業名）</li>
+                <li>Paragraph or div with company description | 企業説明を含む段落またはdiv</li>
+                <li>List items (products, services, or information) | リスト項目（製品、サービス、または情報）</li>
+                <li>Links to other pages | 他のページへのリンク</li>
+                <li>Data in table format (if available) | テーブル形式のデータ（利用可能な場合）</li>
+            </ol>
+
+            <div class="example-box">
+                <h4>Example: HTML Element Identification</h4>
+
+                <p><strong>Element 1: Company Name Heading</strong></p>
+                <ul>
+                    <li><strong>Element Type:</strong> <code>&lt;h1&gt;</code> heading tag</li>
+                    <li><strong>Purpose/Function:</strong> Main heading displaying the company name at the top of the profile page</li>
+                    <li><strong>Data Contained:</strong> Company name - "Toyota Motor Corporation"</li>
+                    <li><strong>HTML Code Sample:</strong></li>
+                </ul>
+                <pre><code>&lt;h1 class="company-name" id="main-title"&gt;Toyota Motor Corporation&lt;/h1&gt;</code></pre>
+                <ul>
+                    <li><strong>Screenshot:</strong> [Screenshot showing highlighted h1 element in developer tools]</li>
+                </ul>
+            </div>
+
+            <h3>Format</h3>
+            <ul>
+                <li>Document format: PDF or Word</li>
+                <li>Organized table or structured list</li>
+                <li>Include all screenshots</li>
+            </ul>
+
+            <h3>Scoring (20 points)</h3>
+            <table class="scoring-table">
+                <tr>
+                    <td>5+ HTML elements correctly identified</td>
+                    <td>10 points (2 each)</td>
+                </tr>
+                <tr>
+                    <td>Clear explanations of purpose and data</td>
+                    <td>5 points</td>
+                </tr>
+                <tr>
+                    <td>HTML code samples included</td>
+                    <td>3 points</td>
+                </tr>
+                <tr>
+                    <td>Screenshots showing elements</td>
+                    <td>2 points</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Deliverable 2 -->
+        <div class="content-section">
+            <div class="deliverable-box">
+                <h3>Deliverable 2: Ethical and Legal Analysis</h3>
+                <p class="japanese">成果物2：倫理的および法的分析</p>
+                <p><strong>Points:</strong> 25 / 100</p>
+            </div>
+
+            <h3>Part A: Ethical Guidelines Summary (1-2 paragraphs)</h3>
+            <p>Summarize the ethical guidelines for web scraping covered in class. Include:</p>
+            <ul>
+                <li>Why ethical scraping matters</li>
+                <li>Key principles to follow (respect robots.txt, rate limiting, avoiding personal data)</li>
+                <li>Consequences of unethical scraping</li>
+            </ul>
+
+            <h3>Part B: Robots.txt Analysis</h3>
+            <p>Analyze <strong>3 different robots.txt files</strong> from potential data source websites.</p>
+
+            <div class="requirements-list">
+                <h4>For each robots.txt file:</h4>
+
+                <p><strong>1. Website Name and URL</strong></p>
+                <ul>
+                    <li>Example: "MyNavi Japan - https://www.mynavi.jp/robots.txt"</li>
+                </ul>
+
+                <p><strong>2. Key Directives Found</strong></p>
+                <ul>
+                    <li>List main User-agent, Disallow, and Allow directives</li>
+                </ul>
+
+                <p><strong>3. Interpretation</strong></p>
+                <ul>
+                    <li>What does this robots.txt allow or disallow?</li>
+                    <li>Example: "Disallow: / means no scraping allowed"</li>
+                    <li>Example: "Allow: /jobs means job pages can be accessed"</li>
+                </ul>
+
+                <p><strong>4. Scraping Decision</strong></p>
+                <ul>
+                    <li>Based on robots.txt, is it ethical to scrape this site?</li>
+                    <li>What specific pages/sections are allowed or restricted?</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h4>Example: robots.txt Analysis</h4>
+
+                <p><strong>Website:</strong> MyNavi Japan<br>
+                <strong>URL:</strong> https://www.mynavi.jp/robots.txt</p>
+
+                <p><strong>Key Directives Found:</strong></p>
+                <pre><code>User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Allow: /jobs/
+Allow: /company/</code></pre>
+
+                <p><strong>Interpretation:</strong> This robots.txt file allows most user agents (web crawlers) to access the site. The "/jobs/" and "/company/" paths are explicitly allowed, which means we can ethically scrape job listings and company information pages. However, admin and private sections are off-limits. This is a positive signal for our project needs.</p>
+
+                <p><strong>Scraping Decision:</strong> ✅ Ethical to scrape job and company pages. This site is appropriate for the course project, focusing on the allowed /jobs/ and /company/ sections.</p>
+            </div>
+
+            <h3>Part C: Terms of Service Review</h3>
+            <p>For at least <strong>2 websites</strong>, review their Terms of Service (ToS) for scraping-related restrictions:</p>
+            <ul>
+                <li>Does the ToS explicitly prohibit web scraping?</li>
+                <li>Are there API alternatives mentioned?</li>
+                <li>What are the consequences of ToS violations?</li>
+            </ul>
+
+            <h3>Format</h3>
+            <ul>
+                <li>Organized document with clear sections</li>
+                <li>Include screenshots of robots.txt files</li>
+                <li>Cite ToS sections if referencing specific language</li>
+            </ul>
+
+            <h3>Scoring (25 points)</h3>
+            <table class="scoring-table">
+                <tr>
+                    <td>Ethical guidelines summary</td>
+                    <td>5 points</td>
+                </tr>
+                <tr>
+                    <td>Three robots.txt files analyzed</td>
+                    <td>12 points (4 each)</td>
+                </tr>
+                <tr>
+                    <td>Correct interpretations</td>
+                    <td>5 points</td>
+                </tr>
+                <tr>
+                    <td>ToS review for 2 websites</td>
+                    <td>3 points</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Deliverable 3 -->
+        <div class="content-section">
+            <div class="deliverable-box">
+                <h3>Deliverable 3: Website Evaluation Matrix</h3>
+                <p class="japanese">成果物3：ウェブサイト評価マトリックス</p>
+                <p><strong>Points:</strong> 25 / 100</p>
+            </div>
+
+            <h3>Required Content</h3>
+            <p>Create a comprehensive evaluation matrix for <strong>3-5 potential websites</strong> where you could collect company data.</p>
+
+            <h3>Evaluation Criteria</h3>
+            <p>For each website, evaluate and rate (1-5 scale, where 1 = Poor, 5 = Excellent):</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Criterion</th>
+                        <th>What to Evaluate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1. Legal Compliance (1-5)</strong></td>
+                        <td>
+                            Does robots.txt allow scraping?<br>
+                            Are there ToS restrictions?<br>
+                            Is the data publicly accessible?
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>2. Ethical Appropriateness (1-5)</strong></td>
+                        <td>
+                            Does scraping align with ethical guidelines?<br>
+                            Is this educational use appropriate?<br>
+                            Would scraping harm the website or users?
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>3. Technical Feasibility (1-5)</strong></td>
+                        <td>
+                            Is the HTML structure accessible?<br>
+                            Is data consistently formatted?<br>
+                            Are there technical barriers (JavaScript rendering, login walls)?
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>4. Data Quality (1-5)</strong></td>
+                        <td>
+                            Is the data accurate and complete?<br>
+                            Is it up-to-date?<br>
+                            Does it include relevant company information?
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>5. Data Richness (1-5)</strong></td>
+                        <td>
+                            How much useful information is available?<br>
+                            Does it include company details needed for the project?
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>For Each Website, Include:</h3>
+            <ul>
+                <li><strong>Total Score</strong> (sum of all ratings, out of 25)</li>
+                <li><strong>Recommendation</strong> (2-3 sentences)
+                    <ul>
+                        <li>Would you recommend using this source? Why or why not?</li>
+                        <li>What are the main advantages or concerns?</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="example-box">
+                <h4>Example Matrix Format:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Website</th>
+                            <th>Legal</th>
+                            <th>Ethical</th>
+                            <th>Technical</th>
+                            <th>Quality</th>
+                            <th>Richness</th>
+                            <th>Total</th>
+                            <th>Recommendation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>MyNavi</td>
+                            <td>5</td>
+                            <td>5</td>
+                            <td>4</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>23/25</td>
+                            <td>Highly recommended for job listings...</td>
+                        </tr>
+                        <tr>
+                            <td>Site 2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>3</td>
+                            <td>17/25</td>
+                            <td>Moderate option with some restrictions...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Format</h3>
+            <ul>
+                <li>Table/matrix format (Excel, Google Sheets, or formatted document)</li>
+                <li>Clear rating scale (1-5)</li>
+                <li>Total scores calculated</li>
+                <li>Brief recommendation for each source</li>
+            </ul>
+
+            <h3>Scoring (25 points)</h3>
+            <table class="scoring-table">
+                <tr>
+                    <td>3-5 websites evaluated (minimum 3)</td>
+                    <td>10 points</td>
+                </tr>
+                <tr>
+                    <td>All 5 criteria rated for each site</td>
+                    <td>8 points</td>
+                </tr>
+                <tr>
+                    <td>Total scores calculated correctly</td>
+                    <td>2 points</td>
+                </tr>
+                <tr>
+                    <td>Clear recommendations provided</td>
+                    <td>5 points</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Deliverable 4 -->
+        <div class="content-section">
+            <div class="deliverable-box">
+                <h3>Deliverable 4: Web Scraping Feasibility Report</h3>
+                <p class="japanese">成果物4：Webスクレイピング実現可能性レポート</p>
+                <p><strong>Points:</strong> 20 / 100</p>
+            </div>
+
+            <h3>Required Content</h3>
+            <p>Write a comprehensive feasibility report (1-2 pages) that synthesizes your analysis.</p>
+
+            <h3>Report Structure:</h3>
+
+            <h4>Section 1: Recommended Websites (1-2 paragraphs)</h4>
+            <ul>
+                <li>Identify the <strong>top 2-3 websites</strong> from your evaluation matrix</li>
+                <li>Explain why these sites are recommended</li>
+                <li>What makes them suitable for the project?</li>
+            </ul>
+
+            <h4>Section 2: Data Elements to Collect (bulleted list)</h4>
+            <p>For each recommended website, list specific data fields you plan to scrape:</p>
+            <ul>
+                <li>Company name</li>
+                <li>Industry/sector</li>
+                <li>Company size (employee count)</li>
+                <li>Location</li>
+                <li>Job listings (if applicable)</li>
+                <li>Company description</li>
+                <li>Any other relevant information</li>
+            </ul>
+
+            <h4>Section 3: Ethical and Legal Justification (1 paragraph)</h4>
+            <ul>
+                <li>Explain why scraping these sites is ethical and legal</li>
+                <li>Reference robots.txt findings and ToS analysis</li>
+                <li>Address how you'll respect rate limits and website resources</li>
+            </ul>
+
+            <h4>Section 4: Potential Challenges (1 paragraph)</h4>
+            <ul>
+                <li>Identify 2-3 challenges you might face</li>
+                <li>Examples: JavaScript rendering, data inconsistency, pagination</li>
+                <li>How will you address these challenges?</li>
+            </ul>
+
+            <h4>Section 5: Alternative Data Sources (optional)</h4>
+            <ul>
+                <li>Are there websites with APIs instead of scraping?</li>
+                <li>What are backup options if primary sources don't work?</li>
+            </ul>
+
+            <h3>Format</h3>
+            <ul>
+                <li>1-2 pages</li>
+                <li>Professional formatting with clear sections</li>
+                <li>Include in main submission document</li>
+            </ul>
+
+            <h3>Scoring (20 points)</h3>
+            <table class="scoring-table">
+                <tr>
+                    <td>Recommended websites with justification</td>
+                    <td>6 points</td>
+                </tr>
+                <tr>
+                    <td>Data elements clearly identified</td>
+                    <td>4 points</td>
+                </tr>
+                <tr>
+                    <td>Ethical and legal justification</td>
+                    <td>6 points</td>
+                </tr>
+                <tr>
+                    <td>Challenges and solutions</td>
+                    <td>4 points</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Deliverable 5 -->
+        <div class="content-section">
+            <div class="deliverable-box">
+                <h3>Deliverable 5: AI Transparency Statement (if applicable)</h3>
+                <p class="japanese">成果物5：AI透明性声明（該当する場合）</p>
+                <p><strong>Points:</strong> 10 / 100</p>
+            </div>
+
+            <h3>Required Content</h3>
+            <p>If your institution requires AI transparency documentation OR if you used external AI tools, include a statement (3-5 sentences) describing:</p>
+
+            <ul>
+                <li>Which AI tools you used (ML-101 Bot, ChatGPT, etc.)</li>
+                <li>How you used them (HTML explanations, robots.txt interpretation, website research)</li>
+                <li>What analysis and decisions you made independently</li>
+                <li>How you verified AI-provided information</li>
+            </ul>
+
+            <h3>Format</h3>
+            <ul>
+                <li>Include at the end of your main document</li>
+                <li>Clearly labeled: "AI Transparency Statement"</li>
+            </ul>
+
+            <div class="info-box">
+                <h3>Note</h3>
+                <p>This deliverable is <strong>required only if</strong> your institution has an AI transparency policy OR if you used external AI tools.</p>
+            </div>
+
+            <h3>Scoring (10 points)</h3>
+            <table class="scoring-table">
+                <tr>
+                    <td>Honest and clear documentation</td>
+                    <td>4 points</td>
+                </tr>
+                <tr>
+                    <td>Appropriate AI usage for research and understanding</td>
+                    <td>3 points</td>
+                </tr>
+                <tr>
+                    <td>Evidence of independent critical thinking</td>
+                    <td>3 points</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Submission Instructions -->
+        <div class="content-section">
+            <h2>Submission Instructions | 提出指示</h2>
+
+            <h3>How to Submit</h3>
+            <ol>
+                <li><strong>Combine all deliverables</strong> into a single comprehensive document:
+                    <ul>
+                        <li>HTML Element Identification (Deliverable 1)</li>
+                        <li>Ethical and Legal Analysis (Deliverable 2)</li>
+                        <li>Website Evaluation Matrix (Deliverable 3) - may be separate Excel/Sheets file</li>
+                        <li>Feasibility Report (Deliverable 4)</li>
+                        <li>AI Transparency (Deliverable 5, if applicable)</li>
+                    </ul>
+                </li>
+                <li><strong>Include all screenshots and supporting materials</strong></li>
+                <li><strong>Name your files:</strong>
+                    <ul>
+                        <li>Main document: <code>Week04_[YourName]_WebScrapingEthics.pdf</code> (or .docx)</li>
+                        <li>Matrix (if separate): <code>Week04_[YourName]_EvaluationMatrix.xlsx</code></li>
+                        <li>Example: <code>Week04_YuriTijerino_WebScrapingEthics.pdf</code></li>
+                    </ul>
+                </li>
+                <li><strong>Upload through ML-101 Bot Portal:</strong>
+                    <ul>
+                        <li>Log in to bot portal</li>
+                        <li>Navigate to "Week 4 Assignment Submission"</li>
+                        <li>Upload all files</li>
+                        <li>Click "Submit"</li>
+                    </ul>
+                </li>
+                <li><strong>Confirm submission:</strong>
+                    <ul>
+                        <li>Receive automated confirmation</li>
+                        <li>Check email for submission receipt</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>Submission Deadline</h3>
+            <div class="warning-box">
+                <h3>Due: End of Week 4 class session</h3>
+                <p class="japanese">期限：第4週授業終了時</p>
+
+                <h4>Late Policy:</h4>
+                <ul>
+                    <li>Submissions up to 24 hours late: -10%</li>
+                    <li>Submissions 24-48 hours late: -20%</li>
+                    <li>Submissions more than 48 hours late: Not accepted without prior arrangement</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Grading Rubric -->
+        <div class="content-section">
+            <h2>Grading Rubric | 評価ルーブリック</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Deliverable</th>
+                        <th>Points</th>
+                        <th>Criteria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>HTML Element Identification</strong></td>
+                        <td>20</td>
+                        <td>5+ elements identified with code samples and screenshots</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ethical and Legal Analysis</strong></td>
+                        <td>25</td>
+                        <td>Guidelines summary, 3 robots.txt analyses, ToS review</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Website Evaluation Matrix</strong></td>
+                        <td>25</td>
+                        <td>3-5 sites rated on 5 criteria with recommendations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Feasibility Report</strong></td>
+                        <td>20</td>
+                        <td>Comprehensive report with recommendations and justification</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI Transparency</strong></td>
+                        <td>10</td>
+                        <td>Clear documentation (if required/applicable)</td>
+                    </tr>
+                    <tr style="background-color: #fef3c7;">
+                        <td><strong>TOTAL</strong></td>
+                        <td><strong>100</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tips for Success -->
+        <div class="content-section">
+            <h2>Tips for Success | 成功のためのヒント</h2>
+
+            <div class="tip-box">
+                <h3>HTML Inspection Tips</h3>
+                <ul>
+                    <li><strong>Start with simple pages</strong> - Company "About" pages are often cleanly structured</li>
+                    <li><strong>Use the element selector tool</strong> - Click the selector icon in developer tools and hover over page elements</li>
+                    <li><strong>Look for patterns</strong> - Similar elements often have the same class or structure, making them easier to scrape</li>
+                </ul>
+            </div>
+
+            <div class="tip-box">
+                <h3>Ethical Analysis Tips</h3>
+                <ul>
+                    <li><strong>When in doubt, don't scrape</strong> - If robots.txt says "Disallow: /", respect it</li>
+                    <li><strong>Educational use is not a free pass</strong> - Even for class projects, respect website policies</li>
+                    <li><strong>Consider API alternatives</strong> - Many websites offer APIs that are legal, structured, and often easier</li>
+                </ul>
+            </div>
+
+            <div class="tip-box">
+                <h3>Website Evaluation Tips</h3>
+                <ul>
+                    <li><strong>Be realistic about feasibility</strong> - Can you actually access this data with your current skills?</li>
+                    <li><strong>Prioritize data quality over quantity</strong> - Better to scrape fewer high-quality sources</li>
+                    <li><strong>Think about project needs</strong> - Focus on sites with company culture and job information</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- FAQs -->
+        <div class="content-section">
+            <h2>Frequently Asked Questions | よくある質問</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: Do we actually scrape websites this week?</div>
+                <div class="faq-answer">
+                    <p>A: No! This week is planning and analysis only. You'll learn scraping tools in Week 5 and implement scraping in Week 6.</p>
+                    <p class="japanese">A: いいえ！今週は計画と分析のみです。第5週でスクレイピングツールを学び、第6週でスクレイピングを実装します。</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: What if a website doesn't have robots.txt?</div>
+                <div class="faq-answer">
+                    <p>A: No robots.txt means there are no explicit restrictions, but you should still check Terms of Service and follow ethical guidelines. Absence of robots.txt doesn't mean "scrape everything."</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: Can I evaluate websites in Japanese?</div>
+                <div class="faq-answer">
+                    <p>A: Absolutely! Japanese job sites (MyNavi, Rikunabi) and company sites are highly relevant for this project.</p>
+                    <p class="japanese">A: もちろん！日本の求人サイト（MyNavi、Rikunabi）と企業サイトはこのプロジェクトに非常に関連しています。</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: What if all my top choices prohibit scraping?</div>
+                <div class="faq-answer">
+                    <p>A: Look for alternative sources, check if they have APIs, or consult with your instructor. There are many company data sources available.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: How do I find Terms of Service?</div>
+                <div class="faq-answer">
+                    <p>A: Usually linked in the website footer as "Terms," "ToS," "Terms of Use," or "Terms of Service." Search the page for these terms.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: What should I do if I'm unsure about a website?</div>
+                <div class="faq-answer">
+                    <p>A: Ask your instructor! It's better to ask before planning to scrape than to proceed with an inappropriate source.</p>
+                    <p class="japanese">A: インストラクターに尋ねてください！不適切なソースで進む前にスクレイピングを計画する前に尋ねる方が良いです。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Getting Help -->
+        <div class="content-section">
+            <h2>Getting Help | ヘルプを得る</h2>
+
+            <h3>During Activity:</h3>
+            <ul>
+                <li>Ask the ML-101 Bot for HTML and ethical guidance</li>
+                <li>Raise hand for instructor help with interpretation</li>
+                <li>Discuss website evaluations with classmates</li>
+            </ul>
+
+            <h3>Outside of Class:</h3>
+            <ul>
+                <li>Use bot portal (24/7 access)</li>
+                <li>Email instructor for ethical/legal questions</li>
+                <li>Office hours for complex cases</li>
+            </ul>
+
+            <h3>Important Resources:</h3>
+            <ul>
+                <li>Course ethical guidelines document (provided)</li>
+                <li>robots.txt interpretation guide</li>
+                <li>HTML tag reference sheet</li>
+            </ul>
+        </div>
+
+        <!-- Academic Integrity -->
+        <div class="content-section">
+            <h2>Academic Integrity | 学術的誠実性</h2>
+
+            <div class="info-box">
+                <h3>Permitted:</h3>
+                <ul>
+                    <li>Using ML-101 Bot for HTML explanations</li>
+                    <li>Using AI to understand robots.txt syntax</li>
+                    <li>Discussing ethical considerations with classmates</li>
+                    <li>Researching legal aspects of web scraping</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h3>Not Permitted:</h3>
+                <ul>
+                    <li>Copying another student's analysis</li>
+                    <li>Having AI write your entire report</li>
+                    <li>Submitting evaluations without actually checking websites</li>
+                    <li>Claiming to understand ethical guidelines without reading them</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h3>⚠️ CRITICAL WARNING ⚠️</h3>
+                <p><strong>This assignment evaluates your understanding of ethical and legal boundaries. Demonstrating poor judgment or disregard for ethical guidelines may result in:</strong></p>
+                <ul>
+                    <li>Assignment failure</li>
+                    <li>Review of continued enrollment in the course</li>
+                    <li>Potential academic integrity violation</li>
+                </ul>
+                <p style="text-align: center; font-size: 1.2rem; margin-top: 20px;">
+                    <strong>When in doubt about whether scraping is appropriate, ASK YOUR INSTRUCTOR.</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- Final Note -->
+        <div class="content-section">
+            <div style="background-color: #f0fdf4; padding: 40px; border-radius: 10px; text-align: center;">
+                <h2 style="color: #059669; margin-bottom: 20px;">Good luck with your ethical analysis!</h2>
+                <p style="font-size: 1.2rem; color: #065f46;">
+                    <strong>Remember:</strong> Just because you CAN scrape doesn't mean you SHOULD.<br>
+                    Always prioritize ethical and legal considerations.
+                </p>
+                <p class="japanese" style="margin-top: 15px;">
+                    覚えておいてください：スクレイプできるからといって、すべきとは限りません。<br>
+                    常に倫理的および法的考慮事項を優先してください。
+                </p>
+            </div>
+
+            <div class="action-buttons" style="margin-top: 30px;">
+                <a href="lecture.html" class="btn btn-primary">📖 Review Lecture Notes</a>
+                <a href="slides.html" class="btn btn-secondary">📊 View Slides</a>
+                <a href="../../index.html" class="btn btn-accent">← Back to Course Home</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>著作権 © 2025 Yuri Tijerino. 無断転載を禁じます。</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">Assignment created for ML-101: Machine Learning and Intelligence</p>
+        </div>
+    </footer>
+</body>
+</html>

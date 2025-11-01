@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 3 Lecture Notes: Google Colab and Python Basics - ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin: -20px -20px 40px -20px;
+        }
+
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+        }
+
+        header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .meta-info {
+            background: #f0f7ff;
+            border-left: 5px solid #667eea;
+            padding: 15px 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .meta-info p {
+            margin: 5px 0;
+        }
+
+        h2 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin-top: 30px;
+        }
+
+        h4 {
+            color: #667eea;
+            margin-top: 20px;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+
+        .code-block code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+
+        .python-keyword {
+            color: #d73a49;
+            font-weight: bold;
+        }
+
+        .python-string {
+            color: #032f62;
+        }
+
+        .python-comment {
+            color: #6a737d;
+            font-style: italic;
+        }
+
+        .python-number {
+            color: #005cc5;
+        }
+
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .concept-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .concept-table th,
+        .concept-table td {
+            padding: 12px;
+            border: 1px solid #dee2e6;
+            text-align: left;
+        }
+
+        .concept-table th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .concept-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        .section-nav {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+
+        .section-nav h3 {
+            margin-top: 0;
+            color: #667eea;
+        }
+
+        .section-nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .section-nav li {
+            margin: 8px 0;
+        }
+
+        .section-nav a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .section-nav a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .bilingual {
+            color: #666;
+            font-style: italic;
+            display: block;
+            margin-top: 5px;
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            background: #f8f9fa;
+            text-align: center;
+            color: #666;
+            border-top: 3px solid #667eea;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 5px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Week 3 Lecture Notes</h1>
+            <p class="subtitle">Google Colab and Python Basics</p>
+            <p class="subtitle">Google Colabと基本的なPython入門</p>
+        </header>
+
+        <div class="meta-info">
+            <p><strong>Course:</strong> ML-101: Machine Learning and Intelligence | 機械学習と知能</p>
+            <p><strong>Instructor:</strong> Yuri Tijerino</p>
+            <p><strong>Duration:</strong> 15-20 minutes lecture + 40-60 minutes hands-on activity</p>
+            <p><strong>Week:</strong> 3 of 14</p>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="section-nav">
+            <h3>Contents | 目次</h3>
+            <ul>
+                <li><a href="#overview">Overview | 概要</a></li>
+                <li><a href="#colab">What is Google Colab? | Google Colabとは？</a></li>
+                <li><a href="#why-python">Why Learn Python for ML? | なぜMLのためにPython?</a></li>
+                <li><a href="#variables">Python Basics: Variables | Python基礎: 変数</a></li>
+                <li><a href="#data-types">Python Data Types | Pythonデータ型</a></li>
+                <li><a href="#lists-dicts">Lists and Dictionaries | リストと辞書</a></li>
+                <li><a href="#pandas">Introducing Pandas | pandasの紹介</a></li>
+                <li><a href="#activity">Today's Activity | 今日のアクティビティ</a></li>
+                <li><a href="#key-takeaways">Key Takeaways | 重要なポイント</a></li>
+            </ul>
+        </div>
+
+        <!-- Overview Section -->
+        <section id="overview">
+            <h2>Overview | 概要</h2>
+
+            <p>This week marks a crucial turning point in our machine learning journey. We're moving from understanding <em>what</em> machine learning is to actually <em>doing</em> machine learning. To accomplish this, we need a programming environment and a programming language.</p>
+
+            <p class="bilingual">今週は、私たちの機械学習の旅における重要な転換点です。機械学習が<em>何であるか</em>を理解することから、実際に機械学習を<em>実行すること</em>へと移行します。</p>
+
+            <div class="success-box">
+                <h4>Learning Objectives | 学習目標</h4>
+                <ul>
+                    <li>Understand what Google Colab is and why it's perfect for learning ML</li>
+                    <li>Learn basic Python programming concepts (variables, data types)</li>
+                    <li>Work with Python data structures (lists and dictionaries)</li>
+                    <li>Get introduced to pandas for data manipulation</li>
+                    <li>Write and execute your first Python code</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h4>Prerequisites</h4>
+                <ul>
+                    <li>Completed Weeks 1-2 (ML fundamentals and data concepts)</li>
+                    <li>Google account (for accessing Colab)</li>
+                    <li>Web browser with internet connection</li>
+                    <li>No programming experience required!</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Google Colab Section -->
+        <section id="colab">
+            <h2>What is Google Colab? | Google Colabとは？</h2>
+
+            <p><strong>Google Colaboratory</strong> (commonly called "Colab") is a free, cloud-based platform that allows you to write and execute Python code in your web browser. Think of it as a combination of a document editor and a programming environment.</p>
+
+            <p class="bilingual">Google Colaboratory（一般的に「Colab」と呼ばれる）は、Webブラウザで��ythonコードを書いて実行できる無料のクラウドベースプラットフォームです。</p>
+
+            <h3>Why Colab is Perfect for Learning ML</h3>
+
+            <table class="concept-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Benefit</th>
+                        <th>Why It Matters for This Course</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>No Installation Required</strong></td>
+                        <td>Runs entirely in your web browser</td>
+                        <td>You can start coding immediately without complex setup</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Completely Free</strong></td>
+                        <td>Google provides computing resources</td>
+                        <td>No need for expensive hardware or software licenses</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pre-installed Libraries</strong></td>
+                        <td>Common data science tools ready to use</td>
+                        <td>pandas, numpy, and other ML libraries already available</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Easy Sharing</strong></td>
+                        <td>Share notebooks like Google Docs</td>
+                        <td>Simple collaboration and assignment submission</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cloud Storage</strong></td>
+                        <td>Automatically saves to Google Drive</td>
+                        <td>Access your work from anywhere, never lose progress</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <h4>What is a Notebook?</h4>
+                <p>A Colab <strong>notebook</strong> is an interactive document that contains both code and text. You can:</p>
+                <ul>
+                    <li>Write code in <strong>code cells</strong> and execute them one by one</li>
+                    <li>Write explanations in <strong>text cells</strong> using Markdown formatting</li>
+                    <li>See results immediately below each code cell</li>
+                    <li>Edit and re-run cells as many times as you need</li>
+                </ul>
+            </div>
+
+            <h3>Accessing Google Colab</h3>
+            <ol>
+                <li>Navigate to <a href="https://colab.research.google.com/" target="_blank">colab.research.google.com</a></li>
+                <li>Sign in with your Google account</li>
+                <li>Click "New Notebook" to create a new file</li>
+                <li>Start coding!</li>
+            </ol>
+        </section>
+
+        <!-- Why Python Section -->
+        <section id="why-python">
+            <h2>Why Learn Python for ML? | なぜMLのためにPythonを学ぶのか？</h2>
+
+            <p>Python has become the dominant language in machine learning and data science. But why?</p>
+
+            <p class="bilingual">Pythonは機械学習とデータサイエンスで主要な言語になっています。なぜでしょうか？</p>
+
+            <h3>Python's Role in the ML Workflow</h3>
+
+            <table class="concept-table">
+                <thead>
+                    <tr>
+                        <th>ML Stage</th>
+                        <th>What Python Does</th>
+                        <th>Example Tasks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Data Collection</strong></td>
+                        <td>Scrapes websites, accesses APIs, reads files</td>
+                        <td>Collecting company information from job sites</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data Cleaning</strong></td>
+                        <td>Fixes errors, handles missing values, standardizes formats</td>
+                        <td>Removing duplicates, filling missing employee counts</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data Analysis</strong></td>
+                        <td>Calculates statistics, finds patterns, creates visualizations</td>
+                        <td>Analyzing industry distributions, salary ranges</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Feature Engineering</strong></td>
+                        <td>Creates new features from existing data</td>
+                        <td>Extracting keywords from company descriptions</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Model Training</strong></td>
+                        <td>Trains ML algorithms on your data</td>
+                        <td>Training a classifier to predict company fit</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Model Evaluation</strong></td>
+                        <td>Tests model performance, generates metrics</td>
+                        <td>Checking accuracy of company recommendations</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="success-box">
+                <h4>Good News for Non-Programmers!</h4>
+                <p>You don't need to be a programmer to succeed in this course. We're teaching Python as a <strong>tool</strong>, not as a goal itself. You'll learn exactly what you need to accomplish our ML tasks, nothing more.</p>
+                <p class="bilingual">このコースで成功するためにプログラマーである必要はありません。Pythonを目標ではなく<strong>ツール</strong>として教えています。</p>
+            </div>
+        </section>
+
+        <!-- Variables Section -->
+        <section id="variables">
+            <h2>Python Basics: Variables | Python基礎: 変数</h2>
+
+            <p>In programming, a <strong>variable</strong> is like a labeled box that stores information. You give the box a name, and you can put different types of information inside.</p>
+
+            <p class="bilingual">プログラミングでは、<strong>変数</strong>は情報を保存するラベル付きの箱のようなものです。</p>
+
+            <h3>Creating Variables in Python</h3>
+
+            <div class="code-block">
+<pre><span class="python-comment"># Variable assignment uses the equals sign (=)</span>
+company_name = <span class="python-string">"ABC Corporation"</span>
+employee_count = <span class="python-number">500</span>
+average_rating = <span class="python-number">4.5</span>
+is_hiring = <span class="python-keyword">True</span>
+
+<span class="python-comment"># You can print variables to see their values</span>
+<span class="python-keyword">print</span>(company_name)        <span class="python-comment"># Output: ABC Corporation</span>
+<span class="python-keyword">print</span>(employee_count)     <span class="python-comment"># Output: 500</span></pre>
+            </div>
+
+            <h3>Variable Naming Rules</h3>
+
+            <div class="info-box">
+                <h4>Rules You Must Follow:</h4>
+                <ul>
+                    <li>Variable names can contain letters, numbers, and underscores</li>
+                    <li>Must start with a letter or underscore (not a number)</li>
+                    <li>Case-sensitive: <code>CompanyName</code> ≠ <code>companyname</code></li>
+                    <li>Cannot use Python keywords (like <code>print</code>, <code>if</code>, <code>True</code>)</li>
+                </ul>
+
+                <h4>Best Practices:</h4>
+                <ul>
+                    <li>Use descriptive names: <code>employee_count</code> not <code>ec</code></li>
+                    <li>Use lowercase with underscores: <code>company_name</code> (snake_case)</li>
+                    <li>Avoid confusing names: <code>l</code> (lowercase L) looks like <code>1</code></li>
+                </ul>
+            </div>
+
+            <div class="code-block">
+<pre><span class="python-comment"># Good variable names</span>
+company_name = <span class="python-string">"Toyota"</span>
+employee_count = <span class="python-number">370000</span>
+founded_year = <span class="python-number">1937</span>
+is_remote_friendly = <span class="python-keyword">True</span>
+
+<span class="python-comment"># Poor variable names (avoid these)</span>
+cn = <span class="python-string">"Toyota"</span>              <span class="python-comment"># Too short, unclear</span>
+EmployeeCount = <span class="python-number">370000</span>     <span class="python-comment"># Not following convention</span>
+x = <span class="python-number">1937</span>                   <span class="python-comment"># Meaningless</span></pre>
+            </div>
+        </section>
+
+        <!-- Data Types Section -->
+        <section id="data-types">
+            <h2>Python Data Types | Pythonデータ型</h2>
+
+            <p>Different types of data require different types of storage. Python has several built-in data types. We'll focus on the four most important for our work.</p>
+
+            <p class="bilingual">さまざまなタイプのデータには、さまざまなタイプのストレージが必要です。</p>
+
+            <h3>The Four Essential Data Types</h3>
+
+            <table class="concept-table">
+                <thead>
+                    <tr>
+                        <th>Data Type</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>String (str)</strong><br>文字列</td>
+                        <td>Text enclosed in quotes</td>
+                        <td><code>"Technology"</code><br><code>'Remote work'</code></td>
+                        <td>Company names, descriptions, industries</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Integer (int)</strong><br>整数</td>
+                        <td>Whole numbers (no decimals)</td>
+                        <td><code>500</code><br><code>2010</code></td>
+                        <td>Employee counts, founded years</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Float</strong><br>浮動小数点</td>
+                        <td>Numbers with decimal points</td>
+                        <td><code>4.5</code><br><code>4500000.00</code></td>
+                        <td>Ratings, salaries, percentages</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Boolean (bool)</strong><br>ブール値</td>
+                        <td>True or False values</td>
+                        <td><code>True</code><br><code>False</code></td>
+                        <td>Hiring status, remote work availability</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Working with Different Data Types</h3>
+
+            <div class="code-block">
+<pre><span class="python-comment"># Strings - use quotes (single or double)</span>
+industry = <span class="python-string">"Technology"</span>
+description = <span class="python-string">'Leading software company'</span>
+location = <span class="python-string">"Tokyo, Japan"</span>
+
+<span class="python-comment"># Integers - whole numbers</span>
+employees = <span class="python-number">1000</span>
+founded_year = <span class="python-number">2010</span>
+num_offices = <span class="python-number">5</span>
+
+<span class="python-comment"># Floats - numbers with decimals</span>
+rating = <span class="python-number">4.7</span>
+salary = <span class="python-number">4500000.00</span>
+growth_rate = <span class="python-number">15.5</span>
+
+<span class="python-comment"># Booleans - True or False (note capitalization!)</span>
+remote_work = <span class="python-keyword">True</span>
+hiring = <span class="python-keyword">False</span>
+has_benefits = <span class="python-keyword">True</span></pre>
+            </div>
+
+            <h3>Checking Data Types</h3>
+
+            <div class="code-block">
+<pre><span class="python-comment"># Use the type() function to check data types</span>
+company_name = <span class="python-string">"Sony"</span>
+employee_count = <span class="python-number">50000</span>
+
+<span class="python-keyword">print</span>(<span class="python-keyword">type</span>(company_name))    <span class="python-comment"># Output: &lt;class 'str'&gt;</span>
+<span class="python-keyword">print</span>(<span class="python-keyword">type</span>(employee_count))  <span class="python-comment"># Output: &lt;class 'int'&gt;</span></pre>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Why Data Types Matter</h4>
+                <p>Different operations work with different data types:</p>
+                <ul>
+                    <li>You can add numbers: <code>100 + 200 = 300</code></li>
+                    <li>You can concatenate strings: <code>"Hello" + " " + "World" = "Hello World"</code></li>
+                    <li>But you can't add a string to a number: <code>"100" + 200</code> will cause an error!</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Lists and Dictionaries Section -->
+        <section id="lists-dicts">
+            <h2>Lists and Dictionaries | リストと辞書</h2>
+
+            <p>So far we've stored single values in variables. But what if we want to store multiple pieces of information together? That's where <strong>lists</strong> and <strong>dictionaries</strong> come in.</p>
+
+            <p class="bilingual">これまで、変数に単一の値を保存してきました。しかし、複数の情報をまとめて保存したい場合はどうでしょうか？</p>
+
+            <h3>Lists: Collections of Items</h3>
+
+            <p>A <strong>list</strong> is an ordered collection of items. Think of it as a numbered list where each item has a position (called an <strong>index</strong>).</p>
+
+            <div class="code-block">
+<pre><span class="python-comment"># Creating lists - use square brackets []</span>
+companies = [<span class="python-string">"Sony"</span>, <span class="python-string">"Toyota"</span>, <span class="python-string">"Rakuten"</span>, <span class="python-string">"Nintendo"</span>]
+employee_counts = [<span class="python-number">50000</span>, <span class="python-number">370000</span>, <span class="python-number">28000</span>, <span class="python-number">6700</span>]
+
+<span class="python-comment"># Accessing items by index (starts at 0!)</span>
+<span class="python-keyword">print</span>(companies[<span class="python-number">0</span>])      <span class="python-comment"># Output: Sony (first item)</span>
+<span class="python-keyword">print</span>(companies[<span class="python-number">3</span>])      <span class="python-comment"># Output: Nintendo (fourth item)</span>
+
+<span class="python-comment"># Getting the length of a list</span>
+<span class="python-keyword">print</span>(<span class="python-keyword">len</span>(companies))  <span class="python-comment"># Output: 4</span>
+
+<span class="python-comment"># Adding items to a list</span>
+companies.append(<span class="python-string">"Panasonic"</span>)
+<span class="python-keyword">print</span>(companies)      <span class="python-comment"># Output: ["Sony", "Toyota", "Rakuten", "Nintendo", "Panasonic"]</span></pre>
+            </div>
+
+            <div class="info-box">
+                <h4>Important: Python Uses Zero-Based Indexing</h4>
+                <p>In Python (and most programming languages), counting starts at 0, not 1:</p>
+                <ul>
+                    <li>First item: index 0</li>
+                    <li>Second item: index 1</li>
+                    <li>Third item: index 2</li>
+                    <li>And so on...</li>
+                </ul>
+            </div>
+
+            <h3>Dictionaries: Organized Key-Value Pairs</h3>
+
+            <p>A <strong>dictionary</strong> stores data as key-value pairs. Instead of accessing items by position (like lists), you access them by <strong>key</strong> (a descriptive label).</p>
+
+            <div class="code-block">
+<pre><span class="python-comment"># Creating dictionaries - use curly braces {}</span>
+company_info = {
+    <span class="python-string">"name"</span>: <span class="python-string">"Sony Corporation"</span>,
+    <span class="python-string">"industry"</span>: <span class="python-string">"Technology & Electronics"</span>,
+    <span class="python-string">"employees"</span>: <span class="python-number">50000</span>,
+    <span class="python-string">"location"</span>: <span class="python-string">"Tokyo"</span>,
+    <span class="python-string">"is_hiring"</span>: <span class="python-keyword">True</span>
+}
+
+<span class="python-comment"># Accessing values by key</span>
+<span class="python-keyword">print</span>(company_info[<span class="python-string">"name"</span>])        <span class="python-comment"># Output: Sony Corporation</span>
+<span class="python-keyword">print</span>(company_info[<span class="python-string">"employees"</span>])  <span class="python-comment"># Output: 50000</span>
+
+<span class="python-comment"># Adding new key-value pairs</span>
+company_info[<span class="python-string">"founded_year"</span>] = <span class="python-number">1946</span>
+
+<span class="python-comment"># Modifying existing values</span>
+company_info[<span class="python-string">"employees"</span>] = <span class="python-number">51000</span></pre>
+            </div>
+
+            <h3>Lists vs. Dictionaries: When to Use Each</h3>
+
+            <table class="concept-table">
+                <thead>
+                    <tr>
+                        <th>Use Lists When...</th>
+                        <th>Use Dictionaries When...</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>You have a collection of similar items</td>
+                        <td>You have related information about one thing</td>
+                    </tr>
+                    <tr>
+                        <td>Order matters</td>
+                        <td>You want descriptive labels for each value</td>
+                    </tr>
+                    <tr>
+                        <td>Example: <code>["Sony", "Toyota", "Rakuten"]</code></td>
+                        <td>Example: <code>{"name": "Sony", "employees": 50000}</code></td>
+                    </tr>
+                    <tr>
+                        <td>Storing multiple companies</td>
+                        <td>Storing detailed info about one company</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Pandas Section -->
+        <section id="pandas">
+            <h2>Introducing Pandas | pandasの紹介</h2>
+
+            <p><strong>pandas</strong> is a Python library specifically designed for working with data. Think of it as "Excel in Python" - it lets you organize, analyze, and manipulate data in tables.</p>
+
+            <p class="bilingual"><strong>pandas</strong>はデータを扱うために特別に設計されたPythonライブラリです。</p>
+
+            <h3>What is pandas?</h3>
+
+            <div class="success-box">
+                <h4>pandas = Python's Data Analysis Tool</h4>
+                <p>pandas provides two key data structures:</p>
+                <ul>
+                    <li><strong>Series:</strong> A single column of data (like one column in Excel)</li>
+                    <li><strong>DataFrame:</strong> A table with rows and columns (like an entire Excel spreadsheet)</li>
+                </ul>
+            </div>
+
+            <h3>Why We Need pandas for ML</h3>
+
+            <table class="concept-table">
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>How pandas Helps</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Loading Data</td>
+                        <td>Read CSV, Excel, JSON files easily</td>
+                    </tr>
+                    <tr>
+                        <td>Viewing Data</td>
+                        <td>Display data in organized tables</td>
+                    </tr>
+                    <tr>
+                        <td>Cleaning Data</td>
+                        <td>Handle missing values, remove duplicates</td>
+                    </tr>
+                    <tr>
+                        <td>Analyzing Data</td>
+                        <td>Calculate statistics, filter, sort, group data</td>
+                    </tr>
+                    <tr>
+                        <td>Preparing for ML</td>
+                        <td>Format data exactly how ML models need it</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Basic pandas Operations</h3>
+
+            <div class="code-block">
+<pre><span class="python-comment"># First, import the pandas library</span>
+<span class="python-keyword">import</span> pandas <span class="python-keyword">as</span> pd
+
+<span class="python-comment"># Load data from a CSV file</span>
+companies = pd.read_csv(<span class="python-string">"companies.csv"</span>)
+
+<span class="python-comment"># View the first 5 rows</span>
+<span class="python-keyword">print</span>(companies.head())
+
+<span class="python-comment"># Check the shape (rows, columns)</span>
+<span class="python-keyword">print</span>(companies.shape)        <span class="python-comment"># Example output: (100, 5)</span>
+
+<span class="python-comment"># See column names</span>
+<span class="python-keyword">print</span>(companies.columns)
+
+<span class="python-comment"># Get summary statistics</span>
+<span class="python-keyword">print</span>(companies.describe())
+
+<span class="python-comment"># Access a specific column</span>
+<span class="python-keyword">print</span>(companies[<span class="python-string">"company_name"</span>])</pre>
+            </div>
+
+            <div class="info-box">
+                <h4>You'll Practice pandas Today!</h4>
+                <p>In today's hands-on activity, you'll:</p>
+                <ul>
+                    <li>Load a real dataset using pandas</li>
+                    <li>Explore the data with <code>.head()</code>, <code>.shape</code>, and <code>.describe()</code></li>
+                    <li>Select and examine specific columns</li>
+                    <li>Get comfortable with the DataFrame structure</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Activity Section -->
+        <section id="activity">
+            <h2>Today's Activity | 今日のアクティビティ</h2>
+
+            <p>Now it's time to put everything into practice! You'll complete a hands-on activity guided by the ML-101 Bot.</p>
+
+            <p class="bilingual">今こそすべてを実践に移す時です！ML-101ボットのガイドに従って実践的なアクティビティを完了します。</p>
+
+            <h3>Activity Structure (40-60 minutes)</h3>
+
+            <table class="concept-table">
+                <thead>
+                    <tr>
+                        <th>Section</th>
+                        <th>Duration</th>
+                        <th>What You'll Do</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1. Set Up Google Colab</strong></td>
+                        <td>10 min</td>
+                        <td>Create your first notebook, understand the interface</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2. Variables and Data Types</strong></td>
+                        <td>12 min</td>
+                        <td>Create variables with strings, integers, floats, booleans</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3. Lists and Dictionaries</strong></td>
+                        <td>13 min</td>
+                        <td>Build lists of companies, create company info dictionaries</td>
+                    </tr>
+                    <tr>
+                        <td><strong>4. Pandas Data Exploration</strong></td>
+                        <td>15 min</td>
+                        <td>Load a CSV file, explore data with pandas commands</td>
+                    </tr>
+                    <tr>
+                        <td><strong>5. Complete and Document</strong></td>
+                        <td>10 min</td>
+                        <td>Save your notebook, take screenshots, write reflection</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>What to Expect</h3>
+
+            <div class="success-box">
+                <h4>The ML-101 Bot Will Guide You</h4>
+                <p>You won't be doing this alone! The bot will:</p>
+                <ul>
+                    <li>Provide step-by-step instructions for each exercise</li>
+                    <li>Explain error messages if your code doesn't work</li>
+                    <li>Answer questions about Python concepts</li>
+                    <li>Give hints when you're stuck</li>
+                    <li>Verify your code is working correctly</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Tips for Success</h4>
+                <ul>
+                    <li><strong>Run code frequently:</strong> Test each line before moving on</li>
+                    <li><strong>Read error messages:</strong> They usually tell you exactly what's wrong</li>
+                    <li><strong>Ask for help:</strong> Use the bot, ask classmates, raise your hand</li>
+                    <li><strong>Experiment:</strong> Try changing values and see what happens</li>
+                    <li><strong>Save often:</strong> Colab auto-saves, but download a backup copy</li>
+                </ul>
+            </div>
+
+            <h3>Deliverables</h3>
+
+            <p>By the end of class, you'll submit:</p>
+            <ol>
+                <li><strong>Completed Colab Notebook</strong> (.ipynb file) with all exercises</li>
+                <li><strong>Screenshots</strong> showing your code execution (minimum 3)</li>
+                <li><strong>Reflection Notes</strong> (1-2 paragraphs about your learning experience)</li>
+                <li><strong>AI Transparency Statement</strong> (if you used external AI tools)</li>
+            </ol>
+
+            <div class="info-box">
+                <p>See the <a href="assignment.html">Week 3 Assignment page</a> for detailed submission instructions and grading rubric.</p>
+            </div>
+        </section>
+
+        <!-- Key Takeaways Section -->
+        <section id="key-takeaways">
+            <h2>Key Takeaways | 重要なポイント</h2>
+
+            <div class="success-box">
+                <h3>Remember These Core Concepts:</h3>
+
+                <h4>1. Google Colab = Your Python Workspace</h4>
+                <ul>
+                    <li>Free, cloud-based, no installation needed</li>
+                    <li>Perfect for learning ML and data science</li>
+                    <li>Notebooks combine code and documentation</li>
+                </ul>
+
+                <h4>2. Python = Tool for ML, Not the Goal</h4>
+                <ul>
+                    <li>We learn Python to accomplish ML tasks</li>
+                    <li>Focus on what you need, not becoming an expert programmer</li>
+                    <li>Learning by doing, not memorizing</li>
+                </ul>
+
+                <h4>3. Variables Store Information</h4>
+                <ul>
+                    <li>Like labeled boxes holding different types of data</li>
+                    <li>Use descriptive names: <code>company_name</code> not <code>cn</code></li>
+                    <li>Essential for organizing company data</li>
+                </ul>
+
+                <h4>4. Four Essential Data Types</h4>
+                <ul>
+                    <li><strong>Strings:</strong> Text data like company names</li>
+                    <li><strong>Integers:</strong> Whole numbers like employee counts</li>
+                    <li><strong>Floats:</strong> Decimals like ratings and salaries</li>
+                    <li><strong>Booleans:</strong> True/False for yes/no questions</li>
+                </ul>
+
+                <h4>5. Lists and Dictionaries Organize Data</h4>
+                <ul>
+                    <li><strong>Lists:</strong> Ordered collections of similar items</li>
+                    <li><strong>Dictionaries:</strong> Key-value pairs for related information</li>
+                    <li>Critical for handling multiple companies and their details</li>
+                </ul>
+
+                <h4>6. pandas = Excel in Python</h4>
+                <ul>
+                    <li>Works with data in tables (DataFrames)</li>
+                    <li>Loads, cleans, analyzes data</li>
+                    <li>Essential for ML data preparation</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h3>Looking Ahead</h3>
+                <p><strong>Next Week (Week 4):</strong> Introduction to Web Scraping</p>
+                <p>You'll learn how websites are structured (HTML) and how to extract data from them - the first step in building your company dataset!</p>
+                <p class="bilingual">来週（第4週）：ウェブスクレイピング入門 - ウェブサイトの構造（HTML）とデータ抽出方法を学びます！</p>
+            </div>
+        </section>
+
+        <!-- Resources Section -->
+        <section>
+            <h2>Additional Resources | 追加リソース</h2>
+
+            <h3>Python Learning Resources</h3>
+            <ul>
+                <li><a href="https://www.python.org/doc/" target="_blank">Official Python Documentation</a></li>
+                <li><a href="https://colab.research.google.com/" target="_blank">Google Colab</a></li>
+                <li><a href="https://www.w3schools.com/python/" target="_blank">W3Schools Python Tutorial</a></li>
+            </ul>
+
+            <h3>pandas Resources</h3>
+            <ul>
+                <li><a href="https://pandas.pydata.org/docs/" target="_blank">Official pandas Documentation</a></li>
+                <li><a href="https://pandas.pydata.org/docs/user_guide/10min.html" target="_blank">10 Minutes to pandas</a></li>
+            </ul>
+
+            <h3>Course Materials</h3>
+            <ul>
+                <li><a href="slides.html" class="btn">View Presentation Slides</a></li>
+                <li><a href="assignment.html" class="btn">View Week 3 Assignment</a></li>
+                <li><a href="../../index.html" class="btn btn-secondary">Back to Course Home</a></li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 Yuri Tijerino. ML-101: Machine Learning and Intelligence</p>
+            <p class="bilingual">著作権 © 2025 Yuri Tijerino. ML-101: 機械学習と知能</p>
+        </footer>
+    </div>
+</body>
+</html>

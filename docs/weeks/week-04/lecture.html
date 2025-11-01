@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 4: Introduction to Web Scraping - Lecture Notes</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .lecture-header {
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            color: white;
+            padding: 50px 0;
+            margin-bottom: 40px;
+        }
+
+        .lecture-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .lecture-meta {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            font-size: 1rem;
+            opacity: 0.95;
+        }
+
+        .lecture-meta span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-breadcrumb {
+            background-color: #f9fafb;
+            padding: 15px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .nav-breadcrumb a {
+            color: #2563eb;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .nav-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .content-section {
+            background-color: white;
+            padding: 40px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .content-section h2 {
+            font-size: 2rem;
+            color: #1f2937;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 10px;
+        }
+
+        .content-section h3 {
+            font-size: 1.5rem;
+            color: #7c3aed;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content-section h4 {
+            font-size: 1.2rem;
+            color: #10b981;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .japanese {
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        .warning-box {
+            background-color: #fef2f2;
+            border-left: 5px solid #dc2626;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box h3 {
+            color: #dc2626;
+            margin-top: 0;
+            font-size: 1.8rem;
+        }
+
+        .info-box {
+            background-color: #eff6ff;
+            border-left: 5px solid #2563eb;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+
+        .info-box h3 {
+            color: #2563eb;
+            margin-top: 0;
+        }
+
+        .success-box {
+            background-color: #f0fdf4;
+            border-left: 5px solid #10b981;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+
+        .success-box h3 {
+            color: #10b981;
+            margin-top: 0;
+        }
+
+        .two-column-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 25px 0;
+        }
+
+        .column-card {
+            background-color: #f9fafb;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .column-card h4 {
+            margin-top: 0;
+            color: #2563eb;
+        }
+
+        code {
+            background-color: #f3f4f6;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+
+        pre {
+            background-color: #1f2937;
+            color: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+        }
+
+        .checklist {
+            background-color: #f0fdf4;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 5px solid #10b981;
+        }
+
+        .checklist ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding: 10px 0;
+            border-bottom: 1px solid #d1fae5;
+        }
+
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+
+        .checklist li::before {
+            content: "✅ ";
+            margin-right: 10px;
+        }
+
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 200px;
+            background-color: #eff6ff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #2563eb;
+        }
+
+        .step-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+
+        .objectives-list {
+            background-color: #fef3c7;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 5px solid #f59e0b;
+        }
+
+        .objectives-list h3 {
+            color: #f59e0b;
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+        }
+
+        table th {
+            background-color: #2563eb;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        table tr:hover {
+            background-color: #f9fafb;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .highlight {
+            background-color: #fef3c7;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .two-column-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process-steps {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Breadcrumb Navigation -->
+    <div class="nav-breadcrumb">
+        <div class="container">
+            <a href="../../index.html">ML-101 Home</a> /
+            <a href="../../index.html#curriculum">Curriculum</a> /
+            <span>Week 4 Lecture</span>
+        </div>
+    </div>
+
+    <!-- Lecture Header -->
+    <div class="lecture-header">
+        <div class="container">
+            <h1>Week 4: Introduction to Web Scraping</h1>
+            <p style="font-size: 1.3rem; margin-bottom: 10px;">第4週：Webスクレイピング入門</p>
+            <div class="lecture-meta">
+                <span>📚 <strong>Course:</strong> Machine Learning and Intelligence</span>
+                <span>👨‍🏫 <strong>Instructor:</strong> Yuri Tijerino</span>
+                <span>⏱️ <strong>Duration:</strong> 15-20 minutes</span>
+                <span>📅 <strong>Phase:</strong> Python & Web Scraping (Weeks 3-5)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Learning Objectives -->
+        <div class="content-section">
+            <div class="objectives-list">
+                <h3>Today's Learning Objectives | 今日の学習目標</h3>
+                <ul>
+                    <li>Understand what web scraping is and why it's important for machine learning</li>
+                    <li><strong class="highlight">Learn about ethical and legal considerations - THIS IS CRITICAL!</strong></li>
+                    <li>Explore how websites are structured using HTML</li>
+                    <li>Learn to use browser developer tools to inspect web pages</li>
+                    <li>Identify appropriate data sources for the course project</li>
+                </ul>
+            </div>
+
+            <div class="action-buttons">
+                <a href="slides.html" class="btn btn-primary">📊 View Presentation Slides</a>
+                <a href="assignment.html" class="btn btn-accent">📝 View Assignment</a>
+                <a href="../../index.html" class="btn btn-secondary">← Back to Course Home</a>
+            </div>
+        </div>
+
+        <!-- Section 1: What is Web Scraping? -->
+        <div class="content-section">
+            <h2>1. What is Web Scraping?</h2>
+            <p class="japanese">Webスクレイピングとは？</p>
+
+            <p><strong>Web Scraping = Automatically Collecting Data from Websites</strong></p>
+            <p>Web scraping is the process of using software to automatically extract information from websites. Instead of manually copying and pasting data, scraping tools visit web pages, read the HTML code, and save the information in a structured format.</p>
+
+            <div class="two-column-grid">
+                <div class="column-card">
+                    <h4>❌ The Problem</h4>
+                    <ul>
+                        <li><strong>ML needs lots of data</strong> - Machine learning models require large datasets to learn patterns effectively</li>
+                        <li><strong>Not all data is downloadable</strong> - Many websites display information but don't offer a "Download" button</li>
+                        <li><strong>Manual copying is tedious</strong> - Copying data from hundreds of web pages by hand is slow, error-prone, and boring</li>
+                    </ul>
+                    <p class="japanese">MLには多くのデータが必要ですが、すべてのデータがダウンロード可能なわけではありません</p>
+                </div>
+
+                <div class="column-card">
+                    <h4>✅ The Solution</h4>
+                    <ul>
+                        <li><strong>Automation</strong> - Scraping automates the data collection process</li>
+                        <li><strong>Speed</strong> - Collects information much faster than manual methods</li>
+                        <li><strong>Organization</strong> - Saves data in clean, structured formats (CSV, databases) ready for analysis</li>
+                    </ul>
+                    <p class="japanese">スクレイピングはデータ収集を自動化し、分析用に整理します</p>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <h3>For Our Project</h3>
+                <p>In this course, we'll use web scraping to collect <strong>company information</strong> from job boards and company directories. This data will help us build a machine learning model that recommends companies based on student interests and qualifications.</p>
+                <p class="japanese">求人サイトや企業ディレクトリから企業情報をスクレイプして、学生の興味や資格に基づいて企業を推薦する機械学習モデルを構築します</p>
+            </div>
+        </div>
+
+        <!-- Section 2: How Web Scraping Works -->
+        <div class="content-section">
+            <h2>2. How Web Scraping Works</h2>
+            <p class="japanese">Webスクレイピングの仕組み</p>
+
+            <h3>The Basic Process</h3>
+            <div class="process-steps">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>VISIT WEBSITE</strong>
+                    <p>🌐 Open webpage</p>
+                    <p class="japanese">ウェブサイト訪問</p>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>READ HTML</strong>
+                    <p>📄 Get page code</p>
+                    <p class="japanese">HTMLを読む</p>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>EXTRACT DATA</strong>
+                    <p>🎯 Find specific info</p>
+                    <p class="japanese">データ抽出</p>
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <strong>SAVE DATA</strong>
+                    <p>💾 Store in file</p>
+                    <p class="japanese">データ保存</p>
+                </div>
+            </div>
+
+            <h3>What Happens Step-by-Step</h3>
+            <ol>
+                <li><strong>Your computer visits a website</strong> - Just like when you open a web browser, but automated</li>
+                <li><strong>Reads the HTML</strong> - HTML is the code behind every web page that tells browsers how to display content</li>
+                <li><strong>Finds specific information</strong> - The scraper looks for company names, descriptions, job postings, etc.</li>
+                <li><strong>Saves it in an organized format</strong> - Data is exported to CSV files, Excel spreadsheets, or databases for analysis</li>
+            </ol>
+
+            <h3>Two Approaches to Scraping</h3>
+            <div class="two-column-grid">
+                <div class="column-card">
+                    <h4>No-Code Tools</h4>
+                    <p><strong>Week 5 Focus</strong></p>
+                    <p>Tools like Octoparse, ParseHub, and WebScraper.io let you scrape websites by pointing and clicking - no programming required!</p>
+                    <p class="japanese">プログラミング不要のポイント＆クリックツール</p>
+                </div>
+                <div class="column-card">
+                    <h4>Python Code</h4>
+                    <p><strong>Later Weeks</strong></p>
+                    <p>Writing Python scripts with libraries like BeautifulSoup and Scrapy gives you more flexibility and control over the scraping process.</p>
+                    <p class="japanese">より柔軟で制御可能なPythonコード</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: CRITICAL - Ethics and Legality -->
+        <div class="content-section">
+            <h2 style="color: #dc2626;">⚠️ 3. CRITICAL: Ethical and Legal Considerations ⚠️</h2>
+            <p class="japanese" style="color: #dc2626; font-size: 1.2rem;">重要：倫理的および法的考慮事項</p>
+
+            <div class="warning-box">
+                <h3>⚠️ NOT ALL SCRAPING IS ETHICAL OR LEGAL!</h3>
+                <p style="font-size: 1.2rem;"><strong>This is the MOST IMPORTANT lesson today.</strong> Just because you <em>can</em> scrape a website doesn't mean you <em>should</em>. Web scraping exists in a complex ethical and legal landscape.</p>
+                <p class="japanese">すべてのスクレイピングが倫理的または合法的ではありません！</p>
+            </div>
+
+            <h3>Before Scraping ANY Website, You MUST Ask These Questions:</h3>
+
+            <div class="info-box">
+                <h4>❓ Question 1: Is this data publicly available?</h4>
+                <p><strong>Public data:</strong> Information that anyone can view without logging in or paying</p>
+                <p><strong>Private data:</strong> Content behind login walls, paywalls, or password-protected areas</p>
+                <p><strong>Rule:</strong> If data is behind a login or paywall → <strong>probably NOT okay to scrape</strong></p>
+                <p class="japanese">このデータは公的に利用可能ですか？ログインや有料の背後にある場合はおそらくNG</p>
+            </div>
+
+            <div class="info-box">
+                <h4>❓ Question 2: What does robots.txt say?</h4>
+                <p><strong>robots.txt</strong> is a file that every website can use to tell automated bots (like scrapers) what they are allowed to access.</p>
+                <p><strong>How to check:</strong> Add <code>/robots.txt</code> to any website URL</p>
+                <p>Example: <code>https://www.example.com/robots.txt</code></p>
+                <p><strong>Rule:</strong> Respect what robots.txt says. If it says "Disallow," don't scrape.</p>
+                <p class="japanese">robots.txtは何と言っていますか？すべてのウェブサイトにはボットのルールがあります</p>
+            </div>
+
+            <div class="info-box">
+                <h4>❓ Question 3: What do the Terms of Service say?</h4>
+                <p><strong>Terms of Service (ToS)</strong> are legal agreements you accept when using a website.</p>
+                <p><strong>Many sites explicitly prohibit scraping</strong> in their ToS</p>
+                <p><strong>Violating ToS can have consequences:</strong></p>
+                <ul>
+                    <li>Account termination</li>
+                    <li>IP address blocking</li>
+                    <li>Legal action in serious cases</li>
+                </ul>
+                <p><strong>Rule:</strong> Always read and respect the Terms of Service.</p>
+                <p class="japanese">利用規約は何と言っていますか？多くのサイトがスクレイピングを禁止しています</p>
+            </div>
+
+            <div class="warning-box">
+                <h3>Golden Rule of Web Scraping</h3>
+                <p style="font-size: 1.3rem; text-align: center;">
+                    <strong>When in doubt, DON'T scrape - or ask permission first!</strong>
+                </p>
+                <p style="text-align: center;" class="japanese">疑わしい場合は、スクレイプしないか、許可を求める！</p>
+            </div>
+
+            <h3>Legal Considerations in Japan</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Legal Area</th>
+                        <th>What You Need to Know</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Copyright Law</strong><br>著作権法</td>
+                        <td>
+                            <ul>
+                                <li>Website content may be copyrighted</li>
+                                <li>Scraping doesn't automatically grant usage rights</li>
+                                <li>Educational use may be fair use, but respect ToS</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Personal Information Protection</strong><br>個人情報保護</td>
+                        <td>
+                            <ul>
+                                <li><strong>DON'T scrape personal data</strong> (names, emails, addresses)</li>
+                                <li>Privacy laws protect individuals</li>
+                                <li>Focus on public company information, not personal details</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Terms of Service</strong><br>利用規約</td>
+                        <td>
+                            <ul>
+                                <li>Legally binding agreements</li>
+                                <li>Violation can lead to legal action</li>
+                                <li>Even for educational purposes, respect website policies</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="success-box">
+                <h3>✅ For This Course</h3>
+                <p><strong>We will ONLY scrape:</strong></p>
+                <div class="checklist">
+                    <ul>
+                        <li>Publicly available information (no login required)</li>
+                        <li>Sites that allow scraping according to robots.txt</li>
+                        <li>For educational purposes only</li>
+                        <li>Company information (not personal data about individuals)</li>
+                    </ul>
+                </div>
+                <p class="japanese">公的に利用可能な情報、スクレイピングを許可するサイト、教育目的のみ、企業情報（個人データではない）</p>
+            </div>
+        </div>
+
+        <!-- Section 4: Understanding robots.txt -->
+        <div class="content-section">
+            <h2>4. Understanding robots.txt</h2>
+            <p class="japanese">robots.txtの理解</p>
+
+            <p><strong>robots.txt = A Website's Rules for Bots</strong></p>
+            <p>The robots.txt file is a simple text file that websites use to communicate with web crawlers and bots. It tells them which parts of the site they can or cannot access.</p>
+
+            <h3>How to Check robots.txt</h3>
+            <p>Simply add <code>/robots.txt</code> to the end of any website's domain:</p>
+            <pre><code>https://example.com/robots.txt</code></pre>
+
+            <h3>Reading robots.txt Files</h3>
+            <div class="two-column-grid">
+                <div class="column-card" style="border-left: 5px solid #10b981;">
+                    <h4 style="color: #10b981;">✅ Example 1: Scraping Allowed</h4>
+                    <pre><code>User-agent: *
+Allow: /</code></pre>
+                    <p><strong>Interpretation:</strong> "All bots (*) can access all pages (/)"</p>
+                    <p>This means scraping is generally allowed!</p>
+                    <p class="japanese">これは「すべてのボットがすべてのページにアクセスできる」を意味します</p>
+                </div>
+
+                <div class="column-card" style="border-left: 5px solid #dc2626;">
+                    <h4 style="color: #dc2626;">❌ Example 2: Scraping NOT Allowed</h4>
+                    <pre><code>User-agent: *
+Disallow: /</code></pre>
+                    <p><strong>Interpretation:</strong> "Don't scrape anything"</p>
+                    <p>This means you should NOT scrape this website.</p>
+                    <p class="japanese">これは「何もスクレイプしない」を意味します</p>
+                </div>
+            </div>
+
+            <h3>Common robots.txt Directives</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Directive</th>
+                        <th>Meaning</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>User-agent: *</code></td>
+                        <td>Applies to all bots</td>
+                        <td>The asterisk (*) means "everyone"</td>
+                    </tr>
+                    <tr>
+                        <td><code>Allow: /</code></td>
+                        <td>Access to all pages is allowed</td>
+                        <td>Root (/) means entire site</td>
+                    </tr>
+                    <tr>
+                        <td><code>Disallow: /</code></td>
+                        <td>Access to all pages is denied</td>
+                        <td>Don't scrape anything</td>
+                    </tr>
+                    <tr>
+                        <td><code>Disallow: /admin/</code></td>
+                        <td>Specific directory is off-limits</td>
+                        <td>Can scrape other parts, not /admin/</td>
+                    </tr>
+                    <tr>
+                        <td><code>Allow: /jobs/</code></td>
+                        <td>Specific directory is allowed</td>
+                        <td>Job listings are okay to scrape</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box">
+                <h3>Today's Activity</h3>
+                <p>You'll practice checking robots.txt files for 3-5 different websites and interpreting what they allow or disallow!</p>
+                <p class="japanese">今日のアクティビティ：robots.txtファイルをチェックします！</p>
+            </div>
+        </div>
+
+        <!-- Section 5: HTML Basics -->
+        <div class="content-section">
+            <h2>5. Website Structure - HTML Basics</h2>
+            <p class="japanese">ウェブサイト構造 - HTML基礎</p>
+
+            <p><strong>HTML = HyperText Markup Language</strong></p>
+            <p>HTML is the code that creates the structure and content of every web page. Think of it as the skeleton and organs of a website.</p>
+
+            <h3>Think of HTML Like a Document Structure</h3>
+            <p>HTML uses "tags" to organize content, just like a document has headings, paragraphs, and lists.</p>
+
+            <pre><code>&lt;div class="company"&gt;
+  &lt;h1&gt;ABC Corporation&lt;/h1&gt;
+  &lt;p class="industry"&gt;Technology&lt;/p&gt;
+  &lt;p class="employees"&gt;500 employees&lt;/p&gt;
+  &lt;p class="description"&gt;Leading software company...&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+
+            <h3>HTML Tags We Care About for Scraping</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>HTML Tag</th>
+                        <th>Purpose</th>
+                        <th>Example Use in Company Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>&lt;h1&gt;, &lt;h2&gt;</code></td>
+                        <td>Headings</td>
+                        <td>Company names, section titles</td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;p&gt;</code></td>
+                        <td>Paragraphs</td>
+                        <td>Company descriptions, mission statements</td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;div&gt;</code></td>
+                        <td>Container/Section</td>
+                        <td>Groups related company information together</td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;a&gt;</code></td>
+                        <td>Links</td>
+                        <td>Links to individual company pages</td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;ul&gt;, &lt;li&gt;</code></td>
+                        <td>Lists</td>
+                        <td>Lists of services, products, benefits</td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;table&gt;</code></td>
+                        <td>Tables</td>
+                        <td>Structured data like company statistics</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="success-box">
+                <h3>✅ Good News!</h3>
+                <p>You don't need to be an HTML expert. Scraping tools find and extract this HTML for you. But understanding the basics helps you identify what data you can scrape.</p>
+                <p class="japanese">スクレイピングツールがこのHTMLを見つけます！HTMLの専門家になる必要はありません</p>
+            </div>
+        </div>
+
+        <!-- Section 6: Browser Developer Tools -->
+        <div class="content-section">
+            <h2>6. Browser Developer Tools</h2>
+            <p class="japanese">ブラウザ開発者ツール</p>
+
+            <p><strong>Developer Tools = Your Window Into Website Structure</strong></p>
+            <p>Every modern web browser has built-in developer tools that let you see the HTML code behind any web page. This is essential for planning your web scraping.</p>
+
+            <h3>How to Access Developer Tools</h3>
+            <div class="two-column-grid">
+                <div class="column-card">
+                    <h4>Method 1: Keyboard Shortcut</h4>
+                    <p>Press <code>F12</code> on your keyboard</p>
+                    <p><strong>Windows/Linux:</strong> F12</p>
+                    <p><strong>Mac:</strong> Cmd + Option + I</p>
+                </div>
+                <div class="column-card">
+                    <h4>Method 2: Right-Click</h4>
+                    <p>Right-click anywhere on a web page</p>
+                    <p>Select <strong>"Inspect"</strong> or <strong>"Inspect Element"</strong></p>
+                </div>
+            </div>
+
+            <h3>What You'll See</h3>
+            <ul>
+                <li><strong>Elements Tab:</strong> Shows the HTML structure of the page</li>
+                <li><strong>Selector Tool:</strong> Click on it, then click on any element on the page to see its HTML code</li>
+                <li><strong>Live Preview:</strong> As you hover over HTML code, the corresponding part of the page highlights</li>
+                <li><strong>CSS Styles:</strong> Shows the styling applied to elements</li>
+            </ul>
+
+            <div class="info-box">
+                <h3>How to Use the Element Selector</h3>
+                <ol>
+                    <li>Open Developer Tools (F12)</li>
+                    <li>Click the selector icon (usually looks like an arrow in a box) in the top-left of DevTools</li>
+                    <li>Hover over elements on the page - they'll highlight</li>
+                    <li>Click an element to see its HTML code</li>
+                    <li>Examine the structure to identify patterns for scraping</li>
+                </ol>
+            </div>
+
+            <div class="success-box">
+                <h3>Today's Activity</h3>
+                <p>You'll use browser developer tools to inspect web pages and identify at least 5 different HTML elements containing company data!</p>
+                <p class="japanese">開発者ツールを使用してWebページを検査し、企業データを含む5つのHTML要素を特定します！</p>
+            </div>
+        </div>
+
+        <!-- Section 7: Evaluating Websites for Scraping -->
+        <div class="content-section">
+            <h2>7. Evaluating Websites for Scraping</h2>
+            <p class="japanese">スクレイピングのためのウェブサイト評価</p>
+
+            <h3>The Scraping Feasibility Checklist</h3>
+            <p>Not all websites are good candidates for scraping. Use this checklist to evaluate potential data sources:</p>
+
+            <div class="checklist">
+                <h4>For Each Potential Website, Check:</h4>
+                <ul>
+                    <li><strong>Data Availability:</strong> Does it have the company information you need? (names, descriptions, industry, size, etc.)</li>
+                    <li><strong>HTML Structure:</strong> Is the data organized in a structured, consistent way?</li>
+                    <li><strong>robots.txt:</strong> Does the robots.txt file allow scraping?</li>
+                    <li><strong>Terms of Service:</strong> Are there prohibitions on scraping or data collection?</li>
+                    <li><strong>Ethical Assessment:</strong> Is this the right thing to do? Would scraping harm the website or users?</li>
+                </ul>
+            </div>
+
+            <h3>Rating Criteria</h3>
+            <p>For your assignment, you'll rate websites on a 1-5 scale:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Criterion</th>
+                        <th>What to Evaluate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Legal Compliance</strong></td>
+                        <td>robots.txt allows scraping, no ToS restrictions, data is public</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ethical Appropriateness</strong></td>
+                        <td>Scraping aligns with ethical guidelines, won't harm site or users</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Technical Feasibility</strong></td>
+                        <td>HTML is accessible, data is consistently formatted, no technical barriers</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data Quality</strong></td>
+                        <td>Accurate, complete, up-to-date information</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data Richness</strong></td>
+                        <td>Contains all the company details needed for the project</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section 8: Responsible Scraping Practices -->
+        <div class="content-section">
+            <h2>8. Responsible Scraping Practices</h2>
+            <p class="japanese">責任あるスクレイピング実践</p>
+
+            <h3>How to Be a Good Scraper</h3>
+
+            <div class="two-column-grid">
+                <div class="column-card">
+                    <h4>1. Respect Rate Limits</h4>
+                    <p class="japanese">レート制限を尊重</p>
+                    <ul>
+                        <li>Don't overwhelm servers with too many requests</li>
+                        <li>Add delays between requests (1-2 seconds minimum)</li>
+                        <li>Scrape during off-peak hours when possible</li>
+                    </ul>
+                </div>
+
+                <div class="column-card">
+                    <h4>2. Use APIs When Available</h4>
+                    <p class="japanese">利用可能な場合はAPIを使用</p>
+                    <ul>
+                        <li>Many sites offer official APIs for data access</li>
+                        <li>APIs are the "proper way" to get data</li>
+                        <li>Often more reliable than scraping</li>
+                    </ul>
+                </div>
+
+                <div class="column-card">
+                    <h4>3. Respect Privacy</h4>
+                    <p class="japanese">プライバシーを尊重</p>
+                    <ul>
+                        <li>Never scrape personal information</li>
+                        <li>Focus on public company data</li>
+                        <li>Don't scrape content behind authentication</li>
+                    </ul>
+                </div>
+
+                <div class="column-card">
+                    <h4>4. Document Your Work</h4>
+                    <p class="japanese">作業を文書化</p>
+                    <ul>
+                        <li>Keep track of what you scraped and when</li>
+                        <li>Note ethical decisions you made</li>
+                        <li>Document data sources for transparency</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <h3>What NOT to Do</h3>
+                <ul>
+                    <li>❌ Don't scrape sites that explicitly prohibit it</li>
+                    <li>❌ Don't scrape personal data (names, emails, phone numbers)</li>
+                    <li>❌ Don't overwhelm servers with rapid requests</li>
+                    <li>❌ Don't scrape content behind paywalls or login walls</li>
+                    <li>❌ Don't use scraped data for commercial purposes without permission</li>
+                    <li>❌ Don't ignore robots.txt or Terms of Service</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 9: Today's Activity -->
+        <div class="content-section">
+            <h2>9. Today's Activity Preview</h2>
+            <p class="japanese">今日のアクティビティプレビュー</p>
+
+            <h3>What You'll Do Today (40-60 minutes)</h3>
+
+            <div style="background-color: #fef3c7; padding: 25px; border-radius: 10px; margin: 25px 0;">
+                <h4>Activity Structure:</h4>
+                <ol>
+                    <li><strong>Browser Developer Tools Practice (10 min)</strong>
+                        <ul>
+                            <li>Learn to access and use browser DevTools</li>
+                            <li>Practice selecting elements and viewing HTML</li>
+                        </ul>
+                    </li>
+
+                    <li><strong>HTML Structure Exploration (12 min)</strong>
+                        <ul>
+                            <li>Identify at least 5 HTML elements on a company profile page</li>
+                            <li>Document element types, purposes, and data contained</li>
+                        </ul>
+                    </li>
+
+                    <li><strong>Ethical Analysis (13 min)</strong>
+                        <ul>
+                            <li>Check robots.txt files for 3 websites</li>
+                            <li>Review Terms of Service for 2 websites</li>
+                            <li>Document your ethical analysis</li>
+                        </ul>
+                    </li>
+
+                    <li><strong>Website Evaluation (15 min)</strong>
+                        <ul>
+                            <li>Evaluate 3-5 potential data sources</li>
+                            <li>Rate each on 5 criteria (legal, ethical, technical, quality, richness)</li>
+                            <li>Create evaluation matrix</li>
+                        </ul>
+                    </li>
+
+                    <li><strong>Feasibility Report (10 min)</strong>
+                        <ul>
+                            <li>Write recommendations for top 2-3 websites</li>
+                            <li>List data elements to collect</li>
+                            <li>Provide ethical justification</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="info-box">
+                <h3>ML-101 Bot Guidance</h3>
+                <p>The ML-101 Bot will guide you through each step of the activity, helping you make ethical decisions and understand HTML structure. The bot will provide:</p>
+                <ul>
+                    <li>Step-by-step instructions for using developer tools</li>
+                    <li>Ethical decision-making frameworks</li>
+                    <li>HTML interpretation assistance</li>
+                    <li>Feedback on your website evaluations</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 10: Key Takeaways -->
+        <div class="content-section">
+            <h2>Key Takeaways | 重要なポイント</h2>
+
+            <div style="background-color: #eff6ff; padding: 30px; border-radius: 10px;">
+                <h3>Remember These Essential Points:</h3>
+                <ul style="font-size: 1.1rem; line-height: 2;">
+                    <li>✅ <strong>Web scraping = automated data collection</strong> from websites</li>
+                    <li>✅ <strong>Ethics and legality MATTER</strong> - always check before scraping</li>
+                    <li>✅ <strong>robots.txt tells you what's allowed</strong> - respect it</li>
+                    <li>✅ <strong>HTML is the website structure</strong> that holds the data you want</li>
+                    <li>✅ <strong>Developer tools</strong> let you explore and understand HTML</li>
+                    <li>✅ <strong>When in doubt, DON'T scrape</strong> - ask permission or find alternatives</li>
+                </ul>
+            </div>
+
+            <div class="warning-box" style="margin-top: 30px;">
+                <h3>Critical Warning</h3>
+                <p style="font-size: 1.1rem;">Just because you <strong>CAN</strong> scrape doesn't mean you <strong>SHOULD</strong>. Always prioritize ethical and legal considerations over convenience.</p>
+                <p class="japanese">スクレイプできるからといって、すべきとは限りません。常に倫理的および法的考慮事項を優先してください。</p>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="content-section">
+            <div class="action-buttons">
+                <a href="slides.html" class="btn btn-primary">📊 View Presentation Slides</a>
+                <a href="assignment.html" class="btn btn-accent">📝 Start Assignment</a>
+                <a href="../../index.html" class="btn btn-secondary">← Back to Course Home</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>著作権 © 2025 Yuri Tijerino. 無断転載を禁じます。</p>
+        </div>
+    </footer>
+</body>
+</html>

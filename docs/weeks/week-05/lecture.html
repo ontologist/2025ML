@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5 Lecture: No-Code Web Scraping Tools - ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .lecture-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .lecture-header {
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .lecture-header h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .lecture-meta {
+            color: #6b7280;
+            font-size: 1rem;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #764ba2;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            border-left: 5px solid #764ba2;
+            padding-left: 15px;
+        }
+
+        .section h3 {
+            color: #667eea;
+            font-size: 1.5rem;
+            margin: 25px 0 15px 0;
+        }
+
+        .section h4 {
+            color: #764ba2;
+            font-size: 1.2rem;
+            margin: 20px 0 10px 0;
+        }
+
+        .japanese {
+            color: #6b7280;
+            font-size: 0.9em;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .highlight-box {
+            background: #fef3c7;
+            border-left: 5px solid #f59e0b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .info-box {
+            background: #e0e7ff;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background: #d1fae5;
+            border-left: 5px solid #10b981;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: #fee2e2;
+            border-left: 5px solid #ef4444;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #10b981;
+            padding: 20px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #e5e7eb;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 10px 0;
+            line-height: 1.8;
+        }
+
+        .tool-card {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .tool-card h4 {
+            color: #667eea;
+            margin-top: 0;
+        }
+
+        .checkmark {
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .process-steps {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .process-steps li {
+            counter-increment: step-counter;
+            margin: 20px 0;
+            padding-left: 50px;
+            position: relative;
+        }
+
+        .process-steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>ML-101: Machine Learning and Intelligence</h1>
+            <p class="subtitle">Week 5 Lecture Notes</p>
+        </div>
+    </header>
+
+    <main class="container" style="padding: 40px 20px;">
+        <div class="lecture-content">
+            <div class="lecture-header">
+                <h1>Week 5: No-Code Web Scraping Tools</h1>
+                <span class="japanese">第5週：ノーコードWebスクレイピングツール</span>
+                <div class="lecture-meta" style="margin-top: 15px;">
+                    <p><strong>Instructor:</strong> Yuri Tijerino</p>
+                    <p><strong>Duration:</strong> 15-20 minutes lecture + 40-60 minutes hands-on activity</p>
+                    <p><strong>Prerequisites:</strong> Week 4 (Introduction to Web Scraping)</p>
+                </div>
+            </div>
+
+            <!-- Learning Objectives -->
+            <div class="section">
+                <h2>Learning Objectives</h2>
+                <span class="japanese">学習目標</span>
+
+                <p>By the end of this week, you will be able to:</p>
+                <ul>
+                    <li>Understand what no-code web scraping tools are and how they differ from traditional programming approaches</li>
+                    <li>Identify and select appropriate no-code scraping tools for different use cases</li>
+                    <li>Create scraping workflows using point-and-click interfaces</li>
+                    <li>Handle pagination and multi-page data collection</li>
+                    <li>Export scraped data to CSV format for analysis</li>
+                    <li>Troubleshoot common scraping issues using no-code tools</li>
+                    <li>Apply ethical scraping principles from Week 4 using no-code tools</li>
+                </ul>
+            </div>
+
+            <!-- Introduction -->
+            <div class="section">
+                <h2>1. What Are No-Code Web Scraping Tools?</h2>
+                <span class="japanese">ノーコードWebスクレイピングツールとは？</span>
+
+                <p>No-code web scraping tools allow you to collect data from websites without writing any code. Instead of using programming languages like Python, these tools provide visual, point-and-click interfaces that make scraping accessible to everyone.</p>
+
+                <h3>Traditional vs. No-Code Scraping</h3>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Traditional Scraping (Code)</th>
+                            <th>No-Code Tools</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Technical Skill</strong></td>
+                            <td>Requires programming knowledge (Python, HTML, CSS)</td>
+                            <td>No programming required</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Learning Curve</strong></td>
+                            <td>Steep - need to learn syntax, libraries, debugging</td>
+                            <td>Gentle - visual interface, immediate feedback</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Setup Time</strong></td>
+                            <td>Hours to days (environment, libraries, dependencies)</td>
+                            <td>Minutes (install tool, create account)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Flexibility</strong></td>
+                            <td>Highly flexible - can handle any website structure</td>
+                            <td>Good for most sites, limited for very complex cases</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Best For</strong></td>
+                            <td>Complex scraping, custom logic, automation at scale</td>
+                            <td>Getting started, simple to intermediate tasks, quick prototypes</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box">
+                    <strong>Important:</strong> No-code tools are not a replacement for programming-based scraping. They're complementary approaches. No-code tools are excellent for learning concepts and handling straightforward tasks, while code-based scraping offers more power and flexibility for complex scenarios.
+                    <p class="japanese" style="margin-top: 10px;">重要：ノーコードツールはプログラミングベースのスクレイピングの代替ではありません。補完的なアプローチです。</p>
+                </div>
+            </div>
+
+            <!-- Why Use No-Code Tools -->
+            <div class="section">
+                <h2>2. Why Use No-Code Scraping Tools?</h2>
+                <span class="japanese">なぜノーコードスクレイピングツールを使用するのか？</span>
+
+                <h3>Key Advantages</h3>
+
+                <div class="success-box">
+                    <h4><span class="checkmark">✅</span> Fast Setup</h4>
+                    <p>Install and start scraping in minutes. No need to configure Python environments, install libraries, or troubleshoot dependencies.</p>
+                    <p class="japanese">数分でインストールしてスクレイピングを開始できます。</p>
+                </div>
+
+                <div class="success-box">
+                    <h4><span class="checkmark">✅</span> Intuitive Visual Interface</h4>
+                    <p>Point and click on the data you want. The tool shows you exactly what you're selecting in real-time.</p>
+                    <p class="japanese">必要なデータをポイントしてクリックします。</p>
+                </div>
+
+                <div class="success-box">
+                    <h4><span class="checkmark">✅</span> Perfect for Learning</h4>
+                    <p>Understand scraping concepts without getting overwhelmed by code syntax. See how HTML structure relates to data extraction visually.</p>
+                    <p class="japanese">コード構文に圧倒されることなく、スクレイピングの概念を理解できます。</p>
+                </div>
+
+                <div class="success-box">
+                    <h4><span class="checkmark">✅</span> Good for Common Tasks</h4>
+                    <p>Ideal for typical scraping needs:</p>
+                    <ul>
+                        <li>Company listings and directories</li>
+                        <li>Product catalogs</li>
+                        <li>Job postings</li>
+                        <li>News articles</li>
+                        <li>E-commerce data</li>
+                    </ul>
+                </div>
+
+                <h3>When to Use No-Code vs. Code</h3>
+
+                <p><strong>Use No-Code Tools When:</strong></p>
+                <ul>
+                    <li>You're learning web scraping for the first time</li>
+                    <li>You need data quickly and the website has a simple structure</li>
+                    <li>You want to prototype and test if scraping will work</li>
+                    <li>The data collection is a one-time or occasional task</li>
+                    <li>You don't have programming experience</li>
+                </ul>
+
+                <p><strong>Consider Code-Based Scraping When:</strong></p>
+                <ul>
+                    <li>Website has very complex structure or heavy JavaScript</li>
+                    <li>You need advanced custom logic or data transformations</li>
+                    <li>You're scraping at very large scale (thousands of pages)</li>
+                    <li>You need to integrate scraping into automated workflows</li>
+                    <li>The website actively blocks no-code tools</li>
+                </ul>
+            </div>
+
+            <!-- Popular Tools -->
+            <div class="section">
+                <h2>3. Popular No-Code Scraping Tools</h2>
+                <span class="japanese">人気のノーコードスクレイピングツール</span>
+
+                <p>There are several excellent no-code scraping tools available. Here are the top three we recommend for this course:</p>
+
+                <div class="tool-card">
+                    <h4>1. Octoparse</h4>
+                    <p><strong>Type:</strong> Desktop application (Windows/Mac)</p>
+                    <p><strong>Pricing:</strong> Free tier available (limited features), paid plans for advanced use</p>
+
+                    <p><strong>Strengths:</strong></p>
+                    <ul>
+                        <li>Very user-friendly interface with visual workflow builder</li>
+                        <li>Built-in templates for popular websites</li>
+                        <li>Auto-detection of data patterns</li>
+                        <li>Cloud-based scraping option</li>
+                        <li>Excellent for beginners</li>
+                    </ul>
+
+                    <p><strong>Best For:</strong> Beginners who want comprehensive features and guided workflows</p>
+                    <p class="japanese">最適：包括的な機能とガイド付きワークフローを求める初心者</p>
+                </div>
+
+                <div class="tool-card">
+                    <h4>2. ParseHub</h4>
+                    <p><strong>Type:</strong> Desktop application (Windows/Mac/Linux)</p>
+                    <p><strong>Pricing:</strong> Free for small projects (up to 5 projects, 200 pages), paid plans for larger scale</p>
+
+                    <p><strong>Strengths:</strong></p>
+                    <ul>
+                        <li>Handles JavaScript-heavy websites well</li>
+                        <li>Powerful pagination and navigation features</li>
+                        <li>Visual point-and-click interface</li>
+                        <li>Can handle AJAX and dynamic content</li>
+                        <li>Good documentation and tutorials</li>
+                    </ul>
+
+                    <p><strong>Best For:</strong> Intermediate users scraping more complex, JavaScript-heavy sites</p>
+                    <p class="japanese">最適：より複雑でJavaScript重視のサイトをスクレイピングする中級ユーザー</p>
+                </div>
+
+                <div class="tool-card">
+                    <h4>3. Web Scraper (Chrome Extension)</h4>
+                    <p><strong>Type:</strong> Browser extension (Chrome/Edge)</p>
+                    <p><strong>Pricing:</strong> Free for basic use, cloud-based paid plans available</p>
+
+                    <p><strong>Strengths:</strong></p>
+                    <ul>
+                        <li>No download required - works directly in browser</li>
+                        <li>Quick setup and easy to start</li>
+                        <li>Point-and-click selector creation</li>
+                        <li>Lightweight and fast</li>
+                        <li>Good for simple to moderate scraping tasks</li>
+                    </ul>
+
+                    <p><strong>Best For:</strong> Quick scraping tasks, users who prefer not to install desktop software</p>
+                    <p class="japanese">最適：クイックスクレイピングタスク、デスクトップソフトウェアをインストールしたくないユーザー</p>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>For This Course:</strong> The ML-101 Bot will recommend the best tool based on your operating system and use case during the hands-on activity. All three tools are excellent choices for beginners.
+                    <p class="japanese" style="margin-top: 10px;">このコースでは：ML-101ボットが、ハンズオンアクティビティ中にあなたのオペレーティングシステムとユースケースに基づいて最適なツールを推奨します。</p>
+                </div>
+            </div>
+
+            <!-- How It Works -->
+            <div class="section">
+                <h2>4. How No-Code Scraping Works</h2>
+                <span class="japanese">ノーコードスクレイピングの仕組み</span>
+
+                <h3>The Point-and-Click Process</h3>
+
+                <p>All no-code scraping tools follow a similar workflow:</p>
+
+                <ol class="process-steps">
+                    <li>
+                        <strong>Load the Website</strong><br>
+                        <span class="japanese">ウェブサイトをロード</span>
+                        <p>Enter the URL of the website you want to scrape. The tool loads the page in an embedded browser.</p>
+                    </li>
+
+                    <li>
+                        <strong>Select Data Elements</strong><br>
+                        <span class="japanese">データ要素を選択</span>
+                        <p>Click on the specific data you want to extract (e.g., company name, price, description). The tool highlights your selection.</p>
+                    </li>
+
+                    <li>
+                        <strong>Establish Patterns</strong><br>
+                        <span class="japanese">パターンを確立</span>
+                        <p>Click on 2-3 similar items (e.g., multiple company names). The tool recognizes the pattern and identifies all similar elements on the page.</p>
+                    </li>
+
+                    <li>
+                        <strong>Configure Additional Fields</strong><br>
+                        <span class="japanese">追加フィールドを設定</span>
+                        <p>Repeat for other data fields you need (industry, location, description, etc.). Each field becomes a column in your dataset.</p>
+                    </li>
+
+                    <li>
+                        <strong>Set Up Pagination (Optional)</strong><br>
+                        <span class="japanese">ページネーションを設定（オプション）</span>
+                        <p>If data spans multiple pages, configure the tool to click "Next Page" buttons automatically.</p>
+                    </li>
+
+                    <li>
+                        <strong>Run the Scraper</strong><br>
+                        <span class="japanese">スクレイパーを実行</span>
+                        <p>Start the scraping process. The tool collects all matching data from all configured pages.</p>
+                    </li>
+
+                    <li>
+                        <strong>Preview and Export</strong><br>
+                        <span class="japanese">プレビューとエクスポート</span>
+                        <p>Review the collected data in the tool's preview. Export to CSV, Excel, or JSON format.</p>
+                    </li>
+                </ol>
+
+                <h3>Example Walkthrough: Scraping Company Data</h3>
+
+                <div class="example-box" style="background: #f3f4f6; border: 2px solid #e5e7eb; padding: 20px; border-radius: 5px; margin: 20px 0;">
+                    <h4>Scenario: Scraping a Company Directory</h4>
+
+                    <p><strong>Website shows:</strong></p>
+                    <div class="code-block" style="background: white; color: #333; border: 1px solid #e5e7eb;">
+ABC Corporation<br>
+Industry: Technology | Employees: 500<br>
+Description: Leading software company...<br>
+<br>
+XYZ Inc<br>
+Industry: Finance | Employees: 1200<br>
+Description: Innovative financial services...<br>
+                    </div>
+
+                    <p><strong>Your Actions:</strong></p>
+                    <ol>
+                        <li>Click on "ABC Corporation" - tool highlights it</li>
+                        <li>Click on "XYZ Inc" - tool says "Oh, you want all company names!"</li>
+                        <li>Tool automatically identifies all company names on the page</li>
+                        <li>Click on "Technology" industry tag for ABC</li>
+                        <li>Click on "Finance" industry tag for XYZ</li>
+                        <li>Tool recognizes industry pattern and finds all industries</li>
+                        <li>Repeat for employees and descriptions</li>
+                        <li>Run scraper - collects all data</li>
+                        <li>Export to CSV with columns: Company Name, Industry, Employees, Description</li>
+                    </ol>
+
+                    <p><strong>Result:</strong> Clean CSV file ready for analysis!</p>
+                </div>
+            </div>
+
+            <!-- Handling Pagination -->
+            <div class="section">
+                <h2>5. Handling Pagination</h2>
+                <span class="japanese">ページネーションの処理</span>
+
+                <p>Most websites don't display all data on a single page. Instead, results are split across multiple pages with "Next" buttons or numbered page links. This is called <strong>pagination</strong>.</p>
+
+                <h3>Why Pagination Matters</h3>
+
+                <p>If you only scrape the first page, you'll miss most of the data. For example:</p>
+
+                <div class="code-block" style="background: #f3f4f6; color: #333; border: 1px solid #e5e7eb;">
+Page 1: Companies 1-20<br>
+Page 2: Companies 21-40<br>
+Page 3: Companies 41-60<br>
+...<br>
+Page 10: Companies 181-200
+                </div>
+
+                <p>To collect all 200 companies, your scraper needs to navigate through all 10 pages.</p>
+
+                <h3>Setting Up Pagination in No-Code Tools</h3>
+
+                <ol>
+                    <li><strong>Scrape the first page:</strong> Set up your data selectors as normal</li>
+                    <li><strong>Identify the "Next" button:</strong> Click on the button or link that goes to the next page</li>
+                    <li><strong>Configure pagination:</strong> Tell the tool to click this button after each page</li>
+                    <li><strong>Set limits (optional):</strong> Specify maximum number of pages or items to scrape</li>
+                    <li><strong>Run and combine:</strong> Tool automatically scrapes all pages and combines data</li>
+                </ol>
+
+                <div class="info-box">
+                    <strong>Tip:</strong> Always test pagination on a small number of pages first (e.g., 2-3 pages) to make sure it's working correctly before scraping hundreds of pages.
+                    <p class="japanese" style="margin-top: 10px;">ヒント：常に最初に少数のページ（例：2-3ページ）でページネーションをテストしてください。</p>
+                </div>
+            </div>
+
+            <!-- Best Practices -->
+            <div class="section">
+                <h2>6. Best Practices for No-Code Scraping</h2>
+                <span class="japanese">ノーコードスクレイピングのベストプラクティス</span>
+
+                <h3>Do's</h3>
+
+                <div class="success-box">
+                    <ul>
+                        <li><strong>Start with simple websites:</strong> Practice on beginner-friendly sites before tackling complex ones</li>
+                        <li><strong>Test on small samples:</strong> Scrape 5-10 items first to verify your workflow works correctly</li>
+                        <li><strong>Verify data quality:</strong> Check the preview to ensure all fields are capturing the right data</li>
+                        <li><strong>Save your workflows:</strong> Most tools let you save scraping configurations for reuse</li>
+                        <li><strong>Check ethics first:</strong> Always verify robots.txt and Terms of Service (Week 4 principles still apply!)</li>
+                    </ul>
+                </div>
+
+                <h3>Don'ts</h3>
+
+                <div class="warning-box">
+                    <ul>
+                        <li><strong>Don't skip ethical checks:</strong> Just because a tool CAN scrape doesn't mean you SHOULD scrape</li>
+                        <li><strong>Don't scrape too aggressively:</strong> Respect rate limits and don't overwhelm websites with requests</li>
+                        <li><strong>Don't ignore errors:</strong> If the tool can't find data, investigate why rather than just running it anyway</li>
+                        <li><strong>Don't assume perfection:</strong> Always verify exported data quality before using it</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Exporting Data -->
+            <div class="section">
+                <h2>7. Exporting and Using Scraped Data</h2>
+                <span class="japanese">スクレイプされたデータのエクスポートと使用</span>
+
+                <h3>Export Formats</h3>
+
+                <p><strong>CSV (Recommended for this course):</strong></p>
+                <ul>
+                    <li>Opens easily in Excel, Google Sheets, and Python pandas</li>
+                    <li>Simple, universal format</li>
+                    <li>Perfect for ML pipelines</li>
+                    <li>Easy to inspect and verify</li>
+                </ul>
+
+                <p><strong>JSON:</strong></p>
+                <ul>
+                    <li>Good for nested or hierarchical data</li>
+                    <li>Used in web development and APIs</li>
+                    <li>More complex to work with for beginners</li>
+                </ul>
+
+                <p><strong>Excel (.xlsx):</strong></p>
+                <ul>
+                    <li>Familiar spreadsheet format</li>
+                    <li>Good for manual inspection and cleaning</li>
+                    <li>Can include formatting and multiple sheets</li>
+                </ul>
+
+                <h3>Next Steps After Scraping</h3>
+
+                <ol>
+                    <li><strong>Export to CSV:</strong> Save your data in CSV format</li>
+                    <li><strong>Open in spreadsheet software:</strong> Verify data quality manually</li>
+                    <li><strong>Import into Python (Week 7):</strong> Use pandas for data cleaning</li>
+                    <li><strong>Prepare for ML (Weeks 8-9):</strong> Feature engineering and preparation</li>
+                    <li><strong>Train models (Weeks 10-12):</strong> Use your collected data for machine learning</li>
+                </ol>
+            </div>
+
+            <!-- Troubleshooting -->
+            <div class="section">
+                <h2>8. Troubleshooting Common Issues</h2>
+                <span class="japanese">一般的な問題のトラブルシューティング</span>
+
+                <h3>Problem 1: Tool Can't Find Data</h3>
+                <p><strong>Symptoms:</strong> Selectors don't highlight anything, or tool says "No matches found"</p>
+                <p><strong>Solutions:</strong></p>
+                <ul>
+                    <li>Make sure you clicked on 2-3 similar items to establish a pattern</li>
+                    <li>Try clicking more precisely on the exact text or element</li>
+                    <li>Check if the website uses dynamic loading (JavaScript) - try ParseHub for these sites</li>
+                    <li>Use manual selector editing to be more specific (advanced)</li>
+                </ul>
+
+                <h3>Problem 2: Getting Wrong Data</h3>
+                <p><strong>Symptoms:</strong> Scraper captures incorrect information or mixes up fields</p>
+                <p><strong>Solutions:</strong></p>
+                <ul>
+                    <li>Review your selectors - make sure each field has the correct selector</li>
+                    <li>Be more specific with your clicks - click directly on the data, not container elements</li>
+                    <li>Use selector editing tools to refine your selections</li>
+                    <li>Check the preview before running the full scrape</li>
+                </ul>
+
+                <h3>Problem 3: Missing Data from Some Rows</h3>
+                <p><strong>Symptoms:</strong> Some entries have blank fields while others are complete</p>
+                <p><strong>Solutions:</strong></p>
+                <ul>
+                    <li>This is often normal - websites have inconsistent structure</li>
+                    <li>Check if those fields actually exist on the source page</li>
+                    <li>Configure selectors to handle optional fields</li>
+                    <li>Plan to clean missing data in Week 7 (data cleaning)</li>
+                </ul>
+
+                <h3>Problem 4: Tool Crashes or Freezes</h3>
+                <p><strong>Symptoms:</strong> Application stops responding or closes unexpectedly</p>
+                <p><strong>Solutions:</strong></p>
+                <ul>
+                    <li>Start with a smaller sample size (fewer pages)</li>
+                    <li>Update the tool to the latest version</li>
+                    <li>Close other applications to free up memory</li>
+                    <li>Try a different tool if problems persist</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>Remember:</strong> The ML-101 Bot is available during the hands-on activity to help troubleshoot any issues you encounter!
+                    <p class="japanese" style="margin-top: 10px;">覚えておいてください：ML-101ボットは、遭遇する問題のトラブルシューティングを支援するためにハンズオンアクティビティ中に利用可能です！</p>
+                </div>
+            </div>
+
+            <!-- Today's Activity -->
+            <div class="section">
+                <h2>9. Today's Hands-On Activity</h2>
+                <span class="japanese">今日のハンズオンアクティビティ</span>
+
+                <p>You'll complete a structured activity to practice no-code scraping:</p>
+
+                <div class="tool-card">
+                    <h4>Activity 1: Tool Setup (12 minutes)</h4>
+                    <ul>
+                        <li>Choose and install a no-code scraping tool</li>
+                        <li>Create account and complete initial configuration</li>
+                        <li>Complete tool tutorial or walkthrough</li>
+                    </ul>
+                </div>
+
+                <div class="tool-card">
+                    <h4>Activity 2: Practice Scraping (13 minutes)</h4>
+                    <ul>
+                        <li>Scrape 20+ book entries from practice website (Books to Scrape)</li>
+                        <li>Collect: title, price, rating, availability</li>
+                        <li>Export to CSV</li>
+                    </ul>
+                </div>
+
+                <div class="tool-card">
+                    <h4>Activity 3: Intermediate Scraping (15 minutes)</h4>
+                    <ul>
+                        <li>Scrape 30+ product entries across multiple pages</li>
+                        <li>Configure pagination</li>
+                        <li>Collect multiple data fields</li>
+                        <li>Export and verify data quality</li>
+                    </ul>
+                </div>
+
+                <div class="tool-card">
+                    <h4>Activity 4: Company Data Sample (12 minutes)</h4>
+                    <ul>
+                        <li>Scrape 5-10 companies from approved website</li>
+                        <li>Apply ethical principles from Week 4</li>
+                        <li>Collect 4-5 data fields per company</li>
+                        <li>Export for project use</li>
+                    </ul>
+                </div>
+
+                <div class="tool-card">
+                    <h4>Activity 5: Documentation (8 minutes)</h4>
+                    <ul>
+                        <li>Document your scraping workflows</li>
+                        <li>Capture screenshots</li>
+                        <li>Write reflection on experience</li>
+                        <li>Prepare assignment submission</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Key Takeaways -->
+            <div class="section">
+                <h2>Key Takeaways</h2>
+                <span class="japanese">重要なポイント</span>
+
+                <div class="success-box">
+                    <ul>
+                        <li><span class="checkmark">✅</span> No-code tools make scraping accessible without programming knowledge</li>
+                        <li><span class="checkmark">✅</span> Point-and-click interfaces allow visual data selection</li>
+                        <li><span class="checkmark">✅</span> Tools learn patterns from your selections and apply them automatically</li>
+                        <li><span class="checkmark">✅</span> Pagination can be configured to scrape multi-page datasets</li>
+                        <li><span class="checkmark">✅</span> CSV export format is ideal for analysis and ML pipelines</li>
+                        <li><span class="checkmark">✅</span> Ethical principles still apply - always check robots.txt and ToS</li>
+                        <li><span class="checkmark">✅</span> No-code tools are perfect for learning and simple tasks; code-based scraping offers more flexibility for complex scenarios</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Next Steps -->
+            <div class="section">
+                <h2>Next Steps</h2>
+                <span class="japanese">次のステップ</span>
+
+                <ol>
+                    <li><strong>Complete Today's Hands-On Activity:</strong> Practice with no-code tools and scrape sample data</li>
+                    <li><strong>Submit Week 5 Assignment:</strong> Include tool setup documentation, practice scrapes, and company data sample</li>
+                    <li><strong>Week 6 Preview:</strong> Building your complete company dataset (100+ companies) using the skills learned today</li>
+                    <li><strong>Week 7 Preview:</strong> Data cleaning fundamentals - preparing your scraped data for machine learning</li>
+                </ol>
+            </div>
+
+            <!-- Footer Navigation -->
+            <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #e5e7eb;">
+                <a href="../../index.html" class="back-link">← Back to Course Home</a>
+                <a href="assignment.html" class="back-link" style="margin-left: 15px; background: #10b981;">View Assignment →</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>ML-101: Machine Learning and Intelligence</p>
+        </div>
+    </footer>
+</body>
+</html>
