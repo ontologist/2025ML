@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>企業求人情報 - Job Listings Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Hiragino Sans', 'Meiryo', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .header {
+            background-color: #1a73e8;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .nav {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .nav a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .search-bar {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .company-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .company-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-left: 4px solid #1a73e8;
+        }
+        .company-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .company-name {
+            font-size: 22px;
+            color: #1a73e8;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+        .company-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .industry, .location {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .industry {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        .location {
+            background-color: #fff3e0;
+            color: #e65100;
+        }
+        .description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        .job-info {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+        }
+        .position-title {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        .salary {
+            display: block;
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .apply-btn {
+            display: inline-block;
+            background-color: #1a73e8;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .apply-btn:hover {
+            background-color: #1557b0;
+        }
+        .footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+        .badge {
+            display: inline-block;
+            background-color: #ff6b6b;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section: Navigation area -->
+    <div class="header">
+        <div class="header-content">
+            <h1>🔍 企業求人ポータル - Job Listings Portal</h1>
+            <div class="nav">
+                <a href="#home">ホーム (Home)</a>
+                <a href="#search">求人検索 (Search)</a>
+                <a href="#companies">企業一覧 (Companies)</a>
+                <a href="#about">About</a>
+                <a href="#contact">お問い合わせ (Contact)</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Search Bar Area -->
+        <div class="search-bar">
+            <h2>求人を検索 (Search Jobs)</h2>
+            <p style="color: #666; margin-top: 8px;">キーワード、業界、勤務地から検索できます</p>
+        </div>
+
+        <!-- Company Listing Section: Main content area -->
+        <div class="company-list">
+
+            <!-- Company Card 1 -->
+            <div class="company-card">
+                <h2 class="company-name">グローバルテック株式会社 (Global Tech Corporation)</h2>
+                <div class="company-meta">
+                    <span class="industry">IT・ソフトウェア</span>
+                    <span class="location">東京都港区</span>
+                    <span class="badge">NEW</span>
+                </div>
+                <p class="description">
+                    クラウドサービスとAIソリューションを提供する大手IT企業。グローバル展開を加速中で、
+                    優秀なエンジニアを積極採用しています。リモートワーク完備、フレックスタイム制度あり。
+                    We are a leading IT company providing cloud services and AI solutions, actively hiring talented engineers.
+                </p>
+                <div class="job-info">
+                    <span class="position-title">募集職種: フルスタックエンジニア (Full Stack Engineer)</span>
+                    <span class="salary">年収: ¥6,000,000 - ¥10,000,000</span>
+                </div>
+                <a href="#apply" class="apply-btn">応募する (Apply Now)</a>
+            </div>
+
+            <!-- Company Card 2 -->
+            <div class="company-card">
+                <h2 class="company-name">サクラフィナンシャル株式会社 (Sakura Financial Co., Ltd.)</h2>
+                <div class="company-meta">
+                    <span class="industry">金融・保険</span>
+                    <span class="location">大阪府大阪市</span>
+                </div>
+                <p class="description">
+                    創業50年の信頼と実績。デジタルバンキングの先駆者として、フィンテック事業を拡大中。
+                    安定した経営基盤と革新的なチャレンジが可能な環境です。
+                    Established 50 years ago, pioneering digital banking and expanding fintech business.
+                </p>
+                <div class="job-info">
+                    <span class="position-title">募集職種: データアナリスト (Data Analyst)</span>
+                    <span class="salary">年収: ¥5,500,000 - ¥9,000,000</span>
+                </div>
+                <a href="#apply" class="apply-btn">応募する (Apply Now)</a>
+            </div>
+
+            <!-- Company Card 3 -->
+            <div class="company-card">
+                <h2 class="company-name">イノベーション・ラボ株式会社 (Innovation Lab Inc.)</h2>
+                <div class="company-meta">
+                    <span class="industry">研究・開発</span>
+                    <span class="location">神奈川県横浜市</span>
+                    <span class="badge">急募</span>
+                </div>
+                <p class="description">
+                    最先端のロボティクスとIoT技術の研究開発を行うスタートアップ。
+                    少数精鋭のチームで、世界を変える製品を一緒に作りませんか。ストックオプション制度あり。
+                    Startup focused on cutting-edge robotics and IoT technology R&D. Stock options available.
+                </p>
+                <div class="job-info">
+                    <span class="position-title">募集職種: 機械学習エンジニア (Machine Learning Engineer)</span>
+                    <span class="salary">年収: ¥7,000,000 - ¥12,000,000</span>
+                </div>
+                <a href="#apply" class="apply-btn">応募する (Apply Now)</a>
+            </div>
+
+            <!-- Company Card 4 -->
+            <div class="company-card">
+                <h2 class="company-name">メディカルケア株式会社 (Medical Care Corporation)</h2>
+                <div class="company-meta">
+                    <span class="industry">医療・ヘルスケア</span>
+                    <span class="location">福岡県福岡市</span>
+                </div>
+                <p class="description">
+                    医療ITシステムの開発・運用を手がける専門企業。全国300以上の医療機関に導入実績あり。
+                    社会貢献性の高い仕事で、やりがいを実感できます。
+                    Specialized company developing and operating medical IT systems, serving over 300 healthcare institutions nationwide.
+                </p>
+                <div class="job-info">
+                    <span class="position-title">募集職種: システムエンジニア (System Engineer)</span>
+                    <span class="salary">年収: ¥4,800,000 - ¥7,500,000</span>
+                </div>
+                <a href="#apply" class="apply-btn">応募する (Apply Now)</a>
+            </div>
+
+            <!-- Company Card 5 -->
+            <div class="company-card">
+                <h2 class="company-name">エコエナジー株式会社 (Eco Energy Co., Ltd.)</h2>
+                <div class="company-meta">
+                    <span class="industry">環境・エネルギー</span>
+                    <span class="location">愛知県名古屋市</span>
+                    <span class="badge">NEW</span>
+                </div>
+                <p class="description">
+                    再生可能エネルギーのプラットフォーム構築を目指すグリーンテック企業。
+                    太陽光・風力発電の効率化システムを開発し、持続可能な社会の実現に貢献しています。
+                    Green tech company building renewable energy platforms, contributing to a sustainable society.
+                </p>
+                <div class="job-info">
+                    <span class="position-title">募集職種: プロジェクトマネージャー (Project Manager)</span>
+                    <span class="salary">年収: ¥6,500,000 - ¥11,000,000</span>
+                </div>
+                <a href="#apply" class="apply-btn">応募する (Apply Now)</a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="footer">
+        <p>&copy; 2025 Job Listings Portal - 企業求人ポータル</p>
+        <p style="margin-top: 10px; font-size: 14px;">
+            練習用サンプルファイル (Practice Sample File) | Web Scraping Training Material
+        </p>
+        <p style="margin-top: 15px; font-size: 12px; color: #bdc3c7;">
+            このページは教育目的で作成されたサンプルページです。<br>
+            Use BeautifulSoup, Selenium, or Scrapy to extract company information from this page.
+        </p>
+    </div>
+
+    <!--
+    SCRAPING PRACTICE NOTES:
+    ========================
+    1. Extract all company names: Use .find_all('h2', class_='company-name')
+    2. Extract industry tags: Use .find_all('span', class_='industry')
+    3. Extract locations: Use .find_all('span', class_='location')
+    4. Extract job titles: Use .find_all('span', class_='position-title')
+    5. Extract salaries: Use .find_all('span', class_='salary')
+    6. Extract descriptions: Use .find_all('p', class_='description')
+    7. Practice nested navigation: card > job-info > position-title
+    8. Try CSS selectors: '.company-card .job-info .salary'
+    -->
+</body>
+</html>
