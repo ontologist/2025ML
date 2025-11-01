@@ -1,0 +1,2514 @@
+# Week 5 Bot Activity Guide: No-Code Web Scraping Tools
+# ML-101 Bot Conversation Flow and Guidance
+# 第5週ボットアクティビティガイド：ノーコードWebスクレイピングツール
+
+activity_info:
+  week: 5
+  title: "Setting Up No-Code Scraping Tools and Practice Data Collection | ノーコードスクレイピングツールのセットアップと練習データ収集"
+  duration: "40-60 minutes"
+  learning_objectives:
+    - "Set up and configure no-code web scraping tools"
+    - "Create scraping workflows without writing code"
+    - "Extract structured data from websites"
+    - "Practice on sample sites and collect company data"
+    - "Export and validate scraped data"
+    - "Apply ethical scraping practices"
+
+# ================================================
+# STEP 1: Welcome and Tool Selection (8 minutes)
+# ================================================
+
+step_1_welcome_tool_selection:
+  duration: "8 minutes"
+  title: "Welcome and Scraping Tool Selection | ツール選択"
+
+  bot_greeting:
+    en: |
+      Welcome to Week 5! 👋 This week we're moving from planning to action.
+
+      You've already analyzed ethical considerations and website feasibility.
+      Now it's time to set up a no-code scraping tool and collect actual data!
+
+      No coding required - we'll use point-and-click tools that make web
+      scraping accessible to everyone.
+
+      Ready to become a data collector?
+
+    ja: |
+      第5週へようこそ！👋 今週は計画から行動へ移ります。
+
+      すでに倫理的考慮事項とウェブサイトの実現可能性を分析しました。
+      今度はノーコードスクレイピングツールをセットアップし、実際のデータを収集します！
+
+      コーディングは不要です - 誰でもWebスクレイピングにアクセスできるように
+      するポイントアンドクリックツールを使用します。
+
+      データコレクターになる準備はできましたか？
+
+  initial_questions:
+    - question:
+        en: "Have you reviewed the Week 5 lecture slides on no-code scraping tools?"
+        ja: "ノーコードスクレイピングツールに関する第5週の講義スライドを確認しましたか？"
+      follow_up_yes:
+        en: "Excellent! Let's apply those concepts hands-on today."
+        ja: "素晴らしい！今日はそれらのコンセプトを実践的に適用しましょう。"
+      follow_up_no:
+        en: "That's okay! I'll guide you through everything. The lecture provides background, but we'll learn by doing."
+        ja: "大丈夫です！すべてをガイドします。講義は背景を提供しますが、実践で学びます。"
+
+    - question:
+        en: "Do you have your Week 4 feasibility report with approved websites ready?"
+        ja: "承認されたウェブサイトを含む第4週の実現可能性レポートの準備はできていますか？"
+      follow_up_yes:
+        en: "Perfect! We'll use those later for real company data collection."
+        ja: "完璧！後で実際の企業データ収集のためにそれらを使用します。"
+      follow_up_no:
+        en: "No problem - we'll start with practice websites first. You can gather your approved sites while we work."
+        ja: "問題ありません - まず練習ウェブサイトから始めます。作業中に承認されたサイトを集めることができます。"
+
+  tool_selection_guidance:
+    en: |
+      Let's choose the right scraping tool for you. There are three recommended options:
+
+      **1. Octoparse** (Desktop Application)
+         ✅ Best for: Comprehensive features, good tutorials
+         ✅ Pros: Powerful, handles pagination well, great for beginners
+         ❌ Cons: Requires download and installation
+         🆓 Free tier: 10 tasks, limited cloud runs
+
+      **2. ParseHub** (Desktop Application)
+         ✅ Best for: JavaScript-heavy sites, visual interface
+         ✅ Pros: Handles dynamic content, intuitive design
+         ❌ Cons: Requires installation, steeper learning curve
+         🆓 Free tier: 5 projects, 200 pages per run
+
+      **3. Web Scraper** (Chrome Extension)
+         ✅ Best for: Quick setup, no installation needed
+         ✅ Pros: Runs in browser, simple interface, fast to start
+         ❌ Cons: Less powerful than desktop apps, Chrome only
+         🆓 Free: Unlimited local use
+
+      Which appeals to you most?
+
+    ja: |
+      あなたに適したスクレイピングツールを選びましょう。3つの推奨オプションがあります：
+
+      **1. Octoparse**（デスクトップアプリケーション）
+         ✅ 最適：包括的な機能、優れたチュートリアル
+         ✅ 長所：強力、ページネーションをうまく処理、初心者に最適
+         ❌ 短所：ダウンロードとインストールが必要
+         🆓 無料ティア：10タスク、限定クラウド実行
+
+      **2. ParseHub**（デスクトップアプリケーション）
+         ✅ 最適：JavaScript重視のサイト、ビジュアルインターフェース
+         ✅ 長所：動的コンテンツを処理、直感的なデザイン
+         ❌ 短所：インストールが必要、学習曲線が急
+         🆓 無料ティア：5プロジェクト、実行あたり200ページ
+
+      **3. Web Scraper**（Chrome拡張機能）
+         ✅ 最適：クイックセットアップ、インストール不要
+         ✅ 長所：ブラウザで実行、シンプルなインターフェース、迅速に開始
+         ❌ 短所：デスクトップアプリほど強力ではない、Chromeのみ
+         🆓 無料：無制限のローカル使用
+
+      どれが最も魅力的ですか？
+
+  decision_support:
+    quick_start_preference:
+      en: "If you want to start fast without installing software, choose **Web Scraper**."
+      ja: "ソフトウェアをインストールせずに迅速に開始したい場合は、**Web Scraper**を選択してください。"
+
+    comprehensive_preference:
+      en: "If you want the most powerful tool with best tutorials, choose **Octoparse**."
+      ja: "最も強力なツールと最高のチュートリアルが必要な場合は、**Octoparse**を選択してください。"
+
+    visual_preference:
+      en: "If you prefer a highly visual interface and plan to scrape complex sites, choose **ParseHub**."
+      ja: "高度なビジュアルインターフェースを好み、複雑なサイトをスクレイプする予定の場合は、**ParseHub**を選択してください。"
+
+  completion_message:
+    en: |
+      Great choice! Let's proceed with {{ selected_tool }}.
+
+      I'll guide you through:
+      1. Installation/Setup (5-8 minutes)
+      2. Account creation and verification
+      3. Initial configuration and tutorial
+
+      Let's get {{ selected_tool }} ready to scrape!
+
+    ja: |
+      素晴らしい選択です！{{ selected_tool }}で進めましょう。
+
+      以下をガイドします：
+      1. インストール/セットアップ（5-8分）
+      2. アカウント作成と確認
+      3. 初期設定とチュートリアル
+
+      {{ selected_tool }}をスクレイプする準備をしましょう！
+
+  data_to_capture:
+    - selected_tool
+    - lecture_completion_status
+    - week4_report_status
+    - tool_preference_reasoning
+    - computer_platform
+
+# ================================================
+# STEP 2: Tool Installation and Setup (12 minutes)
+# ================================================
+
+step_2_tool_setup:
+  duration: "12 minutes"
+  title: "Tool Installation and Account Setup | ツールインストールとアカウントセットアップ"
+
+  introduction:
+    en: |
+      Let's get {{ selected_tool }} installed and configured.
+
+      I'll provide step-by-step instructions specific to your chosen tool.
+      Take your time - proper setup now makes scraping easier later!
+
+    ja: |
+      {{ selected_tool }}をインストールして設定しましょう。
+
+      選択したツールに固有のステップバイステップの指示を提供します。
+      時間をかけてください - 今適切に設定すると、後でスクレイピングが簡単になります！
+
+  installation_guides:
+    octoparse:
+      en: |
+        **Octoparse Installation Steps:**
+
+        1. **Download:**
+           - Visit: https://www.octoparse.com/download
+           - Click "Download Free" for Windows or Mac
+           - Save installer to your computer
+
+        2. **Install:**
+           - Run the installer file
+           - Follow installation wizard
+           - Accept license agreement
+           - Choose installation location (default is fine)
+           - Wait for installation to complete (2-3 minutes)
+
+        3. **Launch:**
+           - Open Octoparse application
+           - Click "Sign Up" (not Login)
+
+        4. **Create Account:**
+           - Enter email address
+           - Create password
+           - Click verification email
+           - Confirm your email
+
+        5. **Initial Setup:**
+           - Log in with your credentials
+           - Choose "Free Plan" when prompted
+           - Skip any tutorial for now (we'll do custom practice)
+
+        **Confirmation:** You should see the main Octoparse workspace with "New Task" button.
+
+        Can you see the main interface? Take a screenshot!
+
+      ja: |
+        **Octoparseインストール手順：**
+
+        1. **ダウンロード：**
+           - 訪問：https://www.octoparse.com/download
+           - WindowsまたはMac用の「無料でダウンロード」をクリック
+           - インストーラーをコンピュータに保存
+
+        2. **インストール：**
+           - インストーラーファイルを実行
+           - インストールウィザードに従う
+           - ライセンス契約に同意
+           - インストール場所を選択（デフォルトで問題ない）
+           - インストールの完了を待つ（2-3分）
+
+        3. **起動：**
+           - Octoparseアプリケーションを開く
+           - 「サインアップ」をクリック（ログインではない）
+
+        4. **アカウント作成：**
+           - メールアドレスを入力
+           - パスワードを作成
+           - 確認メールをクリック
+           - メールを確認
+
+        5. **初期設定：**
+           - 認証情報でログイン
+           - プロンプトが表示されたら「無料プラン」を選択
+           - 今はチュートリアルをスキップ（カスタム練習を行います）
+
+        **確認：** 「新しいタスク」ボタンのあるメインOctoparseワークスペースが表示されるはずです。
+
+        メインインターフェースが見えますか？スクリーンショットを撮ってください！
+
+    parsehub:
+      en: |
+        **ParseHub Installation Steps:**
+
+        1. **Download:**
+           - Visit: https://www.parsehub.com/
+           - Click "Download ParseHub Free"
+           - Choose your operating system (Windows/Mac)
+
+        2. **Install:**
+           - Run the downloaded installer
+           - Follow setup wizard
+           - Install to default location
+           - Complete installation (2-3 minutes)
+
+        3. **Launch and Sign Up:**
+           - Open ParseHub application
+           - Click "Sign Up Free"
+           - Enter email and create password
+           - Or sign up with Google account
+
+        4. **Email Verification:**
+           - Check your email inbox
+           - Click verification link
+           - Return to ParseHub app
+
+        5. **Initial Configuration:**
+           - Log in to ParseHub
+           - Free plan is automatically selected
+           - Familiarize with the interface
+
+        **Confirmation:** You should see ParseHub's main screen with "+ New Project" button.
+
+        Do you see the project creation screen? Screenshot it!
+
+      ja: |
+        **ParseHubインストール手順：**
+
+        1. **ダウンロード：**
+           - 訪問：https://www.parsehub.com/
+           - 「ParseHub無料をダウンロード」をクリック
+           - オペレーティングシステムを選択（Windows/Mac）
+
+        2. **インストール：**
+           - ダウンロードしたインストーラーを実行
+           - セットアップウィザードに従う
+           - デフォルトの場所にインストール
+           - インストールを完了（2-3分）
+
+        3. **起動とサインアップ：**
+           - ParseHubアプリケーションを開く
+           - 「無料でサインアップ」をクリック
+           - メールを入力してパスワードを作成
+           - またはGoogleアカウントでサインアップ
+
+        4. **メール確認：**
+           - メール受信箱を確認
+           - 確認リンクをクリック
+           - ParseHubアプリに戻る
+
+        5. **初期設定：**
+           - ParseHubにログイン
+           - 無料プランが自動的に選択されます
+           - インターフェースに慣れる
+
+        **確認：** 「+ 新しいプロジェクト」ボタンのあるParseHubのメイン画面が表示されるはずです。
+
+        プロジェクト作成画面が見えますか？スクリーンショットを撮ってください！
+
+    web_scraper:
+      en: |
+        **Web Scraper Extension Installation:**
+
+        1. **Open Chrome Browser:**
+           - Launch Google Chrome
+           - If you don't have Chrome, download from google.com/chrome
+
+        2. **Visit Chrome Web Store:**
+           - Go to: chrome.google.com/webstore
+           - Search for "Web Scraper"
+           - Find "Web Scraper - Free Web Scraping" (by webscraper.io)
+
+        3. **Install Extension:**
+           - Click "Add to Chrome"
+           - Click "Add extension" in popup
+           - Wait for installation (10 seconds)
+
+        4. **Verify Installation:**
+           - Click the Extensions icon (puzzle piece) in Chrome toolbar
+           - You should see "Web Scraper" in the list
+           - Pin it to toolbar for easy access
+
+        5. **Access Web Scraper:**
+           - Right-click on any webpage
+           - Look for "Web Scraper" in context menu
+           - OR open Developer Tools (F12) and click "Web Scraper" tab
+
+        6. **Optional Account Creation:**
+           - Visit: https://cloud.webscraper.io/
+           - Create free account if you want to save sitemaps
+           - Not required for local scraping
+
+        **Confirmation:** Can you see the Web Scraper tab in your Chrome DevTools?
+
+        Take a screenshot showing Web Scraper is installed!
+
+      ja: |
+        **Web Scraper拡張機能のインストール：**
+
+        1. **Chromeブラウザを開く：**
+           - Google Chromeを起動
+           - Chromeがない場合は、google.com/chromeからダウンロード
+
+        2. **Chrome Webストアにアクセス：**
+           - 移動：chrome.google.com/webstore
+           - 「Web Scraper」を検索
+           - 「Web Scraper - Free Web Scraping」を見つける（webscraper.ioによる）
+
+        3. **拡張機能をインストール：**
+           - 「Chromeに追加」をクリック
+           - ポップアップで「拡張機能を追加」をクリック
+           - インストールを待つ（10秒）
+
+        4. **インストールを確認：**
+           - Chromeツールバーの拡張機能アイコン（パズルピース）をクリック
+           - リストに「Web Scraper」が表示されるはずです
+           - 簡単にアクセスできるようにツールバーに固定
+
+        5. **Web Scraperにアクセス：**
+           - 任意のWebページを右クリック
+           - コンテキストメニューで「Web Scraper」を探す
+           - または開発者ツール（F12）を開き、「Web Scraper」タブをクリック
+
+        6. **オプションのアカウント作成：**
+           - 訪問：https://cloud.webscraper.io/
+           - サイトマップを保存したい場合は無料アカウントを作成
+           - ローカルスクレイピングには不要
+
+        **確認：** Chrome DevToolsでWeb Scraperタブが見えますか？
+
+        Web Scraperがインストールされていることを示すスクリーンショットを撮ってください！
+
+  troubleshooting_common_issues:
+    installation_failed:
+      en: |
+        **Installation Problems:**
+        - Check system requirements (Windows 7+ or macOS 10.12+)
+        - Disable antivirus temporarily
+        - Run installer as administrator
+        - Clear browser cache (for extensions)
+        - Try alternative tool if persistent issues
+
+      ja: |
+        **インストールの問題：**
+        - システム要件を確認（Windows 7以降またはmacOS 10.12以降）
+        - 一時的にウイルス対策を無効にする
+        - 管理者としてインストーラーを実行
+        - ブラウザキャッシュをクリア（拡張機能の場合）
+        - 持続的な問題がある場合は代替ツールを試す
+
+    email_verification_not_received:
+      en: |
+        **Email Verification Issues:**
+        - Check spam/junk folder
+        - Wait 5-10 minutes and refresh inbox
+        - Verify email address was entered correctly
+        - Request new verification email
+        - Use different email provider if needed
+
+      ja: |
+        **メール確認の問題：**
+        - スパム/迷惑メールフォルダを確認
+        - 5-10分待って受信箱を更新
+        - メールアドレスが正しく入力されたことを確認
+        - 新しい確認メールをリクエスト
+        - 必要に応じて別のメールプロバイダーを使用
+
+    tool_wont_launch:
+      en: |
+        **Launch Problems:**
+        - Restart computer
+        - Reinstall the application
+        - Check for OS updates
+        - Try browser extension version as alternative
+        - Contact instructor for lab computer access
+
+      ja: |
+        **起動の問題：**
+        - コンピュータを再起動
+        - アプリケーションを再インストール
+        - OS更新を確認
+        - 代替としてブラウザ拡張バージョンを試す
+        - ラボコンピュータアクセスのためにインストラクターに連絡
+
+  completion_check:
+    criteria:
+      - tool_installed_successfully: true
+      - account_created_and_verified: true
+      - can_access_main_interface: true
+      - screenshot_taken: true
+
+    completion_message:
+      en: |
+        Perfect! {{ selected_tool }} is ready to use!
+
+        You now have:
+        ✅ Tool installed and running
+        ✅ Account created and verified
+        ✅ Main interface accessible
+
+        Next, we'll practice on a safe sample website before scraping real data.
+        Let's create your first scraping workflow!
+
+      ja: |
+        完璧！{{ selected_tool }}は使用準備ができました！
+
+        以下があります：
+        ✅ ツールがインストールされ実行中
+        ✅ アカウントが作成され確認済み
+        ✅ メインインターフェースにアクセス可能
+
+        次に、実際のデータをスクレイピングする前に、安全なサンプルウェブサイトで練習します。
+        最初のスクレイピングワークフローを作成しましょう！
+
+  data_to_capture:
+    - tool_installation_success
+    - installation_time_taken
+    - technical_issues_encountered
+    - account_creation_method
+    - screenshot_saved
+
+# ================================================
+# STEP 3: Practice Scraping - Books Website (13 minutes)
+# ================================================
+
+step_3_practice_scraping:
+  duration: "13 minutes"
+  title: "Practice Scraping Workflow | 練習スクレイピングワークフロー"
+
+  introduction:
+    en: |
+      Time to create your first scraping workflow!
+
+      We'll practice on **Books to Scrape** (http://books.toscrape.com/),
+      a safe, legal website designed specifically for scraping practice.
+
+      **Goal:** Scrape 20+ book entries with these fields:
+      - Book title
+      - Price
+      - Star rating
+      - Availability status
+
+      This is a simple, beginner-friendly task. Let's do it together!
+
+    ja: |
+      最初のスクレイピングワークフローを作成する時間です！
+
+      **Books to Scrape** (http://books.toscrape.com/)で練習します。
+      これはスクレイピング練習専用に設計された安全で合法的なウェブサイトです。
+
+      **目標：** 以下のフィールドで20以上の書籍エントリをスクレイプ：
+      - 書籍タイトル
+      - 価格
+      - 星評価
+      - 在庫状況
+
+      これはシンプルで初心者に優しいタスクです。一緒にやりましょう！
+
+  step_by_step_guidance:
+    step_1_create_new_task:
+      en: |
+        **Step 1: Create New Scraping Task**
+
+        In {{ selected_tool }}:
+        - Click "New Task" or "New Project"
+        - Enter URL: http://books.toscrape.com/
+        - Name your task: "Practice Books Scrape"
+        - Click to load the webpage
+
+        The tool should now show the Books to Scrape homepage.
+        Can you see the list of books?
+
+      ja: |
+        **ステップ1：新しいスクレイピングタスクを作成**
+
+        {{ selected_tool }}で：
+        - 「新しいタスク」または「新しいプロジェクト」をクリック
+        - URLを入力：http://books.toscrape.com/
+        - タスクに名前を付ける：「練習書籍スクレイプ」
+        - クリックしてWebページを読み込む
+
+        ツールにBooks to Scrapeのホームページが表示されるはずです。
+        書籍のリストが見えますか？
+
+    step_2_select_data_elements:
+      en: |
+        **Step 2: Select Data Elements**
+
+        Now we'll tell the tool WHAT to scrape.
+
+        **For Book Titles:**
+        - Click on the title of the FIRST book
+        - Then click on the title of the SECOND book
+        - Tool learns the pattern: "Oh, these are all book titles!"
+
+        **For Prices:**
+        - Click on the price of the first book
+        - Click on the price of the second book
+        - Tool recognizes all prices
+
+        **For Ratings:**
+        - Click on the star rating element
+        - Click on another star rating
+        - Pattern established!
+
+        **For Availability:**
+        - Click "In stock" text on first book
+        - Click "In stock" on second book
+
+        The tool is learning what data you want. This is the magic of
+        no-code scraping - point and click!
+
+        Can you see data being selected in the tool's interface?
+
+      ja: |
+        **ステップ2：データ要素を選択**
+
+        今度はツールに何をスクレイプするかを伝えます。
+
+        **書籍タイトルの場合：**
+        - 最初の書籍のタイトルをクリック
+        - 次に2番目の書籍のタイトルをクリック
+        - ツールはパターンを学習：「ああ、これらはすべて書籍タイトルだ！」
+
+        **価格の場合：**
+        - 最初の書籍の価格をクリック
+        - 2番目の書籍の価格をクリック
+        - ツールがすべての価格を認識
+
+        **評価の場合：**
+        - 星評価要素をクリック
+        - 別の星評価をクリック
+        - パターン確立！
+
+        **在庫状況の場合：**
+        - 最初の書籍で「在庫あり」テキストをクリック
+        - 2番目の書籍で「在庫あり」をクリック
+
+        ツールはあなたが必要とするデータを学習しています。これがノーコード
+        スクレイピングの魔法です - ポイントアンドクリック！
+
+        ツールのインターフェースでデータが選択されているのが見えますか？
+
+    step_3_preview_data:
+      en: |
+        **Step 3: Preview Your Data**
+
+        Before scraping, let's preview to make sure everything is correct.
+
+        Look for a "Preview" or "Data Preview" button in {{ selected_tool }}.
+
+        **Check for:**
+        ✅ All 4 fields are showing data
+        ✅ Book titles are text (not images or links)
+        ✅ Prices have currency symbols
+        ✅ Ratings show star numbers
+        ✅ Availability shows "In stock" or similar
+
+        **If something looks wrong:**
+        - Edit the selector
+        - Reselect the elements
+        - Try clicking parent elements instead
+
+        Does your preview show all 4 data fields correctly?
+
+      ja: |
+        **ステップ3：データをプレビュー**
+
+        スクレイピングする前に、すべてが正しいことを確認するためにプレビューしましょう。
+
+        {{ selected_tool }}で「プレビュー」または「データプレビュー」ボタンを探します。
+
+        **確認：**
+        ✅ 4つのフィールドすべてがデータを表示
+        ✅ 書籍タイトルはテキスト（画像やリンクではない）
+        ✅ 価格には通貨記号がある
+        ✅ 評価は星の数を表示
+        ✅ 在庫状況は「在庫あり」または類似を表示
+
+        **何かおかしい場合：**
+        - セレクターを編集
+        - 要素を再選択
+        - 代わりに親要素をクリックしてみる
+
+        プレビューに4つのデータフィールドすべてが正しく表示されていますか？
+
+    step_4_run_scraper:
+      en: |
+        **Step 4: Run Your First Scrape!**
+
+        Time to collect the data!
+
+        - Click "Run" or "Start" button
+        - Watch the tool scrape the page
+        - Wait for it to complete (10-30 seconds)
+
+        **What's happening:**
+        The tool is extracting all book titles, prices, ratings, and
+        availability from the first page.
+
+        **Expected result:** 20 book entries scraped
+
+        You should see a data table with 20 rows and 4 columns.
+        Amazing - you just scraped data without writing code!
+
+        Did you successfully scrape 20 books?
+
+      ja: |
+        **ステップ4：最初のスクレイプを実行！**
+
+        データを収集する時間です！
+
+        - 「実行」または「開始」ボタンをクリック
+        - ツールがページをスクレイプするのを見る
+        - 完了するのを待つ（10-30秒）
+
+        **何が起こっているか：**
+        ツールは最初のページからすべての書籍タイトル、価格、評価、
+        在庫状況を抽出しています。
+
+        **期待される結果：** 20の書籍エントリがスクレイプされた
+
+        20行4列のデータテーブルが表示されるはずです。
+        すごい - コードを書かずにデータをスクレイプしました！
+
+        20冊の書籍を正常にスクレイプしましたか？
+
+    step_5_export_csv:
+      en: |
+        **Step 5: Export to CSV**
+
+        Let's save this data!
+
+        - Look for "Export" or "Download" button
+        - Choose "CSV" format
+        - Save file as: Week05_[YourName]_PracticeScrape.csv
+        - Choose location you can easily find
+
+        **Open the CSV file:**
+        - Use Excel, Google Sheets, or any spreadsheet program
+        - Verify data looks clean and organized
+        - Check for any missing values or errors
+
+        **Quality Check:**
+        ✅ 20 rows of data (plus header row)
+        ✅ 4 columns with clear headers
+        ✅ No completely empty cells
+        ✅ Prices formatted consistently
+
+        Does your CSV file look good?
+
+      ja: |
+        **ステップ5：CSVにエクスポート**
+
+        このデータを保存しましょう！
+
+        - 「エクスポート」または「ダウンロード」ボタンを探す
+        - 「CSV」形式を選択
+        - ファイルを保存：Week05_[あなたの名前]_PracticeScrape.csv
+        - 簡単に見つけられる場所を選択
+
+        **CSVファイルを開く：**
+        - Excel、Googleスプレッドシート、または任意のスプレッドシートプログラムを使用
+        - データがクリーンで整理されているか確認
+        - 欠損値またはエラーをチェック
+
+        **品質チェック：**
+        ✅ 20行のデータ（ヘッダー行を含む）
+        ✅ 明確なヘッダーを持つ4列
+        ✅ 完全に空のセルがない
+        ✅ 価格が一貫してフォーマットされている
+
+        CSVファイルは良さそうですか？
+
+  troubleshooting_tips:
+    selectors_not_working:
+      en: |
+        **Selectors Not Capturing Data:**
+
+        Try these solutions:
+        1. Click more specifically on the text you want
+        2. Select 3-4 examples instead of just 2
+        3. Use "Edit Selector" to manually adjust
+        4. Right-click element and choose "Inspect" to see HTML structure
+        5. Try clicking parent container element
+
+      ja: |
+        **セレクターがデータをキャプチャしない：**
+
+        これらの解決策を試してください：
+        1. 必要なテキストをより具体的にクリック
+        2. 2つだけでなく3-4の例を選択
+        3. 「セレクターを編集」を使用して手動で調整
+        4. 要素を右クリックして「検査」を選択し、HTML構造を確認
+        5. 親コンテナ要素をクリックしてみる
+
+    data_preview_empty:
+      en: |
+        **Preview Shows No Data:**
+
+        Possible fixes:
+        1. Reload the webpage in the tool
+        2. Check internet connection
+        3. Verify you clicked the correct elements
+        4. Try re-creating the task from scratch
+        5. Use different selector method (CSS vs XPath)
+
+      ja: |
+        **プレビューにデータが表示されない：**
+
+        可能な修正：
+        1. ツールでWebページを再読み込み
+        2. インターネット接続を確認
+        3. 正しい要素をクリックしたことを確認
+        4. タスクを最初から再作成してみる
+        5. 異なるセレクター方法を使用（CSS vs XPath）
+
+    export_failed:
+      en: |
+        **Export Not Working:**
+
+        Try these steps:
+        1. Check if you have write permissions to save location
+        2. Try saving to Desktop or Documents folder
+        3. Use different export format (Excel instead of CSV)
+        4. Export smaller dataset first to test
+        5. Restart the tool and try again
+
+      ja: |
+        **エクスポートが機能しない：**
+
+        これらのステップを試してください：
+        1. 保存場所への書き込み権限があるか確認
+        2. デスクトップまたはドキュメントフォルダに保存してみる
+        3. 異なるエクスポート形式を使用（CSVの代わりにExcel）
+        4. まず小さなデータセットをエクスポートしてテスト
+        5. ツールを再起動して再試行
+
+  completion_check:
+    criteria:
+      - workflow_created: true
+      - minimum_20_books_scraped: true
+      - all_4_fields_captured: true
+      - csv_exported_successfully: true
+      - data_quality_verified: true
+
+    completion_message:
+      en: |
+        Congratulations! 🎉 You've completed your first web scraping task!
+
+        You successfully:
+        ✅ Created a scraping workflow in {{ selected_tool }}
+        ✅ Scraped {{ book_count }} book entries
+        ✅ Captured 4 data fields per book
+        ✅ Exported clean data to CSV
+
+        You're now a no-code web scraper! Ready for the next challenge?
+
+      ja: |
+        おめでとうございます！🎉 最初のWebスクレイピングタスクを完了しました！
+
+        成功したこと：
+        ✅ {{ selected_tool }}でスクレイピングワークフローを作成
+        ✅ {{ book_count }}冊の書籍エントリをスクレイプ
+        ✅ 書籍ごとに4つのデータフィールドをキャプチャ
+        ✅ クリーンなデータをCSVにエクスポート
+
+        あなたは今やノーコードWebスクレイパーです！次のチャレンジの準備はできましたか？
+
+  data_to_capture:
+    - workflow_creation_time
+    - number_of_books_scraped
+    - data_fields_captured
+    - selector_issues_encountered
+    - export_format_used
+    - data_quality_score
+
+# ================================================
+# STEP 4: Intermediate Scraping - Pagination (15 minutes)
+# ================================================
+
+step_4_intermediate_scraping:
+  duration: "15 minutes"
+  title: "Intermediate Scraping with Pagination | ページネーション付き中級スクレイピング"
+
+  introduction:
+    en: |
+      Excellent work on the practice scrape! Now let's level up.
+
+      **New Challenge:** Scrape data from MULTIPLE pages (pagination)
+
+      Most websites have multiple pages of data. We need to teach the tool
+      to automatically click "Next" and keep scraping.
+
+      **Goal:** Scrape 30+ product entries across multiple pages
+      **Website:** Books to Scrape (we'll scrape pages 2-3 this time)
+
+      Ready for multi-page scraping?
+
+    ja: |
+      練習スクレイプの素晴らしい仕事！今度はレベルアップしましょう。
+
+      **新しいチャレンジ：** 複数ページからのデータをスクレイプ（ページネーション）
+
+      ほとんどのウェブサイトには複数ページのデータがあります。ツールに
+      自動的に「次へ」をクリックしてスクレイピングを続けるように教える必要があります。
+
+      **目標：** 複数ページにわたって30以上の製品エントリをスクレイプ
+      **ウェブサイト：** Books to Scrape（今回はページ2-3をスクレイプ）
+
+      マルチページスクレイピングの準備はできましたか？
+
+  pagination_guidance:
+    step_1_create_pagination_task:
+      en: |
+        **Step 1: Create New Task with Pagination**
+
+        - Create new task: "Intermediate Multi-Page Scrape"
+        - URL: http://books.toscrape.com/
+        - Set up the same 4 data fields (title, price, rating, availability)
+
+        But this time, we'll add pagination!
+
+      ja: |
+        **ステップ1：ページネーション付き新しいタスクを作成**
+
+        - 新しいタスクを作成：「中級マルチページスクレイプ」
+        - URL：http://books.toscrape.com/
+        - 同じ4つのデータフィールドをセットアップ（タイトル、価格、評価、在庫状況）
+
+        しかし今回は、ページネーションを追加します！
+
+    step_2_configure_pagination:
+      en: |
+        **Step 2: Configure Pagination Settings**
+
+        Look for "Pagination" settings in {{ selected_tool }}.
+
+        **Common pagination options:**
+
+        **Option A: Auto-detect (easiest)**
+        - Tool automatically finds "Next" button
+        - Set max pages to scrape: 3 pages
+        - Tool handles everything
+
+        **Option B: Manual "Next" button**
+        - Click on the "next" button (arrow or page number)
+        - Tell tool: "This is the pagination element"
+        - Set number of clicks or max pages
+
+        **Option C: Page URLs**
+        - Enter multiple URLs: page 1, page 2, page 3
+        - Tool scrapes each URL sequentially
+
+        **Settings to configure:**
+        - Max pages: 3
+        - Delay between pages: 2 seconds (polite scraping!)
+        - Stop condition: No more "next" button OR reached max pages
+
+        Which pagination method does {{ selected_tool }} use?
+
+      ja: |
+        **ステップ2：ページネーション設定を構成**
+
+        {{ selected_tool }}で「ページネーション」設定を探します。
+
+        **一般的なページネーションオプション：**
+
+        **オプションA：自動検出（最も簡単）**
+        - ツールが自動的に「次へ」ボタンを見つける
+        - スクレイプする最大ページ数を設定：3ページ
+        - ツールがすべてを処理
+
+        **オプションB：手動「次へ」ボタン**
+        - 「次へ」ボタン（矢印またはページ番号）をクリック
+        - ツールに伝える：「これがページネーション要素です」
+        - クリック数または最大ページ数を設定
+
+        **オプションC：ページURL**
+        - 複数のURLを入力：ページ1、ページ2、ページ3
+        - ツールが各URLを順次スクレイプ
+
+        **設定する項目：**
+        - 最大ページ数：3
+        - ページ間の遅延：2秒（礼儀正しいスクレイピング！）
+        - 停止条件：「次へ」ボタンがなくなるまたは最大ページに到達
+
+        {{ selected_tool }}はどのページネーション方法を使用しますか？
+
+    step_3_test_pagination:
+      en: |
+        **Step 3: Test Pagination**
+
+        Before running full scrape, test pagination:
+
+        - Run scraper with pagination enabled
+        - Watch the tool navigate through pages
+        - Confirm it's collecting data from all pages
+
+        **What to observe:**
+        ✅ Tool loads page 1, scrapes data
+        ✅ Tool clicks "next" (or loads page 2 URL)
+        ✅ Tool scrapes page 2 data
+        ✅ Tool continues to page 3
+        ✅ Tool stops after 3 pages (or when no more pages)
+
+        Can you see the page number changing as it scrapes?
+
+      ja: |
+        **ステップ3：ページネーションをテスト**
+
+        完全なスクレイプを実行する前に、ページネーションをテスト：
+
+        - ページネーションを有効にしてスクレイパーを実行
+        - ツールがページをナビゲートするのを見る
+        - すべてのページからデータを収集していることを確認
+
+        **観察すること：**
+        ✅ ツールがページ1を読み込み、データをスクレイプ
+        ✅ ツールが「次へ」をクリック（またはページ2のURLを読み込む）
+        ✅ ツールがページ2のデータをスクレイプ
+        ✅ ツールがページ3に続く
+        ✅ ツールが3ページ後に停止（またはページがなくなったとき）
+
+        スクレイプ中にページ番号が変化するのが見えますか？
+
+    step_4_verify_multi_page_data:
+      en: |
+        **Step 4: Verify Multi-Page Data Collection**
+
+        After scraping completes, check your results:
+
+        **Expected data:**
+        - Page 1: ~20 books
+        - Page 2: ~20 books
+        - Page 3: ~20 books
+        - **Total: 60 books** (or at least 30+)
+
+        **Verification checklist:**
+        ✅ Total entries ≥ 30 (minimum for assignment)
+        ✅ Data from multiple pages (check book titles are different)
+        ✅ No duplicate entries (same book twice)
+        ✅ All 4 fields populated for each entry
+
+        **Common issue:** If you only got 20 books total, pagination didn't work.
+        Go back and reconfigure pagination settings.
+
+        How many total entries did you scrape?
+
+      ja: |
+        **ステップ4：マルチページデータ収集を確認**
+
+        スクレイピング完了後、結果を確認：
+
+        **期待されるデータ：**
+        - ページ1：約20冊
+        - ページ2：約20冊
+        - ページ3：約20冊
+        - **合計：60冊**（または少なくとも30以上）
+
+        **確認チェックリスト：**
+        ✅ 合計エントリ ≥ 30（課題の最小）
+        ✅ 複数ページからのデータ（書籍タイトルが異なることを確認）
+        ✅ 重複エントリなし（同じ本が2回）
+        ✅ 各エントリに4つのフィールドすべてが入力されている
+
+        **一般的な問題：** 合計20冊しか取得できなかった場合、ページネーションが機能しませんでした。
+        戻ってページネーション設定を再構成してください。
+
+        合計何エントリをスクレイプしましたか？
+
+    step_5_export_intermediate_data:
+      en: |
+        **Step 5: Export Intermediate Scrape Results**
+
+        Export your multi-page data:
+
+        - Export to CSV format
+        - Save as: Week05_[YourName]_IntermediateScrape.csv
+        - Open in spreadsheet to verify quality
+
+        **Quality checks:**
+        ✅ At least 30 rows of data
+        ✅ 4 columns with headers
+        ✅ Data from different pages (varied book titles)
+        ✅ Clean formatting, no major errors
+
+        Take screenshot showing:
+        - Your pagination configuration
+        - The final scraped data preview
+        - The CSV file open in spreadsheet
+
+        Data exported successfully?
+
+      ja: |
+        **ステップ5：中級スクレイプ結果をエクスポート**
+
+        マルチページデータをエクスポート：
+
+        - CSV形式にエクスポート
+        - 保存：Week05_[あなたの名前]_IntermediateScrape.csv
+        - スプレッドシートで開いて品質を確認
+
+        **品質チェック：**
+        ✅ 少なくとも30行のデータ
+        ✅ ヘッダー付きの4列
+        ✅ 異なるページからのデータ（多様な書籍タイトル）
+        ✅ クリーンなフォーマット、大きなエラーなし
+
+        以下を示すスクリーンショットを撮る：
+        - ページネーション設定
+        - 最終スクレイプされたデータのプレビュー
+        - スプレッドシートで開かれたCSVファイル
+
+        データは正常にエクスポートされましたか？
+
+  pagination_troubleshooting:
+    pagination_not_triggering:
+      en: |
+        **Pagination Isn't Working:**
+
+        Diagnosis:
+        - Only getting data from first page
+        - Tool not clicking "next" button
+        - Scraper stops after first page
+
+        Solutions:
+        1. Manually click the "next" button to show tool where it is
+        2. Check if "next" button selector is correct
+        3. Increase delay between pages (site might need more time)
+        4. Try URL-based pagination: manually enter page URLs
+        5. Disable "auto-detect" and manually configure pagination
+
+      ja: |
+        **ページネーションが機能していない：**
+
+        診断：
+        - 最初のページからのデータのみを取得
+        - ツールが「次へ」ボタンをクリックしない
+        - 最初のページの後にスクレイパーが停止
+
+        解決策：
+        1. 手動で「次へ」ボタンをクリックしてツールに場所を示す
+        2. 「次へ」ボタンのセレクターが正しいか確認
+        3. ページ間の遅延を増やす（サイトはより多くの時間が必要かもしれません）
+        4. URLベースのページネーションを試す：手動でページURLを入力
+        5. 「自動検出」を無効にして手動でページネーションを設定
+
+    duplicate_data:
+      en: |
+        **Getting Duplicate Entries:**
+
+        Problem: Same books appearing multiple times
+
+        Causes:
+        - Pagination reloading same page
+        - Selector capturing data twice
+        - Pages overlapping
+
+        Fixes:
+        1. Clear previous data before re-running
+        2. Check pagination logic (is it incrementing correctly?)
+        3. Use tool's "remove duplicates" feature if available
+        4. Export to Excel and manually remove duplicates
+
+      ja: |
+        **重複エントリを取得：**
+
+        問題：同じ本が複数回表示される
+
+        原因：
+        - ページネーションが同じページを再読み込み
+        - セレクターがデータを2回キャプチャ
+        - ページが重複
+
+        修正：
+        1. 再実行前に以前のデータをクリア
+        2. ページネーションロジックを確認（正しくインクリメントしていますか？）
+        3. 利用可能な場合はツールの「重複を削除」機能を使用
+        4. Excelにエクスポートして手動で重複を削除
+
+    scraper_timing_out:
+      en: |
+        **Scraper Times Out or Crashes:**
+
+        Problem: Tool stops or freezes during multi-page scraping
+
+        Solutions:
+        1. Reduce number of pages (try 2 pages instead of 3)
+        2. Increase delay between pages to 3-5 seconds
+        3. Check internet connection stability
+        4. Reduce complexity (fewer data fields temporarily)
+        5. Try scraping during off-peak hours
+        6. Use desktop app instead of browser extension
+
+      ja: |
+        **スクレイパーがタイムアウトまたはクラッシュ：**
+
+        問題：マルチページスクレイピング中にツールが停止またはフリーズ
+
+        解決策：
+        1. ページ数を減らす（3ページではなく2ページを試す）
+        2. ページ間の遅延を3-5秒に増やす
+        3. インターネット接続の安定性を確認
+        4. 複雑さを減らす（一時的にデータフィールドを減らす）
+        5. オフピーク時間中にスクレイピングを試す
+        6. ブラウザ拡張機能の代わりにデスクトップアプリを使用
+
+  completion_check:
+    criteria:
+      - pagination_configured: true
+      - minimum_30_entries_scraped: true
+      - data_from_multiple_pages: true
+      - no_major_duplicates: true
+      - csv_exported: true
+
+    completion_message:
+      en: |
+        Fantastic work! 🚀 You've mastered multi-page scraping!
+
+        You successfully:
+        ✅ Configured pagination in {{ selected_tool }}
+        ✅ Scraped {{ entry_count }} entries across multiple pages
+        ✅ Collected clean data without duplicates
+        ✅ Exported to CSV format
+
+        This is a critical skill - most real websites have multiple pages.
+        You're ready for the final challenge: scraping real company data!
+
+      ja: |
+        素晴らしい仕事！🚀 マルチページスクレイピングをマスターしました！
+
+        成功したこと：
+        ✅ {{ selected_tool }}でページネーションを設定
+        ✅ 複数ページにわたって{{ entry_count }}エントリをスクレイプ
+        ✅ 重複なしでクリーンなデータを収集
+        ✅ CSV形式にエクスポート
+
+        これは重要なスキルです - ほとんどの実際のウェブサイトには複数のページがあります。
+        最後のチャレンジの準備ができました：実際の企業データのスクレイピング！
+
+  data_to_capture:
+    - pagination_method_used
+    - number_of_pages_scraped
+    - total_entries_collected
+    - pagination_issues_encountered
+    - time_to_complete_multi_page
+
+# ================================================
+# STEP 5: Company Data Sample Scrape (12 minutes)
+# ================================================
+
+step_5_company_data_scrape:
+  duration: "12 minutes"
+  title: "Real Company Data Practice Scrape | 実際の企業データ練習スクレイプ"
+
+  introduction:
+    en: |
+      Now for the real thing - scraping actual company data!
+
+      You'll use one of the websites you evaluated in Week 4's feasibility report.
+
+      ⚠️ **ETHICAL REMINDER:**
+      - Only scrape websites you verified as ethical/legal in Week 4
+      - Check robots.txt allows scraping
+      - Respect rate limiting (add delays)
+      - Collect only publicly available data
+
+      **Goal:** Scrape 5-10 companies with 4-5 data fields each
+
+      This is proof-of-concept for Week 6's full data collection!
+
+      Which approved website will you scrape?
+
+    ja: |
+      今度は本物です - 実際の企業データのスクレイピング！
+
+      第4週の実現可能性レポートで評価したウェブサイトの1つを使用します。
+
+      ⚠️ **倫理的注意：**
+      - 第4週で倫理的/合法的と確認したウェブサイトのみをスクレイプ
+      - robots.txtがスクレイピングを許可しているか確認
+      - レート制限を尊重（遅延を追加）
+      - 公的にアクセス可能なデータのみを収集
+
+      **目標：** 各社4-5のデータフィールドで5-10社をスクレイプ
+
+      これは第6週の完全なデータ収集の概念実証です！
+
+      どの承認されたウェブサイトをスクレイプしますか？
+
+  ethical_review:
+    en: |
+      Before scraping, let's verify ethical considerations:
+
+      **Checklist:**
+      ✅ This website was approved in my Week 4 feasibility report
+      ✅ I checked robots.txt - scraping is allowed
+      ✅ Terms of Service don't prohibit scraping
+      ✅ Data I'm collecting is publicly accessible
+      ✅ I'm collecting business information (not personal data)
+      ✅ I'll respect rate limits with delays
+
+      **If any of these are NO, STOP and choose a different website.**
+
+      Ethical scraping is non-negotiable. Always scrape responsibly.
+
+      Ready to proceed ethically?
+
+    ja: |
+      スクレイピングする前に、倫理的考慮事項を確認しましょう：
+
+      **チェックリスト：**
+      ✅ このウェブサイトは第4週の実現可能性レポートで承認されました
+      ✅ robots.txtを確認 - スクレイピングが許可されています
+      ✅ 利用規約がスクレイピングを禁止していない
+      ✅ 収集しているデータは公的にアクセス可能
+      ✅ ビジネス情報を収集しています（個人データではない）
+      ✅ 遅延でレート制限を尊重します
+
+      **これらのいずれかがNOの場合、停止して別のウェブサイトを選択してください。**
+
+      倫理的スクレイピングは交渉の余地がありません。常に責任を持ってスクレイプしてください。
+
+      倫理的に進める準備はできましたか？
+
+  company_data_workflow:
+    step_1_identify_target_data:
+      en: |
+        **Step 1: Identify Company Data to Collect**
+
+        What information about companies should we scrape?
+
+        **Required Fields (minimum 4-5):**
+        ✅ **Company name** (required)
+        ✅ **Industry or sector** (required)
+        ✅ **Company size** (employees, revenue, or category)
+        ✅ **Location** (headquarters, main office)
+        ✅ **Description or tags** (brief company overview)
+
+        **Optional fields if available:**
+        - Website URL
+        - Founded year
+        - Job openings count
+        - Company culture tags
+        - Benefits offered
+
+        Navigate to your chosen website and identify which of these
+        fields are available on the company listing pages.
+
+        What fields can you collect from your website?
+
+      ja: |
+        **ステップ1：収集する企業データを特定**
+
+        企業についてどのような情報をスクレイプすべきですか？
+
+        **必須フィールド（最低4-5）：**
+        ✅ **企業名**（必須）
+        ✅ **業界またはセクター**（必須）
+        ✅ **企業規模**（従業員、収益、またはカテゴリ）
+        ✅ **場所**（本社、主要オフィス）
+        ✅ **説明またはタグ**（簡単な企業概要）
+
+        **利用可能な場合のオプションフィールド：**
+        - ウェブサイトURL
+        - 設立年
+        - 求人数
+        - 企業文化タグ
+        - 提供される福利厚生
+
+        選択したウェブサイトにナビゲートし、これらのフィールドのうち
+        どれが企業リストページで利用可能かを特定してください。
+
+        ウェブサイトからどのフィールドを収集できますか？
+
+    step_2_create_company_scraping_workflow:
+      en: |
+        **Step 2: Create Company Scraping Workflow**
+
+        Now create a new scraping task for company data:
+
+        - Task name: "Company Data Sample - [Website Name]"
+        - URL: [Your approved company listing page]
+        - Target: 5-10 companies
+
+        **Configure selectors:**
+        1. Click on first company's name
+        2. Click on second company's name (establish pattern)
+        3. Repeat for industry, location, size, etc.
+
+        **Important for real websites:**
+        - Be more careful with selector accuracy
+        - Real sites may have inconsistent HTML structure
+        - Some fields might be missing for some companies
+        - Preview data carefully before running
+
+        **Rate limiting:**
+        - Set delay between requests: 2-3 seconds minimum
+        - Respect the website's resources
+        - Don't overwhelm their servers
+
+        Have you configured all selectors?
+
+      ja: |
+        **ステップ2：企業スクレイピングワークフローを作成**
+
+        今度は企業データ用の新しいスクレイピングタスクを作成します：
+
+        - タスク名：「企業データサンプル - [ウェブサイト名]」
+        - URL：[承認された企業リストページ]
+        - 対象：5-10社
+
+        **セレクターを設定：**
+        1. 最初の企業の名前をクリック
+        2. 2番目の企業の名前をクリック（パターンを確立）
+        3. 業界、場所、規模などについて繰り返す
+
+        **実際のウェブサイトにとって重要：**
+        - セレクターの精度により注意
+        - 実際のサイトには一貫性のないHTML構造がある場合があります
+        - 一部の企業では一部のフィールドが欠落している可能性があります
+        - 実行前にデータを注意深くプレビュー
+
+        **レート制限：**
+        - リクエスト間の遅延を設定：最低2-3秒
+        - ウェブサイトのリソースを尊重
+        - サーバーに負担をかけない
+
+        すべてのセレクターを設定しましたか？
+
+    step_3_run_sample_scrape:
+      en: |
+        **Step 3: Run Sample Company Scrape**
+
+        Start with a SMALL sample first:
+
+        - Set to scrape only 5-10 companies (not 100!)
+        - Run the scraper
+        - Observe data collection
+        - Watch for errors or missing data
+
+        **What to monitor:**
+        ✅ Are company names being captured correctly?
+        ✅ Is industry/sector data accurate?
+        ✅ Are all fields populating (or appropriately empty)?
+        ✅ Any fields capturing wrong data?
+
+        **Common issues with real websites:**
+        - Some companies missing certain fields (that's okay!)
+        - HTML structure differs slightly between entries
+        - Dynamic content loading (may need special handling)
+        - Pop-ups or cookie notices interfering
+
+        Did your scrape complete successfully?
+
+      ja: |
+        **ステップ3：サンプル企業スクレイプを実行**
+
+        まず小さなサンプルから始めます：
+
+        - 5-10社のみをスクレイプするように設定（100社ではない！）
+        - スクレイパーを実行
+        - データ収集を観察
+        - エラーまたは欠損データを監視
+
+        **監視すること：**
+        ✅ 企業名が正しくキャプチャされていますか？
+        ✅ 業界/セクターデータは正確ですか？
+        ✅ すべてのフィールドが入力されていますか（または適切に空ですか）？
+        ✅ 間違ったデータをキャプチャしているフィールドはありますか？
+
+        **実際のウェブサイトでの一般的な問題：**
+        - 一部の企業は特定のフィールドが欠落（それは大丈夫！）
+        - エントリ間でHTML構造が若干異なる
+        - 動的コンテンツの読み込み（特別な処理が必要な場合があります）
+        - ポップアップまたはCookie通知が干渉
+
+        スクレイプは正常に完了しましたか？
+
+    step_4_validate_company_data:
+      en: |
+        **Step 4: Validate Company Data Quality**
+
+        Check the quality of your scraped company data:
+
+        **Quality Verification:**
+        ✅ **Completeness:** At least 5 companies scraped
+        ✅ **Accuracy:** Company names are correct (spot-check 2-3)
+        ✅ **Consistency:** Data format is uniform across entries
+        ✅ **Relevance:** Data fields match what you intended to collect
+        ✅ **Ethics:** Only public business information (no personal data)
+
+        **Expected imperfections:**
+        - Some fields may be empty for some companies (acceptable)
+        - Minor formatting inconsistencies (can clean later)
+        - Not all companies have all attributes (real-world data!)
+
+        **Red flags (need fixing):**
+        - No company names captured
+        - Completely wrong data (prices instead of names, etc.)
+        - HTML tags or code in data fields
+        - All fields empty
+
+        How does your data quality look?
+
+      ja: |
+        **ステップ4：企業データ品質を検証**
+
+        スクレイプされた企業データの品質を確認：
+
+        **品質確認：**
+        ✅ **完全性：** 少なくとも5社がスクレイプされた
+        ✅ **正確性：** 企業名が正しい（2-3をスポットチェック）
+        ✅ **一貫性：** データ形式がエントリ全体で統一されている
+        ✅ **関連性：** データフィールドが収集しようとしたものと一致
+        ✅ **倫理：** 公開ビジネス情報のみ（個人データなし）
+
+        **期待される不完全性：**
+        - 一部の企業では一部のフィールドが空の場合があります（許容範囲）
+        - 軽微なフォーマットの不一致（後でクリーニング可能）
+        - すべての企業がすべての属性を持っているわけではない（実世界のデータ！）
+
+        **警告サイン（修正が必要）：**
+        - 企業名がキャプチャされていない
+        - 完全に間違ったデータ（名前の代わりに価格など）
+        - データフィールドにHTMLタグまたはコード
+        - すべてのフィールドが空
+
+        データ品質はどうですか？
+
+    step_5_export_company_data:
+      en: |
+        **Step 5: Export Company Data Sample**
+
+        Export your company data:
+
+        - Format: CSV
+        - Filename: Week05_[YourName]_CompanyData.csv
+        - Save to easily accessible location
+
+        **Final checks in spreadsheet:**
+        ✅ 5-10 rows (companies)
+        ✅ 4-5 columns (data fields)
+        ✅ Clear column headers
+        ✅ Data is readable and makes sense
+        ✅ No obvious errors or corruption
+
+        **Documentation to include:**
+        - Which website you scraped
+        - Why it was ethically approved
+        - Which data fields you collected
+        - Any challenges encountered
+        - How you resolved issues
+
+        Screenshot your workflow configuration and the final CSV!
+
+        Ready to submit your company data?
+
+      ja: |
+        **ステップ5：企業データサンプルをエクスポート**
+
+        企業データをエクスポート：
+
+        - 形式：CSV
+        - ファイル名：Week05_[あなたの名前]_CompanyData.csv
+        - 簡単にアクセスできる場所に保存
+
+        **スプレッドシートでの最終チェック：**
+        ✅ 5-10行（企業）
+        ✅ 4-5列（データフィールド）
+        ✅ 明確な列ヘッダー
+        ✅ データは読みやすく意味がある
+        ✅ 明らかなエラーまたは破損なし
+
+        **含める文書：**
+        - スクレイプしたウェブサイト
+        - なぜ倫理的に承認されたか
+        - 収集したデータフィールド
+        - 遭遇した課題
+        - 問題をどのように解決したか
+
+        ワークフロー設定と最終CSVをスクリーンショット！
+
+        企業データを提出する準備はできましたか？
+
+  troubleshooting_real_websites:
+    data_not_loading:
+      en: |
+        **Website Data Not Loading:**
+
+        Real websites can have issues practice sites don't:
+
+        - **JavaScript rendering:** Some sites load data dynamically
+          Solution: Use ParseHub (handles JS) or wait longer for page load
+
+        - **Login required:** Site might require account
+          Solution: Create free account OR choose different website
+
+        - **Geographic restrictions:** Site blocks certain regions
+          Solution: Try VPN OR choose alternative website
+
+        - **Anti-scraping measures:** Site actively blocks scrapers
+          Solution: Respect their wishes, choose different source
+
+      ja: |
+        **ウェブサイトデータが読み込まれない：**
+
+        実際のウェブサイトには練習サイトにはない問題があります：
+
+        - **JavaScriptレンダリング：** 一部のサイトはデータを動的に読み込みます
+          解決策：ParseHubを使用（JSを処理）またはページ読み込みを長く待つ
+
+        - **ログイン必要：** サイトがアカウントを必要とする場合があります
+          解決策：無料アカウントを作成または別のウェブサイトを選択
+
+        - **地理的制限：** サイトが特定の地域をブロック
+          解決策：VPNを試すまたは代替ウェブサイトを選択
+
+        - **アンチスクレイピング対策：** サイトがスクレイパーを積極的にブロック
+          解決策：彼らの意向を尊重し、別のソースを選択
+
+    inconsistent_html_structure:
+      en: |
+        **Inconsistent Data Structure:**
+
+        Real websites often have variations:
+
+        Problem: Some companies have all fields, others are missing some
+
+        This is NORMAL and acceptable:
+        - Not all companies provide all information
+        - Some listings are more complete than others
+        - Empty fields are okay in your data
+
+        What to do:
+        - Accept that some fields will be empty
+        - Document which fields had missing data
+        - Don't worry about minor inconsistencies
+        - You'll clean this data in later weeks
+
+      ja: |
+        **一貫性のないデータ構造：**
+
+        実際のウェブサイトにはしばしば変動があります：
+
+        問題：一部の企業はすべてのフィールドを持ち、他の企業は一部が欠落
+
+        これは正常で許容範囲です：
+        - すべての企業がすべての情報を提供するわけではない
+        - 一部のリストは他のものよりも完全
+        - データに空のフィールドがあっても大丈夫
+
+        対処法：
+        - 一部のフィールドが空であることを受け入れる
+        - どのフィールドにデータが欠落していたかを文書化
+        - 軽微な不一致を心配しない
+        - 後の週にこのデータをクリーニングします
+
+    wrong_data_captured:
+      en: |
+        **Capturing Wrong Elements:**
+
+        Problem: Selector is grabbing navigation links, ads, or irrelevant data
+
+        Diagnosis:
+        - Look at scraped data - is it company info or something else?
+        - Check if selector is too broad (capturing parent elements)
+        - Verify you clicked the correct elements during setup
+
+        Fixes:
+        1. Use "Edit Selector" to be more specific
+        2. Re-select elements more precisely
+        3. Use CSS selector or XPath for accuracy
+        4. Exclude unwanted elements explicitly
+        5. Test on 1-2 companies before running full scrape
+
+      ja: |
+        **間違った要素をキャプチャ：**
+
+        問題：セレクターがナビゲーションリンク、広告、または無関係なデータを取得
+
+        診断：
+        - スクレイプされたデータを見る - 企業情報ですか、それとも別のものですか？
+        - セレクターが広すぎるか確認（親要素をキャプチャ）
+        - セットアップ中に正しい要素をクリックしたことを確認
+
+        修正：
+        1. 「セレクターを編集」を使用してより具体的にする
+        2. より正確に要素を再選択
+        3. 精度のためにCSSセレクターまたはXPathを使用
+        4. 不要な要素を明示的に除外
+        5. 完全なスクレイプを実行する前に1-2社でテスト
+
+  completion_check:
+    criteria:
+      - ethical_website_chosen: true
+      - minimum_5_companies_scraped: true
+      - minimum_4_fields_per_company: true
+      - data_quality_acceptable: true
+      - csv_exported: true
+      - process_documented: true
+
+    completion_message:
+      en: |
+        Outstanding achievement! 🎉 You've scraped REAL company data!
+
+        You successfully:
+        ✅ Selected and verified ethical website for scraping
+        ✅ Created workflow for company data collection
+        ✅ Scraped {{ company_count }} companies with {{ field_count }} data fields
+        ✅ Validated data quality
+        ✅ Exported to CSV format
+        ✅ Documented your process
+
+        This is HUGE! You've proven you can collect real-world data for your
+        ML project. Week 6 will be full-scale data collection for your
+        company recommendation system!
+
+      ja: |
+        素晴らしい成果！🎉 実際の企業データをスクレイプしました！
+
+        成功したこと：
+        ✅ スクレイピング用の倫理的ウェブサイトを選択して確認
+        ✅ 企業データ収集のワークフローを作成
+        ✅ {{ field_count }}のデータフィールドで{{ company_count }}社をスクレイプ
+        ✅ データ品質を検証
+        ✅ CSV形式にエクスポート
+        ✅ プロセスを文書化
+
+        これは大きいです！MLプロジェクトのために実世界のデータを収集できることを
+        証明しました。第6週は企業推薦システムのための本格的なデータ収集です！
+
+  data_to_capture:
+    - website_scraped
+    - ethical_justification
+    - number_of_companies_scraped
+    - data_fields_collected
+    - data_quality_score
+    - challenges_encountered
+    - time_taken
+
+# ================================================
+# STEP 6: Documentation and Submission (8 minutes)
+# ================================================
+
+step_6_documentation_submission:
+  duration: "8 minutes"
+  title: "Documentation and Assignment Submission | 文書化と課題提出"
+
+  introduction:
+    en: |
+      Almost done! Let's document your work and prepare for submission.
+
+      Good documentation helps you remember what you did and helps others
+      (including future you) understand your process.
+
+    ja: |
+      ほぼ完了です！作業を文書化して提出の準備をしましょう。
+
+      良い文書化は、何をしたかを覚えるのに役立ち、他の人
+      （将来のあなたを含む）があなたのプロセスを理解するのに役立ちます。
+
+  documentation_checklist:
+    files_to_submit:
+      en: |
+        **Files You Should Have:**
+
+        ✅ **CSV File 1:** Week05_[YourName]_PracticeScrape.csv
+           - 20+ book entries from Books to Scrape
+
+        ✅ **CSV File 2:** Week05_[YourName]_IntermediateScrape.csv
+           - 30+ entries with pagination from multiple pages
+
+        ✅ **CSV File 3:** Week05_[YourName]_CompanyData.csv
+           - 5-10 companies from your approved website
+
+        ✅ **Documentation Document:** Week05_[YourName]_NoCodeScraping.pdf
+           - Screenshots of all workflows
+           - Process descriptions
+           - Challenges and solutions
+           - Reflection
+
+        Missing any files? Go back and create them!
+
+      ja: |
+        **必要なファイル：**
+
+        ✅ **CSVファイル1：** Week05_[あなたの名前]_PracticeScrape.csv
+           - Books to Scrapeからの20以上の書籍エントリ
+
+        ✅ **CSVファイル2：** Week05_[あなたの名前]_IntermediateScrape.csv
+           - 複数ページからのページネーション付きの30以上のエントリ
+
+        ✅ **CSVファイル3：** Week05_[あなたの名前]_CompanyData.csv
+           - 承認されたウェブサイトからの5-10社
+
+        ✅ **文書化ドキュメント：** Week05_[あなたの名前]_NoCodeScraping.pdf
+           - すべてのワークフローのスクリーンショット
+           - プロセスの説明
+           - 課題と解決策
+           - 考察
+
+        ファイルが足りませんか？戻って作成してください！
+
+    documentation_sections:
+      en: |
+        **Your Documentation Should Include:**
+
+        **1. Tool Setup Section:**
+        - Which tool you chose and why
+        - Screenshot of installed tool
+        - Any installation challenges
+
+        **2. Practice Scrape Section:**
+        - URL scraped: http://books.toscrape.com/
+        - Data fields: title, price, rating, availability
+        - Number of entries: {{ practice_count }}
+        - Screenshot of workflow configuration
+        - Screenshot of scraped data
+
+        **3. Intermediate Scrape Section:**
+        - Pagination configuration screenshot
+        - Number of pages scraped: {{ pages_scraped }}
+        - Total entries: {{ intermediate_count }}
+        - How you configured pagination
+        - Any pagination challenges
+
+        **4. Company Data Section:**
+        - Website scraped: {{ company_website }}
+        - Ethical justification (reference Week 4)
+        - Data fields collected: {{ company_fields }}
+        - Number of companies: {{ company_count }}
+        - Workflow screenshot
+        - Challenges and solutions
+        - Data quality notes
+
+        **5. Reflection (1 paragraph):**
+        - What was easier than expected?
+        - What was more challenging?
+        - How will this help with Week 6 and final project?
+        - What do you want to learn more about?
+
+        **6. AI Transparency (if applicable):**
+        - AI tools used (ML-101 Bot, ChatGPT, etc.)
+        - How you used them
+        - What you verified independently
+
+      ja: |
+        **文書化に含めるべき内容：**
+
+        **1. ツールセットアップセクション：**
+        - 選択したツールとその理由
+        - インストールされたツールのスクリーンショット
+        - インストールの課題
+
+        **2. 練習スクレイプセクション：**
+        - スクレイプされたURL：http://books.toscrape.com/
+        - データフィールド：タイトル、価格、評価、在庫状況
+        - エントリ数：{{ practice_count }}
+        - ワークフロー設定のスクリーンショット
+        - スクレイプされたデータのスクリーンショット
+
+        **3. 中級スクレイプセクション：**
+        - ページネーション設定のスクリーンショット
+        - スクレイプされたページ数：{{ pages_scraped }}
+        - 合計エントリ：{{ intermediate_count }}
+        - ページネーションをどのように設定したか
+        - ページネーションの課題
+
+        **4. 企業データセクション：**
+        - スクレイプされたウェブサイト：{{ company_website }}
+        - 倫理的正当化（第4週を参照）
+        - 収集されたデータフィールド：{{ company_fields }}
+        - 企業数：{{ company_count }}
+        - ワークフローのスクリーンショット
+        - 課題と解決策
+        - データ品質ノート
+
+        **5. 考察（1段落）：**
+        - 予想よりも簡単だったことは何ですか？
+        - より挑戦的だったことは何ですか？
+        - これは第6週と最終プロジェクトにどのように役立ちますか？
+        - 何についてもっと学びたいですか？
+
+        **6. AI透明性（該当する場合）：**
+        - 使用したAIツール（ML-101ボット、ChatGPTなど）
+        - どのように使用したか
+        - 独立して検証したこと
+
+  quality_final_check:
+    en: |
+      **Final Quality Check Before Submission:**
+
+      **CSV Files:**
+      ✅ All 3 CSV files open correctly in spreadsheet software
+      ✅ Data is readable and makes sense
+      ✅ No corrupt files or encoding issues
+      ✅ File names follow naming convention
+
+      **Documentation:**
+      ✅ All required sections included
+      ✅ Screenshots are clear and properly labeled
+      ✅ Reflection is thoughtful and complete
+      ✅ AI transparency included (if applicable)
+
+      **Submission Package:**
+      ✅ 1 PDF/Word document
+      ✅ 3 CSV files
+      ✅ All files properly named
+      ✅ Total reasonable file size
+
+      Everything ready?
+
+    ja: |
+      **提出前の最終品質チェック：**
+
+      **CSVファイル：**
+      ✅ 3つのCSVファイルすべてがスプレッドシートソフトウェアで正しく開く
+      ✅ データは読みやすく意味がある
+      ✅ 破損したファイルやエンコーディングの問題なし
+      ✅ ファイル名が命名規則に従っている
+
+      **文書化：**
+      ✅ すべての必要なセクションが含まれている
+      ✅ スクリーンショットが明確で適切にラベル付けされている
+      ✅ 考察が思慮深く完全
+      ✅ AI透明性が含まれている（該当する場合）
+
+      **提出パッケージ：**
+      ✅ 1つのPDF/Wordドキュメント
+      ✅ 3つのCSVファイル
+      ✅ すべてのファイルが適切に命名されている
+      ✅ 合理的なファイルサイズ
+
+      すべて準備できましたか？
+
+  submission_instructions:
+    en: |
+      **How to Submit:**
+
+      1. **Organize files in one folder:**
+         - Week05_[YourName]_NoCodeScraping.pdf
+         - Week05_[YourName]_PracticeScrape.csv
+         - Week05_[YourName]_IntermediateScrape.csv
+         - Week05_[YourName]_CompanyData.csv
+
+      2. **Verify all files:**
+         - Double-check file names
+         - Open each file to confirm it's correct
+         - Ensure total size is reasonable
+
+      3. **Submit through ML-101 Bot Portal:**
+         - Log in to bot portal
+         - Navigate to "Week 5 Assignment"
+         - Upload all 4 files
+         - Click "Submit"
+
+      4. **Confirm submission:**
+         - Receive automated confirmation
+         - Verify all files uploaded
+         - Save confirmation email/message
+
+      **Submission deadline:** End of Week 5 class session
+
+      Ready to submit?
+
+    ja: |
+      **提出方法：**
+
+      1. **ファイルを1つのフォルダに整理：**
+         - Week05_[あなたの名前]_NoCodeScraping.pdf
+         - Week05_[あなたの名前]_PracticeScrape.csv
+         - Week05_[あなたの名前]_IntermediateScrape.csv
+         - Week05_[あなたの名前]_CompanyData.csv
+
+      2. **すべてのファイルを確認：**
+         - ファイル名を再確認
+         - 各ファイルを開いて正しいことを確認
+         - 合計サイズが合理的であることを確認
+
+      3. **ML-101ボットポータル経由で提出：**
+         - ボットポータルにログイン
+         - 「第5週課題」にナビゲート
+         - 4つのファイルすべてをアップロード
+         - 「提出」をクリック
+
+      4. **提出を確認：**
+         - 自動確認を受信
+         - すべてのファイルがアップロードされたことを確認
+         - 確認メール/メッセージを保存
+
+      **提出期限：** 第5週授業終了時
+
+      提出する準備はできましたか？
+
+  completion_message:
+    en: |
+      🎉 **Congratulations! You've completed Week 5!** 🎉
+
+      **What you accomplished today:**
+      ✅ Set up and configured {{ selected_tool }}
+      ✅ Created your first scraping workflow (practice)
+      ✅ Mastered multi-page scraping with pagination
+      ✅ Scraped real company data ethically
+      ✅ Exported and validated data quality
+      ✅ Documented your entire process
+
+      **Skills you gained:**
+      - No-code web scraping proficiency
+      - Workflow configuration and optimization
+      - Pagination handling for multi-page data
+      - Ethical data collection practices
+      - Data quality validation
+      - Technical documentation
+
+      **What's next:**
+      - Week 6: Full-scale company data collection (100+ companies!)
+      - You'll use these same skills to build your project dataset
+      - This data will power your ML recommendation system
+
+      You're making incredible progress! See you in Week 6! 🚀
+
+    ja: |
+      🎉 **おめでとうございます！第5週を完了しました！** 🎉
+
+      **今日達成したこと：**
+      ✅ {{ selected_tool }}をセットアップして設定
+      ✅ 最初のスクレイピングワークフローを作成（練習）
+      ✅ ページネーション付きマルチページスクレイピングをマスター
+      ✅ 実際の企業データを倫理的にスクレイプ
+      ✅ データ品質をエクスポートして検証
+      ✅ プロセス全体を文書化
+
+      **獲得したスキル：**
+      - ノーコードWebスクレイピング熟練
+      - ワークフロー設定と最適化
+      - マルチページデータのページネーション処理
+      - 倫理的データ収集実践
+      - データ品質検証
+      - 技術文書化
+
+      **次のステップ：**
+      - 第6週：本格的な企業データ収集（100社以上！）
+      - これらの同じスキルを使用してプロジェクトデータセットを構築します
+      - このデータはML推薦システムを動かします
+
+      素晴らしい進歩を遂げています！第6週でお会いしましょう！🚀
+
+  data_to_capture:
+    - documentation_completeness
+    - files_submitted_count
+    - submission_timestamp
+    - overall_activity_satisfaction
+    - confidence_level_for_week6
+
+# ================================================
+# ASSESSMENT CRITERIA
+# ================================================
+
+assessment_criteria:
+  completion_points: 100
+
+  rubric:
+    tool_setup_documentation:
+      weight: 15
+      excellent: "Tool installed, account verified, clear documentation with screenshots"
+      good: "Tool set up successfully with basic documentation"
+      satisfactory: "Tool installed but minimal documentation"
+      needs_improvement: "Installation incomplete or undocumented"
+
+    practice_scraping_results:
+      weight: 20
+      excellent: "20+ books scraped with all 4 fields, clean CSV, workflow documented"
+      good: "20+ books with minor data quality issues"
+      satisfactory: "15-19 books or missing some fields"
+      needs_improvement: "< 15 books or major data issues"
+
+    intermediate_pagination_scraping:
+      weight: 25
+      excellent: "30+ entries from multiple pages, pagination configured correctly, no duplicates"
+      good: "30+ entries with minor pagination issues"
+      satisfactory: "20-29 entries or some pagination problems"
+      needs_improvement: "< 20 entries or pagination failed"
+
+    company_data_sample:
+      weight: 25
+      excellent: "5-10 companies, ethical justification, 4-5 fields each, quality data"
+      good: "5-10 companies with minor quality issues"
+      satisfactory: "3-4 companies or missing some fields"
+      needs_improvement: "< 3 companies or ethical concerns"
+
+    documentation_quality:
+      weight: 10
+      excellent: "Complete documentation with all sections, clear screenshots, thoughtful reflection"
+      good: "Most sections complete with adequate detail"
+      satisfactory: "Basic documentation, some sections missing"
+      needs_improvement: "Minimal or disorganized documentation"
+
+    ai_transparency:
+      weight: 5
+      excellent: "Clear, honest documentation of AI usage (if applicable)"
+      good: "Adequate AI transparency documentation"
+      satisfactory: "Basic AI transparency"
+      needs_improvement: "Missing or incomplete (if AI was used)"
+
+# ================================================
+# COMMON ISSUES AND BOT RESPONSES
+# ================================================
+
+common_issues:
+  student_overwhelmed_by_tool_choice:
+    detection: "Student expresses uncertainty about which tool to choose"
+    bot_response:
+      en: |
+        I understand - choosing can feel overwhelming!
+
+        Here's my recommendation based on your situation:
+
+        **Choose Web Scraper if:**
+        - You want to start FAST (no download needed)
+        - You're comfortable with Chrome browser
+        - You want simplest possible setup
+
+        **Choose Octoparse if:**
+        - You want comprehensive tutorials
+        - You plan to scrape complex sites later
+        - You don't mind installing software
+
+        **Choose ParseHub if:**
+        - Your target websites use lots of JavaScript
+        - You prefer highly visual interfaces
+        - You're okay with a learning curve
+
+        **My top recommendation for beginners: Octoparse**
+        It has the best balance of power and ease of use.
+
+        Still unsure? Start with Web Scraper (fastest setup) and
+        you can always try others later!
+
+      ja: |
+        理解できます - 選択するのは圧倒されるように感じます！
+
+        あなたの状況に基づいた私の推薦：
+
+        **Web Scraperを選択する場合：**
+        - 迅速に開始したい（ダウンロード不要）
+        - Chromeブラウザに慣れている
+        - 最もシンプルなセットアップが必要
+
+        **Octoparseを選択する場合：**
+        - 包括的なチュートリアルが必要
+        - 後で複雑なサイトをスクレイプする予定
+        - ソフトウェアのインストールを気にしない
+
+        **ParseHubを選択する場合：**
+        - ターゲットウェブサイトが多くのJavaScriptを使用
+        - 高度にビジュアルなインターフェースを好む
+        - 学習曲線を許容できる
+
+        **初心者への私のトップ推薦：Octoparse**
+        パワーと使いやすさの最高のバランスがあります。
+
+        まだ不確かですか？Web Scraperから始めて（最速セットアップ）、
+        後でいつでも他のものを試すことができます！
+
+  tool_installation_failing:
+    detection: "Student reports installation errors or crashes"
+    bot_response:
+      en: |
+        Installation problems are frustrating, but we can solve this!
+
+        **Immediate troubleshooting:**
+
+        1. **Check system requirements:**
+           - Windows 7+ or macOS 10.12+
+           - At least 4GB RAM
+           - Admin permissions on computer
+
+        2. **Common fixes:**
+           - Restart computer and try again
+           - Temporarily disable antivirus
+           - Run installer as administrator (Windows)
+           - Clear download cache and re-download
+
+        3. **Alternative solutions:**
+           - Try Web Scraper extension (no installation needed!)
+           - Use different browser if using extension
+           - Try different tool entirely
+
+        4. **If nothing works:**
+           - Contact instructor for lab computer access
+           - Work with classmate temporarily
+           - We can find a solution together
+
+        What specific error message are you seeing?
+
+      ja: |
+        インストールの問題はイライラしますが、解決できます！
+
+        **即座のトラブルシューティング：**
+
+        1. **システム要件を確認：**
+           - Windows 7以降またはmacOS 10.12以降
+           - 少なくとも4GB RAM
+           - コンピュータの管理者権限
+
+        2. **一般的な修正：**
+           - コンピュータを再起動して再試行
+           - 一時的にウイルス対策を無効にする
+           - 管理者としてインストーラーを実行（Windows）
+           - ダウンロードキャッシュをクリアして再ダウンロード
+
+        3. **代替ソリューション：**
+           - Web Scraper拡張機能を試す（インストール不要！）
+           - 拡張機能を使用している場合は別のブラウザを試す
+           - 完全に異なるツールを試す
+
+        4. **何も機能しない場合：**
+           - ラボコンピュータアクセスのためにインストラクターに連絡
+           - 一時的にクラスメートと協力
+           - 一緒に解決策を見つけることができます
+
+        どのような具体的なエラーメッセージが表示されていますか？
+
+  selectors_capturing_wrong_data:
+    detection: "Student reports scraped data is incorrect or irrelevant"
+    bot_response:
+      en: |
+        Wrong data being captured is a common issue - let's fix it!
+
+        **Diagnosis:**
+        - Look at what data you're getting vs what you want
+        - Are you getting navigation links instead of titles?
+        - Getting prices when you wanted descriptions?
+
+        **Solutions:**
+
+        **1. Be more specific with selection:**
+        - Click directly on the text you want (not the container)
+        - Avoid clicking images or links
+        - Target the actual data element
+
+        **2. Re-establish the pattern:**
+        - Delete current selector
+        - Click 3-4 examples of correct data
+        - Tool will learn better pattern
+
+        **3. Use "Edit Selector" feature:**
+        - Most tools let you manually adjust selectors
+        - Look for CSS selector or XPath options
+        - Refine to be more specific
+
+        **4. Check the HTML structure:**
+        - Right-click element → Inspect
+        - See if data is in specific tags
+        - Target those specific tags
+
+        Can you describe what you're getting vs what you want?
+
+      ja: |
+        間違ったデータがキャプチャされるのは一般的な問題です - 修正しましょう！
+
+        **診断：**
+        - 取得しているデータと必要なデータを見る
+        - タイトルの代わりにナビゲーションリンクを取得していますか？
+        - 説明が必要なときに価格を取得していますか？
+
+        **解決策：**
+
+        **1. 選択をより具体的にする：**
+        - 必要なテキストを直接クリック（コンテナではない）
+        - 画像やリンクをクリックしない
+        - 実際のデータ要素をターゲットにする
+
+        **2. パターンを再確立：**
+        - 現在のセレクターを削除
+        - 正しいデータの3-4の例をクリック
+        - ツールがより良いパターンを学習します
+
+        **3. 「セレクターを編集」機能を使用：**
+        - ほとんどのツールでセレクターを手動で調整できます
+        - CSSセレクターまたはXPathオプションを探す
+        - より具体的に絞り込む
+
+        **4. HTML構造を確認：**
+        - 要素を右クリック→検査
+        - データが特定のタグにあるか確認
+        - それらの特定のタグをターゲットにする
+
+        取得しているものと必要なものを説明できますか？
+
+  pagination_not_working:
+    detection: "Student reports only getting first page of data"
+    bot_response:
+      en: |
+        Pagination not working? Let's troubleshoot!
+
+        **Common causes:**
+
+        **1. Pagination not configured:**
+        - Did you set up pagination in tool settings?
+        - Check for "Pagination" or "Next Page" configuration
+        - Some tools require manual activation
+
+        **2. "Next" button not detected:**
+        - Tool can't find the "next page" button
+        - Try manually clicking "next" to show tool where it is
+        - Look for pagination settings to specify the button
+
+        **3. Delay too short:**
+        - Tool moving too fast, page not loading before scraping
+        - Increase delay between pages to 3-5 seconds
+        - Give each page time to fully load
+
+        **4. Max pages setting:**
+        - Check if max pages is set to 1
+        - Increase to 3-5 pages
+        - Or set to "unlimited" with stop condition
+
+        **Alternative approach:**
+        - Use URL-based pagination instead
+        - Manually enter URLs: page1, page2, page3
+        - Tool scrapes each URL in sequence
+
+        What happens when you run the scraper? Does it stay on page 1?
+
+      ja: |
+        ページネーションが機能していませんか？トラブルシューティングしましょう！
+
+        **一般的な原因：**
+
+        **1. ページネーションが設定されていない：**
+        - ツール設定でページネーションを設定しましたか？
+        - 「ページネーション」または「次のページ」設定を確認
+        - 一部のツールは手動でアクティブ化が必要
+
+        **2. 「次へ」ボタンが検出されない：**
+        - ツールが「次のページ」ボタンを見つけられない
+        - 手動で「次へ」をクリックしてツールに場所を示す
+        - ボタンを指定するためのページネーション設定を探す
+
+        **3. 遅延が短すぎる：**
+        - ツールが速すぎ、スクレイピング前にページが読み込まれていない
+        - ページ間の遅延を3-5秒に増やす
+        - 各ページが完全に読み込まれる時間を与える
+
+        **4. 最大ページ設定：**
+        - 最大ページが1に設定されているか確認
+        - 3-5ページに増やす
+        - または停止条件付きで「無制限」に設定
+
+        **代替アプローチ：**
+        - 代わりにURLベースのページネーションを使用
+        - 手動でURLを入力：page1、page2、page3
+        - ツールが各URLを順次スクレイプ
+
+        スクレイパーを実行すると何が起こりますか？ページ1にとどまりますか？
+
+  ethical_concerns_about_website:
+    detection: "Student unsure if website is ethical to scrape"
+    bot_response:
+      en: |
+        Great question! Ethical scraping is crucial.
+
+        **Let's verify together:**
+
+        **1. Check robots.txt:**
+        - Add /robots.txt to the website URL
+        - Example: mynavi.jp/robots.txt
+        - Look for "Disallow" entries
+        - If it disallows scraping, STOP and choose different site
+
+        **2. Review Terms of Service:**
+        - Look for website's Terms of Service or Terms of Use
+        - Search for terms: "scraping", "automated access", "bots"
+        - If explicitly prohibited, don't scrape
+
+        **3. Check data type:**
+        - Is this publicly accessible information? ✅ OK
+        - Is this behind login/paywall? ❌ Not OK
+        - Is this personal private data? ❌ Not OK
+        - Is this business/company info? ✅ Usually OK
+
+        **4. Consider the source:**
+        - Job sites (mynavi, rikunabi): Usually OK for public listings
+        - Social media profiles: Often NOT OK
+        - Government open data: Usually OK
+        - E-commerce prices: Check terms carefully
+
+        **When in doubt:**
+        - Choose a different website
+        - Ask instructor for approval
+        - Use practice websites provided
+
+        Which website are you considering?
+
+      ja: |
+        素晴らしい質問です！倫理的スクレイピングは重要です。
+
+        **一緒に確認しましょう：**
+
+        **1. robots.txtを確認：**
+        - ウェブサイトURLに/robots.txtを追加
+        - 例：mynavi.jp/robots.txt
+        - 「Disallow」エントリを探す
+        - スクレイピングを禁止している場合、停止して別のサイトを選択
+
+        **2. 利用規約を確認：**
+        - ウェブサイトの利用規約を探す
+        - 検索用語：「スクレイピング」、「自動アクセス」、「ボット」
+        - 明示的に禁止されている場合、スクレイプしない
+
+        **3. データタイプを確認：**
+        - これは公的にアクセス可能な情報ですか？✅ OK
+        - これはログイン/ペイウォールの後ろですか？❌ NG
+        - これは個人の非公開データですか？❌ NG
+        - これはビジネス/企業情報ですか？✅ 通常OK
+
+        **4. ソースを検討：**
+        - 求人サイト（mynavi、rikunabi）：公開リストは通常OK
+        - ソーシャルメディアプロフィール：しばしばNG
+        - 政府オープンデータ：通常OK
+        - Eコマース価格：規約を注意深く確認
+
+        **疑わしい場合：**
+        - 別のウェブサイトを選択
+        - インストラクターに承認を求める
+        - 提供された練習ウェブサイトを使用
+
+        どのウェブサイトを検討していますか？
+
+  data_quality_issues:
+    detection: "Student reports messy, incomplete, or incorrect data"
+    bot_response:
+      en: |
+        Data quality issues are normal when scraping real websites!
+
+        **Let's assess the situation:**
+
+        **Minor issues (ACCEPTABLE):**
+        ✅ Some fields empty for some entries (not all companies provide all info)
+        ✅ Minor formatting inconsistencies (e.g., some prices with ¥, some without)
+        ✅ Extra spaces or line breaks (can clean later)
+        ✅ Mix of Japanese and English text
+
+        **Major issues (NEED TO FIX):**
+        ❌ All fields completely empty
+        ❌ HTML tags or code showing in data
+        ❌ Completely wrong data (navigation links, ads, etc.)
+        ❌ All entries identical (scraping same item repeatedly)
+
+        **Solutions for major issues:**
+
+        **1. Empty data:**
+        - Selectors not capturing correctly
+        - Re-select elements more carefully
+        - Check if data loads dynamically (wait longer)
+
+        **2. HTML tags in data:**
+        - Selector grabbing too much
+        - Use "text only" or "inner text" option
+        - Edit selector to be more specific
+
+        **3. Wrong data:**
+        - Selector targeting wrong elements
+        - Delete and recreate selectors
+        - Click specifically on the data you want
+
+        **4. Duplicate entries:**
+        - Pagination looping on same page
+        - Check pagination configuration
+        - Use "remove duplicates" feature
+
+        What specific quality issue are you seeing?
+
+      ja: |
+        データ品質の問題は実際のウェブサイトをスクレイピングする際に正常です！
+
+        **状況を評価しましょう：**
+
+        **軽微な問題（許容範囲）：**
+        ✅ 一部のエントリで一部のフィールドが空（すべての企業がすべての情報を提供するわけではない）
+        ✅ 軽微なフォーマットの不一致（例：¥付きの価格とそうでない価格）
+        ✅ 余分なスペースまたは改行（後でクリーニング可能）
+        ✅ 日本語と英語のテキストの混在
+
+        **大きな問題（修正が必要）：**
+        ❌ すべてのフィールドが完全に空
+        ❌ データにHTMLタグまたはコードが表示される
+        ❌ 完全に間違ったデータ（ナビゲーションリンク、広告など）
+        ❌ すべてのエントリが同一（同じアイテムを繰り返しスクレイピング）
+
+        **大きな問題の解決策：**
+
+        **1. 空のデータ：**
+        - セレクターが正しくキャプチャしていない
+        - より注意深く要素を再選択
+        - データが動的に読み込まれるか確認（より長く待つ）
+
+        **2. データ内のHTMLタグ：**
+        - セレクターが多すぎる情報を取得
+        - 「テキストのみ」または「内部テキスト」オプションを使用
+        - より具体的になるようにセレクターを編集
+
+        **3. 間違ったデータ：**
+        - セレクターが間違った要素をターゲットにしている
+        - セレクターを削除して再作成
+        - 必要なデータを具体的にクリック
+
+        **4. 重複エントリ：**
+        - ページネーションが同じページでループ
+        - ページネーション設定を確認
+        - 「重複を削除」機能を使用
+
+        どのような具体的な品質問題が見られますか？
+
+# ================================================
+# SUCCESS METRICS
+# ================================================
+
+success_metrics:
+  activity_completion_rate:
+    target: "> 90%"
+    measurement: "Percentage of students completing all 5 scraping tasks"
+
+  average_time:
+    target: "40-60 minutes"
+    measurement: "Time from tool selection to final submission"
+
+  tool_setup_success:
+    target: "> 95%"
+    measurement: "Students successfully installing and configuring tools"
+
+  practice_scrape_success:
+    target: "> 95%"
+    measurement: "Students completing basic scrape with 20+ entries"
+
+  pagination_mastery:
+    target: "> 85%"
+    measurement: "Students successfully configuring multi-page scraping"
+
+  company_data_collection:
+    target: "> 80%"
+    measurement: "Students successfully scraping real company data ethically"
+
+  data_quality_score:
+    target: "> 75% high quality"
+    measurement: "Clean, complete, accurate data in CSV exports"
+
+  ethical_compliance:
+    target: "100%"
+    measurement: "All students scraping only approved, ethical sources"
+
+  student_confidence_for_week6:
+    target: "> 4.0/5"
+    measurement: "Student self-reported confidence for full data collection"

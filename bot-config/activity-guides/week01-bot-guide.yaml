@@ -1,0 +1,741 @@
+# Week 1 Bot Activity Guide: Introduction to ML
+# ML-101 Bot Conversation Flow and Guidance
+# 第1週ボットアクティビティガイド：ML入門
+
+activity_info:
+  week: 1
+  title: "Exploring Real-World ML Applications | 実世界のMLアプリケーションを探索"
+  duration: "40-60 minutes"
+  learning_objectives:
+    - "Identify real-world ML applications"
+    - "Understand basic ML workflow"
+    - "Connect ML to course project"
+    - "Practice bot interaction with transparency"
+
+# ================================================
+# STEP 1: Bot Portal Setup (10 minutes)
+# ================================================
+
+step_1_portal_setup:
+  duration: "10 minutes"
+  title: "Welcome and Bot Introduction"
+
+  bot_greeting:
+    en: |
+      Hello! 👋 I'm ML-101 Bot, your AI learning assistant for this course.
+
+      I'm here to guide you through activities, answer questions, and help you
+      learn machine learning step by step. I can communicate in English or
+      Japanese - whichever you prefer!
+
+      Let's get started with Week 1. Are you ready?
+
+    ja: |
+      こんにちは！👋 私はML-101ボット、このコースのAI学習アシスタントです。
+
+      アクティビティをガイドし、質問に答え、段階的に機械学習を学ぶのを
+      お手伝いします。英語でも日本語でもコミュニケーションできます！
+
+      第1週を始めましょう。準備はできましたか？
+
+  initial_questions:
+    - question:
+        en: "Have you completed the pre-lecture slides for Week 1?"
+        ja: "第1週の事前講義スライドを完了しましたか？"
+      follow_up_yes:
+        en: "Great! Let's build on those concepts today."
+        ja: "素晴らしい！今日はそれらのコンセプトを基に進めましょう。"
+      follow_up_no:
+        en: "No problem! I recommend reviewing them first, but we can also learn as we go. What would you prefer?"
+        ja: "問題ありません！まず復習することをお勧めしますが、進めながら学ぶこともできます。どちらがいいですか？"
+
+    - question:
+        en: "Do you prefer to communicate in English, Japanese, or a mix of both?"
+        ja: "英語、日本語、またはその両方の組み合わせで会話したいですか？"
+      note: "Store student's language preference for future interactions"
+
+  activity_introduction:
+    en: |
+      Today's activity has 4 main steps:
+
+      1. 🔍 Discover ML in your daily life (15 min)
+      2. 🗂️ Categorize ML applications (10 min)
+      3. 🎯 Connect to course project (10 min)
+      4. 📝 Reflect and document (10 min)
+
+      I'll guide you through each step. Feel free to ask questions anytime!
+
+      Ready to start Step 1?
+
+    ja: |
+      今日のアクティビティには4つの主要なステップがあります：
+
+      1. 🔍 日常生活でMLを発見する（15分）
+      2. 🗂️ MLアプリケーションを分類する（10分）
+      3. 🎯 コースプロジェクトに関連付ける（10分）
+      4. 📝 考察し文書化する（10分）
+
+      各ステップをガイドします。いつでも質問してください！
+
+      ステップ1を始める準備はできましたか？
+
+  data_to_capture:
+    - language_preference
+    - lecture_completion_status
+    - initial_ml_knowledge_level
+    - student_readiness
+
+# ================================================
+# STEP 2: ML in Daily Life Discovery (15 minutes)
+# ================================================
+
+step_2_ml_discovery:
+  duration: "15 minutes"
+  title: "Discovering ML in Daily Life | 日常生活でのML発見"
+
+  introduction:
+    en: |
+      Let's discover machine learning in your everyday life!
+
+      Think about the apps and services you use daily. Many of them use ML
+      without you even noticing. Let's find them together.
+
+    ja: |
+      日常生活の中で機械学習を発見しましょう！
+
+      毎日使用しているアプリやサービスについて考えてみてください。
+      気づかないうちに多くがMLを使用しています。一緒に見つけましょう。
+
+  guiding_questions:
+    - question:
+        en: "What apps on your phone do you use most often?"
+        ja: "携帯電話でよく使用するアプリは何ですか？"
+      hints:
+        - en: "Think about social media, streaming, maps, shopping..."
+          ja: "ソーシャルメディア、ストリーミング、地図、ショッピングなどを考えてみてください..."
+
+    - question:
+        en: "Which of these apps seem to 'learn' about your preferences?"
+        ja: "これらのアプリのうち、あなたの好みを「学習」しているように見えるものはありますか？"
+      hints:
+        - en: "Apps that give recommendations"
+          ja: "推薦を提供するアプリ"
+        - en: "Apps that personalize content for you"
+          ja: "コンテンツをパーソナライズするアプリ"
+        - en: "Apps that predict what you might like"
+          ja: "あなたが好きかもしれないものを予測するアプリ"
+
+    - question:
+        en: "Can you name 5-7 specific examples of ML you encounter?"
+        ja: "遭遇するMLの具体的な例を5-7個挙げられますか？"
+      hints:
+        - en: "Netflix/YouTube recommendations"
+          ja: "Netflix/YouTubeの推薦"
+        - en: "Face unlock on your phone"
+          ja: "携帯電話の顔認証ロック解除"
+        - en: "Google Maps traffic prediction"
+          ja: "Googleマップの交通予測"
+        - en: "Instagram photo filters"
+          ja: "Instagramの写真フィルター"
+        - en: "Spam email filtering"
+          ja: "スパムメール フィルタリング"
+
+  validation_criteria:
+    minimum_examples: 5
+    quality_check:
+      - "Is it actually using ML (not just algorithms)?"
+      - "Can the student explain WHY it's ML?"
+      - "Does the example show learning from data?"
+
+  bot_feedback_examples:
+    good_example:
+      en: |
+        ✅ Great example! Netflix recommendations ARE machine learning because:
+        - Netflix learns from millions of users' viewing patterns
+        - It predicts what YOU specifically might enjoy
+        - It improves over time as you watch more
+
+        This is exactly the kind of thinking we need!
+      ja: |
+        ✅ 素晴らしい例です！Netflixの推薦は機械学習です。なぜなら：
+        - Netflixは何百万ものユーザーの視聴パターンから学習します
+        - あなたが具体的に楽しむかもしれないものを予測します
+        - あなたが見るほど時間とともに改善します
+
+        これはまさに私たちが必要とする思考です！
+
+    needs_clarification:
+      en: |
+        🤔 Hmm, let's think about this one. Is this really ML or just a rule-based system?
+
+        ML systems LEARN from data and improve over time.
+        Rule-based systems follow fixed instructions.
+
+        Which one do you think this is, and why?
+      ja: |
+        🤔 うーん、これについて考えてみましょう。これは本当にMLですか、それとも単なるルールベースシステムですか？
+
+        MLシステムはデータから学習し、時間とともに改善します。
+        ルールベースシステムは固定された指示に従います。
+
+        これはどちらだと思いますか、そしてなぜですか？
+
+  completion_check:
+    criteria:
+      - student_provides: "at_least_5_valid_examples"
+      - student_explains: "why_each_is_ml"
+      - student_demonstrates: "understanding_of_learning_from_data"
+
+    completion_message:
+      en: |
+        Excellent work! You've identified {{ count }} ML applications in your daily life.
+
+        You now understand that ML is all around us, quietly working in the background.
+        Let's move to Step 2 where we'll categorize these examples.
+      ja: |
+        素晴らしい仕事です！日常生活で{{ count }}個のMLアプリケーションを特定しました。
+
+        MLが私たちの周りにあり、静かにバックグラウンドで働いていることを理解しました。
+        これらの例を分類するステップ2に進みましょう。
+
+  data_to_capture:
+    - number_of_examples_identified
+    - quality_of_examples
+    - student_understanding_level
+    - time_taken
+    - hints_requested
+
+# ================================================
+# STEP 3: ML Application Categorization (10 minutes)
+# ================================================
+
+step_3_categorization:
+  duration: "10 minutes"
+  title: "Categorizing ML Applications | MLアプリケーションの分類"
+
+  introduction:
+    en: |
+      Now let's organize your examples into different types of ML tasks.
+
+      Machine learning isn't just one thing - there are different categories
+      based on what the system is trying to do.
+
+    ja: |
+      それでは、例をさまざまなタイプのMLタスクに整理しましょう。
+
+      機械学習は一つのことだけではありません - システムが何をしようとしているかに
+      基づいてさまざまなカテゴリがあります。
+
+  ml_categories_explanation:
+    recommendation:
+      en: "Recommending items based on past behavior"
+      ja: "過去の行動に基づいてアイテムを推薦"
+      examples: ["Netflix shows", "YouTube videos", "Amazon products"]
+
+    classification:
+      en: "Sorting things into categories"
+      ja: "物事をカテゴリに分類"
+      examples: ["Spam detection", "Face recognition", "Image tagging"]
+
+    prediction:
+      en: "Forecasting future values or events"
+      ja: "将来の値やイベントを予測"
+      examples: ["Traffic prediction", "Weather forecast", "Stock prices"]
+
+    generation:
+      en: "Creating new content"
+      ja: "新しいコンテンツを作成"
+      examples: ["Image filters", "Text generation", "Music composition"]
+
+  guiding_activity:
+    en: |
+      For each of your {{ count }} examples, let's figure out which category it belongs to:
+
+      Example: "Netflix recommendations"
+      → This is RECOMMENDATION (suggesting content based on your viewing history)
+
+      Now you try! Take your first example and tell me which category it fits.
+
+    ja: |
+      あなたの{{ count }}個の例それぞれについて、どのカテゴリに属するか考えましょう：
+
+      例：「Netflixの推薦」
+      → これは推薦です（視聴履歴に基づいてコンテンツを提案）
+
+      さあ、やってみましょう！最初の例を取り、どのカテゴリに合うか教えてください。
+
+  interactive_categorization:
+    bot_asks_for_each_example:
+      - "What ML task is this example doing?"
+      - "Why did you choose that category?"
+      - "Can you think of how it learns from data?"
+
+    bot_provides_feedback:
+      correct:
+        en: "✅ Exactly! That's a perfect match for {{ category }}."
+        ja: "✅ その通り！{{ category }}に完璧に一致します。"
+
+      partially_correct:
+        en: "🤔 Close! I see why you thought {{ guess }}, but it's actually more like {{ correct }}. Here's why..."
+        ja: "🤔 惜しい！なぜ{{ guess }}だと思ったかわかりますが、実際には{{ correct }}に近いです。その理由は..."
+
+      needs_help:
+        en: "Let me give you a hint: Think about what the main output is. Is it suggesting something? Sorting? Predicting?"
+        ja: "ヒントを差し上げます：主な出力が何かを考えてください。何かを提案していますか？分類していますか？予測していますか？"
+
+  completion_check:
+    criteria:
+      - all_examples_categorized: true
+      - student_understands_categories: true
+      - student_can_justify_choices: true
+
+    completion_message:
+      en: |
+        Perfect! You've successfully categorized all your examples:
+
+        - {{ recommendation_count }} Recommendations
+        - {{ classification_count }} Classifications
+        - {{ prediction_count }} Predictions
+        - {{ generation_count }} Content Generation
+
+        You now understand that ML takes many different forms!
+        Let's connect this to the course project in Step 3.
+      ja: |
+        完璧！すべての例の分類に成功しました：
+
+        - {{ recommendation_count }}個の推薦
+        - {{ classification_count }}個の分類
+        - {{ prediction_count }}個の予測
+        - {{ generation_count }}個のコンテンツ生成
+
+        MLがさまざまな形を取ることを理解しました！
+        ステップ3でこれをコースプロジェクトに関連付けましょう。
+
+  data_to_capture:
+    - categorization_accuracy
+    - understanding_of_ml_types
+    - ability_to_justify_choices
+    - time_taken
+
+# ================================================
+# STEP 4: Course Project Connection (10 minutes)
+# ================================================
+
+step_4_project_connection:
+  duration: "10 minutes"
+  title: "Connecting to Course Project | コースプロジェクトへの接続"
+
+  introduction:
+    en: |
+      Now for the exciting part - YOUR course project!
+
+      You're going to build a **Company Recommendation System** that helps
+      with your actual job search. Let's talk about how ML makes this possible.
+
+    ja: |
+      では、エキサイティングな部分です - あなたのコースプロジェクト！
+
+      実際の就職活動を助ける**企業推薦システム**を構築します。
+      MLがこれをどのように可能にするか話しましょう。
+
+  project_explanation:
+    en: |
+      Here's how your project will work:
+
+      1. 📊 Collect Data: Scrape company info from mynavi.jp
+      2. 🏷️ Label Data: Mark companies as "Interested" or "Not Interested"
+      3. 🤖 Train Model: ML learns YOUR specific preferences
+      4. 🎯 Get Recommendations: System suggests companies you might like
+
+      Sound familiar? It's just like the recommendation systems you identified!
+
+    ja: |
+      プロジェクトの仕組みは次のとおりです：
+
+      1. 📊 データ収集：mynavi.jpから企業情報をスクレイピング
+      2. 🏷️ データラベル付け：企業を「興味あり」または「興味なし」としてマーク
+      3. 🤖 モデルトレーニング：MLがあなたの具体的な好みを学習
+      4. 🎯 推薦を取得：システムがあなたが好きかもしれない企業を提案
+
+      見覚えがありますか？あなたが特定した推薦システムと同じです！
+
+  guiding_questions:
+    - question:
+        en: "Which category does our course project fall into?"
+        ja: "私たちのコースプロジェクトはどのカテゴリに該当しますか？"
+      answer: "Recommendation (or Classification)"
+      follow_up:
+        en: "Exactly! We're building a RECOMMENDATION system (or you could say CLASSIFICATION - sorting companies into 'interested' vs 'not interested'). Both perspectives are valid!"
+        ja: "その通り！推薦システムを構築しています（または分類と言うこともできます - 企業を「興味あり」対「興味なし」に分類）。どちらの視点も有効です！"
+
+    - question:
+        en: "What data will the ML model learn from?"
+        ja: "MLモデルはどのデータから学習しますか？"
+      hints:
+        - en: "Think about the companies you label"
+          ja: "ラベル付けする企業について考えてください"
+        - en: "What information about companies will we collect?"
+          ja: "企業についてどのような情報を収集しますか？"
+      answer_components:
+        - "Company features (industry, size, location, etc.)"
+        - "Your labels (interested vs not interested)"
+        - "Patterns in what you like vs don't like"
+
+    - question:
+        en: "How is this personally useful for your job search?"
+        ja: "これはあなたの就職活動にどのように個人的に役立ちますか？"
+      encourage_personal_reflection: true
+
+  motivation_building:
+    en: |
+      Here's what makes this project special:
+
+      ✨ It's YOURS - learns YOUR preferences, not someone else's
+      ✨ It's PRACTICAL - helps with your actual job search
+      ✨ It's REAL - uses real company data from mynavi.jp
+      ✨ It's EDUCATIONAL - you'll understand how ML recommendation works
+
+      By the end of this course, you'll have a working ML system that can:
+      - Save you time in job searching
+      - Discover companies you might have missed
+      - Help you understand what you're looking for in a job
+
+      Exciting, right? 🚀
+
+    ja: |
+      このプロジェクトが特別な理由：
+
+      ✨ あなたのもの - 他の誰かではなく、あなたの好みを学習します
+      ✨ 実用的 - 実際の就職活動を助けます
+      ✨ 本物 - mynavi.jpの実際の企業データを使用します
+      ✨ 教育的 - ML推薦の仕組みを理解します
+
+      このコースの終わりまでに、以下ができる動作するMLシステムを持つことになります：
+      - 就職活動の時間を節約
+      - 見逃していたかもしれない企業を発見
+      - 仕事で何を探しているかを理解
+
+      エキサイティングでしょう？🚀
+
+  completion_check:
+    criteria:
+      - understands_project_is_recommendation: true
+      - understands_data_collection_process: true
+      - understands_personal_value: true
+      - demonstrates_enthusiasm: true
+
+    completion_message:
+      en: |
+        Perfect! You now understand:
+        ✅ What you'll build (company recommendation system)
+        ✅ How it works (ML learns from your labeled data)
+        ✅ Why it matters (helps your actual job search)
+
+        Let's move to the final step - reflection and documentation.
+      ja: |
+        完璧！以下を理解しました：
+        ✅ 何を構築するか（企業推薦システム）
+        ✅ どのように機能するか（MLがラベル付けされたデータから学習）
+        ✅ なぜ重要か（実際の就職活動を助ける）
+
+        最後のステップ - 考察と文書化に進みましょう。
+
+  data_to_capture:
+    - project_understanding_level
+    - motivation_level
+    - concerns_or_questions
+    - personal_job_search_goals
+
+# ================================================
+# STEP 5: Reflection and Documentation (10 minutes)
+# ================================================
+
+step_5_reflection:
+  duration: "10 minutes"
+  title: "Reflection and Bot Interaction Log | 考察とボットインタラクションログ"
+
+  introduction:
+    en: |
+      Great work today! Before we finish, let's reflect on what you learned
+      and document this activity.
+
+      This reflection helps you consolidate your learning and also helps
+      improve the course for future students.
+
+    ja: |
+      今日は素晴らしい仕事でした！終了する前に、学んだことを考察し、
+      このアクティビティを文書化しましょう。
+
+      この考察は学習を強化し、また将来の学生のためにコースを改善するのに役立ちます。
+
+  reflection_questions:
+    - question:
+        en: "What was the most surprising ML application you discovered today?"
+        ja: "今日発見した最も驚くべきMLアプリケーションは何でしたか？"
+      type: "open_ended"
+
+    - question:
+        en: "Before today, how familiar were you with machine learning? (Scale 1-5)"
+        ja: "今日以前、機械学習にどのくらい精通していましたか？（1-5スケール）"
+      type: "rating"
+      scale: [1, 2, 3, 4, 5]
+      labels:
+        1: "Never heard of it"
+        5: "Very familiar"
+
+    - question:
+        en: "After today, how confident are you about the course project? (Scale 1-5)"
+        ja: "今日の後、コースプロジェクトについてどのくらい自信がありますか？（1-5スケール）"
+      type: "rating"
+      scale: [1, 2, 3, 4, 5]
+      labels:
+        1: "Very nervous"
+        5: "Very confident"
+
+    - question:
+        en: "What questions do you still have about ML or the project?"
+        ja: "MLまたはプロジェクトについてまだどのような質問がありますか？"
+      type: "open_ended"
+      note: "Address concerns or note for instructor follow-up"
+
+  bot_interaction_documentation:
+    en: |
+      Finally, let's document your bot interaction for transparency.
+
+      I'll help you fill out the AI Transparency Template:
+
+      - What you asked me
+      - How I helped
+      - What you learned from our conversation
+      - What you did on your own
+
+      This is good practice for using AI tools responsibly!
+
+    ja: |
+      最後に、透明性のためにボットインタラクションを文書化しましょう。
+
+      AI透明性テンプレートの記入をお手伝いします：
+
+      - 私に何を尋ねたか
+      - どのように助けたか
+      - 会話から何を学んだか
+      - 自分で何をしたか
+
+      これはAIツールを責任を持って使用するための良い練習です！
+
+  deliverable_checklist:
+    en: |
+      Before you submit, make sure you have:
+
+      ✅ List of 5-7 ML applications with descriptions
+      ✅ Categorization of each application
+      ✅ Reflection on course project connection
+      ✅ Bot interaction log (AI transparency)
+      ✅ Reflection answers
+
+      Have you completed all of these?
+
+    ja: |
+      提出する前に、以下があることを確認してください：
+
+      ✅ 説明付きの5-7個のMLアプリケーションのリスト
+      ✅ 各アプリケーションの分類
+      ✅ コースプロジェクトとのつながりについての考察
+      ✅ ボットインタラクションログ（AI透明性）
+      ✅ 考察の回答
+
+      これらすべてを完了しましたか？
+
+  completion_message:
+    en: |
+      🎉 Congratulations! You've completed Week 1 Activity!
+
+      Here's what you accomplished today:
+      - Discovered {{ example_count }} ML applications in daily life
+      - Learned to categorize different types of ML tasks
+      - Understood the course project and its value
+      - Practiced responsible AI interaction documentation
+
+      You're ready to submit your assignment. Great work! 🌟
+
+      Next week, we'll dive into data - the fuel that powers all ML systems.
+      See you then!
+
+    ja: |
+      🎉 おめでとうございます！第1週アクティビティを完了しました！
+
+      今日達成したこと：
+      - 日常生活で{{ example_count }}個のMLアプリケーションを発見
+      - さまざまなタイプのMLタスクを分類することを学習
+      - コースプロジェクトとその価値を理解
+      - 責任あるAIインタラクション文書化を練習
+
+      課題を提出する準備ができました。素晴らしい仕事です！🌟
+
+      来週は、すべてのMLシステムを動かす燃料であるデータに深く入ります。
+      それではまた！
+
+  data_to_capture:
+    - reflection_responses
+    - pre_activity_familiarity
+    - post_activity_confidence
+    - outstanding_questions
+    - overall_activity_time
+    - student_satisfaction
+
+# ================================================
+# ASSESSMENT CRITERIA
+# ================================================
+
+assessment_criteria:
+  completion_points: 100
+
+  rubric:
+    ml_examples_quality:
+      weight: 30
+      excellent: "7+ valid examples with clear ML characteristics"
+      good: "5-6 valid examples"
+      satisfactory: "3-4 valid examples"
+      needs_improvement: "< 3 examples or unclear ML connection"
+
+    categorization_accuracy:
+      weight: 20
+      excellent: "All examples correctly categorized with justification"
+      good: "Most examples correct (80%+)"
+      satisfactory: "Some correct (60%+)"
+      needs_improvement: "< 60% accurate"
+
+    project_understanding:
+      weight: 20
+      excellent: "Clear articulation of project goals, process, and personal value"
+      good: "Understands project basics and sees value"
+      satisfactory: "Basic understanding"
+      needs_improvement: "Unclear or confused about project"
+
+    bot_interaction_log:
+      weight: 15
+      excellent: "Detailed, accurate documentation of AI assistance"
+      good: "Complete documentation"
+      satisfactory: "Basic documentation"
+      needs_improvement: "Incomplete or missing"
+
+    reflection_quality:
+      weight: 15
+      excellent: "Thoughtful, specific, demonstrates learning"
+      good: "Complete and relevant"
+      satisfactory: "Adequate responses"
+      needs_improvement: "Superficial or incomplete"
+
+# ================================================
+# COMMON ISSUES AND BOT RESPONSES
+# ================================================
+
+common_issues:
+  student_cant_think_of_examples:
+    detection: "Student says 'I don't know' or provides < 3 examples"
+    bot_response:
+      en: |
+        No worries! Let's think about this together.
+
+        What did you do on your phone today? Let's start from there.
+        - Did you watch any videos?
+        - Did you check social media?
+        - Did you use maps to go somewhere?
+        - Did you take photos?
+
+        Pick one and tell me about it!
+      ja: |
+        心配しないでください！一緒に考えましょう。
+
+        今日携帯電話で何をしましたか？そこから始めましょう。
+        - ビデオを見ましたか？
+        - ソーシャルメディアをチェックしましたか？
+        - どこかに行くために地図を使いましたか？
+        - 写真を撮りましたか？
+
+        一つ選んで教えてください！
+
+  student_confuses_ml_with_regular_software:
+    detection: "Student suggests non-ML examples (e.g., calculator, timer)"
+    bot_response:
+      en: |
+        Good thinking! But let me help clarify.
+
+        That's a useful tool, but it's not quite ML. Here's the difference:
+
+        Regular software: Follows programmed rules (if X then Y)
+        Machine Learning: Learns patterns from data and improves
+
+        A calculator follows rules (2+2=4 always).
+        ML systems learn (Netflix gets better at recommending as you watch more).
+
+        Can you think of something that learns and improves based on your behavior?
+      ja: |
+        良い考えです！でも明確にするのを手伝わせてください。
+
+        それは便利なツールですが、MLではありません。違いは次のとおりです：
+
+        通常のソフトウェア：プログラムされたルールに従う（Xならば Y）
+        機械学習：データからパターンを学習し改善する
+
+        電卓はルールに従います（2+2=4常に）。
+        MLシステムは学習します（Netflixはあなたが見るほど推薦が上手になります）。
+
+        あなたの行動に基づいて学習し改善するものを考えられますか？
+
+  student_overwhelmed_by_project:
+    detection: "Student expresses concern about project difficulty"
+    bot_response:
+      en: |
+        I completely understand! Building an ML system sounds intimidating.
+
+        But here's the secret: we'll do it step by step, week by week.
+
+        You won't build it all at once. Each week teaches you ONE piece:
+        - Week 2: Understanding data
+        - Week 3: Python basics
+        - Week 4-5: Collecting company data
+        - And so on...
+
+        By Week 14, you'll have built it without even realizing how much you learned!
+
+        Plus, I'll be here every step of the way to help. You've got this! 💪
+      ja: |
+        完全に理解できます！MLシステムを構築することは威圧的に聞こえます。
+
+        でも秘密はこれです：ステップバイステップ、週ごとに進めます。
+
+        すべてを一度に構築するわけではありません。各週が一つのピースを教えます：
+        - 第2週：データの理解
+        - 第3週：Python基礎
+        - 第4-5週：企業データの収集
+        - などなど...
+
+        第14週までに、どれだけ学んだか気づかないうちに構築完了します！
+
+        さらに、私は一歩一歩お手伝いするためにここにいます。あなたならできます！💪
+
+# ================================================
+# SUCCESS METRICS
+# ================================================
+
+success_metrics:
+  activity_completion_rate:
+    target: "> 95%"
+    measurement: "Percentage of students who complete all 4 steps"
+
+  average_time:
+    target: "40-60 minutes"
+    measurement: "Time from start to completion"
+
+  ml_understanding:
+    target: "85%+ can identify valid ML examples"
+    measurement: "Quality of examples provided"
+
+  project_clarity:
+    target: "80%+ feel confident about project direction"
+    measurement: "Post-activity confidence rating"
+
+  bot_satisfaction:
+    target: "> 4.0/5"
+    measurement: "Student rating of bot helpfulness"

@@ -1,0 +1,1946 @@
+# Week 3 Bot Activity Guide: Google Colab and Python Basics
+# ML-101 Bot Conversation Flow and Guidance
+# 第3週ボットアクティビティガイド：Google Colabと基本的なPython
+
+activity_info:
+  week: 3
+  title: "Hands-On Python for Data Analysis | データ分析のためのハンズオンPython"
+  duration: "40-60 minutes"
+  learning_objectives:
+    - "Navigate and use Google Colab environment"
+    - "Write and execute basic Python code with proper syntax"
+    - "Work with Python data structures (lists, dictionaries)"
+    - "Import and explore datasets using pandas DataFrames"
+
+# ================================================
+# STEP 1: Google Colab Setup (10 minutes)
+# ================================================
+
+step_1_colab_setup:
+  duration: "10 minutes"
+  title: "Google Colab Environment Setup | Google Colab環境セットアップ"
+
+  bot_greeting:
+    en: |
+      Hello! 👋 Welcome to Week 3!
+
+      Today we're getting hands-on with Python programming in Google Colab.
+      Don't worry if you've never coded before - I'll guide you through
+      everything step by step!
+
+      Python is the language we'll use to collect and analyze company data
+      for your job search project. By the end of today, you'll be able to
+      write code that works with real data.
+
+      Ready to start?
+
+    ja: |
+      こんにちは！👋 第3週へようこそ！
+
+      今日はGoogle ColabでPythonプログラミングを実践します。
+      以前にコーディングしたことがなくても心配しないでください - すべてを
+      ステップバイステップでガイドします！
+
+      Pythonは就職活動プロジェクトのための企業データを収集し分析するために
+      使用する言語です。今日の終わりまでに、実際のデータを扱うコードを
+      書けるようになります。
+
+      始める準備はできましたか？
+
+  initial_questions:
+    - question:
+        en: "Have you used Google Colab or Jupyter notebooks before?"
+        ja: "以前にGoogle ColabまたはJupyterノートブックを使用したことがありますか？"
+      follow_up_yes:
+        en: "Great! Then you know the basics. We'll still do a quick review to make sure everyone's on the same page."
+        ja: "素晴らしい！基本を知っているのですね。全員が同じページにいることを確認するために簡単なレビューをします。"
+      follow_up_no:
+        en: "No problem! Colab is very user-friendly. I'll show you everything you need to know."
+        ja: "問題ありません！Colabは非常にユーザーフレンドリーです。知る必要があるすべてを見せます。"
+
+    - question:
+        en: "Have you done any programming before (any language)?"
+        ja: "以前にプログラミングをしたことがありますか（どの言語でも）？"
+      note: "Store student's programming experience level for adaptive guidance"
+
+  colab_access_guidance:
+    en: |
+      Let's get you set up in Google Colab:
+
+      **Step 1:** Open your web browser (Chrome works best)
+      **Step 2:** Go to: https://colab.research.google.com
+      **Step 3:** Sign in with your Google account
+      **Step 4:** Click "New Notebook" or open the Week 3 starter notebook I'll share
+
+      Have you successfully reached the Colab interface?
+
+    ja: |
+      Google Colabでセットアップしましょう：
+
+      **ステップ1:** Webブラウザを開く（Chromeが最適）
+      **ステップ2:** https://colab.research.google.com にアクセス
+      **ステップ3:** Googleアカウントでサインイン
+      **ステップ4:** 「新しいノートブック」をクリックまたは共有する第3週スターターノートブックを開く
+
+      Colabインターフェースに正常に到達しましたか？
+
+  interface_walkthrough:
+    en: |
+      Perfect! Let's understand the Colab interface:
+
+      🔹 **Code Cells** - Where you write Python code (gray background)
+      🔹 **Text Cells** - Where you write explanations (white background)
+      🔹 **Play Button** - Runs the code in a cell
+      🔹 **Menu Bar** - File, Edit, Runtime options at the top
+
+      You'll mostly work with code cells. To run code:
+      1. Click inside a code cell
+      2. Press Shift+Enter OR click the play button on the left
+
+      Let's try it! Type this in a code cell:
+      ```python
+      print("Hello ML-101!")
+      ```
+
+      Then run it. Did it work?
+
+    ja: |
+      完璧！Colabインターフェースを理解しましょう：
+
+      🔹 **コードセル** - Pythonコードを書く場所（灰色の背景）
+      🔹 **テキストセル** - 説明を書く場所（白い背景）
+      🔹 **再生ボタン** - セル内のコードを実行
+      🔹 **メニューバー** - 上部のFile、Edit、Runtimeオプション
+
+      主にコードセルで作業します。コードを実行するには：
+      1. コードセル内をクリック
+      2. Shift+Enterを押すか、左側の再生ボタンをクリック
+
+      試してみましょう！コードセルにこれを入力：
+      ```python
+      print("Hello ML-101!")
+      ```
+
+      その後実行します。うまくいきましたか？
+
+  completion_check:
+    criteria:
+      - student_accessed_colab: true
+      - student_executed_hello_world: true
+      - student_understands_interface: true
+
+    completion_message:
+      en: |
+        Excellent! You've successfully set up Google Colab and run your first Python code!
+
+        You now know:
+        ✅ How to access Google Colab
+        ✅ What code cells and text cells are
+        ✅ How to run Python code
+
+        Let's move on to learning Python basics in Step 2!
+      ja: |
+        素晴らしい！Google Colabを正常にセットアップし、最初のPythonコードを実行しました！
+
+        以下を知りました：
+        ✅ Google Colabにアクセスする方法
+        ✅ コードセルとテキストセルとは何か
+        ✅ Pythonコードを実行する方法
+
+        ステップ2でPythonの基礎を学ぶことに進みましょう！
+
+  data_to_capture:
+    - colab_access_status
+    - prior_programming_experience
+    - prior_colab_experience
+    - first_code_execution_success
+    - time_to_setup
+
+# ================================================
+# STEP 2: Python Variables and Data Types (12 minutes)
+# ================================================
+
+step_2_variables_data_types:
+  duration: "12 minutes"
+  title: "Python Variables and Data Types | Python変数とデータ型"
+
+  introduction:
+    en: |
+      Now let's learn about variables - the building blocks of programming!
+
+      Think of variables as labeled boxes that store information. Just like you
+      might have a box labeled "company_name" that contains "Toyota", in Python
+      we can create variables to store data about companies.
+
+    ja: |
+      それでは変数について学びましょう - プログラミングの構成要素です！
+
+      変数は情報を保存するラベル付きの箱と考えてください。「company_name」と
+      ラベル付けされた箱に「Toyota」が含まれているように、Pythonでは
+      企業に関するデータを保存する変数を作成できます。
+
+  data_types_explanation:
+    string:
+      en: "Text in quotes - like company names"
+      ja: "引用符内のテキスト - 企業名など"
+      examples:
+        - '"Toyota Motor Corporation"'
+        - '"トヨタ自動車株式会社"'
+      syntax: 'company_name = "Toyota"'
+
+    integer:
+      en: "Whole numbers - like employee counts"
+      ja: "整数 - 従業員数など"
+      examples: [100, 450, 75000]
+      syntax: 'employee_count = 450'
+
+    float:
+      en: "Decimal numbers - like ratings or salaries"
+      ja: "小数 - 評価や給与など"
+      examples: [4.5, 3.14, 5200000.50]
+      syntax: 'avg_rating = 4.5'
+
+    boolean:
+      en: "True or False values - like hiring status"
+      ja: "TrueまたはFalseの値 - 採用状況など"
+      examples: [true, false]
+      syntax: 'is_hiring = True'
+
+  guiding_exercises:
+    exercise_1:
+      title: "Create String Variable"
+      en: |
+        Let's create your first variable!
+
+        Type this code:
+        ```python
+        company_name = "Toyota Motor Corporation"
+        print(company_name)
+        ```
+
+        The `=` symbol assigns a value to a variable.
+        The `print()` function displays the value.
+
+        Try it! Then tell me what you see.
+
+      ja: |
+        最初の変数を作成しましょう！
+
+        このコードを入力：
+        ```python
+        company_name = "Toyota Motor Corporation"
+        print(company_name)
+        ```
+
+        `=`記号は変数に値を割り当てます。
+        `print()`関数は値を表示します。
+
+        試してみてください！その後、何が見えるか教えてください。
+
+      expected_output: "Toyota Motor Corporation"
+      common_errors:
+        - error: "NameError: name 'company_name' is not defined"
+          explanation:
+            en: "This means you forgot to run the cell that creates the variable first!"
+            ja: "これは変数を作成するセルを最初に実行するのを忘れたことを意味します！"
+        - error: "SyntaxError: invalid syntax"
+          explanation:
+            en: "Check for typos! Make sure you have quotes around the text."
+            ja: "タイプミスをチェック！テキストの周りに引用符があることを確認してください。"
+
+    exercise_2:
+      title: "Create Multiple Data Types"
+      en: |
+        Great! Now let's create variables for different data types.
+
+        Create these variables:
+        ```python
+        company_name = "Toyota"        # string
+        employee_count = 75000         # integer
+        avg_rating = 4.5               # float
+        is_hiring = True               # boolean
+        ```
+
+        Then use the `type()` function to check each one:
+        ```python
+        print(type(company_name))
+        print(type(employee_count))
+        print(type(avg_rating))
+        print(type(is_hiring))
+        ```
+
+        What types does Python tell you?
+
+      ja: |
+        素晴らしい！さまざまなデータ型の変数を作成しましょう。
+
+        これらの変数を作成：
+        ```python
+        company_name = "Toyota"        # string
+        employee_count = 75000         # integer
+        avg_rating = 4.5               # float
+        is_hiring = True               # boolean
+        ```
+
+        その後、`type()`関数を使用して各変数をチェック：
+        ```python
+        print(type(company_name))
+        print(type(employee_count))
+        print(type(avg_rating))
+        print(type(is_hiring))
+        ```
+
+        Pythonはどのタイプを教えますか？
+
+      expected_output: "<class 'str'>, <class 'int'>, <class 'float'>, <class 'bool'>"
+
+    exercise_3:
+      title: "Perform Basic Operations"
+      en: |
+        Now let's do something useful with these variables!
+
+        Calculate total annual payroll:
+        ```python
+        avg_salary = 5200000
+        employee_count = 1200
+        total_payroll = employee_count * avg_salary
+        print("Total payroll:", total_payroll)
+        ```
+
+        You can do math with numbers just like a calculator!
+        - Addition: `+`
+        - Subtraction: `-`
+        - Multiplication: `*`
+        - Division: `/`
+
+        Try calculating employee count after 10% growth:
+        ```python
+        new_count = employee_count * 1.10
+        print("After growth:", new_count)
+        ```
+
+      ja: |
+        これらの変数で有用なことをしましょう！
+
+        年間総給与を計算：
+        ```python
+        avg_salary = 5200000
+        employee_count = 1200
+        total_payroll = employee_count * avg_salary
+        print("Total payroll:", total_payroll)
+        ```
+
+        電卓のように数値で数学ができます！
+        - 加算：`+`
+        - 減算：`-`
+        - 乗算：`*`
+        - 除算：`/`
+
+        10%成長後の従業員数を計算してみてください：
+        ```python
+        new_count = employee_count * 1.10
+        print("After growth:", new_count)
+        ```
+
+  bot_feedback_examples:
+    success:
+      en: |
+        ✅ Perfect! You've created variables of different types!
+
+        You now understand that:
+        - Strings hold text (in quotes)
+        - Integers hold whole numbers
+        - Floats hold decimal numbers
+        - Booleans hold True/False
+
+        These will be essential for storing company data!
+
+      ja: |
+        ✅ 完璧！さまざまなタイプの変数を作成しました！
+
+        以下を理解しました：
+        - 文字列はテキストを保持（引用符内）
+        - 整数は整数を保持
+        - 浮動小数点数は小数を保持
+        - ブール値はTrue/Falseを保持
+
+        これらは企業データを保存するために不可欠です！
+
+    needs_help:
+      en: |
+        Having trouble? Let's troubleshoot:
+
+        Common issues:
+        - Forgot quotes around text? Should be `"Toyota"` not `Toyota`
+        - Misspelled variable name? Python is case-sensitive!
+        - Forgot to run previous cells? Variables must be created first!
+
+        Try again, and if stuck, copy the exact error message you see.
+
+      ja: |
+        問題がありますか？トラブルシューティングしましょう：
+
+        一般的な問題：
+        - テキストの周りの引用符を忘れましたか？`Toyota`ではなく`"Toyota"`にする必要があります
+        - 変数名のスペルミス？Pythonは大文字小文字を区別します！
+        - 前のセルを実行するのを忘れましたか？変数は最初に作成する必要があります！
+
+        もう一度試して、行き詰まった場合は、表示される正確なエラーメッセージをコピーしてください。
+
+  completion_check:
+    criteria:
+      - created_string_variable: true
+      - created_integer_variable: true
+      - created_float_variable: true
+      - created_boolean_variable: true
+      - used_type_function: true
+      - performed_basic_operations: true
+
+    completion_message:
+      en: |
+        Excellent work! You've mastered Python variables and data types!
+
+        You can now:
+        ✅ Create variables for different types of data
+        ✅ Check data types with type()
+        ✅ Perform calculations with variables
+
+        Next, we'll learn about lists and dictionaries - perfect for
+        storing multiple companies! Let's move to Step 3.
+
+      ja: |
+        素晴らしい仕事です！Python変数とデータ型をマスターしました！
+
+        以下ができるようになりました：
+        ✅ さまざまなタイプのデータの変数を作成
+        ✅ type()でデータ型をチェック
+        ✅ 変数で計算を実行
+
+        次に、リストと辞書について学びます - 複数の企業を保存するのに最適です！
+        ステップ3に進みましょう。
+
+  data_to_capture:
+    - exercises_completed
+    - errors_encountered
+    - error_resolution_method
+    - time_taken
+    - understanding_level
+
+# ================================================
+# STEP 3: Lists and Dictionaries (13 minutes)
+# ================================================
+
+step_3_lists_dictionaries:
+  duration: "13 minutes"
+  title: "Python Lists and Dictionaries | Pythonのリストと辞書"
+
+  introduction:
+    en: |
+      Now let's learn about storing MULTIPLE pieces of information!
+
+      **Lists** are like shopping lists - ordered collections of items.
+      Perfect for storing multiple company names!
+
+      **Dictionaries** are like contact cards - they store key-value pairs.
+      Perfect for storing attributes of a single company!
+
+      These are crucial for your company data project!
+
+    ja: |
+      複数の情報を保存することについて学びましょう！
+
+      **リスト**は買い物リストのようなものです - アイテムの順序付きコレクション。
+      複数の企業名を保存するのに最適！
+
+      **辞書**は名刺のようなものです - キーと値のペアを保存します。
+      単一の企業の属性を保存するのに最適！
+
+      これらはあなたの企業データプロジェクトにとって重要です！
+
+  lists_explanation:
+    syntax:
+      en: "Lists use square brackets: [ ]"
+      ja: "リストは角括弧を使用：[ ]"
+      example: 'companies = ["Toyota", "Sony", "Honda"]'
+
+    indexing:
+      en: "Access items by position (starting at 0)"
+      ja: "位置でアイテムにアクセス（0から開始）"
+      examples:
+        - 'companies[0]  # First item: "Toyota"'
+        - 'companies[1]  # Second item: "Sony"'
+        - 'companies[-1] # Last item: "Honda"'
+
+    operations:
+      en: "Common list operations"
+      ja: "一般的なリスト操作"
+      examples:
+        - 'companies.append("Nissan")  # Add to end'
+        - 'len(companies)  # Count items'
+        - 'companies.remove("Sony")  # Remove item'
+
+  lists_exercises:
+    exercise_1:
+      title: "Create a List"
+      en: |
+        Let's create a list of company names!
+
+        ```python
+        companies = ["Toyota", "Sony", "Honda", "Panasonic", "Canon"]
+        print(companies)
+        print("Number of companies:", len(companies))
+        ```
+
+        Try it! How many companies are in your list?
+
+      ja: |
+        企業名のリストを作成しましょう！
+
+        ```python
+        companies = ["Toyota", "Sony", "Honda", "Panasonic", "Canon"]
+        print(companies)
+        print("Number of companies:", len(companies))
+        ```
+
+        試してみてください！リストにはいくつの企業がありますか？
+
+    exercise_2:
+      title: "Access List Items"
+      en: |
+        Now let's access specific companies:
+
+        ```python
+        print("First company:", companies[0])
+        print("Third company:", companies[2])
+        print("Last company:", companies[-1])
+        ```
+
+        Remember: Python starts counting at 0!
+        - Index 0 = first item
+        - Index 1 = second item
+        - Index -1 = last item
+
+      ja: |
+        特定の企業にアクセスしましょう：
+
+        ```python
+        print("First company:", companies[0])
+        print("Third company:", companies[2])
+        print("Last company:", companies[-1])
+        ```
+
+        覚えておいてください：Pythonは0からカウントを始めます！
+        - インデックス0 = 最初のアイテム
+        - インデックス1 = 2番目のアイテム
+        - インデックス-1 = 最後のアイテム
+
+    exercise_3:
+      title: "Modify Lists"
+      en: |
+        Let's add and modify our list:
+
+        ```python
+        # Add a new company
+        companies.append("Nissan")
+        print("After adding:", companies)
+
+        # Remove a company
+        companies.remove("Sony")
+        print("After removing:", companies)
+        ```
+
+        Lists are flexible - you can change them after creation!
+
+      ja: |
+        リストを追加および変更しましょう：
+
+        ```python
+        # 新しい企業を追加
+        companies.append("Nissan")
+        print("After adding:", companies)
+
+        # 企業を削除
+        companies.remove("Sony")
+        print("After removing:", companies)
+        ```
+
+        リストは柔軟です - 作成後に変更できます！
+
+  dictionaries_explanation:
+    syntax:
+      en: "Dictionaries use curly braces: { }"
+      ja: "辞書は中括弧を使用：{ }"
+      example: 'company = {"name": "Toyota", "employees": 75000}'
+
+    key_value_pairs:
+      en: "Store information as key-value pairs"
+      ja: "キーと値のペアとして情報を保存"
+      examples:
+        - '"name" is the key, "Toyota" is the value'
+        - '"employees" is the key, 75000 is the value'
+
+    accessing:
+      en: "Access values by key name"
+      ja: "キー名で値にアクセス"
+      examples:
+        - 'company["name"]  # Returns "Toyota"'
+        - 'company["employees"]  # Returns 75000'
+
+  dictionaries_exercises:
+    exercise_1:
+      title: "Create a Dictionary"
+      en: |
+        Let's create a dictionary for a company:
+
+        ```python
+        company = {
+            "name": "Toyota Motor Corporation",
+            "industry": "Automotive",
+            "employees": 75000,
+            "location": "Tokyo",
+            "is_hiring": True
+        }
+
+        print(company)
+        ```
+
+        This dictionary stores multiple attributes of one company!
+
+      ja: |
+        企業の辞書を作成しましょう：
+
+        ```python
+        company = {
+            "name": "Toyota Motor Corporation",
+            "industry": "Automotive",
+            "employees": 75000,
+            "location": "Tokyo",
+            "is_hiring": True
+        }
+
+        print(company)
+        ```
+
+        この辞書は1つの企業の複数の属性を保存します！
+
+    exercise_2:
+      title: "Access Dictionary Values"
+      en: |
+        Now let's access specific information:
+
+        ```python
+        print("Company name:", company["name"])
+        print("Employee count:", company["employees"])
+        print("Hiring status:", company["is_hiring"])
+        ```
+
+        Use the key name in square brackets to get the value!
+
+      ja: |
+        特定の情報にアクセスしましょう：
+
+        ```python
+        print("Company name:", company["name"])
+        print("Employee count:", company["employees"])
+        print("Hiring status:", company["is_hiring"])
+        ```
+
+        値を取得するには角括弧内のキー名を使用します！
+
+    exercise_3:
+      title: "Create List of Dictionaries"
+      en: |
+        Here's where it gets powerful! Let's store multiple companies:
+
+        ```python
+        companies = [
+            {"name": "Toyota", "industry": "Automotive", "employees": 75000},
+            {"name": "Sony", "industry": "Electronics", "employees": 45000},
+            {"name": "Rakuten", "industry": "E-commerce", "employees": 28000}
+        ]
+
+        print("First company:", companies[0]["name"])
+        print("Second company industry:", companies[1]["industry"])
+        ```
+
+        This is how we'll store your company data for the project!
+
+      ja: |
+        ここで強力になります！複数の企業を保存しましょう：
+
+        ```python
+        companies = [
+            {"name": "Toyota", "industry": "Automotive", "employees": 75000},
+            {"name": "Sony", "industry": "Electronics", "employees": 45000},
+            {"name": "Rakuten", "industry": "E-commerce", "employees": 28000}
+        ]
+
+        print("First company:", companies[0]["name"])
+        print("Second company industry:", companies[1]["industry"])
+        ```
+
+        これがプロジェクトのための企業データを保存する方法です！
+
+  bot_feedback_examples:
+    lists_success:
+      en: |
+        ✅ Excellent! You understand lists!
+
+        Lists are perfect when you need:
+        - Multiple items in order
+        - To access by position (first, second, last)
+        - To add/remove items easily
+
+        For your project: List of company names, list of industries, etc.
+
+      ja: |
+        ✅ 素晴らしい！リストを理解しました！
+
+        リストは以下が必要なときに最適：
+        - 順序付きの複数のアイテム
+        - 位置でアクセス（最初、2番目、最後）
+        - アイテムを簡単に追加/削除
+
+        プロジェクトの場合：企業名のリスト、業界のリストなど。
+
+    dictionaries_success:
+      en: |
+        ✅ Perfect! You understand dictionaries!
+
+        Dictionaries are perfect when you need:
+        - Store related information together
+        - Access by meaningful names (not just positions)
+        - Represent real-world objects (like companies)
+
+        For your project: Each company will be a dictionary!
+
+      ja: |
+        ✅ 完璧！辞書を理解しました！
+
+        辞書は以下が必要なときに最適：
+        - 関連情報を一緒に保存
+        - 意味のある名前でアクセス（位置だけでなく）
+        - 現実世界のオブジェクトを表現（企業など）
+
+        プロジェクトの場合：各企業は辞書になります！
+
+    common_error_indexerror:
+      en: |
+        ⚠️ IndexError: list index out of range
+
+        This means you tried to access a position that doesn't exist!
+
+        If your list has 5 items, valid indexes are: 0, 1, 2, 3, 4
+        (Remember: Python starts at 0)
+
+        Check your list length with `len(your_list)` first!
+
+      ja: |
+        ⚠️ IndexError: list index out of range
+
+        これは存在しない位置にアクセスしようとしたことを意味します！
+
+        リストに5つのアイテムがある場合、有効なインデックスは：0, 1, 2, 3, 4
+        （覚えておいて：Pythonは0から始まります）
+
+        最初に`len(your_list)`でリストの長さをチェックしてください！
+
+    common_error_keyerror:
+      en: |
+        ⚠️ KeyError: 'key_name'
+
+        This means you tried to access a key that doesn't exist in the dictionary!
+
+        Check your keys with: `print(your_dict.keys())`
+
+        Make sure you spelled the key correctly (case-sensitive!)
+
+      ja: |
+        ⚠️ KeyError: 'key_name'
+
+        これは辞書に存在しないキーにアクセスしようとしたことを意味します！
+
+        キーをチェック：`print(your_dict.keys())`
+
+        キーのスペルが正しいか確認してください（大文字小文字を区別します！）
+
+  completion_check:
+    criteria:
+      - created_list: true
+      - accessed_list_items: true
+      - modified_list: true
+      - created_dictionary: true
+      - accessed_dictionary_values: true
+      - created_list_of_dictionaries: true
+
+    completion_message:
+      en: |
+        Amazing work! You've mastered lists and dictionaries!
+
+        You now know how to:
+        ✅ Create and modify lists
+        ✅ Access list items by index
+        ✅ Create dictionaries with key-value pairs
+        ✅ Combine lists and dictionaries for complex data
+
+        This is EXACTLY how we'll store company data in your project!
+        Each company = dictionary, All companies = list of dictionaries.
+
+        Ready for pandas in Step 4?
+
+      ja: |
+        素晴らしい仕事です！リストと辞書をマスターしました！
+
+        以下の方法を知りました：
+        ✅ リストを作成および変更
+        ✅ インデックスでリストアイテムにアクセス
+        ✅ キーと値のペアで辞書を作成
+        ✅ 複雑なデータのためにリストと辞書を組み合わせる
+
+        これはプロジェクトで企業データを保存する方法とまったく同じです！
+        各企業 = 辞書、すべての企業 = 辞書のリスト。
+
+        ステップ4でpandasの準備はできましたか？
+
+  data_to_capture:
+    - list_exercises_completed
+    - dictionary_exercises_completed
+    - errors_encountered
+    - understanding_of_data_structures
+    - time_taken
+
+# ================================================
+# STEP 4: Pandas Data Exploration (15 minutes)
+# ================================================
+
+step_4_pandas_exploration:
+  duration: "15 minutes"
+  title: "Introduction to Pandas DataFrames | pandasデータフレームの紹介"
+
+  introduction:
+    en: |
+      Now for the exciting part - real data analysis with pandas!
+
+      **Pandas** is Python's data analysis library. It's THE tool data
+      scientists use to work with tabular data (like Excel spreadsheets).
+
+      **DataFrame** is pandas' main data structure - think of it as a
+      powerful table with rows and columns.
+
+      This is what you'll use to analyze company data from mynavi.jp!
+
+    ja: |
+      エキサイティングな部分です - pandasで実際のデータ分析！
+
+      **Pandas**はPythonのデータ分析ライブラリです。データサイエンティストが
+      表形式データ（Excelスプレッドシートなど）を扱うために使用するツールです。
+
+      **DataFrame**はpandasのメインデータ構造です - 行と列を持つ
+      強力なテーブルと考えてください。
+
+      これはmynavi.jpからの企業データを分析するために使用します！
+
+  pandas_setup:
+    import_statement:
+      en: |
+        First, we need to import pandas:
+
+        ```python
+        import pandas as pd
+        ```
+
+        The `as pd` part means we can type `pd` instead of `pandas` -
+        it's a shortcut! Everyone uses this convention.
+
+      ja: |
+        最初に、pandasをインポートする必要があります：
+
+        ```python
+        import pandas as pd
+        ```
+
+        `as pd`の部分は、`pandas`の代わりに`pd`と入力できることを意味します -
+        ショートカットです！誰もがこの慣例を使用します。
+
+    check_version:
+      en: |
+        Let's verify pandas is working:
+
+        ```python
+        print("Pandas version:", pd.__version__)
+        ```
+
+        If you see a version number, you're good to go!
+
+      ja: |
+        pandasが動作していることを確認しましょう：
+
+        ```python
+        print("Pandas version:", pd.__version__)
+        ```
+
+        バージョン番号が表示されれば、準備完了です！
+
+  loading_data:
+    sample_data_url: "https://raw.githubusercontent.com/ontologist/2025ML/main/resources/week03-materials/sample-companies.csv"
+
+    guidance:
+      en: |
+        Now let's load real company data!
+
+        ```python
+        # Load CSV file into a DataFrame
+        df = pd.read_csv('sample-companies.csv')
+
+        print("Data loaded successfully!")
+        print(f"Number of companies: {len(df)}")
+        ```
+
+        `df` is our DataFrame variable (short for dataframe - another common convention)
+        `pd.read_csv()` reads CSV files into DataFrames
+
+        Try loading the data! Did it work?
+
+      ja: |
+        実際の企業データをロードしましょう！
+
+        ```python
+        # CSVファイルをDataFrameにロード
+        df = pd.read_csv('sample-companies.csv')
+
+        print("Data loaded successfully!")
+        print(f"Number of companies: {len(df)}")
+        ```
+
+        `df`はDataFrame変数です（dataframeの略 - もう一つの一般的な慣例）
+        `pd.read_csv()`はCSVファイルをDataFrameに読み込みます
+
+        データのロードを試してください！うまくいきましたか？
+
+  exploration_commands:
+    head:
+      command: "df.head()"
+      en: "Shows first 5 rows of data"
+      ja: "データの最初の5行を表示"
+      guidance:
+        en: |
+          Let's see what our data looks like:
+
+          ```python
+          df.head()
+          ```
+
+          This shows the first 5 rows - perfect for previewing data!
+          What columns do you see?
+
+        ja: |
+          データがどのように見えるか見てみましょう：
+
+          ```python
+          df.head()
+          ```
+
+          これは最初の5行を表示します - データをプレビューするのに最適！
+          どの列が見えますか？
+
+    shape:
+      command: "df.shape"
+      en: "Shows number of rows and columns"
+      ja: "行と列の数を表示"
+      guidance:
+        en: |
+          How big is our dataset?
+
+          ```python
+          print(df.shape)
+          ```
+
+          Returns (rows, columns) - for example (100, 5) means
+          100 companies and 5 attributes!
+
+        ja: |
+          データセットはどのくらい大きいですか？
+
+          ```python
+          print(df.shape)
+          ```
+
+          (行, 列)を返します - 例えば(100, 5)は
+          100企業と5つの属性を意味します！
+
+    columns:
+      command: "df.columns"
+      en: "Shows column names"
+      ja: "列名を表示"
+      guidance:
+        en: |
+          What information do we have about each company?
+
+          ```python
+          print(df.columns)
+          ```
+
+          These are the attributes we can analyze!
+
+        ja: |
+          各企業についてどのような情報がありますか？
+
+          ```python
+          print(df.columns)
+          ```
+
+          これらは分析できる属性です！
+
+    info:
+      command: "df.info()"
+      en: "Shows data types and missing values"
+      ja: "データ型と欠損値を表示"
+      guidance:
+        en: |
+          Let's check the data quality:
+
+          ```python
+          df.info()
+          ```
+
+          This shows:
+          - Column names
+          - Data types (int, float, object/string)
+          - How many non-null values (no missing data)
+
+        ja: |
+          データ品質をチェックしましょう：
+
+          ```python
+          df.info()
+          ```
+
+          これは以下を表示：
+          - 列名
+          - データ型（int、float、object/string）
+          - 非null値の数（欠損データなし）
+
+    describe:
+      command: "df.describe()"
+      en: "Shows statistical summary"
+      ja: "統計サマリーを表示"
+      guidance:
+        en: |
+          Let's get statistics about numeric columns:
+
+          ```python
+          df.describe()
+          ```
+
+          This shows:
+          - Count (how many)
+          - Mean (average)
+          - Min/Max (smallest/largest)
+          - Quartiles (25%, 50%, 75%)
+
+          Very useful for understanding your data!
+
+        ja: |
+          数値列の統計を取得しましょう：
+
+          ```python
+          df.describe()
+          ```
+
+          これは以下を表示：
+          - Count（数）
+          - Mean（平均）
+          - Min/Max（最小/最大）
+          - Quartiles（25%、50%、75%）
+
+          データを理解するのに非常に便利！
+
+  column_selection:
+    single_column:
+      en: |
+        Let's select a specific column:
+
+        ```python
+        # Get just the company names
+        print(df["name"])
+        ```
+
+        Use the column name in square brackets!
+
+      ja: |
+        特定の列を選択しましょう：
+
+        ```python
+        # 企業名だけを取得
+        print(df["name"])
+        ```
+
+        角括弧内の列名を使用します！
+
+    multiple_columns:
+      en: |
+        Select multiple columns:
+
+        ```python
+        # Get name and industry
+        print(df[["name", "industry"]])
+        ```
+
+        Notice the double brackets [[ ]] for multiple columns!
+
+      ja: |
+        複数の列を選択：
+
+        ```python
+        # 名前と業界を取得
+        print(df[["name", "industry"]])
+        ```
+
+        複数の列には二重括弧[[ ]]に注意してください！
+
+  filtering_data:
+    basic_filter:
+      en: |
+        Now let's filter data - this is powerful!
+
+        ```python
+        # Show only companies in Tokyo
+        tokyo_companies = df[df["location"] == "Tokyo"]
+        print(tokyo_companies)
+        ```
+
+        The condition `df["location"] == "Tokyo"` creates a True/False
+        mask that filters rows!
+
+      ja: |
+        データをフィルターしましょう - これは強力です！
+
+        ```python
+        # 東京の企業のみを表示
+        tokyo_companies = df[df["location"] == "Tokyo"]
+        print(tokyo_companies)
+        ```
+
+        条件`df["location"] == "Tokyo"`は行をフィルターする
+        True/Falseマスクを作成します！
+
+    numeric_filter:
+      en: |
+        Filter by numbers:
+
+        ```python
+        # Companies with more than 500 employees
+        large_companies = df[df["employees"] > 500]
+        print(large_companies)
+        ```
+
+        You can use: >, <, >=, <=, ==, !=
+
+      ja: |
+        数値でフィルター：
+
+        ```python
+        # 500人以上の従業員を持つ企業
+        large_companies = df[df["employees"] > 500]
+        print(large_companies)
+        ```
+
+        使用できます：>, <, >=, <=, ==, !=
+
+  practical_exercises:
+    exercise_1:
+      title: "Load and Preview Data"
+      en: |
+        Your turn! Complete these tasks:
+
+        1. Import pandas as pd
+        2. Load the sample CSV file
+        3. Use df.head() to preview data
+        4. Use df.shape to check size
+        5. Use df.columns to see column names
+
+        Tell me what you discover!
+
+      ja: |
+        あなたの番です！これらのタスクを完了してください：
+
+        1. pandasをpdとしてインポート
+        2. サンプルCSVファイルをロード
+        3. df.head()を使用してデータをプレビュー
+        4. df.shape を使用してサイズをチェック
+        5. df.columnsを使用して列名を表示
+
+        何を発見したか教えてください！
+
+    exercise_2:
+      title: "Explore Specific Columns"
+      en: |
+        Now let's dig deeper:
+
+        1. Select and print just the "name" column
+        2. Select and print "name" and "industry" together
+        3. Use df.describe() to get statistics
+
+        What's the average number of employees?
+
+      ja: |
+        もっと深く掘り下げましょう：
+
+        1. "name"列だけを選択して出力
+        2. "name"と"industry"を一緒に選択して出力
+        3. df.describe()を使用して統計を取得
+
+        平均従業員数は？
+
+    exercise_3:
+      title: "Filter and Analyze"
+      en: |
+        Let's practice filtering:
+
+        1. Show only companies in Tokyo
+        2. Show only Technology companies
+        3. Show companies with more than 1000 employees
+
+        How many companies match each filter?
+
+      ja: |
+        フィルターを練習しましょう：
+
+        1. 東京の企業のみを表示
+        2. テクノロジー企業のみを表示
+        3. 1000人以上の従業員を持つ企業を表示
+
+        各フィルターに一致する企業はいくつですか？
+
+  bot_feedback_examples:
+    pandas_success:
+      en: |
+        🎉 Excellent! You're now using pandas like a data scientist!
+
+        You can:
+        ✅ Load CSV data into DataFrames
+        ✅ Preview and explore data structure
+        ✅ Select specific columns
+        ✅ Filter data based on conditions
+        ✅ Calculate statistics
+
+        This is EXACTLY how you'll analyze the company data
+        you scrape from mynavi.jp for your project!
+
+      ja: |
+        🎉 素晴らしい！データサイエンティストのようにpandasを使用しています！
+
+        以下ができます：
+        ✅ CSVデータをDataFrameにロード
+        ✅ データ構造をプレビューおよび探索
+        ✅ 特定の列を選択
+        ✅ 条件に基づいてデータをフィルター
+        ✅ 統計を計算
+
+        これはプロジェクトのためにmynavi.jpからスクレイプした
+        企業データを分析する方法とまったく同じです！
+
+    common_filenotfound_error:
+      en: |
+        ⚠️ FileNotFoundError: No such file or directory
+
+        This means pandas can't find your CSV file!
+
+        Solutions:
+        1. Make sure you uploaded the file to Colab
+        2. Check the filename spelling exactly
+        3. Use the full file path if needed
+        4. Or load from URL (I can provide one!)
+
+        Need help uploading the file?
+
+      ja: |
+        ⚠️ FileNotFoundError: No such file or directory
+
+        これはpandasがCSVファイルを見つけられないことを意味します！
+
+        解決策：
+        1. ファイルをColabにアップロードしたことを確認
+        2. ファイル名のスペルを正確にチェック
+        3. 必要に応じて完全なファイルパスを使用
+        4. またはURLからロード（提供できます！）
+
+        ファイルのアップロードのヘルプが必要ですか？
+
+    common_keyerror_column:
+      en: |
+        ⚠️ KeyError: 'column_name'
+
+        This column doesn't exist in your DataFrame!
+
+        Check available columns with:
+        ```python
+        print(df.columns)
+        ```
+
+        Common issues:
+        - Typo in column name
+        - Case sensitivity ("Name" vs "name")
+        - Extra spaces in name
+
+      ja: |
+        ⚠️ KeyError: 'column_name'
+
+        この列はDataFrameに存在しません！
+
+        利用可能な列をチェック：
+        ```python
+        print(df.columns)
+        ```
+
+        一般的な問題：
+        - 列名のタイプミス
+        - 大文字小文字の区別（"Name" vs "name"）
+        - 名前の余分なスペース
+
+  completion_check:
+    criteria:
+      - imported_pandas: true
+      - loaded_csv_data: true
+      - used_head_command: true
+      - used_describe_command: true
+      - selected_columns: true
+      - filtered_data: true
+
+    completion_message:
+      en: |
+        🌟 Outstanding work! You've completed the pandas section!
+
+        You now have the core skills for data analysis:
+        ✅ Loading data from CSV files
+        ✅ Exploring data structure and quality
+        ✅ Selecting and filtering data
+        ✅ Calculating basic statistics
+
+        These skills are the foundation for:
+        - Week 4-5: Scraping company data from mynavi.jp
+        - Week 6-7: Cleaning and preparing data
+        - Week 8+: Training ML models on your data
+
+        Let's move to the final step - documentation!
+
+      ja: |
+        🌟 素晴らしい仕事です！pandasセクションを完了しました！
+
+        データ分析のためのコアスキルを持っています：
+        ✅ CSVファイルからデータをロード
+        ✅ データ構造と品質を探索
+        ✅ データを選択およびフィルター
+        ✅ 基本統計を計算
+
+        これらのスキルは以下の基礎です：
+        - 第4-5週：mynavi.jpから企業データをスクレイピング
+        - 第6-7週：データのクリーニングと準備
+        - 第8週以降：データでMLモデルをトレーニング
+
+        最後のステップ - 文書化に進みましょう！
+
+  data_to_capture:
+    - pandas_import_success: true
+    - data_load_success: true
+    - exploration_commands_used: []
+    - filtering_attempted: true
+    - errors_encountered: []
+    - understanding_level: ""
+    - time_taken: 0
+
+# ================================================
+# STEP 5: Documentation and Reflection (10 minutes)
+# ================================================
+
+step_5_documentation_reflection:
+  duration: "10 minutes"
+  title: "Complete Documentation and Reflection | 文書化と考察を完了"
+
+  introduction:
+    en: |
+      Great work today! Before we finish, let's document your work and
+      reflect on what you learned.
+
+      This is important for:
+      - Reinforcing your learning
+      - Creating a reference for future weeks
+      - Building good coding habits (documentation!)
+
+    ja: |
+      今日は素晴らしい仕事でした！終了する前に、作業を文書化し
+      学んだことを振り返りましょう。
+
+      これは以下のために重要です：
+      - 学習を強化する
+      - 将来の週のための参照を作成する
+      - 良いコーディング習慣を構築する（文書化！）
+
+  code_documentation:
+    add_comments:
+      en: |
+        Let's add comments to your code to explain what it does:
+
+        ```python
+        # Import pandas library for data analysis
+        import pandas as pd
+
+        # Load company data from CSV file
+        df = pd.read_csv('sample-companies.csv')
+
+        # Preview first 5 rows of data
+        print(df.head())
+        ```
+
+        Comments (lines starting with #) explain your code!
+
+        Go through your notebook and add comments to each section.
+
+      ja: |
+        コードにコメントを追加して何をするかを説明しましょう：
+
+        ```python
+        # データ分析のためにpandasライブラリをインポート
+        import pandas as pd
+
+        # CSVファイルから企業データをロード
+        df = pd.read_csv('sample-companies.csv')
+
+        # データの最初の5行をプレビュー
+        print(df.head())
+        ```
+
+        コメント（#で始まる行）はコードを説明します！
+
+        ノートブックを見て、各セクションにコメントを追加してください。
+
+    add_markdown_cells:
+      en: |
+        Add text cells between code sections to explain:
+        - What you're trying to do
+        - Why you chose this approach
+        - What the results mean
+
+        This makes your notebook a complete story, not just code!
+
+      ja: |
+        コードセクション間にテキストセルを追加して説明：
+        - 何をしようとしているか
+        - なぜこのアプローチを選んだか
+        - 結果が何を意味するか
+
+        これはノートブックを単なるコードではなく、完全なストーリーにします！
+
+  save_and_download:
+    guidance:
+      en: |
+        Now let's save your work:
+
+        **Method 1: Auto-save to Google Drive**
+        - Colab automatically saves to your Drive
+        - Look for "All changes saved" at the top
+
+        **Method 2: Download locally**
+        - File → Download → Download .ipynb
+        - This creates a backup on your computer
+
+        Make sure you download it - you'll need to submit this!
+
+      ja: |
+        作業を保存しましょう：
+
+        **方法1：Google Driveに自動保存**
+        - Colabは自動的にDriveに保存します
+        - 上部の「All changes saved」を探す
+
+        **方法2：ローカルにダウンロード**
+        - File → Download → Download .ipynb
+        - これはコンピュータにバックアップを作成します
+
+        ダウンロードすることを確認してください - 提出する必要があります！
+
+  reflection_questions:
+    - question:
+        en: "What was the most challenging aspect of Python for you today?"
+        ja: "今日のPythonの最も挑戦的な側面は何でしたか？"
+      type: "open_ended"
+      hints:
+        - "Variables and data types?"
+        - "Lists and dictionaries?"
+        - "Pandas commands?"
+        - "Understanding error messages?"
+
+    - question:
+        en: "What was easier than you expected?"
+        ja: "何が予想よりも簡単でしたか？"
+      type: "open_ended"
+
+    - question:
+        en: "How do you see Python and pandas helping with the company recommendation project?"
+        ja: "企業推薦プロジェクトにPythonとpandasがどのように役立つと思いますか？"
+      type: "open_ended"
+      connection_to_project: true
+
+    - question:
+        en: "What Python concepts do you want to learn more about?"
+        ja: "どのPythonコンセプトについてもっと学びたいですか？"
+      type: "open_ended"
+
+    - question:
+        en: "How confident are you with Python now? (1-5 scale)"
+        ja: "今Pythonにどのくらい自信がありますか？（1-5スケール）"
+      type: "rating"
+      scale: [1, 2, 3, 4, 5]
+      labels:
+        1: "Not confident at all"
+        5: "Very confident"
+
+  ai_transparency_documentation:
+    en: |
+      If you used any external AI tools (ChatGPT, Claude, etc.)
+      besides ML-101 Bot, please document:
+
+      1. **Which AI tools did you use?**
+         Example: "ChatGPT to explain error messages"
+
+      2. **What prompts did you give?**
+         Example: "What does NameError mean in Python?"
+
+      3. **How did the AI help?**
+         Example: "Explained that I forgot to define the variable first"
+
+      4. **Did you verify the AI's suggestions worked?**
+         Example: "Yes, I tested the code and it ran correctly"
+
+      This transparency is important for academic integrity!
+
+    ja: |
+      ML-101ボット以外の外部AIツール（ChatGPT、Claudeなど）を
+      使用した場合は、以下を文書化してください：
+
+      1. **どのAIツールを使用しましたか？**
+         例：「エラーメッセージを説明するためにChatGPT」
+
+      2. **どのようなプロンプトを与えましたか？**
+         例：「PythonでNameErrorは何を意味しますか？」
+
+      3. **AIはどのように助けましたか？**
+         例：「最初に変数を定義するのを忘れたことを説明しました」
+
+      4. **AIの提案が機能することを確認しましたか？**
+         例：「はい、コードをテストして正しく実行されました」
+
+      この透明性は学術的誠実性にとって重要です！
+
+  deliverable_checklist:
+    en: |
+      Before you submit, verify you have:
+
+      ✅ **Completed Jupyter Notebook**
+         - All exercises completed with working code
+         - Comments explaining your code
+         - Text cells with explanations
+         - All outputs visible
+
+      ✅ **Screenshots** (at least 3)
+         - Colab interface
+         - Variables and data types output
+         - Pandas DataFrame output
+
+      ✅ **Reflection Notes** (1-2 paragraphs)
+         - What was challenging?
+         - What did you learn?
+         - How will this help the project?
+
+      ✅ **AI Transparency Statement** (if applicable)
+         - Which tools used
+         - How they helped
+         - Verification of suggestions
+
+      Ready to submit?
+
+    ja: |
+      提出する前に、以下があることを確認してください：
+
+      ✅ **完了したJupyterノートブック**
+         - 動作中のコードですべての演習が完了
+         - コードを説明するコメント
+         - 説明を伴うテキストセル
+         - すべての出力が表示される
+
+      ✅ **スクリーンショット**（少なくとも3つ）
+         - Colabインターフェース
+         - 変数とデータ型の出力
+         - pandasデータフレーム出力
+
+      ✅ **考察ノート**（1-2段落）
+         - 何が挑戦的でしたか？
+         - 何を学びましたか？
+         - これはプロジェクトにどのように役立ちますか？
+
+      ✅ **AI透明性声明**（該当する場合）
+         - どのツールを使用したか
+         - どのように助けたか
+         - 提案の検証
+
+      提出する準備はできましたか？
+
+  completion_message:
+    en: |
+      🎉 Congratulations! You've completed Week 3!
+
+      Today you learned:
+      ✅ How to use Google Colab for Python programming
+      ✅ Python variables and data types
+      ✅ Lists and dictionaries for storing data
+      ✅ Pandas for data analysis
+
+      These are foundational skills for:
+      - Scraping company data (Weeks 4-5)
+      - Cleaning and preparing data (Weeks 6-7)
+      - Training ML models (Weeks 8+)
+
+      Next week: HTML basics and web scraping fundamentals!
+
+      You're building real data science skills. Keep it up! 🌟
+
+    ja: |
+      🎉 おめでとうございます！第3週を完了しました！
+
+      今日学んだこと：
+      ✅ PythonプログラミングのためにGoogle Colabを使用する方法
+      ✅ Python変数とデータ型
+      ✅ データを保存するためのリストと辞書
+      ✅ データ分析のためのpandas
+
+      これらは以下の基礎スキルです：
+      - 企業データのスクレイピング（第4-5週）
+      - データのクリーニングと準備（第6-7週）
+      - MLモデルのトレーニング（第8週以降）
+
+      来週：HTML基礎とWebスクレイピングの基礎！
+
+      本物のデータサイエンススキルを構築しています。頑張ってください！🌟
+
+  data_to_capture:
+    - reflection_responses
+    - confidence_level_pre_activity
+    - confidence_level_post_activity
+    - challenges_faced
+    - concepts_mastered
+    - ai_tools_used
+    - total_activity_time
+    - submission_completeness
+
+# ================================================
+# ASSESSMENT CRITERIA
+# ================================================
+
+assessment_criteria:
+  completion_points: 100
+
+  rubric:
+    python_basics_notebook:
+      weight: 40
+      excellent: "All exercises completed correctly with working code, proper comments, and clear explanations"
+      good: "Most exercises completed (80%+) with working code"
+      satisfactory: "Basic exercises completed (60%+)"
+      needs_improvement: "< 60% exercises completed or code doesn't run"
+
+    exercise_screenshots:
+      weight: 25
+      excellent: "3+ clear screenshots showing successful execution of all major sections"
+      good: "3 screenshots provided, mostly clear"
+      satisfactory: "2-3 screenshots, some clarity issues"
+      needs_improvement: "< 2 screenshots or poor quality"
+
+    reflection_notes:
+      weight: 25
+      excellent: "Thoughtful reflection (1-2 paragraphs) connecting Python skills to project, specific examples of learning"
+      good: "Complete reflection with project connection"
+      satisfactory: "Basic reflection provided"
+      needs_improvement: "Superficial or incomplete reflection"
+
+    ai_transparency:
+      weight: 10
+      excellent: "Complete, honest documentation of all AI usage with verification"
+      good: "Clear AI usage documentation"
+      satisfactory: "Basic AI transparency"
+      needs_improvement: "Incomplete or missing when required"
+
+# ================================================
+# COMMON ISSUES AND BOT RESPONSES
+# ================================================
+
+common_issues:
+  cant_access_colab:
+    detection: "Student reports can't reach Google Colab"
+    bot_response:
+      en: |
+        Let's troubleshoot Colab access:
+
+        ✅ Are you signed into a Google account?
+        ✅ Are you using a supported browser? (Chrome, Firefox, Safari)
+        ✅ Is your internet connection stable?
+        ✅ Try opening in incognito/private mode
+
+        If still stuck, you can:
+        - Try a different browser
+        - Clear browser cache
+        - Use a different Google account
+        - Contact me for alternative access
+
+        Which step is giving you trouble?
+
+      ja: |
+        Colabアクセスをトラブルシューティングしましょう：
+
+        ✅ Googleアカウントにサインインしていますか？
+        ✅ サポートされているブラウザを使用していますか？（Chrome、Firefox、Safari）
+        ✅ インターネット接続は安定していますか？
+        ✅ シークレット/プライベートモードで開いてみてください
+
+        まだ行き詰まっている場合：
+        - 別のブラウザを試す
+        - ブラウザキャッシュをクリア
+        - 別のGoogleアカウントを使用
+        - 代替アクセスのために私に連絡
+
+        どのステップで問題がありますか？
+
+  code_wont_run:
+    detection: "Student reports code cells won't execute"
+    bot_response:
+      en: |
+        Code not running? Let's check:
+
+        1. **Did you click the play button?** (or press Shift+Enter)
+        2. **Are cells executed in order?** (top to bottom)
+        3. **Do you see any error messages?** (tell me what they say)
+        4. **Is the runtime connected?** (check top-right corner)
+
+        If you see "Runtime disconnected":
+        - Runtime → Restart runtime
+        - Then run cells again from top
+
+        What's happening on your screen?
+
+      ja: |
+        コードが実行されませんか？チェックしましょう：
+
+        1. **再生ボタンをクリックしましたか？**（またはShift+Enterを押す）
+        2. **セルは順番に実行されていますか？**（上から下へ）
+        3. **エラーメッセージが表示されますか？**（何と言っているか教えて）
+        4. **ランタイムは接続されていますか？**（右上隅をチェック）
+
+        「Runtime disconnected」が表示される場合：
+        - Runtime → Restart runtime
+        - その後、上からセルを再度実行
+
+        画面に何が起こっていますか？
+
+  syntax_errors:
+    detection: "Student encounters SyntaxError messages"
+    bot_response:
+      en: |
+        SyntaxError means Python doesn't understand your code syntax.
+
+        Common causes:
+        - **Missing quotes** around strings: `"text"` not `text`
+        - **Misspelled keywords**: `print` not `prnit`
+        - **Wrong indentation**: Python cares about spaces!
+        - **Missing colons**: after if, for, def statements
+
+        Copy the exact error message and show me your code.
+        I'll help you find the issue!
+
+      ja: |
+        SyntaxErrorはPythonがコード構文を理解できないことを意味します。
+
+        一般的な原因：
+        - 文字列の周りの**引用符がない**：`text`ではなく`"text"`
+        - **キーワードのスペルミス**：`prnit`ではなく`print`
+        - **間違ったインデント**：Pythonはスペースを気にします！
+        - **コロンがない**：if、for、def文の後
+
+        正確なエラーメッセージをコピーしてコードを見せてください。
+        問題を見つけるのを手伝います！
+
+  name_errors:
+    detection: "Student encounters NameError messages"
+    bot_response:
+      en: |
+        NameError means you're using a variable that doesn't exist yet!
+
+        This usually happens when:
+        - **You forgot to define the variable first**
+          ```python
+          # Wrong order:
+          print(company_name)  # Error!
+          company_name = "Toyota"
+
+          # Correct order:
+          company_name = "Toyota"
+          print(company_name)  # Works!
+          ```
+
+        - **Typo in variable name** - `companyname` vs `company_name`
+        - **Didn't run the cell** that creates the variable
+
+        Check: Did you run all cells from top to bottom?
+
+      ja: |
+        NameErrorはまだ存在しない変数を使用していることを意味します！
+
+        これは通常以下の場合に起こります：
+        - **最初に変数を定義するのを忘れた**
+          ```python
+          # 間違った順序：
+          print(company_name)  # エラー！
+          company_name = "Toyota"
+
+          # 正しい順序：
+          company_name = "Toyota"
+          print(company_name)  # 動作！
+          ```
+
+        - **変数名のタイプミス** - `companyname` vs `company_name`
+        - 変数を作成する**セルを実行しなかった**
+
+        チェック：上から下にすべてのセルを実行しましたか？
+
+  pandas_import_error:
+    detection: "Student can't import pandas"
+    bot_response:
+      en: |
+        Can't import pandas? This is unusual in Colab (pandas is pre-installed).
+
+        Try:
+        ```python
+        import pandas as pd
+        print(pd.__version__)
+        ```
+
+        If you get ImportError:
+        1. Make sure you typed it exactly: `import pandas as pd`
+        2. Restart runtime: Runtime → Restart runtime
+        3. Try installing: `!pip install pandas`
+
+        Still not working? Tell me the exact error message.
+
+      ja: |
+        pandasをインポートできませんか？これはColabでは珍しいです（pandasは事前にインストールされています）。
+
+        試してください：
+        ```python
+        import pandas as pd
+        print(pd.__version__)
+        ```
+
+        ImportErrorが出た場合：
+        1. 正確に入力したことを確認：`import pandas as pd`
+        2. ランタイムを再起動：Runtime → Restart runtime
+        3. インストールを試す：`!pip install pandas`
+
+        まだ動作しませんか？正確なエラーメッセージを教えてください。
+
+  file_not_found:
+    detection: "Student gets FileNotFoundError when loading CSV"
+    bot_response:
+      en: |
+        Can't find the CSV file? Let's fix this!
+
+        **Option 1: Upload file to Colab**
+        1. Click the folder icon on the left sidebar
+        2. Click the upload button (up arrow)
+        3. Select sample-companies.csv from your computer
+        4. Run: `df = pd.read_csv('sample-companies.csv')`
+
+        **Option 2: Load from URL** (easier!)
+        ```python
+        url = 'https://raw.githubusercontent.com/ontologist/2025ML/main/resources/week03-materials/sample-companies.csv'
+        df = pd.read_csv(url)
+        ```
+
+        Which method would you like to try?
+
+      ja: |
+        CSVファイルが見つかりませんか？修正しましょう！
+
+        **オプション1：Colabにファイルをアップロード**
+        1. 左サイドバーのフォルダアイコンをクリック
+        2. アップロードボタン（上矢印）をクリック
+        3. コンピュータからsample-companies.csvを選択
+        4. 実行：`df = pd.read_csv('sample-companies.csv')`
+
+        **オプション2：URLからロード**（簡単！）
+        ```python
+        url = 'https://raw.githubusercontent.com/ontologist/2025ML/main/resources/week03-materials/sample-companies.csv'
+        df = pd.read_csv(url)
+        ```
+
+        どの方法を試したいですか？
+
+  overwhelmed_by_coding:
+    detection: "Student expresses feeling overwhelmed or confused"
+    bot_response:
+      en: |
+        Feeling overwhelmed? That's completely normal! 💪
+
+        Remember:
+        - **Everyone starts as a beginner** - coding is a new language!
+        - **Errors are part of learning** - even experienced programmers get errors
+        - **You don't need to memorize** - you can always look things up
+        - **We're going step-by-step** - you only need today's concepts now
+
+        Let's break it down:
+        - Where did you get stuck?
+        - What's the most confusing part?
+        - Shall we review one concept at a time?
+
+        You're doing better than you think! 🌟
+
+      ja: |
+        圧倒されていますか？それは完全に正常です！💪
+
+        覚えておいてください：
+        - **誰もが初心者として始まります** - コーディングは新しい言語です！
+        - **エラーは学習の一部です** - 経験豊富なプログラマーでもエラーが出ます
+        - **暗記する必要はありません** - いつでも調べることができます
+        - **ステップバイステップで進んでいます** - 今日のコンセプトだけが今必要です
+
+        分解しましょう：
+        - どこで行き詰まりましたか？
+        - 最も混乱している部分は？
+        - 一度に1つのコンセプトをレビューしましょうか？
+
+        あなたは思っているよりうまくやっています！🌟
+
+# ================================================
+# SUCCESS METRICS
+# ================================================
+
+success_metrics:
+  activity_completion_rate:
+    target: "> 90%"
+    measurement: "Percentage of students who complete all exercises"
+
+  average_time:
+    target: "40-60 minutes"
+    measurement: "Time from start to completion"
+
+  code_execution_success:
+    target: "85%+ students execute code without critical errors"
+    measurement: "Successful completion of core exercises"
+
+  pandas_proficiency:
+    target: "80%+ can load and explore data with pandas"
+    measurement: "Successful completion of pandas exercises"
+
+  confidence_improvement:
+    target: "Average increase of 2+ points on 1-5 scale"
+    measurement: "Pre vs post-activity confidence ratings"
+
+  bot_satisfaction:
+    target: "> 4.0/5"
+    measurement: "Student rating of bot helpfulness for Python learning"

@@ -1,0 +1,1635 @@
+# Week 2 Bot Activity Guide: Understanding Data and Its Role
+# ML-101 Bot Conversation Flow and Guidance
+# 第2週ボットアクティビティガイド：データとその役割の理解
+
+activity_info:
+  week: 2
+  title: "Understanding Data Types and Quality | データタイプと品質の理解"
+  duration: "40-60 minutes"
+  learning_objectives:
+    - "Distinguish between structured, semi-structured, and unstructured data"
+    - "Identify common data quality issues in real datasets"
+    - "Evaluate potential data sources for ML projects"
+    - "Connect data concepts to course project (company data collection)"
+
+# ================================================
+# STEP 1: Bot Portal Setup (8 minutes)
+# ================================================
+
+step_1_portal_setup:
+  duration: "8 minutes"
+  title: "Welcome to Week 2: Data Exploration"
+
+  bot_greeting:
+    en: |
+      Welcome back! 👋 Great to see you again for Week 2.
+
+      Last week, we explored ML applications in your daily life. This week, we're
+      diving into something equally important: DATA - the fuel that powers all ML systems!
+
+      Remember our course project - the company recommendation system? This week,
+      we'll start planning HOW to collect the data we need.
+
+      Ready to become a data detective? 🔍
+
+    ja: |
+      おかえりなさい！👋 第2週にまた会えて嬉しいです。
+
+      先週は、日常生活でのMLアプリケーションを探索しました。今週は、
+      同じくらい重要なものに深く入ります：データ - すべてのMLシステムを動かす燃料！
+
+      私たちのコースプロジェクト - 企業推薦システムを覚えていますか？今週は、
+      必要なデータをどのように収集するかの計画を始めます。
+
+      データ探偵になる準備はできましたか？🔍
+
+  initial_questions:
+    - question:
+        en: "Did you complete Week 1's activity about ML applications?"
+        ja: "MLアプリケーションについての第1週のアクティビティを完了しましたか？"
+      follow_up_yes:
+        en: "Perfect! Today we'll explore the data that makes those ML systems work."
+        ja: "完璧！今日は、それらのMLシステムを機能させるデータを探索します。"
+      follow_up_no:
+        en: "No worries! I can give you a quick recap if needed. Today focuses on data - the foundation of ML."
+        ja: "心配しないでください！必要に応じて簡単な要約を提供できます。今日はデータ - MLの基礎に焦点を当てます。"
+
+    - question:
+        en: "Have you reviewed the Week 2 lecture slides on data types and quality?"
+        ja: "データタイプと品質に関する第2週の講義スライドを確認しましたか？"
+      follow_up_yes:
+        en: "Excellent! We'll apply those concepts hands-on today."
+        ja: "素晴らしい！今日はそれらのコンセプトを実践的に適用します。"
+      follow_up_no:
+        en: "I recommend reviewing them, but I'll also explain key concepts as we go. Sound good?"
+        ja: "復習することをお勧めしますが、進めながら主要なコンセプトも説明します。良いですか？"
+
+  activity_introduction:
+    en: |
+      Today's activity has 5 main steps:
+
+      1. 📊 Explore different data types (12 min)
+      2. 🔍 Assess data quality issues (13 min)
+      3. 💡 Brainstorm company data sources (15 min)
+      4. ⚖️ Evaluate data sources (12 min)
+      5. 📝 Document and reflect (8 min)
+
+      We'll work with real datasets and think critically about data for your project.
+
+      This isn't just theory - by the end of today, you'll know WHERE to find
+      company data and WHAT to look for!
+
+      Ready to start Step 1?
+
+    ja: |
+      今日のアクティビティには5つの主要なステップがあります：
+
+      1. 📊 異なるデータタイプを探索（12分）
+      2. 🔍 データ品質問題を評価（13分）
+      3. 💡 企業データソースをブレインストーム（15分）
+      4. ⚖️ データソースを評価（12分）
+      5. 📝 文書化し考察（8分）
+
+      実際のデータセットを扱い、プロジェクトのデータについて批判的に考えます。
+
+      これは単なる理論ではありません - 今日の終わりまでに、
+      企業データをどこで見つけ、何を探すべきかがわかります！
+
+      ステップ1を始める準備はできましたか？
+
+  data_to_capture:
+    - language_preference
+    - week1_completion_status
+    - lecture_review_status
+    - student_readiness
+    - prior_data_knowledge
+
+# ================================================
+# STEP 2: Data Type Exploration (12 minutes)
+# ================================================
+
+step_2_data_type_exploration:
+  duration: "12 minutes"
+  title: "Discovering Data Types | データタイプの発見"
+
+  introduction:
+    en: |
+      Let's start by understanding the different types of data we encounter.
+
+      Not all data is created equal! Some is neatly organized in tables,
+      some is free-flowing text, and some is somewhere in between.
+
+      I'm going to show you THREE sample datasets. Your job is to examine each
+      one and tell me what you notice about its structure.
+
+    ja: |
+      私たちが遭遇するさまざまなタイプのデータを理解することから始めましょう。
+
+      すべてのデータが同じように作られているわけではありません！いくつかは
+      きちんとテーブルに整理され、いくつかは自由に流れるテキストで、
+      いくつかはその中間のどこかにあります。
+
+      3つのサンプルデータセットをお見せします。あなたの仕事は、それぞれを調べて、
+      その構造について気づいたことを教えることです。
+
+  dataset_presentation:
+    dataset_1:
+      name: "sample-structured-data.csv"
+      description:
+        en: "Company information in CSV format"
+        ja: "CSV形式の企業情報"
+
+    dataset_2:
+      name: "sample-semistructured-data.json"
+      description:
+        en: "Company data in JSON format"
+        ja: "JSON形式の企業データ"
+
+    dataset_3:
+      name: "sample-unstructured-data.txt"
+      description:
+        en: "Company descriptions in free-form text"
+        ja: "自由形式テキストの企業説明"
+
+  guiding_questions:
+    - question:
+        en: "Let's start with the CSV file. Open it and tell me - what do you see?"
+        ja: "CSVファイルから始めましょう。開いて教えてください - 何が見えますか？"
+      hints:
+        - en: "Look at how the information is organized"
+          ja: "情報がどのように整理されているかを見てください"
+        - en: "Do you see rows and columns?"
+          ja: "行と列が見えますか？"
+        - en: "Is each piece of information in a specific place?"
+          ja: "各情報は特定の場所にありますか？"
+      expected_observations:
+        - "Tabular format with rows and columns"
+        - "Each row is one company"
+        - "Columns have specific headers (company_id, name, industry, etc.)"
+        - "Consistent structure across all rows"
+
+    - question:
+        en: "Now look at the JSON file. How is this different from the CSV?"
+        ja: "次にJSONファイルを見てください。これはCSVとどう違いますか？"
+      hints:
+        - en: "Look for curly braces {} and nested information"
+          ja: "中括弧{}とネストされた情報を探してください"
+        - en: "Can one company have multiple sub-categories?"
+          ja: "1つの企業が複数のサブカテゴリを持つことができますか？"
+        - en: "Is it more flexible than CSV?"
+          ja: "CSVよりも柔軟ですか？"
+      expected_observations:
+        - "Nested structure with hierarchies"
+        - "More flexible than CSV"
+        - "Can have different fields for different entries"
+        - "Uses key-value pairs"
+
+    - question:
+        en: "Finally, check out the text file. What makes this different from both CSV and JSON?"
+        ja: "最後に、テキストファイルをチェックしてください。これはCSVとJSONの両方とどう違いますか？"
+      hints:
+        - en: "Is there a clear structure?"
+          ja: "明確な構造がありますか？"
+        - en: "Could you easily extract specific information (like company name)?"
+          ja: "特定の情報（企業名など）を簡単に抽出できますか？"
+        - en: "Is it written for humans to read?"
+          ja: "人間が読むために書かれていますか？"
+      expected_observations:
+        - "Free-form text, no rigid structure"
+        - "More natural language"
+        - "Harder for computers to parse"
+        - "Rich in context and description"
+
+  data_type_explanation:
+    structured:
+      en: |
+        ✅ CSV is STRUCTURED data
+
+        - Organized in rows and columns (like Excel)
+        - Each field has a defined data type
+        - Easy for computers to read and process
+        - Great for ML algorithms!
+
+        Examples: CSV files, SQL databases, spreadsheets
+      ja: |
+        ✅ CSVは構造化データです
+
+        - 行と列に整理されています（Excelのように）
+        - 各フィールドは定義されたデータ型を持っています
+        - コンピュータが読み取り処理するのが簡単
+        - MLアルゴリズムに最適！
+
+        例：CSVファイル、SQLデータベース、スプレッドシート
+
+    semi_structured:
+      en: |
+        ✅ JSON is SEMI-STRUCTURED data
+
+        - Has some organization (keys, hierarchies)
+        - More flexible than tables
+        - Can have nested information
+        - Still computer-readable, but needs parsing
+
+        Examples: JSON, XML, HTML, emails
+      ja: |
+        ✅ JSONは半構造化データです
+
+        - いくつかの構造があります（キー、階層）
+        - テーブルよりも柔軟
+        - ネストされた情報を持つことができます
+        - まだコンピュータが読み取れますが、パースが必要
+
+        例：JSON、XML、HTML、メール
+
+    unstructured:
+      en: |
+        ✅ Text file is UNSTRUCTURED data
+
+        - No predefined structure
+        - Free-form natural language
+        - Rich in meaning and context
+        - Requires Natural Language Processing (NLP) for ML
+
+        Examples: Social media posts, articles, reviews, images, videos
+      ja: |
+        ✅ テキストファイルは非構造化データです
+
+        - 事前定義された構造がありません
+        - 自由形式の自然言語
+        - 意味と文脈が豊富
+        - MLには自然言語処理（NLP）が必要
+
+        例：ソーシャルメディア投稿、記事、レビュー、画像、ビデオ
+
+  interactive_classification:
+    bot_asks:
+      en: |
+        Now let's test your understanding!
+
+        For each dataset, tell me:
+        1. Is it structured, semi-structured, or unstructured?
+        2. What are its key characteristics?
+        3. What advantages does it have for ML?
+        4. What challenges might it present?
+
+        Let's start with the CSV file!
+      ja: |
+        では、理解度をテストしましょう！
+
+        各データセットについて、教えてください：
+        1. 構造化、半構造化、または非構造化ですか？
+        2. 主な特性は何ですか？
+        3. MLにとってどのような利点がありますか？
+        4. どのような課題を提示する可能性がありますか？
+
+        CSVファイルから始めましょう！
+
+    validation_criteria:
+      - student_correctly_identifies: "all_three_data_types"
+      - student_explains: "key_characteristics"
+      - student_understands: "ml_relevance"
+      - student_recognizes: "challenges"
+
+  bot_feedback_examples:
+    correct_classification:
+      en: |
+        ✅ Exactly right! This is {{ data_type }} data because {{ reason }}.
+
+        You've got a good eye for data structure!
+      ja: |
+        ✅ 正解です！これは{{ data_type }}データです。なぜなら{{ reason }}。
+
+        データ構造を見る目がありますね！
+
+    partially_correct:
+      en: |
+        🤔 You're on the right track, but let me clarify...
+
+        This is actually {{ correct_type }}, not {{ student_guess }}.
+        Here's why: {{ explanation }}
+      ja: |
+        🤔 正しい方向に向かっていますが、明確にさせてください...
+
+        これは実際には{{ correct_type }}で、{{ student_guess }}ではありません。
+        その理由は：{{ explanation }}
+
+    needs_help:
+      en: |
+        Let me give you a hint!
+
+        Think about:
+        - Can you easily point to where specific information is?
+        - Is there a consistent format across entries?
+        - How easy would it be for a computer to find the company name?
+      ja: |
+        ヒントを差し上げます！
+
+        考えてください：
+        - 特定の情報がどこにあるかを簡単に指し示すことができますか？
+        - エントリー間で一貫した形式がありますか？
+        - コンピュータが企業名を見つけるのはどれくらい簡単ですか？
+
+  completion_check:
+    criteria:
+      - correctly_classified: "all_3_datasets"
+      - explained_characteristics: true
+      - understands_ml_implications: true
+
+    completion_message:
+      en: |
+        Excellent work! You now understand the three main types of data:
+
+        📊 Structured (easy for ML)
+        📋 Semi-structured (flexible but needs parsing)
+        📝 Unstructured (rich but requires NLP)
+
+        This knowledge will help you evaluate data sources for your project!
+
+        Ready for Step 2 where we look at data QUALITY?
+      ja: |
+        素晴らしい仕事です！3つの主なデータタイプを理解しました：
+
+        📊 構造化（MLに簡単）
+        📋 半構造化（柔軟だがパースが必要）
+        📝 非構造化（豊かだがNLPが必要）
+
+        この知識は、プロジェクトのデータソースを評価するのに役立ちます！
+
+        データ品質を見るステップ2の準備はできましたか？
+
+  data_to_capture:
+    - data_type_classification_accuracy
+    - time_to_understand_each_type
+    - questions_asked
+    - conceptual_understanding_level
+
+# ================================================
+# STEP 3: Data Quality Assessment (13 minutes)
+# ================================================
+
+step_3_data_quality_assessment:
+  duration: "13 minutes"
+  title: "Identifying Data Quality Issues | データ品質問題の特定"
+
+  introduction:
+    en: |
+      Now comes the detective work! 🔍
+
+      I'm going to show you a "messy" company dataset with INTENTIONAL quality issues.
+      Your mission: Find at least 5 different types of data quality problems.
+
+      Remember: "Garbage in, garbage out" - bad data = bad ML models!
+
+      Let's hunt for problems together.
+
+    ja: |
+      さあ、探偵作業の時間です！🔍
+
+      意図的な品質問題を含む「乱雑な」企業データセットをお見せします。
+      あなたのミッション：少なくとも5つの異なるタイプのデータ品質問題を見つけてください。
+
+      覚えておいてください：「ゴミを入れればゴミが出る」- 悪いデータ = 悪いMLモデル！
+
+      一緒に問題を探しましょう。
+
+  dataset_presentation:
+    name: "messy-company-data.csv"
+    description:
+      en: "Company dataset with multiple quality issues"
+      ja: "複数の品質問題を含む企業データセット"
+    intentional_issues:
+      - "Missing values (NULL, empty cells)"
+      - "Duplicate records"
+      - "Inconsistent formatting"
+      - "Invalid/impossible values"
+      - "Inconsistent data types"
+      - "Outdated information"
+      - "Naming inconsistencies"
+
+  guiding_questions:
+    - question:
+        en: "Let's start with a systematic check. Scan through the dataset - do you see any EMPTY cells or NULL values?"
+        ja: "体系的なチェックから始めましょう。データセットをスキャンして - 空のセルやNULL値が見えますか？"
+      hints:
+        - en: "Look column by column"
+          ja: "列ごとに見てください"
+        - en: "Some cells might say 'NULL' or just be blank"
+          ja: "いくつかのセルは'NULL'と書かれているか、空白かもしれません"
+      follow_up:
+        en: |
+          Great find! Missing values are one of the most common data quality issues.
+
+          ❓ What happens if an ML model tries to learn from missing data?
+
+          Think about it: If we don't know a company's industry, how can we
+          recommend similar companies?
+        ja: |
+          素晴らしい発見です！欠損値は最も一般的なデータ品質問題の1つです。
+
+          ❓ MLモデルが欠損データから学習しようとしたらどうなりますか？
+
+          考えてみてください：企業の業界がわからない場合、どのように
+          類似企業を推薦できますか？
+
+    - question:
+        en: "Now look carefully - do you see any companies that appear MORE THAN ONCE?"
+        ja: "次に注意深く見てください - 複数回表示される企業はありますか？"
+      hints:
+        - en: "Check company IDs and names"
+          ja: "企業IDと名前をチェックしてください"
+        - en: "Look for exact duplicates or similar entries"
+          ja: "正確な重複または類似エントリを探してください"
+      follow_up:
+        en: |
+          Duplicate records are problematic!
+
+          ❓ What would happen if our ML model saw the same company twice?
+
+          It might think that company is twice as important and give it unfair weight
+          in the recommendations. Not good!
+        ja: |
+          重複レコードは問題です！
+
+          ❓ MLモデルが同じ企業を2回見たらどうなりますか？
+
+          その企業が2倍重要だと考え、推薦で不公平な重みを与えるかもしれません。
+          良くないですね！
+
+    - question:
+        en: "Check the formatting. Are dates, numbers, or text formatted CONSISTENTLY across all rows?"
+        ja: "フォーマットをチェックしてください。日付、数字、またはテキストはすべての行で一貫してフォーマットされていますか？"
+      hints:
+        - en: "Look at date formats (YYYY-MM-DD vs DD/MM/YYYY)"
+          ja: "日付形式を見てください（YYYY-MM-DD vs DD/MM/YYYY）"
+        - en: "Check if numbers have commas, or inconsistent units"
+          ja: "数字にコンマがあるか、一貫性のない単位をチェックしてください"
+        - en: "Look at text capitalization"
+          ja: "テキストの大文字小文字を見てください"
+      follow_up:
+        en: |
+          Inconsistent formatting confuses ML models!
+
+          If "Tokyo" and "tokyo" and "TOKYO" are all in the dataset, the model
+          might think they're three different locations. Computers are literal!
+        ja: |
+          一貫性のないフォーマットはMLモデルを混乱させます！
+
+          「Tokyo」と「tokyo」と「TOKYO」がすべてデータセットにある場合、モデルは
+          3つの異なる場所だと考えるかもしれません。コンピュータは文字通りです！
+
+    - question:
+        en: "Look for IMPOSSIBLE or INVALID values. Do any numbers or values make no logical sense?"
+        ja: "不可能または無効な値を探してください。論理的に意味をなさない数字や値はありますか？"
+      hints:
+        - en: "Can employee count be negative?"
+          ja: "従業員数は負になれますか？"
+        - en: "Can a company be founded in the future?"
+          ja: "企業は未来に設立されることができますか？"
+        - en: "Are there percentage values over 100%?"
+          ja: "100%を超えるパーセンテージ値がありますか？"
+      follow_up:
+        en: |
+          Invalid values are dangerous!
+
+          A company with -50 employees makes no sense. If this goes into an ML model,
+          it will learn nonsensical patterns and make terrible predictions.
+
+          Always validate that your data makes REAL-WORLD SENSE!
+        ja: |
+          無効な値は危険です！
+
+          -50人の従業員を持つ企業は意味をなしません。これがMLモデルに入ると、
+          無意味なパターンを学習し、ひどい予測を行います。
+
+          常にデータが実世界で意味をなすことを検証してください！
+
+    - question:
+        en: "Finally, check data types. Is numeric data stored as numbers or text? Are there mixed types in the same column?"
+        ja: "最後に、データ型をチェックしてください。数値データは数字またはテキストとして保存されていますか？同じ列に混合型がありますか？"
+      hints:
+        - en: "Numbers stored as text (quotes around them)"
+          ja: "テキストとして保存された数字（周りに引用符）"
+        - en: "Mix of numbers and text in numeric columns"
+          ja: "数値列での数字とテキストの混合"
+      follow_up:
+        en: |
+          Data type inconsistencies break ML algorithms!
+
+          If "employee_count" contains both numbers (500) and text ("about 500"),
+          the algorithm can't perform mathematical operations on it.
+
+          Each column should have ONE consistent data type.
+        ja: |
+          データ型の不整合はMLアルゴリズムを壊します！
+
+          「employee_count」が数字（500）とテキスト（「約500」）の両方を含む場合、
+          アルゴリズムはそれに数学的操作を実行できません。
+
+          各列は1つの一貫したデータ型を持つべきです。
+
+  quality_issues_framework:
+    missing_values:
+      name_en: "Missing Values"
+      name_ja: "欠損値"
+      impact: "Model can't learn from incomplete information"
+      solution: "Remove rows, fill with median/mode, or use imputation techniques"
+
+    duplicates:
+      name_en: "Duplicate Records"
+      name_ja: "重複レコード"
+      impact: "Gives unfair weight to repeated entries"
+      solution: "Remove exact duplicates, merge similar entries"
+
+    inconsistent_formatting:
+      name_en: "Inconsistent Formatting"
+      name_ja: "一貫性のないフォーマット"
+      impact: "Model treats same values as different"
+      solution: "Standardize all formatting (dates, capitalization, units)"
+
+    invalid_values:
+      name_en: "Invalid/Impossible Values"
+      name_ja: "無効/不可能な値"
+      impact: "Model learns nonsensical patterns"
+      solution: "Remove or correct invalid values, validate against constraints"
+
+    type_inconsistency:
+      name_en: "Inconsistent Data Types"
+      name_ja: "一貫性のないデータ型"
+      impact: "Breaks mathematical operations and algorithms"
+      solution: "Convert all values in column to same type"
+
+  interactive_documentation:
+    bot_guides:
+      en: |
+        For each quality issue you find, let's document:
+
+        1. 🏷️ TYPE: What kind of issue is it?
+        2. 📍 LOCATION: Which row/column?
+        3. 📊 EXAMPLE: What exactly is wrong?
+        4. ⚠️ IMPACT: How would this affect ML?
+        5. 🔧 SOLUTION: How could we fix it?
+
+        Let's document your findings systematically!
+      ja: |
+        見つけた各品質問題について、文書化しましょう：
+
+        1. 🏷️ タイプ：どのような種類の問題ですか？
+        2. 📍 場所：どの行/列ですか？
+        3. 📊 例：正確に何が間違っていますか？
+        4. ⚠️ 影響：これはMLにどのように影響しますか？
+        5. 🔧 解決策：どのように修正できますか？
+
+        発見を体系的に文書化しましょう！
+
+  completion_check:
+    criteria:
+      - minimum_issues_identified: 5
+      - issues_correctly_categorized: true
+      - ml_impact_understood: true
+      - solutions_proposed: true
+
+    completion_message:
+      en: |
+        Outstanding detective work! 🎯
+
+        You identified {{ count }} data quality issues:
+        - {{ issue_types_list }}
+
+        You now understand that QUALITY matters as much as QUANTITY in ML!
+
+        Before we train any model, we must:
+        ✅ Clean the data
+        ✅ Handle missing values
+        ✅ Remove duplicates
+        ✅ Standardize formats
+        ✅ Validate values
+
+        Ready for Step 3? We'll brainstorm WHERE to find company data!
+      ja: |
+        優れた探偵作業です！🎯
+
+        {{ count }}個のデータ品質問題を特定しました：
+        - {{ issue_types_list }}
+
+        MLでは品質が量と同じくらい重要であることを理解しました！
+
+        モデルを訓練する前に、次を行う必要があります：
+        ✅ データをクリーン
+        ✅ 欠損値を処理
+        ✅ 重複を削除
+        ✅ フォーマットを標準化
+        ✅ 値を検証
+
+        ステップ3の準備はできましたか？企業データをどこで見つけるかブレインストームします！
+
+  data_to_capture:
+    - number_of_issues_identified
+    - issue_types_found
+    - quality_of_issue_descriptions
+    - understanding_of_ml_impact
+    - time_taken
+
+# ================================================
+# STEP 4: Company Data Source Brainstorming (15 minutes)
+# ================================================
+
+step_4_data_source_brainstorming:
+  duration: "15 minutes"
+  title: "Finding Company Data Sources | 企業データソースの発見"
+
+  introduction:
+    en: |
+      Now for the exciting part - YOUR project! 🎯
+
+      To build a company recommendation system, we need DATA about companies.
+      But where do we find it?
+
+      Let's brainstorm together. Think about YOUR OWN job search:
+      - Where do you look for company information?
+      - What websites do you visit?
+      - Where do you read reviews or get advice?
+
+      Every data source you use is a potential source for our ML model!
+
+    ja: |
+      さて、エキサイティングな部分です - あなたのプロジェクト！🎯
+
+      企業推薦システムを構築するには、企業についてのデータが必要です。
+      しかし、それをどこで見つけますか？
+
+      一緒にブレインストームしましょう。あなた自身の就職活動について考えてください：
+      - 企業情報をどこで探しますか？
+      - どのウェブサイトを訪問しますか？
+      - レビューを読んだりアドバイスを得たりする場所は？
+
+      使用するすべてのデータソースは、MLモデルの潜在的なソースです！
+
+  guiding_questions:
+    - question:
+        en: "Let's start personal. Where do YOU currently search for jobs and company information?"
+        ja: "個人的なことから始めましょう。現在、どこで仕事と企業情報を検索していますか？"
+      hints:
+        - en: "Think about job boards you visit"
+          ja: "訪問する求人掲示板について考えてください"
+        - en: "Company websites you check"
+          ja: "チェックする企業ウェブサイト"
+        - en: "Social media or professional networks"
+          ja: "ソーシャルメディアやプロフェッショナルネットワーク"
+      expected_answers:
+        - "MyNavi, Rikunabi (Japan job boards)"
+        - "Indeed, LinkedIn"
+        - "Company websites"
+        - "OpenWork, Vorkers (review sites)"
+
+    - question:
+        en: "Great! Now think broader - what OTHER types of information would help you decide if a company is a good fit?"
+        ja: "素晴らしい！さらに広く考えてください - 企業が良い適合かを決めるのに役立つ他のタイプの情報は何ですか？"
+      hints:
+        - en: "Company culture and employee satisfaction?"
+          ja: "企業文化と従業員満足度？"
+        - en: "Salary and benefits information?"
+          ja: "給与と福利厚生情報？"
+        - en: "News and reputation?"
+          ja: "ニュースと評判？"
+        - en: "Growth and financial stability?"
+          ja: "成長と財務安定性？"
+      encourage_creative_thinking: true
+
+    - question:
+        en: "Now let's categorize. For each source you mentioned, what TYPE of data does it provide?"
+        ja: "次に分類しましょう。言及した各ソースについて、どのタイプのデータを提供しますか？"
+      framework:
+        basic_info:
+          en: "Basic company info (name, size, location, industry)"
+          ja: "基本的な企業情報（名前、規模、場所、業界）"
+        job_listings:
+          en: "Job listings and requirements"
+          ja: "求人リストと要件"
+        reviews:
+          en: "Employee reviews and ratings"
+          ja: "従業員レビューと評価"
+        financials:
+          en: "Financial and business information"
+          ja: "財務およびビジネス情報"
+        culture:
+          en: "Culture, values, and work environment"
+          ja: "文化、価値観、職場環境"
+
+  data_source_categories:
+    job_boards:
+      name_en: "Job Boards / 求人掲示板"
+      examples:
+        - "MyNavi (https://www.mynavi.jp/)"
+        - "Rikunabi (https://www.rikunabi.com/)"
+        - "Indeed Japan (https://jp.indeed.com/)"
+        - "Wantedly (https://www.wantedly.com/)"
+      data_available:
+        - "Job listings"
+        - "Company descriptions"
+        - "Requirements and qualifications"
+        - "Basic company info (size, location)"
+      advantages:
+        - "Rich company information"
+        - "Regularly updated"
+        - "Structured format"
+      challenges:
+        - "May require scraping"
+        - "Legal/ethical considerations"
+
+    review_sites:
+      name_en: "Review Sites / レビューサイト"
+      examples:
+        - "OpenWork (https://www.openwork.jp/)"
+        - "Vorkers"
+        - "Glassdoor (https://www.glassdoor.com/)"
+      data_available:
+        - "Employee reviews"
+        - "Salary information"
+        - "Company ratings"
+        - "Work-life balance scores"
+      advantages:
+        - "Insider perspectives"
+        - "Detailed culture information"
+        - "Helps understand employee satisfaction"
+      challenges:
+        - "May be biased (unhappy employees more likely to review)"
+        - "Some sites require login"
+        - "Unstructured text data"
+
+    company_websites:
+      name_en: "Company Websites / 企業ウェブサイト"
+      examples:
+        - "Individual company career pages"
+        - "About us sections"
+        - "CSR/sustainability reports"
+      data_available:
+        - "Company mission and values"
+        - "Products and services"
+        - "Corporate information"
+      advantages:
+        - "Official information"
+        - "Rich context about company"
+      challenges:
+        - "Unstructured text"
+        - "Inconsistent formats across companies"
+        - "Time-consuming to collect from many companies"
+
+    professional_networks:
+      name_en: "Professional Networks / プロフェッショナルネットワーク"
+      examples:
+        - "LinkedIn"
+        - "Wantedly"
+      data_available:
+        - "Company profiles"
+        - "Employee connections"
+        - "Company updates and culture"
+      advantages:
+        - "Network insights"
+        - "Employee demographics"
+      challenges:
+        - "May require API access"
+        - "Privacy restrictions"
+
+    news_business_sites:
+      name_en: "News & Business Sites / ニュースとビジネスサイト"
+      examples:
+        - "Nikkei"
+        - "Bloomberg"
+        - "Company financial reports"
+      data_available:
+        - "Company news"
+        - "Financial performance"
+        - "Industry trends"
+      advantages:
+        - "Current information"
+        - "Business context"
+      challenges:
+        - "Unstructured text"
+        - "May require subscriptions"
+
+  interactive_brainstorming:
+    bot_facilitates:
+      en: |
+        Let's build your data source list together!
+
+        As you think of each source, I'll ask:
+        1. 🌐 What's the source name and URL?
+        2. 📊 What information does it provide?
+        3. 🏗️ Is the data structured, semi-structured, or unstructured?
+        4. ✅ Is it easily accessible?
+
+        Goal: Identify at least 5-7 different sources!
+
+        Ready? What's your first data source?
+      ja: |
+        一緒にデータソースリストを作りましょう！
+
+        各ソースを考えるとき、私は尋ねます：
+        1. 🌐 ソース名とURLは何ですか？
+        2. 📊 どのような情報を提供しますか？
+        3. 🏗️ データは構造化、半構造化、または非構造化ですか？
+        4. ✅ 簡単にアクセスできますか？
+
+        目標：少なくとも5-7の異なるソースを特定！
+
+        準備はできましたか？最初のデータソースは何ですか？
+
+    validation_per_source:
+      - "Is this source relevant to job searching?"
+      - "Does it contain company information?"
+      - "Is the data accessible (free or with registration)?"
+      - "What type of data structure does it have?"
+
+  completion_check:
+    criteria:
+      - minimum_sources_identified: 5
+      - sources_are_relevant: true
+      - data_types_documented: true
+      - accessibility_noted: true
+
+    completion_message:
+      en: |
+        Fantastic brainstorming! 🌟
+
+        You've identified {{ count }} potential data sources:
+        {{ source_list }}
+
+        Now you know WHERE to find company data. But not all sources are equally good!
+
+        In Step 4, we'll EVALUATE each source to determine which ones are best
+        for your project. Ready to become a critical evaluator?
+      ja: |
+        素晴らしいブレインストーミング！🌟
+
+        {{ count }}個の潜在的なデータソースを特定しました：
+        {{ source_list }}
+
+        企業データをどこで見つけるかがわかりました。しかし、すべてのソースが同じように良いわけではありません！
+
+        ステップ4では、各ソースを評価して、プロジェクトに最適なものを決定します。
+        批判的評価者になる準備はできましたか？
+
+  data_to_capture:
+    - number_of_sources_identified
+    - source_categories_used
+    - creativity_of_sources
+    - understanding_of_data_types
+    - time_taken
+
+# ================================================
+# STEP 5: Data Source Evaluation (12 minutes)
+# ================================================
+
+step_5_data_source_evaluation:
+  duration: "12 minutes"
+  title: "Evaluating Data Sources | データソースの評価"
+
+  introduction:
+    en: |
+      Time to be critical! 🧐
+
+      Not every data source is suitable for your project. We need to evaluate
+      each one systematically using clear criteria.
+
+      Think like a data scientist: Is this source actually useful? Can we access it?
+      Is it legal to collect? Will it help our ML model?
+
+      Let's create an evaluation matrix!
+
+    ja: |
+      批判的になる時間です！🧐
+
+      すべてのデータソースがプロジェクトに適しているわけではありません。明確な基準を使用して
+      各ソースを体系的に評価する必要があります。
+
+      データサイエンティストのように考えてください：このソースは実際に役立ちますか？アクセスできますか？
+      収集することは合法ですか？MLモデルに役立ちますか？
+
+      評価マトリックスを作成しましょう！
+
+  evaluation_criteria:
+    accessibility:
+      name_en: "Accessibility"
+      name_ja: "アクセシビリティ"
+      description:
+        en: "How easy is it to access this data?"
+        ja: "このデータにアクセスするのはどれくらい簡単ですか？"
+      scale:
+        5: "Publicly available, no registration"
+        4: "Free with registration"
+        3: "Limited free access"
+        2: "Requires paid subscription"
+        1: "Very difficult or impossible to access"
+
+    data_richness:
+      name_en: "Data Richness"
+      name_ja: "データの豊富さ"
+      description:
+        en: "How much useful information does it provide?"
+        ja: "どれだけ有用な情報を提供しますか？"
+      scale:
+        5: "Very comprehensive (10+ data points per company)"
+        4: "Rich information (6-10 data points)"
+        3: "Moderate information (3-5 data points)"
+        2: "Limited information (1-2 data points)"
+        1: "Minimal information"
+
+    data_quality:
+      name_en: "Data Quality"
+      name_ja: "データ品質"
+      description:
+        en: "Is the data accurate, complete, and up-to-date?"
+        ja: "データは正確で完全で最新ですか？"
+      scale:
+        5: "Official source, regularly updated, complete"
+        4: "Mostly accurate and current"
+        3: "Generally reliable with some gaps"
+        2: "Some quality concerns"
+        1: "Poor quality, unreliable"
+
+    relevance:
+      name_en: "Relevance to Project"
+      name_ja: "プロジェクトへの関連性"
+      description:
+        en: "How relevant is this for building a company recommendation system?"
+        ja: "企業推薦システムを構築するためにこれはどれだけ関連していますか？"
+      scale:
+        5: "Highly relevant (directly helps understand company fit)"
+        4: "Very relevant"
+        3: "Moderately relevant"
+        2: "Somewhat relevant"
+        1: "Not very relevant"
+
+    feasibility:
+      name_en: "Feasibility"
+      name_ja: "実現可能性"
+      description:
+        en: "How feasible is it to collect this data (considering time, skills, legal/ethical)?"
+        ja: "このデータを収集することはどれだけ実現可能ですか（時間、スキル、法的/倫理的を考慮）？"
+      scale:
+        5: "Very feasible (easy to scrape, legal, ethical)"
+        4: "Feasible with some effort"
+        3: "Moderately challenging"
+        2: "Difficult but possible"
+        1: "Very difficult or ethically questionable"
+
+  interactive_evaluation:
+    bot_guides:
+      en: |
+        Let's evaluate each of your {{ count }} data sources!
+
+        For each one, we'll rate it on a scale of 1-5 for:
+        1. 🔓 Accessibility
+        2. 📊 Data Richness
+        3. ✅ Data Quality
+        4. 🎯 Relevance
+        5. ⚙️ Feasibility
+
+        Then we'll calculate a TOTAL SCORE and decide if it's worth using.
+
+        Let's start with {{ first_source }}!
+      ja: |
+        {{ count }}個のデータソースのそれぞれを評価しましょう！
+
+        それぞれについて、1-5のスケールで評価します：
+        1. 🔓 アクセシビリティ
+        2. 📊 データの豊富さ
+        3. ✅ データ品質
+        4. 🎯 関連性
+        5. ⚙️ 実現可能性
+
+        次に合計スコアを計算し、使用する価値があるかを決定します。
+
+        {{ first_source }}から始めましょう！
+
+    per_criterion_questions:
+      accessibility:
+        en: "Can you access {{ source_name }} without paying? Do you need to register?"
+        ja: "{{ source_name }}に支払いなしでアクセスできますか？登録が必要ですか？"
+
+      richness:
+        en: "How many different pieces of information about companies does {{ source_name }} provide?"
+        ja: "{{ source_name }}は企業について何種類の異なる情報を提供しますか？"
+
+      quality:
+        en: "Is the information on {{ source_name }} accurate and up-to-date? Is it from an official source?"
+        ja: "{{ source_name }}の情報は正確で最新ですか？公式ソースからですか？"
+
+      relevance:
+        en: "Will information from {{ source_name }} help you understand if a company is a good fit for you?"
+        ja: "{{ source_name }}からの情報は、企業があなたに適しているかを理解するのに役立ちますか？"
+
+      feasibility:
+        en: "Given your current skills and time, how realistic is it to collect data from {{ source_name }}? Is it legal and ethical?"
+        ja: "現在のスキルと時間を考慮して、{{ source_name }}からデータを収集することはどれくらい現実的ですか？合法で倫理的ですか？"
+
+  legal_ethical_guidance:
+    en: |
+      ⚖️ IMPORTANT: Legal and Ethical Considerations
+
+      Before collecting data, always check:
+
+      ✅ Terms of Service: Does the website allow scraping?
+      ✅ Robots.txt: Are there technical restrictions?
+      ✅ Privacy: Is the data public or private?
+      ✅ Copyright: Can you legally use this data?
+
+      For this course, we'll focus on:
+      - Publicly available job listing data (like MyNavi)
+      - Data explicitly meant to be public
+      - Ethical, respectful data collection
+
+      When in doubt, ASK! It's better to be safe than sorry.
+    ja: |
+      ⚖️ 重要：法的および倫理的考慮事項
+
+      データを収集する前に、常にチェックしてください：
+
+      ✅ 利用規約：ウェブサイトはスクレイピングを許可していますか？
+      ✅ Robots.txt：技術的制限はありますか？
+      ✅ プライバシー：データは公開ですか、それとも私的ですか？
+      ✅ 著作権：このデータを合法的に使用できますか？
+
+      このコースでは、次に焦点を当てます：
+      - 公開されている求人リストデータ（MyNaviなど）
+      - 明示的に公開を意図したデータ
+      - 倫理的で敬意を持ったデータ収集
+
+      疑問がある場合は、質問してください！後悔するより安全である方が良いです。
+
+  evaluation_matrix_example:
+    example_source: "MyNavi Japan"
+    ratings:
+      accessibility: 4  # "Free with registration"
+      richness: 5       # "Very comprehensive company data"
+      quality: 5        # "Official, regularly updated"
+      relevance: 5      # "Highly relevant for job search"
+      feasibility: 3    # "Moderate - requires scraping skills"
+    total_score: 22
+    recommendation: "Highly recommended - rich, reliable data despite moderate scraping challenge"
+
+  completion_check:
+    criteria:
+      - all_sources_evaluated: true
+      - ratings_justified: true
+      - legal_ethical_considered: true
+      - top_3_selected: true
+
+    completion_message:
+      en: |
+        Excellent evaluation work! 📊
+
+        You've systematically evaluated all {{ count }} data sources.
+
+        Your TOP 3 data sources for the project:
+        1. {{ source_1 }} (Score: {{ score_1 }}/25)
+        2. {{ source_2 }} (Score: {{ score_2 }}/25)
+        3. {{ source_3 }} (Score: {{ score_3 }}/25)
+
+        These will be your primary targets for data collection in coming weeks!
+
+        You now understand:
+        ✅ Different types of data (structured, semi, unstructured)
+        ✅ Data quality issues to watch for
+        ✅ Where to find company data
+        ✅ How to evaluate data sources critically
+
+        Ready for the final step - documentation?
+      ja: |
+        素晴らしい評価作業です！📊
+
+        {{ count }}個すべてのデータソースを体系的に評価しました。
+
+        プロジェクトのトップ3データソース：
+        1. {{ source_1 }}（スコア：{{ score_1 }}/25）
+        2. {{ source_2 }}（スコア：{{ score_2 }}/25）
+        3. {{ source_3 }}（スコア：{{ score_3 }}/25）
+
+        これらが今後数週間のデータ収集の主要なターゲットになります！
+
+        以下を理解しました：
+        ✅ 異なるタイプのデータ（構造化、半、非構造化）
+        ✅ 注意すべきデータ品質問題
+        ✅ 企業データをどこで見つけるか
+        ✅ データソースを批判的に評価する方法
+
+        最後のステップ - 文書化の準備はできましたか？
+
+  data_to_capture:
+    - evaluation_matrix_completed
+    - rating_justifications
+    - top_3_sources_selected
+    - legal_ethical_awareness
+    - time_taken
+
+# ================================================
+# STEP 6: Reflection and Documentation (8 minutes)
+# ================================================
+
+step_6_reflection_documentation:
+  duration: "8 minutes"
+  title: "Reflection and Activity Completion | 考察とアクティビティ完了"
+
+  introduction:
+    en: |
+      Congratulations! You've completed the data exploration! 🎉
+
+      Before we finish, let's reflect on what you learned and make sure
+      you have everything ready to submit.
+
+      This reflection helps consolidate your learning.
+
+    ja: |
+      おめでとうございます！データ探索を完了しました！🎉
+
+      終了する前に、学んだことを考察し、提出の準備ができていることを
+      確認しましょう。
+
+      この考察は学習を強化するのに役立ちます。
+
+  reflection_questions:
+    - question:
+        en: "What surprised you most about data quality issues?"
+        ja: "データ品質問題について最も驚いたことは何ですか？"
+      type: "open_ended"
+
+    - question:
+        en: "Before today, how familiar were you with different data types? (Scale 1-5)"
+        ja: "今日以前、異なるデータタイプにどのくらい精通していましたか？（1-5スケール）"
+      type: "rating"
+      scale: [1, 2, 3, 4, 5]
+      labels:
+        1: "Never heard of them"
+        5: "Very familiar"
+
+    - question:
+        en: "After today, how confident are you about finding and evaluating data sources for the project? (Scale 1-5)"
+        ja: "今日の後、プロジェクトのためのデータソースを見つけ評価することについてどのくらい自信がありますか？（1-5スケール）"
+      type: "rating"
+      scale: [1, 2, 3, 4, 5]
+      labels:
+        1: "Not confident at all"
+        5: "Very confident"
+
+    - question:
+        en: "Which data source are you most excited to collect data from, and why?"
+        ja: "どのデータソースからデータを収集することに最もワクワクしていますか、そしてなぜですか？"
+      type: "open_ended"
+
+    - question:
+        en: "What questions do you still have about data or the project?"
+        ja: "データまたはプロジェクトについてまだどのような質問がありますか？"
+      type: "open_ended"
+      note: "Address concerns or note for instructor follow-up"
+
+  deliverable_checklist:
+    en: |
+      Before you submit, make sure you have completed:
+
+      ✅ Deliverable 1: Data Type Analysis Document
+         - Analyzed all 3 sample datasets (CSV, JSON, text)
+         - Identified data type for each
+         - Explained characteristics, advantages, and challenges
+
+      ✅ Deliverable 2: Data Quality Assessment Report
+         - Identified at least 5 quality issues in messy dataset
+         - Provided specific examples with row/column references
+         - Explained ML impact for each issue
+         - Proposed solutions
+
+      ✅ Deliverable 3: Data Source Identification Report
+         - Listed 5-7 potential company data sources
+         - Documented type of information available
+         - Identified data structure for each
+         - Assessed data quality
+
+      ✅ Deliverable 4: Data Source Evaluation Matrix
+         - Rated all sources on 5 criteria (1-5 scale)
+         - Calculated total scores
+         - Provided recommendations
+         - Selected top 3 sources
+
+      ✅ Deliverable 5: AI Transparency Statement (if you used AI)
+         - Documented which AI tools used
+         - Described how you used them
+         - Noted independent analysis
+
+      Have you completed all of these?
+
+    ja: |
+      提出する前に、以下を完了していることを確認してください：
+
+      ✅ 成果物1：データタイプ分析文書
+         - すべての3つのサンプルデータセットを分析（CSV、JSON、テキスト）
+         - 各データタイプを識別
+         - 特性、利点、課題を説明
+
+      ✅ 成果物2：データ品質評価レポート
+         - 乱雑なデータセットで少なくとも5つの品質問題を特定
+         - 行/列参照付きの具体的な例を提供
+         - 各問題のML影響を説明
+         - 解決策を提案
+
+      ✅ 成果物3：データソース識別レポート
+         - 5-7の潜在的な企業データソースをリスト
+         - 利用可能な情報のタイプを文書化
+         - 各データ構造を識別
+         - データ品質を評価
+
+      ✅ 成果物4：データソース評価マトリックス
+         - 5つの基準ですべてのソースを評価（1-5スケール）
+         - 合計スコアを計算
+         - 推奨を提供
+         - トップ3ソースを選択
+
+      ✅ 成果物5：AI透明性声明（AIを使用した場合）
+         - 使用したAIツールを文書化
+         - どのように使用したかを説明
+         - 独立した分析を記録
+
+      これらすべてを完了しましたか？
+
+  submission_guidance:
+    en: |
+      Ready to submit? Here's how:
+
+      1. 📁 Combine all deliverables into ONE document
+      2. 🏷️ Name your file: Week02_[YourName]_DataAnalysis
+      3. 📤 Upload through the ML-101 Bot Portal
+      4. ✅ Confirm you receive submission confirmation
+
+      The bot portal will guide you through the upload process!
+
+      Any questions before you submit?
+    ja: |
+      提出の準備はできましたか？方法は次のとおりです：
+
+      1. 📁 すべての成果物を1つの文書に結合
+      2. 🏷️ ファイル名：Week02_[あなたの名前]_DataAnalysis
+      3. 📤 ML-101ボットポータル経由でアップロード
+      4. ✅ 提出確認を受け取ることを確認
+
+      ボットポータルがアップロードプロセスをガイドします！
+
+      提出前に質問はありますか？
+
+  completion_message:
+    en: |
+      🎉 Congratulations! You've completed Week 2 Activity!
+
+      Here's what you accomplished today:
+      - Learned to distinguish 3 types of data structures
+      - Identified {{ quality_issues_count }} data quality issues
+      - Discovered {{ sources_count }} potential company data sources
+      - Evaluated and ranked sources systematically
+      - Selected your top 3 sources for the project
+
+      You're now ready to submit your assignment. Great work! 🌟
+
+      💡 Key Takeaway: "Garbage in, garbage out" - Data quality is CRUCIAL for ML success!
+
+      Next week, we'll start learning Python - the tool we'll use to collect and
+      process all this data. Exciting times ahead!
+
+      See you in Week 3! 👋
+    ja: |
+      🎉 おめでとうございます！第2週アクティビティを完了しました！
+
+      今日達成したこと：
+      - 3つのタイプのデータ構造を区別することを学習
+      - {{ quality_issues_count }}個のデータ品質問題を特定
+      - {{ sources_count }}個の潜在的な企業データソースを発見
+      - ソースを体系的に評価しランク付け
+      - プロジェクトのトップ3ソースを選択
+
+      課題を提出する準備ができました。素晴らしい仕事です！🌟
+
+      💡 重要なポイント：「ゴミを入れればゴミが出る」- データ品質はMLの成功に重要です！
+
+      来週は、これらすべてのデータを収集し処理するために使用するツールであるPythonの
+      学習を始めます。エキサイティングな時間が待っています！
+
+      第3週でお会いしましょう！👋
+
+  data_to_capture:
+    - reflection_responses
+    - pre_activity_data_familiarity
+    - post_activity_confidence
+    - favorite_data_source
+    - outstanding_questions
+    - deliverable_completion_status
+    - overall_activity_time
+    - student_satisfaction
+
+# ================================================
+# ASSESSMENT CRITERIA
+# ================================================
+
+assessment_criteria:
+  completion_points: 100
+
+  rubric:
+    data_type_analysis:
+      weight: 25
+      excellent: "All 3 datasets correctly classified with clear explanations of characteristics, advantages, and challenges"
+      good: "Correct classification with good explanations (minor gaps)"
+      satisfactory: "Mostly correct classification, basic explanations"
+      needs_improvement: "Incorrect classifications or unclear explanations"
+
+    data_quality_assessment:
+      weight: 30
+      excellent: "5+ quality issues identified with specific examples, clear ML impact explanations, and thoughtful solutions"
+      good: "5 quality issues with good examples and explanations"
+      satisfactory: "5 issues identified but lacking detail or depth"
+      needs_improvement: "< 5 issues or poor quality analysis"
+
+    data_source_identification:
+      weight: 20
+      excellent: "7+ relevant sources with comprehensive documentation of data types, structure, and quality"
+      good: "5-6 quality sources with good documentation"
+      satisfactory: "5 sources with basic documentation"
+      needs_improvement: "< 5 sources or poorly documented"
+
+    source_evaluation_matrix:
+      weight: 20
+      excellent: "Complete evaluation matrix with justified ratings, clear totals, and thoughtful recommendations for all sources"
+      good: "Complete matrix with reasonable ratings and recommendations"
+      satisfactory: "Matrix completed but lacking justification"
+      needs_improvement: "Incomplete matrix or unjustified ratings"
+
+    ai_transparency:
+      weight: 5
+      excellent: "Comprehensive documentation of AI usage with verification process"
+      good: "Complete AI transparency documentation"
+      satisfactory: "Basic AI documentation or clear statement of no use"
+      needs_improvement: "Missing or inadequate documentation"
+
+# ================================================
+# COMMON ISSUES AND BOT RESPONSES
+# ================================================
+
+common_issues:
+  student_confused_about_data_types:
+    detection: "Student struggles to distinguish structured vs semi-structured vs unstructured"
+    bot_response:
+      en: |
+        No worries! Let me help clarify with a simple question:
+
+        🤔 Can you easily point to WHERE specific information is located?
+
+        STRUCTURED (CSV): Yes! Row 5, Column 3 - always there!
+        SEMI-STRUCTURED (JSON): Kind of - it's nested but organized
+        UNSTRUCTURED (Text): No - you have to read through to find it
+
+        Think of it like this:
+        - CSV = Filing cabinet with labeled drawers
+        - JSON = Box with labeled sections inside
+        - Text = Free-flowing story
+
+        Does this help?
+      ja: |
+        心配しないでください！簡単な質問で明確にしましょう：
+
+        🤔 特定の情報がどこにあるかを簡単に指し示すことができますか？
+
+        構造化（CSV）：はい！行5、列3 - 常にそこにあります！
+        半構造化（JSON）：ある程度 - ネストされていますが整理されています
+        非構造化（テキスト）：いいえ - 見つけるために読む必要があります
+
+        このように考えてください：
+        - CSV = ラベル付き引き出しのあるファイルキャビネット
+        - JSON = 内部にラベル付きセクションのある箱
+        - テキスト = 自由に流れる物語
+
+        これは役立ちますか？
+
+  student_cant_find_quality_issues:
+    detection: "Student struggles to identify data quality problems"
+    bot_response:
+      en: |
+        Let me guide you through a systematic check! 🔍
+
+        Look column by column:
+
+        1. Missing values: See any blank cells or "NULL"?
+        2. Duplicates: Same company appearing twice?
+        3. Format issues: Dates in different formats? Mixed capitalization?
+        4. Invalid values: Negative employee counts? Future founding dates?
+        5. Type issues: Numbers stored as text?
+
+        Start with Column 1 and work your way across. What do you notice?
+      ja: |
+        体系的なチェックをガイドしましょう！🔍
+
+        列ごとに見てください：
+
+        1. 欠損値：空白のセルや「NULL」が見えますか？
+        2. 重複：同じ企業が2回表示されていますか？
+        3. フォーマット問題：異なる形式の日付？混合大文字小文字？
+        4. 無効な値：負の従業員数？未来の設立日？
+        5. 型の問題：テキストとして保存された数字？
+
+        列1から始めて進んでください。何に気づきますか？
+
+  student_limited_data_source_ideas:
+    detection: "Student can only think of 1-2 data sources"
+    bot_response:
+      en: |
+        Let's think broader! Think about your actual job search process:
+
+        🌐 Job Boards: Where do you look for job listings?
+        → MyNavi, Rikunabi, Indeed, Wantedly...
+
+        ⭐ Reviews: Where do people share company experiences?
+        → OpenWork, Vorkers, Glassdoor...
+
+        🏢 Official: Where do companies share info about themselves?
+        → Company websites, LinkedIn pages...
+
+        📰 News: Where do you read about companies?
+        → Business news sites, company reports...
+
+        Think about each category. Can you name one source in each?
+      ja: |
+        もっと広く考えましょう！実際の就職活動プロセスについて考えてください：
+
+        🌐 求人掲示板：求人リストをどこで探しますか？
+        → マイナビ、リクナビ、Indeed、Wantedly...
+
+        ⭐ レビュー：人々が企業経験を共有する場所は？
+        → OpenWork、Vorkers、Glassdoor...
+
+        🏢 公式：企業が自社について情報を共有する場所は？
+        → 企業ウェブサイト、LinkedInページ...
+
+        📰 ニュース：企業についてどこで読みますか？
+        → ビジネスニュースサイト、企業レポート...
+
+        各カテゴリについて考えてください。それぞれで1つのソースを挙げられますか？
+
+  student_unsure_about_evaluation_ratings:
+    detection: "Student uncertain how to rate data sources"
+    bot_response:
+      en: |
+        Rating can feel subjective, but let's make it concrete!
+
+        For example, let's rate MyNavi for ACCESSIBILITY:
+
+        ❓ Can you access it without paying? → YES
+        ❓ Do you need to register? → YES (free registration)
+        ❓ Are there limitations? → Some features need login
+
+        Rating: 4/5 (Free with registration)
+
+        Not a 5 because you need to register.
+        Not a 3 because registration is free and easy.
+
+        Make sense? Now you try for the next criterion!
+      ja: |
+        評価は主観的に感じるかもしれませんが、具体的にしましょう！
+
+        たとえば、MyNaviのアクセシビリティを評価しましょう：
+
+        ❓ 支払いなしでアクセスできますか？→ はい
+        ❓ 登録が必要ですか？→ はい（無料登録）
+        ❓ 制限はありますか？→ いくつかの機能はログインが必要
+
+        評価：4/5（無料登録あり）
+
+        登録が必要なので5ではありません。
+        登録が無料で簡単なので3ではありません。
+
+        わかりましたか？次の基準でやってみてください！
+
+  student_overwhelmed_by_deliverables:
+    detection: "Student expresses concern about amount of work"
+    bot_response:
+      en: |
+        I understand it looks like a lot! But here's the secret:
+
+        You've ALREADY done most of the work during our conversation! 🎉
+
+        Deliverable 1: ✅ You already analyzed the 3 datasets with me
+        Deliverable 2: ✅ You already identified quality issues
+        Deliverable 3: ✅ You already brainstormed data sources
+        Deliverable 4: ✅ You already evaluated them
+        Deliverable 5: ✅ Quick 3-5 sentence statement
+
+        Now you just need to:
+        1. Organize your notes
+        2. Format them nicely
+        3. Submit
+
+        It's more about organizing what you learned than creating new work!
+
+        You've got this! 💪
+      ja: |
+        たくさんに見えることを理解しています！でも秘密は：
+
+        会話中にすでにほとんどの作業を完了しています！🎉
+
+        成果物1：✅ 私と一緒に3つのデータセットをすでに分析
+        成果物2：✅ すでに品質問題を特定
+        成果物3：✅ すでにデータソースをブレインストーム
+        成果物4：✅ すでに評価済み
+        成果物5：✅ 簡単な3-5文の声明
+
+        今必要なのは：
+        1. ノートを整理
+        2. きれいにフォーマット
+        3. 提出
+
+        新しい作業を作成するというよりも、学んだことを整理することです！
+
+        あなたならできます！💪
+
+  student_asks_about_legal_scraping:
+    detection: "Student asks if it's legal to scrape certain websites"
+    bot_response:
+      en: |
+        Great question! Legal data collection is VERY important! ⚖️
+
+        Before scraping any website, check:
+
+        1. 📜 Terms of Service: Read the website's ToS
+           - Some explicitly prohibit scraping
+           - Some allow it with restrictions
+
+        2. 🤖 Robots.txt: Check [website.com/robots.txt]
+           - Shows what automated access is allowed
+
+        3. 🔒 Data Type: Is it public or behind login?
+           - Public job listings = usually OK
+           - Private user data = usually NOT OK
+
+        4. 📊 Use Case: For learning vs commercial
+           - Educational use has more leeway
+
+        For this course, we'll focus on:
+        - ✅ Public job listing data (MyNavi-style sites)
+        - ✅ Respectful, rate-limited scraping
+        - ✅ Educational purposes
+
+        When uncertain, ASK your instructor!
+      ja: |
+        素晴らしい質問です！合法的なデータ収集は非常に重要です！⚖️
+
+        ウェブサイトをスクレイピングする前に、チェックしてください：
+
+        1. 📜 利用規約：ウェブサイトのToSを読む
+           - いくつかは明示的にスクレイピングを禁止
+           - いくつかは制限付きで許可
+
+        2. 🤖 Robots.txt：[website.com/robots.txt]をチェック
+           - 許可される自動アクセスを示します
+
+        3. 🔒 データタイプ：公開かログイン後か？
+           - 公開求人リスト = 通常OK
+           - 私的ユーザーデータ = 通常NG
+
+        4. 📊 使用ケース：学習 vs 商業
+           - 教育的使用はより柔軟性があります
+
+        このコースでは、次に焦点を当てます：
+        - ✅ 公開求人リストデータ（MyNavi式サイト）
+        - ✅ 敬意を持った、レート制限付きスクレイピング
+        - ✅ 教育目的
+
+        不確かな場合は、インストラクターに質問してください！
+
+# ================================================
+# SUCCESS METRICS
+# ================================================
+
+success_metrics:
+  activity_completion_rate:
+    target: "> 95%"
+    measurement: "Percentage of students who complete all 5 steps"
+
+  average_time:
+    target: "40-60 minutes"
+    measurement: "Time from start to completion"
+
+  data_understanding:
+    target: "90%+ correctly identify all 3 data types"
+    measurement: "Accuracy of data type classification"
+
+  quality_issue_identification:
+    target: "85%+ identify at least 5 quality issues"
+    measurement: "Number and quality of issues found"
+
+  data_source_creativity:
+    target: "Average 6+ sources identified per student"
+    measurement: "Breadth of sources discovered"
+
+  evaluation_completeness:
+    target: "95%+ complete full evaluation matrix"
+    measurement: "Completion of all evaluation criteria"
+
+  project_readiness:
+    target: "80%+ feel confident about data collection approach"
+    measurement: "Post-activity confidence rating"
+
+  bot_satisfaction:
+    target: "> 4.0/5"
+    measurement: "Student rating of bot helpfulness"

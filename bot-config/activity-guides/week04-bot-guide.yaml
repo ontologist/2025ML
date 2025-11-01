@@ -1,0 +1,1590 @@
+# Week 4 Bot Activity Guide: Introduction to Web Scraping
+# ML-101 Bot Conversation Flow and Guidance
+# 第4週ボットアクティビティガイド：Webスクレイピング入門
+
+activity_info:
+  week: 4
+  title: "Exploring Web Page Structure and Ethical Scraping | Webページ構造の探索と倫理的スクレイピング"
+  duration: "40-60 minutes"
+  learning_objectives:
+    - "Understand basic HTML structure and identify scrapable data"
+    - "Use browser developer tools to inspect web pages"
+    - "Apply ethical and legal frameworks to scraping decisions"
+    - "Evaluate websites for scraping feasibility"
+    - "Interpret robots.txt files and Terms of Service"
+
+# ================================================
+# STEP 1: Browser Developer Tools Introduction (10 minutes)
+# ================================================
+
+step_1_devtools_intro:
+  duration: "10 minutes"
+  title: "Introduction to Browser Developer Tools | ブラウザ開発者ツール入門"
+
+  bot_greeting:
+    en: |
+      Hello! Welcome to Week 4 - Web Scraping Fundamentals!
+
+      This week is VERY important because we're learning about ethical data collection.
+      Web scraping is powerful, but with power comes responsibility.
+
+      Today we'll explore:
+      - How web pages are structured (HTML)
+      - How to inspect pages using browser tools
+      - What you CAN and SHOULD scrape (ethics!)
+      - How to evaluate websites for your project
+
+      Are you ready to become a responsible web scraper?
+
+    ja: |
+      こんにちは！第4週 - Webスクレイピング基礎へようこそ！
+
+      今週は倫理的なデータ収集について学ぶので非常に重要です。
+      Webスクレイピングは強力ですが、力には責任が伴います。
+
+      今日は以下を探索します：
+      - Webページの構造（HTML）
+      - ブラウザツールを使用してページを検査する方法
+      - 何をスクレイプできるか、すべきか（倫理！）
+      - プロジェクトのためにウェブサイトを評価する方法
+
+      責任あるWebスクレイパーになる準備はできましたか？
+
+  initial_questions:
+    - question:
+        en: "Have you completed the Week 4 pre-lecture on web scraping ethics?"
+        ja: "第4週のWebスクレイピング倫理に関する事前講義を完了しましたか？"
+      follow_up_yes:
+        en: "Excellent! Today we'll apply those ethical principles hands-on."
+        ja: "素晴らしい！今日はそれらの倫理原則を実践的に適用します。"
+      follow_up_no:
+        en: "No problem! I'll guide you through the key concepts. But I strongly recommend reviewing the lecture afterward to deepen your understanding."
+        ja: "問題ありません！主要なコンセプトをガイドします。しかし、理解を深めるために後で講義を復習することを強くお勧めします。"
+
+    - question:
+        en: "Have you ever opened browser developer tools before (F12 or right-click > Inspect)?"
+        ja: "以前にブラウザ開発者ツールを開いたことがありますか（F12または右クリック > 検査）？"
+      note: "Assess student's familiarity with developer tools"
+
+  activity_introduction:
+    en: |
+      Today's activity has 5 main steps:
+
+      1. 🔧 Learn browser developer tools (10 min)
+      2. 🏗️ Explore HTML structure (12 min)
+      3. ⚖️ Understand ethical and legal considerations (13 min)
+      4. 🔍 Evaluate websites for scraping (15 min)
+      5. 📋 Create feasibility report (10 min)
+
+      IMPORTANT: This week you will NOT write any scraping code.
+      We're planning and analyzing only. Actual scraping comes in Week 6!
+
+      Ready to start with Step 1?
+
+    ja: |
+      今日のアクティビティには5つの主要なステップがあります：
+
+      1. 🔧 ブラウザ開発者ツールを学ぶ（10分）
+      2. 🏗️ HTML構造を探索する（12分）
+      3. ⚖️ 倫理的および法的考慮事項を理解する（13分）
+      4. 🔍 スクレイピングのためにウェブサイトを評価する（15分）
+      5. 📋 実現可能性レポートを作成する（10分）
+
+      重要：今週はスクレイピングコードを書きません。
+      計画と分析のみです。実際のスクレイピングは第6週に行います！
+
+      ステップ1を始める準備はできましたか？
+
+  devtools_tutorial:
+    introduction:
+      en: |
+        Let's learn how to see the "code behind the page"!
+
+        Every webpage you see is built with HTML code. Browser developer tools
+        let you inspect this code and understand how pages are structured.
+
+        This is ESSENTIAL for web scraping - you need to know where data lives
+        in the HTML before you can extract it.
+
+      ja: |
+        「ページの背後にあるコード」を見る方法を学びましょう！
+
+        見るすべてのWebページはHTMLコードで構築されています。ブラウザ開発者ツールを
+        使用すると、このコードを検査してページの構造を理解できます。
+
+        これはWebスクレイピングに不可欠です - データを抽出する前に、
+        データがHTMLのどこにあるかを知る必要があります。
+
+    opening_devtools:
+      en: |
+        **How to Open Developer Tools:**
+
+        Method 1: Press F12 key
+        Method 2: Press Ctrl+Shift+I (Windows) or Cmd+Option+I (Mac)
+        Method 3: Right-click anywhere on a page and select "Inspect"
+
+        Try opening developer tools now on any webpage. What do you see?
+
+      ja: |
+        **開発者ツールの開き方：**
+
+        方法1：F12キーを押す
+        方法2：Ctrl+Shift+I（Windows）またはCmd+Option+I（Mac）を押す
+        方法3：ページの任意の場所を右クリックして「検査」を選択
+
+        今、任意のWebページで開発者ツールを開いてみてください。何が見えますか？
+
+    guided_exploration:
+      step_1:
+        en: "Navigate to the 'Elements' or 'Inspector' tab. This shows the HTML code."
+        ja: "「Elements」または「Inspector」タブに移動します。これがHTMLコードを表示します。"
+
+      step_2:
+        en: "Click the element selector tool (arrow icon in top-left of dev tools)"
+        ja: "要素セレクターツールをクリック（開発者ツールの左上の矢印アイコン）"
+
+      step_3:
+        en: "Hover over different parts of the webpage. Notice how HTML highlights!"
+        ja: "Webページのさまざまな部分の上にカーソルを置きます。HTMLがハイライトされることに注意してください！"
+
+      step_4:
+        en: "Click on a heading or paragraph. The HTML code for that element appears."
+        ja: "見出しまたは段落をクリックします。その要素のHTMLコードが表示されます。"
+
+    practice_exercise:
+      en: |
+        **Practice Exercise:**
+
+        I'm going to provide you with a simple sample HTML file to practice on.
+
+        File location: /resources/week04-materials/sample-simple-page.html
+
+        Open this file in your browser, then open developer tools.
+
+        Can you identify:
+        1. The main heading (what HTML tag is it?)
+        2. Where the paragraph text is stored
+        3. Where the link is defined
+
+        Take 3-4 minutes to explore, then tell me what you found!
+
+      ja: |
+        **練習演習：**
+
+        練習用のシンプルなサンプルHTMLファイルを提供します。
+
+        ファイルの場所：/resources/week04-materials/sample-simple-page.html
+
+        このファイルをブラウザで開き、次に開発者ツールを開きます。
+
+        以下を特定できますか：
+        1. メイン見出し（どのHTMLタグですか？）
+        2. 段落テキストがどこに保存されているか
+        3. リンクがどこに定義されているか
+
+        3-4分かけて探索し、見つけたことを教えてください！
+
+  validation_questions:
+    - "Did you successfully open developer tools?"
+    - "Can you see the HTML code in the Elements/Inspector tab?"
+    - "Were you able to use the element selector tool?"
+    - "Did you identify the heading tag (<h1>, <h2>, etc.)?"
+
+  completion_check:
+    criteria:
+      - successfully_opened_devtools: true
+      - located_elements_tab: true
+      - used_element_selector: true
+      - identified_basic_html_tags: true
+
+    completion_message:
+      en: |
+        Great work! You've learned the foundational skill for web scraping.
+
+        You now know how to:
+        - Open browser developer tools
+        - Use the element selector
+        - View HTML code behind web pages
+
+        This is like getting x-ray vision for websites!
+        Let's move to Step 2 where we'll learn HTML structure in detail.
+
+      ja: |
+        素晴らしい仕事です！Webスクレイピングの基礎スキルを学びました。
+
+        以下の方法を知りました：
+        - ブラウザ開発者ツールを開く
+        - 要素セレクターを使用する
+        - Webページの背後にあるHTMLコードを表示する
+
+        これはウェブサイトのX線視力を得るようなものです！
+        ステップ2に進み、HTML構造を詳細に学びましょう。
+
+  data_to_capture:
+    - devtools_familiarity_level
+    - browser_type_used
+    - successfully_opened_tools
+    - identified_elements_count
+    - time_taken
+
+# ================================================
+# STEP 2: HTML Structure Exploration (12 minutes)
+# ================================================
+
+step_2_html_structure:
+  duration: "12 minutes"
+  title: "Understanding HTML Structure | HTML構造の理解"
+
+  introduction:
+    en: |
+      Now that you can see HTML code, let's understand what it means!
+
+      HTML stands for HyperText Markup Language. It's the skeleton of every webpage.
+      Think of it like building blocks - elements contain other elements in a tree structure.
+
+      Understanding this structure is KEY to scraping data efficiently.
+
+    ja: |
+      HTMLコードが見えるようになったので、それが何を意味するかを理解しましょう！
+
+      HTMLはHyperText Markup Languageの略です。すべてのWebページの骨格です。
+      ビルディングブロックのように考えてください - 要素は木構造で他の要素を含みます。
+
+      この構造を理解することはデータを効率的にスクレイピングするための鍵です。
+
+  html_concepts:
+    tags:
+      en: |
+        **HTML Tags - The Building Blocks**
+
+        Tags are the foundation of HTML. They look like this: <tagname>content</tagname>
+
+        Common tags you'll encounter:
+        - <h1> to <h6> - Headings (h1 is biggest, h6 is smallest)
+        - <p> - Paragraphs of text
+        - <div> - Container/division for grouping elements
+        - <span> - Inline container for small pieces of content
+        - <a> - Links (anchor tags)
+        - <table>, <tr>, <td> - Tables with rows and cells
+        - <ul>, <ol>, <li> - Lists (unordered, ordered, list items)
+
+      ja: |
+        **HTMLタグ - ビルディングブロック**
+
+        タグはHTMLの基礎です。次のように見えます：<tagname>コンテンツ</tagname>
+
+        遭遇する一般的なタグ：
+        - <h1>から<h6> - 見出し（h1が最大、h6が最小）
+        - <p> - テキストの段落
+        - <div> - 要素をグループ化するためのコンテナ/区分
+        - <span> - 小さなコンテンツ用のインラインコンテナ
+        - <a> - リンク（アンカータグ）
+        - <table>、<tr>、<td> - 行とセルを持つテーブル
+        - <ul>、<ol>、<li> - リスト（順序なし、順序付き、リスト項目）
+
+    attributes:
+      en: |
+        **HTML Attributes - Extra Information**
+
+        Attributes provide extra info about elements. Format: attribute="value"
+
+        Important attributes for scraping:
+        - class="company-name" - Groups elements with same styling/purpose
+        - id="main-title" - Unique identifier for a specific element
+        - href="https://example.com" - Link destination (in <a> tags)
+        - src="image.jpg" - Source of images
+
+        Example: <div class="company-profile" id="toyota">...</div>
+
+      ja: |
+        **HTML属性 - 追加情報**
+
+        属性は要素に関する追加情報を提供します。形式：attribute="value"
+
+        スクレイピングに重要な属性：
+        - class="company-name" - 同じスタイル/目的を持つ要素をグループ化
+        - id="main-title" - 特定の要素の一意の識別子
+        - href="https://example.com" - リンクの宛先（<a>タグ内）
+        - src="image.jpg" - 画像のソース
+
+        例：<div class="company-profile" id="toyota">...</div>
+
+    hierarchy:
+      en: |
+        **HTML Hierarchy - Parent and Child Elements**
+
+        HTML is organized like a family tree:
+        - Parent elements contain child elements
+        - Child elements can have their own children
+
+        Example:
+        <div class="company">           ← Parent
+          <h1>Company Name</h1>         ← Child
+          <p>Description here</p>       ← Child
+          <div class="details">         ← Child (also a parent!)
+            <span>Industry</span>       ← Grandchild
+          </div>
+        </div>
+
+      ja: |
+        **HTML階層 - 親要素と子要素**
+
+        HTMLは家系図のように組織されています：
+        - 親要素は子要素を含みます
+        - 子要素は独自の子を持つことができます
+
+        例：
+        <div class="company">           ← 親
+          <h1>企業名</h1>               ← 子
+          <p>説明はここ</p>             ← 子
+          <div class="details">         ← 子（また親でもあります！）
+            <span>業界</span>           ← 孫
+          </div>
+        </div>
+
+  guided_exercise:
+    en: |
+      **Let's Practice with a Company Profile Page!**
+
+      Open the sample company listing file:
+      /resources/week04-materials/sample-company-listing.html
+
+      Use developer tools to find and identify these 6 elements:
+
+      1. **Company Name** - What tag is it? What class does it have?
+      2. **Industry/Sector** - Where is this information stored?
+      3. **Company Description** - Is it in a <p> tag or <div>?
+      4. **Employee Count** - Can you locate this data?
+      5. **Location** - What element contains the location?
+      6. **Website Link** - Find the <a> tag. What's the href attribute?
+
+      For each element, write down:
+      - Tag type (e.g., <h1>, <p>, <div>)
+      - Any class or id attributes
+      - The actual content/data
+
+      Take about 8 minutes for this exercise. Ready?
+
+    ja: |
+      **企業プロフィールページで練習しましょう！**
+
+      サンプル企業リストファイルを開きます：
+      /resources/week04-materials/sample-company-listing.html
+
+      開発者ツールを使用してこれらの6つの要素を見つけて識別します：
+
+      1. **企業名** - どのタグですか？どのクラスを持っていますか？
+      2. **業界/セクター** - この情報はどこに保存されていますか？
+      3. **企業説明** - <p>タグまたは<div>にありますか？
+      4. **従業員数** - このデータを見つけられますか？
+      5. **所在地** - どの要素が所在地を含みますか？
+      6. **ウェブサイトリンク** - <a>タグを見つけます。href属性は何ですか？
+
+      各要素について、以下を書き留めます：
+      - タグタイプ（例：<h1>、<p>、<div>）
+      - クラスまたはid属性
+      - 実際のコンテンツ/データ
+
+      この演習に約8分かけてください。準備はいいですか？
+
+  bot_feedback_patterns:
+    correct_identification:
+      en: "Excellent! You correctly identified the {{ element_type }} tag with class '{{ class_name }}'. This is exactly the kind of element we'd target when scraping."
+      ja: "素晴らしい！class '{{ class_name }}'を持つ{{ element_type }}タグを正しく識別しました。これはまさにスクレイピング時にターゲットにする要素の種類です。"
+
+    needs_guidance:
+      en: |
+        Let me help you find that element. Try this:
+        1. Click the element selector tool (arrow icon)
+        2. Hover over the {{ element_description }} on the page
+        3. Click when it highlights
+        4. Look at the HTML that appears in the Elements tab
+
+        What tag do you see?
+
+      ja: |
+        その要素を見つけるのをお手伝いします。これを試してください：
+        1. 要素セレクターツール（矢印アイコン）をクリック
+        2. ページ上の{{ element_description }}の上にカーソルを置く
+        3. ハイライトされたらクリック
+        4. Elementsタブに表示されるHTMLを見る
+
+        どのタグが見えますか？
+
+    missing_attributes:
+      en: "Good start! But don't forget to note the class or id attributes. These are important for scraping because they help us target specific elements. Look inside the opening tag - see anything after the tag name?"
+      ja: "良い始まりです！しかし、classまたはid属性を書き留めることを忘れないでください。これらはスクレイピングに重要です。特定の要素をターゲットにするのに役立ちます。開始タグの内部を見てください - タグ名の後に何かが見えますか？"
+
+  completion_check:
+    criteria:
+      - identified_all_six_elements: true
+      - noted_tag_types: true
+      - noted_classes_or_ids: true
+      - extracted_content_correctly: true
+
+    completion_message:
+      en: |
+        Outstanding work! You've successfully identified:
+        - {{ element_count }} HTML elements
+        - Their tag types
+        - Their class/id attributes
+        - The data they contain
+
+        This skill - mapping where data lives in HTML - is the foundation
+        of all web scraping. You're now ready to learn the ethical framework.
+
+        Let's move to Step 3 - the MOST IMPORTANT step!
+
+      ja: |
+        素晴らしい仕事です！以下を正常に識別しました：
+        - {{ element_count }}個のHTML要素
+        - それらのタグタイプ
+        - それらのclass/id属性
+        - それらが含むデータ
+
+        このスキル - データがHTMLのどこにあるかをマッピングする - は
+        すべてのWebスクレイピングの基礎です。倫理的フレームワークを学ぶ準備ができました。
+
+        ステップ3 - 最も重要なステップに進みましょう！
+
+  data_to_capture:
+    - elements_identified_count
+    - correct_tag_identification
+    - attributes_noted
+    - understanding_of_hierarchy
+    - time_taken
+
+# ================================================
+# STEP 3: Ethical and Legal Considerations (13 minutes)
+# ================================================
+
+step_3_ethics_and_legal:
+  duration: "13 minutes"
+  title: "Ethical and Legal Framework for Web Scraping | Webスクレイピングの倫理的および法的フレームワーク"
+
+  introduction:
+    en: |
+      ⚠️ THIS IS THE MOST CRITICAL PART OF THIS WEEK ⚠️
+
+      Now you know HOW to see data in HTML. But here's the big question:
+
+      "Just because you CAN scrape, does that mean you SHOULD?"
+
+      The answer is: It depends!
+
+      Web scraping exists in a gray area. Some is perfectly fine. Some is
+      illegal. Some is technically legal but ethically questionable.
+
+      Today you'll learn how to make informed, ethical decisions about scraping.
+
+    ja: |
+      ⚠️ これは今週の最も重要な部分です ⚠️
+
+      HTMLでデータを見る方法を知りました。しかし、大きな質問があります：
+
+      「スクレイプできるからといって、すべきという意味ですか？」
+
+      答えは：場合によります！
+
+      Webスクレイピングはグレーゾーンに存在します。いくつかは完全に問題ありません。いくつかは
+      違法です。いくつかは技術的には合法ですが倫理的に疑問があります。
+
+      今日はスクレイピングについて情報に基づいた倫理的な決定を下す方法を学びます。
+
+  ethical_principles:
+    respect_robots_txt:
+      en: |
+        **1. Respect robots.txt**
+
+        robots.txt is a file that tells web crawlers what they can and cannot access.
+        Location: Always at websitename.com/robots.txt
+
+        Key directives:
+        - User-agent: * (applies to all bots)
+        - Disallow: /admin/ (don't access /admin/ section)
+        - Allow: /public/ (okay to access /public/ section)
+        - Disallow: / (don't scrape ANYTHING on this site)
+
+        RULE: If robots.txt says "Disallow", you MUST respect it.
+        This is the website owner's explicit request.
+
+      ja: |
+        **1. robots.txtを尊重する**
+
+        robots.txtはWebクローラーが何にアクセスできるか、できないかを伝えるファイルです。
+        場所：常にwebsitename.com/robots.txtにあります
+
+        主要な指令：
+        - User-agent: *（すべてのボットに適用）
+        - Disallow: /admin/（/admin/セクションにアクセスしない）
+        - Allow: /public/（/public/セクションへのアクセスは問題ない）
+        - Disallow: /（このサイト上の何もスクレイプしない）
+
+        ルール：robots.txtが「Disallow」と言っている場合、尊重する必要があります。
+        これはウェブサイト所有者の明示的な要求です。
+
+    check_terms_of_service:
+      en: |
+        **2. Check Terms of Service (ToS)**
+
+        Many websites explicitly prohibit scraping in their Terms of Service.
+        Usually found in website footer: "Terms", "ToS", "Terms of Use"
+
+        Look for phrases like:
+        - "Scraping is prohibited"
+        - "Automated access not permitted"
+        - "Data may not be extracted or copied"
+
+        RULE: If ToS prohibits scraping, find an alternative source or API.
+        Violating ToS can lead to legal action, even if robots.txt allows it.
+
+      ja: |
+        **2. 利用規約（ToS）を確認する**
+
+        多くのウェブサイトは利用規約でスクレイピングを明示的に禁止しています。
+        通常、ウェブサイトフッターにあります：「規約」、「ToS」、「利用規約」
+
+        次のようなフレーズを探します：
+        - 「スクレイピングは禁止されています」
+        - 「自動アクセスは許可されていません」
+        - 「データを抽出またはコピーすることはできません」
+
+        ルール：ToSがスクレイピングを禁止している場合、代替ソースまたはAPIを見つけます。
+        ToS違反は、robots.txtが許可していても法的措置につながる可能性があります。
+
+    rate_limiting:
+      en: |
+        **3. Rate Limiting - Don't Overload Servers**
+
+        When scraping, you're using the website's server resources.
+        Sending too many requests too fast can:
+        - Slow down the site for other users
+        - Crash the server
+        - Get your IP address blocked
+
+        RULE: Add delays between requests (1-2 seconds minimum).
+        Be a good internet citizen. Scrape slowly and respectfully.
+
+      ja: |
+        **3. レート制限 - サーバーを過負荷にしない**
+
+        スクレイピング時、ウェブサイトのサーバーリソースを使用しています。
+        リクエストを速く送信しすぎると：
+        - 他のユーザーのためにサイトが遅くなる
+        - サーバーがクラッシュする
+        - IPアドレスがブロックされる
+
+        ルール：リクエスト間に遅延を追加します（最低1-2秒）。
+        良いインターネット市民になりましょう。ゆっくりと敬意を持ってスクレイプします。
+
+    avoid_personal_data:
+      en: |
+        **4. Avoid Personal Data**
+
+        Never scrape:
+        - Email addresses
+        - Phone numbers
+        - Personal information about individuals
+        - Data behind login walls
+        - Private messages or user-generated content
+
+        RULE: Only scrape publicly visible, non-personal data.
+        Focus on company information, not individual people's data.
+
+      ja: |
+        **4. 個人データを避ける**
+
+        決してスクレイプしない：
+        - メールアドレス
+        - 電話番号
+        - 個人に関する個人情報
+        - ログイン壁の背後にあるデータ
+        - プライベートメッセージまたはユーザー生成コンテンツ
+
+        ルール：公的に可視で非個人的なデータのみをスクレイプします。
+        個人のデータではなく、企業情報に焦点を当てます。
+
+    educational_use:
+      en: |
+        **5. Educational Use is Not a Free Pass**
+
+        "But it's for a school project!" is NOT a valid excuse.
+        Educational use doesn't exempt you from:
+        - robots.txt restrictions
+        - Terms of Service
+        - Copyright laws
+        - Ethical guidelines
+
+        RULE: Use the same ethical standards whether it's for class,
+        work, or personal projects. Ethics don't change based on your purpose.
+
+      ja: |
+        **5. 教育的使用は免罪符ではない**
+
+        「しかし、これは学校プロジェクトです！」は有効な言い訳ではありません。
+        教育的使用は以下から免除されません：
+        - robots.txt制限
+        - 利用規約
+        - 著作権法
+        - 倫理的ガイドライン
+
+        ルール：クラス、仕事、個人プロジェクトのいずれであっても、
+        同じ倫理基準を使用します。目的に基づいて倫理は変わりません。
+
+  robots_txt_tutorial:
+    en: |
+      **Let's Learn to Read robots.txt Files!**
+
+      Open this reference file:
+      /resources/week04-materials/robots-txt-guide.md
+
+      This guide shows you how to interpret different robots.txt directives.
+
+      Now, let's practice with real examples!
+      /resources/week04-materials/sample-robots-txt-examples.md
+
+      For each robots.txt example, ask yourself:
+      1. What does "User-agent: *" mean?
+      2. Which paths are Disallowed?
+      3. Which paths are Allowed?
+      4. Can I scrape this site for my project?
+
+      Let's analyze 3 robots.txt files together!
+
+    ja: |
+      **robots.txtファイルの読み方を学びましょう！**
+
+      この参照ファイルを開きます：
+      /resources/week04-materials/robots-txt-guide.md
+
+      このガイドは、さまざまなrobots.txt指令を解釈する方法を示しています。
+
+      では、実際の例で練習しましょう！
+      /resources/week04-materials/sample-robots-txt-examples.md
+
+      各robots.txt例について、自問してください：
+      1. 「User-agent: *」は何を意味しますか？
+      2. どのパスがDisallowedですか？
+      3. どのパスがAllowedですか？
+      4. このサイトをプロジェクトのためにスクレイプできますか？
+
+      3つのrobots.txtファイルを一緒に分析しましょう！
+
+  interactive_analysis:
+    prompt_for_each_robots_txt:
+      - "What does this robots.txt allow or disallow?"
+      - "Are there specific paths you CAN access?"
+      - "Are there specific paths you CANNOT access?"
+      - "Based on this robots.txt, would it be ethical to scrape this site for company data?"
+      - "What sections of the site would you focus on?"
+
+    feedback_patterns:
+      correct_interpretation:
+        en: "Exactly right! You correctly interpreted that {{ directive }}. This means {{ explanation }}."
+        ja: "その通りです！{{ directive }}を正しく解釈しました。これは{{ explanation }}を意味します。"
+
+      needs_correction:
+        en: |
+          Not quite. Let me explain {{ directive }}:
+
+          {{ explanation }}
+
+          So in this case, {{ correct_interpretation }}.
+          Does that make sense?
+
+        ja: |
+          少し違います。{{ directive }}を説明します：
+
+          {{ explanation }}
+
+          つまり、この場合、{{ correct_interpretation }}。
+          理解できましたか？
+
+  ethical_checklist:
+    en: |
+      **Ethical Scraping Checklist**
+
+      Before scraping ANY website, ask yourself:
+
+      ✅ Does robots.txt allow scraping this section?
+      ✅ Does Terms of Service permit data extraction?
+      ✅ Is this data publicly visible (no login required)?
+      ✅ Am I avoiding personal/private information?
+      ✅ Will I add delays to respect server resources?
+      ✅ Is there an API I should use instead?
+      ✅ Would the website owner likely approve of this use?
+
+      If you answer "NO" or "UNSURE" to any question, STOP and ask instructor.
+
+    ja: |
+      **倫理的スクレイピングチェックリスト**
+
+      任意のウェブサイトをスクレイピングする前に、自問してください：
+
+      ✅ robots.txtはこのセクションのスクレイピングを許可していますか？
+      ✅ 利用規約はデータ抽出を許可していますか？
+      ✅ このデータは公的に可視ですか（ログイン不要）？
+      ✅ 個人/プライベート情報を避けていますか？
+      ✅ サーバーリソースを尊重するために遅延を追加しますか？
+      ✅ 代わりに使用すべきAPIがありますか？
+      ✅ ウェブサイト所有者はこの使用を承認する可能性がありますか？
+
+      任意の質問に「いいえ」または「不明」と答えた場合、停止してインストラクターに尋ねます。
+
+  completion_check:
+    criteria:
+      - understands_robots_txt: true
+      - knows_tos_importance: true
+      - can_interpret_directives: true
+      - demonstrates_ethical_awareness: true
+      - analyzed_three_robots_files: true
+
+    completion_message:
+      en: |
+        Excellent! You now understand the ethical framework for web scraping.
+
+        Key takeaways:
+        ✅ Always check robots.txt
+        ✅ Review Terms of Service
+        ✅ Respect rate limits
+        ✅ Avoid personal data
+        ✅ When in doubt, ask!
+
+        This knowledge will protect you legally and ethically throughout your career.
+        Now let's apply this framework to evaluate real websites!
+
+      ja: |
+        素晴らしい！Webスクレイピングの倫理的フレームワークを理解しました。
+
+        主要なポイント：
+        ✅ 常にrobots.txtを確認
+        ✅ 利用規約を確認
+        ✅ レート制限を尊重
+        ✅ 個人データを避ける
+        ✅ 疑問がある場合は尋ねる！
+
+        この知識はキャリアを通じて法的および倫理的にあなたを保護します。
+        では、このフレームワークを適用して実際のウェブサイトを評価しましょう！
+
+  data_to_capture:
+    - robots_txt_understanding_level
+    - ethical_awareness_score
+    - number_of_robots_files_analyzed
+    - can_make_ethical_decisions
+    - questions_or_concerns
+
+# ================================================
+# STEP 4: Website Evaluation Exercise (15 minutes)
+# ================================================
+
+step_4_website_evaluation:
+  duration: "15 minutes"
+  title: "Evaluating Websites for Scraping Feasibility | スクレイピング実現可能性のためのウェブサイト評価"
+
+  introduction:
+    en: |
+      Now it's time to apply everything you've learned!
+
+      You're going to evaluate 3-5 potential websites where you could collect
+      company data for your recommendation system project.
+
+      For each website, you'll assess:
+      - Legal compliance (robots.txt, ToS)
+      - Ethical appropriateness
+      - Technical feasibility
+      - Data quality and richness
+
+      This evaluation will guide your scraping work in Week 6!
+
+    ja: |
+      では、学んだすべてを適用する時が来ました！
+
+      推薦システムプロジェクトのために企業データを収集できる
+      3-5の潜在的なウェブサイトを評価します。
+
+      各ウェブサイトについて、以下を評価します：
+      - 法的遵守（robots.txt、ToS）
+      - 倫理的適切性
+      - 技術的実現可能性
+      - データ品質と豊富さ
+
+      この評価は第6週のスクレイピング作業をガイドします！
+
+  evaluation_framework:
+    criteria:
+      legal_compliance:
+        description:
+          en: "Does robots.txt allow scraping? Does ToS permit it? Is data public?"
+          ja: "robots.txtはスクレイピングを許可していますか？ToSは許可していますか？データは公開されていますか？"
+        rating_scale:
+          5: "Fully compliant - robots.txt allows, no ToS restrictions"
+          4: "Mostly compliant - some minor restrictions"
+          3: "Partially compliant - requires careful navigation"
+          2: "Questionable - significant restrictions exist"
+          1: "Non-compliant - clearly prohibited"
+
+      ethical_appropriateness:
+        description:
+          en: "Is scraping this site ethical for educational purposes?"
+          ja: "教育目的でこのサイトをスクレイピングすることは倫理的ですか？"
+        rating_scale:
+          5: "Highly ethical - public data, clear educational value"
+          4: "Ethical - acceptable with proper precautions"
+          3: "Ethically neutral - requires careful consideration"
+          2: "Ethically questionable - may cause harm"
+          1: "Unethical - should not scrape"
+
+      technical_feasibility:
+        description:
+          en: "Can you technically scrape this site with your current skills?"
+          ja: "現在のスキルでこのサイトを技術的にスクレイプできますか？"
+        rating_scale:
+          5: "Very feasible - simple HTML structure"
+          4: "Feasible - straightforward with some challenges"
+          3: "Moderate - requires additional learning"
+          2: "Difficult - heavy JavaScript or complex structure"
+          1: "Very difficult - beyond current skill level"
+
+      data_quality:
+        description:
+          en: "Is the data accurate, complete, and up-to-date?"
+          ja: "データは正確で完全で最新ですか？"
+        rating_scale:
+          5: "Excellent - highly accurate and current"
+          4: "Good - mostly accurate with minor gaps"
+          3: "Adequate - acceptable quality"
+          2: "Poor - significant quality issues"
+          1: "Very poor - unreliable data"
+
+      data_richness:
+        description:
+          en: "How much useful company information is available?"
+          ja: "どれだけ有用な企業情報が利用可能ですか？"
+        rating_scale:
+          5: "Very rich - extensive company details"
+          4: "Rich - good amount of relevant data"
+          3: "Moderate - basic information available"
+          2: "Limited - minimal useful data"
+          1: "Very limited - insufficient data"
+
+  guided_evaluation:
+    en: |
+      **Let's Evaluate Websites Together!**
+
+      Think about websites that have company information. Consider:
+      - Job posting sites (Indeed, LinkedIn, MyNavi, Rikunabi)
+      - Company review sites (Glassdoor, Vorkers)
+      - Business directories
+      - Company official websites
+      - News sites with company profiles
+
+      Choose 3-5 websites to evaluate. For each one, we'll work through
+      the evaluation criteria together.
+
+      What's your first website choice? Let's start evaluating!
+
+    ja: |
+      **一緒にウェブサイトを評価しましょう！**
+
+      企業情報を持つウェブサイトについて考えてください。検討：
+      - 求人掲載サイト（Indeed、LinkedIn、MyNavi、Rikunabi）
+      - 企業レビューサイト（Glassdoor、Vorkers）
+      - ビジネスディレクトリ
+      - 企業公式ウェブサイト
+      - 企業プロフィールを持つニュースサイト
+
+      評価する3-5のウェブサイトを選択します。それぞれについて、
+      評価基準を一緒に進めます。
+
+      最初のウェブサイトの選択は何ですか？評価を始めましょう！
+
+  evaluation_process:
+    for_each_website:
+      step_1:
+        en: "First, visit the website. What company data do you see?"
+        ja: "まず、ウェブサイトを訪問します。どのような企業データが見えますか？"
+
+      step_2:
+        en: "Check robots.txt: Go to [website]/robots.txt. What does it say?"
+        ja: "robots.txtを確認：[website]/robots.txtに移動します。何と言っていますか？"
+
+      step_3:
+        en: "Find Terms of Service. Does it mention scraping or automated access?"
+        ja: "利用規約を見つけます。スクレイピングまたは自動アクセスに言及していますか？"
+
+      step_4:
+        en: "Open developer tools. How is the data structured? Simple or complex HTML?"
+        ja: "開発者ツールを開きます。データはどのように構造化されていますか？シンプルまたは複雑なHTML？"
+
+      step_5:
+        en: "Rate the website on all 5 criteria (1-5 scale for each)"
+        ja: "5つすべての基準でウェブサイトを評価（各1-5スケール）"
+
+      step_6:
+        en: "Calculate total score (out of 25) and write a 2-3 sentence recommendation"
+        ja: "合計スコア（25点満点）を計算し、2-3文の推奨を書く"
+
+  bot_guidance_during_evaluation:
+    prompts:
+      - question: "What company data elements can you identify on this site?"
+        hints:
+          - "Company name"
+          - "Industry/sector"
+          - "Company size/employee count"
+          - "Location"
+          - "Job openings"
+          - "Company description/mission"
+
+      - question: "On a scale of 1-5, how would you rate legal compliance?"
+        follow_up: "Why did you give it that rating? What evidence supports your score?"
+
+      - question: "Is there an API alternative available?"
+        explanation: "Many sites offer APIs which are better than scraping. Check the footer for 'API' or 'Developers' links."
+
+      - question: "Would scraping this site harm anyone?"
+        ethical_reflection: "Think about: server load, data privacy, business impact"
+
+  evaluation_matrix_template:
+    en: |
+      Create a table like this for your evaluation:
+
+      | Website | Legal | Ethical | Technical | Quality | Richness | Total | Recommendation |
+      |---------|-------|---------|-----------|---------|----------|-------|----------------|
+      | Site 1  |   ?   |    ?    |     ?     |    ?    |     ?    |  /25  | ... |
+      | Site 2  |   ?   |    ?    |     ?     |    ?    |     ?    |  /25  | ... |
+      | Site 3  |   ?   |    ?    |     ?     |    ?    |     ?    |  /25  | ... |
+
+      Fill in the ratings (1-5) for each criterion, calculate totals, and
+      write a brief recommendation for each site.
+
+    ja: |
+      評価用にこのような表を作成します：
+
+      | ウェブサイト | 法的 | 倫理的 | 技術的 | 品質 | 豊富さ | 合計 | 推奨 |
+      |------------|------|--------|--------|------|--------|------|------|
+      | サイト1    |  ?   |   ?    |   ?    |  ?   |   ?    | /25  | ... |
+      | サイト2    |  ?   |   ?    |   ?    |  ?   |   ?    | /25  | ... |
+      | サイト3    |  ?   |   ?    |   ?    |  ?   |   ?    | /25  | ... |
+
+      各基準の評価（1-5）を記入し、合計を計算し、
+      各サイトの簡単な推奨を書きます。
+
+  completion_check:
+    criteria:
+      - evaluated_minimum_three_websites: true
+      - completed_all_five_criteria: true
+      - calculated_total_scores: true
+      - provided_recommendations: true
+      - demonstrated_critical_thinking: true
+
+    completion_message:
+      en: |
+        Fantastic evaluation work! You've systematically assessed {{ website_count }} websites.
+
+        Your top-rated sites:
+        1. {{ top_site_1 }} - {{ score_1 }}/25
+        2. {{ top_site_2 }} - {{ score_2 }}/25
+        3. {{ top_site_3 }} - {{ score_3 }}/25
+
+        These evaluations will guide your scraping implementation in Week 6.
+        Let's move to the final step - creating your feasibility report!
+
+      ja: |
+        素晴らしい評価作業です！{{ website_count }}個のウェブサイトを体系的に評価しました。
+
+        上位評価のサイト：
+        1. {{ top_site_1 }} - {{ score_1 }}/25
+        2. {{ top_site_2 }} - {{ score_2 }}/25
+        3. {{ top_site_3 }} - {{ score_3 }}/25
+
+        これらの評価は第6週のスクレイピング実装をガイドします。
+        最終ステップに進みましょう - 実現可能性レポートの作成！
+
+  data_to_capture:
+    - number_of_websites_evaluated
+    - evaluation_scores_per_site
+    - top_recommended_sites
+    - evaluation_thoroughness
+    - time_taken
+
+# ================================================
+# STEP 5: Scraping Feasibility Report (10 minutes)
+# ================================================
+
+step_5_feasibility_report:
+  duration: "10 minutes"
+  title: "Creating Web Scraping Feasibility Report | Webスクレイピング実現可能性レポートの作成"
+
+  introduction:
+    en: |
+      Final step! Let's synthesize your analysis into a comprehensive report.
+
+      This report will:
+      - Document your top website choices
+      - Justify why they're suitable
+      - Identify specific data elements to collect
+      - Address potential challenges
+      - Provide ethical justification
+
+      This becomes your roadmap for Week 6 when you actually implement scraping!
+
+    ja: |
+      最終ステップ！分析を包括的なレポートに統合しましょう。
+
+      このレポートは：
+      - トップウェブサイトの選択を文書化
+      - それらが適している理由を正当化
+      - 収集する特定のデータ要素を特定
+      - 潜在的な課題に対処
+      - 倫理的正当化を提供
+
+      これは実際にスクレイピングを実装する第6週のロードマップになります！
+
+  report_structure:
+    section_1_recommended_websites:
+      en: |
+        **Section 1: Recommended Websites (1-2 paragraphs)**
+
+        Identify your top 2-3 websites from the evaluation matrix.
+
+        For each, explain:
+        - Why this site scored highly
+        - What makes it suitable for the project
+        - Key advantages (legal, ethical, technical, data quality)
+
+        Example:
+        "MyNavi Japan (score: 23/25) is highly recommended because it explicitly
+        allows scraping of job listings in robots.txt, provides rich company data
+        including industry and size, and has a clean, consistent HTML structure
+        that is technically feasible to scrape."
+
+      ja: |
+        **セクション1：推奨ウェブサイト（1-2段落）**
+
+        評価マトリックスから上位2-3のウェブサイトを特定します。
+
+        それぞれについて、説明：
+        - なぜこのサイトが高得点だったか
+        - プロジェクトに適している理由
+        - 主な利点（法的、倫理的、技術的、データ品質）
+
+        例：
+        「MyNavi Japan（スコア：23/25）は、robots.txtで求人リストのスクレイピングを
+        明示的に許可し、業界やサイズを含む豊富な企業データを提供し、
+        技術的にスクレイプ可能なクリーンで一貫したHTML構造を持つため、
+        強く推奨されます。」
+
+    section_2_data_elements:
+      en: |
+        **Section 2: Data Elements to Collect (bulleted list)**
+
+        For each recommended website, list specific data fields you'll scrape:
+
+        Website 1 - MyNavi:
+        - Company name
+        - Industry/sector
+        - Company size (number of employees)
+        - Location (headquarters)
+        - Job posting titles
+        - Company description/overview
+        - Website URL
+
+        Be specific about what data exists and where you'll find it!
+
+      ja: |
+        **セクション2：収集するデータ要素（箇条書きリスト）**
+
+        各推奨ウェブサイトについて、スクレイプする特定のデータフィールドをリスト：
+
+        ウェブサイト1 - MyNavi：
+        - 企業名
+        - 業界/セクター
+        - 企業規模（従業員数）
+        - 所在地（本社）
+        - 求人タイトル
+        - 企業説明/概要
+        - ウェブサイトURL
+
+        どのようなデータが存在し、どこで見つけるかについて具体的に！
+
+    section_3_ethical_justification:
+      en: |
+        **Section 3: Ethical and Legal Justification (1 paragraph)**
+
+        Address why scraping these sites is ethical and legal:
+
+        - Reference robots.txt findings
+        - Mention ToS compliance (or note if API exists)
+        - Explain data is publicly accessible
+        - Commit to rate limiting and respectful scraping
+        - Emphasize educational purpose
+
+        Example:
+        "Scraping these sites is ethically justified because all three allow
+        bot access to company/job sections per their robots.txt files, display
+        data publicly without login requirements, and do not prohibit scraping
+        in their Terms of Service. We will implement 2-second delays between
+        requests to respect server resources and limit our scraping to
+        publicly available company information, avoiding any personal data."
+
+      ja: |
+        **セクション3：倫理的および法的正当化（1段落）**
+
+        これらのサイトをスクレイピングすることが倫理的かつ合法的である理由を述べる：
+
+        - robots.txt調査結果を参照
+        - ToS遵守に言及（またはAPIが存在する場合は注記）
+        - データが公的にアクセス可能であることを説明
+        - レート制限と敬意あるスクレイピングへのコミット
+        - 教育目的を強調
+
+        例：
+        「これらのサイトをスクレイピングすることは倫理的に正当化されます。
+        なぜなら、3つすべてがrobots.txtファイルで企業/求人セクションへのボットアクセスを
+        許可し、ログイン要件なしでデータを公的に表示し、利用規約でスクレイピングを
+        禁止していないためです。サーバーリソースを尊重するために
+        リクエスト間に2秒の遅延を実装し、スクレイピングを公的に利用可能な
+        企業情報に限定し、個人データを避けます。」
+
+    section_4_challenges:
+      en: |
+        **Section 4: Potential Challenges (1 paragraph)**
+
+        Identify 2-3 challenges you might face and how you'll address them:
+
+        Challenges might include:
+        - JavaScript-rendered content (solution: use Selenium or API)
+        - Pagination across multiple pages (solution: iterate through page numbers)
+        - Inconsistent HTML structure (solution: error handling, data validation)
+        - Rate limiting/blocking (solution: respect delays, rotate user agents)
+        - Data format inconsistencies (solution: data cleaning and normalization)
+
+        Be realistic about difficulties and show you've thought about solutions!
+
+      ja: |
+        **セクション4：潜在的な課題（1段落）**
+
+        直面する可能性のある2-3の課題とそれらへの対処方法を特定：
+
+        課題には以下が含まれる可能性があります：
+        - JavaScriptレンダリングされたコンテンツ（解決策：SeleniumまたはAPIを使用）
+        - 複数ページにわたるページネーション（解決策：ページ番号を反復）
+        - 一貫性のないHTML構造（解決策：エラー処理、データ検証）
+        - レート制限/ブロッキング（解決策：遅延を尊重、ユーザーエージェントをローテーション）
+        - データ形式の不整合（解決策：データクリーニングと正規化）
+
+        困難について現実的に、解決策について考えたことを示してください！
+
+    section_5_alternatives:
+      en: |
+        **Section 5: Alternative Data Sources (optional)**
+
+        Are there backup options if primary sources don't work?
+
+        Consider:
+        - Websites with official APIs
+        - Alternative job boards or company directories
+        - Public datasets (government sources, research repositories)
+        - Company official websites as fallback
+
+        Having backup plans shows good planning!
+
+      ja: |
+        **セクション5：代替データソース（オプション）**
+
+        主要ソースが機能しない場合のバックアップオプションはありますか？
+
+        検討：
+        - 公式APIを持つウェブサイト
+        - 代替求人掲示板または企業ディレクトリ
+        - 公開データセット（政府ソース、研究リポジトリ）
+        - フォールバックとしての企業公式ウェブサイト
+
+        バックアッププランを持つことは良い計画を示します！
+
+  bot_assistance:
+    en: |
+      I'll help you structure your report. Let's go section by section.
+
+      Start with Section 1: Which 2-3 websites did you rate highest?
+      Tell me their names and scores, and I'll help you write justifications.
+
+      Then we'll move through each section together, and I'll provide
+      feedback and suggestions to make your report comprehensive and professional.
+
+    ja: |
+      レポートの構造化をお手伝いします。セクションごとに進めましょう。
+
+      セクション1から始めます：最も高く評価した2-3のウェブサイトは何ですか？
+      名前とスコアを教えてください。正当化を書くのをお手伝いします。
+
+      次に、各セクションを一緒に進み、レポートを包括的でプロフェッショナルに
+      するためのフィードバックと提案を提供します。
+
+  quality_checks:
+    completeness:
+      - "All 5 sections included?"
+      - "Minimum 1-2 pages total?"
+      - "Specific data elements listed?"
+      - "Ethical justification thorough?"
+
+    clarity:
+      - "Writing is clear and professional?"
+      - "Justifications are well-reasoned?"
+      - "Challenges and solutions are realistic?"
+
+    critical_thinking:
+      - "Evidence of independent analysis?"
+      - "Demonstrates understanding of ethics?"
+      - "Shows practical planning for implementation?"
+
+  completion_check:
+    criteria:
+      - all_sections_completed: true
+      - recommended_sites_justified: true
+      - data_elements_identified: true
+      - ethical_justification_provided: true
+      - challenges_addressed: true
+
+    completion_message:
+      en: |
+        Outstanding work! You've completed your Web Scraping Feasibility Report!
+
+        Your report includes:
+        ✅ {{ recommended_count }} recommended websites with justification
+        ✅ Specific data elements to collect
+        ✅ Ethical and legal justification
+        ✅ Identified challenges and solutions
+        ✅ {{ has_alternatives }} backup alternatives
+
+        This report demonstrates:
+        - Technical understanding of HTML structure
+        - Ethical awareness and responsible decision-making
+        - Practical planning for data collection
+        - Critical thinking about challenges
+
+        You're now ready to submit your Week 4 assignment!
+
+        Remember: In Week 5, we'll learn Beautiful Soup (scraping library).
+        In Week 6, you'll implement actual scraping using this plan!
+
+      ja: |
+        素晴らしい仕事です！Webスクレイピング実現可能性レポートを完了しました！
+
+        レポートには以下が含まれます：
+        ✅ {{ recommended_count }}個の推奨ウェブサイトと正当化
+        ✅ 収集する特定のデータ要素
+        ✅ 倫理的および法的正当化
+        ✅ 特定された課題と解決策
+        ✅ {{ has_alternatives }}個のバックアップ代替案
+
+        このレポートは以下を示します：
+        - HTML構造の技術的理解
+        - 倫理的意識と責任ある意思決定
+        - データ収集の実践的計画
+        - 課題に関する批判的思考
+
+        第4週課題を提出する準備ができました！
+
+        覚えておいてください：第5週では、Beautiful Soup（スクレイピングライブラリ）を学びます。
+        第6週では、この計画を使用して実際のスクレイピングを実装します！
+
+  data_to_capture:
+    - report_completeness
+    - recommended_sites_count
+    - data_elements_specified
+    - ethical_justification_quality
+    - demonstrates_planning_ability
+    - overall_activity_time
+
+# ================================================
+# ASSESSMENT CRITERIA
+# ================================================
+
+assessment_criteria:
+  total_points: 100
+
+  rubric:
+    html_element_identification:
+      weight: 20
+      excellent: "Identified 6+ elements with correct tags, attributes, code samples, and screenshots"
+      good: "Identified 5 elements with mostly correct information"
+      satisfactory: "Identified 4 elements with some correct information"
+      needs_improvement: "< 4 elements or incorrect identifications"
+
+    ethical_and_legal_analysis:
+      weight: 25
+      excellent: "Comprehensive ethical guidelines summary, 3 robots.txt files correctly analyzed, ToS reviewed for 2+ sites, demonstrates deep understanding"
+      good: "Good ethical summary, 3 robots.txt analyzed with minor errors, ToS reviewed"
+      satisfactory: "Basic ethical understanding, 2-3 robots.txt analyzed, ToS mentioned"
+      needs_improvement: "Weak ethical analysis, < 3 robots.txt files, or incorrect interpretations"
+
+    website_evaluation_matrix:
+      weight: 25
+      excellent: "5 websites evaluated on all 5 criteria with clear ratings, total scores calculated, thoughtful recommendations"
+      good: "4 websites evaluated on all criteria with adequate recommendations"
+      satisfactory: "3 websites evaluated with basic ratings and recommendations"
+      needs_improvement: "< 3 websites or incomplete evaluations"
+
+    feasibility_report:
+      weight: 20
+      excellent: "Comprehensive report with all 5 sections, clear justifications, specific data elements, realistic challenges, professional writing"
+      good: "Complete report with 4-5 sections, good justifications and planning"
+      satisfactory: "Basic report with main sections, adequate justifications"
+      needs_improvement: "Incomplete report, weak justifications, or missing sections"
+
+    ai_transparency:
+      weight: 10
+      excellent: "Clear documentation of AI use with prompts, responses, verification process, and critical evaluation"
+      good: "Complete AI documentation with basic verification"
+      satisfactory: "AI use documented but minimal verification"
+      needs_improvement: "Missing or inadequate AI transparency documentation"
+
+# ================================================
+# COMMON ISSUES AND BOT RESPONSES
+# ================================================
+
+common_issues:
+  cant_open_devtools:
+    detection: "Student says they can't open developer tools"
+    bot_response:
+      en: |
+        No problem! Let's troubleshoot together.
+
+        What browser are you using? (Chrome, Firefox, Safari, Edge?)
+
+        Try these methods IN ORDER:
+        1. Press F12 key
+        2. Press Ctrl+Shift+I (Windows) or Cmd+Option+I (Mac)
+        3. Right-click anywhere on a webpage and select "Inspect" or "Inspect Element"
+
+        Which one worked for you?
+
+      ja: |
+        問題ありません！一緒にトラブルシューティングしましょう。
+
+        どのブラウザを使用していますか？（Chrome、Firefox、Safari、Edge？）
+
+        これらの方法を順番に試してください：
+        1. F12キーを押す
+        2. Ctrl+Shift+I（Windows）またはCmd+Option+I（Mac）を押す
+        3. Webページの任意の場所を右クリックして「検査」または「要素を検査」を選択
+
+        どれが機能しましたか？
+
+  html_looks_overwhelming:
+    detection: "Student expresses confusion about HTML complexity"
+    bot_response:
+      en: |
+        I completely understand! HTML can look like a jungle at first.
+
+        Here's the secret: You don't need to understand EVERYTHING.
+
+        Focus on ONE small piece at a time:
+        1. Use the element selector tool (click arrow icon)
+        2. Click on just the company name on the page
+        3. Look ONLY at the highlighted line in the HTML
+        4. Ignore everything else for now
+
+        Let's start super simple. Click the element selector, then click
+        on a heading or paragraph on the sample page. What tag appears?
+
+      ja: |
+        完全に理解できます！HTMLは最初はジャングルのように見えます。
+
+        秘密はこれです：すべてを理解する必要はありません。
+
+        一度に一つの小さな部分に焦点を当てます：
+        1. 要素セレクターツールを使用（矢印アイコンをクリック）
+        2. ページ上の企業名だけをクリック
+        3. HTMLでハイライトされた行だけを見る
+        4. 今は他のすべてを無視する
+
+        超シンプルに始めましょう。要素セレクターをクリックし、次に
+        サンプルページの見出しまたは段落をクリックします。どのタグが表示されますか？
+
+  confused_about_robots_txt:
+    detection: "Student doesn't understand robots.txt interpretation"
+    bot_response:
+      en: |
+        robots.txt can be confusing! Let me break it down VERY simply.
+
+        Think of it like a "DO NOT ENTER" sign on a door:
+
+        - "User-agent: *" = This applies to ALL bots (including you)
+        - "Disallow: /" = Don't access ANYTHING on this site
+        - "Disallow: /admin/" = Don't access the /admin/ section
+        - "Allow: /public/" = You CAN access the /public/ section
+
+        If you see "Disallow: /", that's a clear "STOP - don't scrape this site"
+
+        If you see specific paths like "Disallow: /admin/", you can scrape
+        OTHER parts, just not that restricted section.
+
+        Does this make more sense?
+
+      ja: |
+        robots.txtは混乱を招く可能性があります！非常にシンプルに分解しましょう。
+
+        ドアの「立ち入り禁止」サインのように考えてください：
+
+        - "User-agent: *" = すべてのボット（あなたを含む）に適用
+        - "Disallow: /" = このサイト上の何にもアクセスしない
+        - "Disallow: /admin/" = /admin/セクションにアクセスしない
+        - "Allow: /public/" = /public/セクションにアクセスできます
+
+        「Disallow: /」が見える場合、それは明確な「停止 - このサイトをスクレイプしない」です
+
+        「Disallow: /admin/」のような特定のパスが見える場合、その制限された
+        セクションではなく、他の部分をスクレイプできます。
+
+        より理解できましたか？
+
+  unsure_if_ethical_to_scrape:
+    detection: "Student expresses uncertainty about ethical appropriateness"
+    bot_response:
+      en: |
+        EXCELLENT question! When in doubt, it's ALWAYS better to ask.
+
+        Let's work through the ethical checklist together for this website:
+
+        1. What does robots.txt say? (Does it allow or disallow?)
+        2. What does Terms of Service say? (Any scraping prohibitions?)
+        3. Is this data publicly visible without login?
+        4. Is this personal data about individuals, or company data?
+        5. Will scraping harm the website or its users?
+        6. Is there an API you could use instead?
+
+        Answer these questions, and we'll determine together if it's ethical.
+
+        If ANY answer raises a red flag, we'll find an alternative source!
+
+      ja: |
+        素晴らしい質問です！疑問がある場合、尋ねる方が常に良いです。
+
+        このウェブサイトの倫理的チェックリストを一緒に確認しましょう：
+
+        1. robots.txtは何と言っていますか？（許可または禁止？）
+        2. 利用規約は何と言っていますか？（スクレイピング禁止？）
+        3. このデータはログインなしで公的に可視ですか？
+        4. これは個人に関する個人データですか、それとも企業データですか？
+        5. スクレイピングはウェブサイトまたはそのユーザーに害を与えますか？
+        6. 代わりに使用できるAPIがありますか？
+
+        これらの質問に答えてください。一緒に倫理的かどうかを判断します。
+
+        任意の答えが赤旗を上げる場合、代替ソースを見つけます！
+
+  cant_find_suitable_websites:
+    detection: "Student struggling to find websites to evaluate"
+    bot_response:
+      en: |
+        Let me help you brainstorm! There are many sources for company data.
+
+        **Job Posting Sites:** (companies post job openings)
+        - Indeed Japan
+        - LinkedIn
+        - MyNavi (マイナビ)
+        - Rikunabi (リクナビ)
+        - GreenJobs
+
+        **Company Review Sites:** (employee reviews and company info)
+        - Glassdoor
+        - Vorkers
+        - OpenWork
+
+        **Business Directories:**
+        - Company databases
+        - Industry-specific directories
+        - Local business listings
+
+        **Company Official Websites:**
+        - "About Us" pages
+        - Careers pages
+
+        Try starting with job sites like MyNavi or Indeed. They have
+        structured company data and are generally scraper-friendly.
+
+        Pick one and let's evaluate it together!
+
+      ja: |
+        ブレインストーミングをお手伝いします！企業データのソースは多数あります。
+
+        **求人掲載サイト：**（企業が求人を掲載）
+        - Indeed Japan
+        - LinkedIn
+        - MyNavi（マイナビ）
+        - Rikunabi（リクナビ）
+        - GreenJobs
+
+        **企業レビューサイト：**（従業員レビューと企業情報）
+        - Glassdoor
+        - Vorkers
+        - OpenWork
+
+        **ビジネスディレクトリ：**
+        - 企業データベース
+        - 業界特化ディレクトリ
+        - ローカルビジネスリスト
+
+        **企業公式ウェブサイト：**
+        - 「About Us」ページ
+        - キャリアページ
+
+        MyNaviやIndeedのような求人サイトから始めてみてください。
+        構造化された企業データがあり、一般的にスクレイパーフレンドリーです。
+
+        一つ選んで、一緒に評価しましょう！
+
+# ================================================
+# SUCCESS METRICS
+# ================================================
+
+success_metrics:
+  activity_completion_rate:
+    target: "> 90%"
+    measurement: "Percentage of students completing all 5 steps"
+
+  average_time:
+    target: "40-60 minutes"
+    measurement: "Time from start to completion"
+
+  ethical_understanding:
+    target: "95%+ demonstrate ethical awareness"
+    measurement: "Quality of ethical analysis and decision-making"
+
+  html_comprehension:
+    target: "85%+ correctly identify HTML elements"
+    measurement: "Accuracy of element identification in deliverable 1"
+
+  website_evaluation_quality:
+    target: "80%+ provide thoughtful evaluations"
+    measurement: "Completeness and reasoning in evaluation matrix"
+
+  bot_satisfaction:
+    target: "> 4.2/5"
+    measurement: "Student rating of bot helpfulness for this activity"
+
+# ================================================
+# ADDITIONAL RESOURCES PROVIDED
+# ================================================
+
+resources_to_provide:
+  sample_files:
+    - "/resources/week04-materials/sample-simple-page.html"
+    - "/resources/week04-materials/sample-company-listing.html"
+
+  reference_guides:
+    - "/resources/week04-materials/html-basics-for-scraping.md"
+    - "/resources/week04-materials/robots-txt-guide.md"
+    - "/resources/week04-materials/ethical-scraping-checklist.md"
+    - "/resources/week04-materials/sample-robots-txt-examples.md"
+
+  templates:
+    - "Website Evaluation Matrix Template"
+    - "Feasibility Report Template"
+    - "AI Transparency Log Template"
+
+# ================================================
+# END OF WEEK 4 BOT GUIDE
+# ================================================
