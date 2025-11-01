@@ -1,0 +1,142 @@
+[
+  {
+    "company_id": "C001",
+    "basic_info": {
+      "name": "TechVision株式会社",
+      "industry": "Technology",
+      "founded": 2015
+    },
+    "employees": {
+      "full_time": 420,
+      "part_time": 30,
+      "total": 450
+    },
+    "locations": [
+      {
+        "type": "headquarters",
+        "city": "Tokyo",
+        "address": "1-1-1 Shibuya, Shibuya-ku"
+      },
+      {
+        "type": "branch",
+        "city": "Osaka",
+        "address": "2-2-2 Umeda, Kita-ku"
+      }
+    ],
+    "recruitment": {
+      "is_hiring": true,
+      "open_positions": 15,
+      "job_categories": ["Engineering", "Design", "Sales"]
+    }
+  },
+  {
+    "company_id": "C002",
+    "basic_info": {
+      "name": "Global Finance Corp",
+      "industry": "Finance",
+      "founded": 2008
+    },
+    "employees": {
+      "full_time": 1150,
+      "part_time": 50,
+      "total": 1200
+    },
+    "locations": [
+      {
+        "type": "headquarters",
+        "city": "Osaka",
+        "address": "3-3-3 Honmachi, Chuo-ku"
+      }
+    ],
+    "recruitment": {
+      "is_hiring": true,
+      "open_positions": 8,
+      "job_categories": ["Finance", "Accounting", "Risk Management"]
+    }
+  },
+  {
+    "company_id": "C003",
+    "basic_info": {
+      "name": "Healthcare Innovations",
+      "industry": "Healthcare",
+      "founded": 2012
+    },
+    "employees": {
+      "full_time": 650,
+      "part_time": 30,
+      "total": 680
+    },
+    "locations": [
+      {
+        "type": "headquarters",
+        "city": "Yokohama",
+        "address": "4-4-4 Minato Mirai, Nishi-ku"
+      },
+      {
+        "type": "research_center",
+        "city": "Kawasaki",
+        "address": "5-5-5 Takatsu-ku"
+      }
+    ],
+    "recruitment": {
+      "is_hiring": false,
+      "open_positions": 0,
+      "job_categories": []
+    }
+  },
+  {
+    "company_id": "C004",
+    "basic_info": {
+      "name": "Green Energy Solutions",
+      "industry": "Energy",
+      "founded": 2018
+    },
+    "employees": {
+      "full_time": 300,
+      "part_time": 20,
+      "total": 320
+    },
+    "locations": [
+      {
+        "type": "headquarters",
+        "city": "Fukuoka",
+        "address": "6-6-6 Tenjin, Chuo-ku"
+      }
+    ],
+    "recruitment": {
+      "is_hiring": true,
+      "open_positions": 25,
+      "job_categories": ["Engineering", "Research", "Project Management", "Sales"]
+    },
+    "sustainability": {
+      "carbon_neutral": true,
+      "certifications": ["ISO 14001", "Green Business Award 2023"]
+    }
+  },
+  {
+    "company_id": "C005",
+    "basic_info": {
+      "name": "Digital Marketing Pro",
+      "industry": "Marketing",
+      "founded": 2019
+    },
+    "employees": {
+      "full_time": 130,
+      "part_time": 20,
+      "total": 150
+    },
+    "locations": [
+      {
+        "type": "headquarters",
+        "city": "Tokyo",
+        "address": "7-7-7 Roppongi, Minato-ku"
+      }
+    ],
+    "recruitment": {
+      "is_hiring": true,
+      "open_positions": 12,
+      "job_categories": ["Digital Marketing", "Content Creation", "Analytics"]
+    },
+    "client_industries": ["E-commerce", "Technology", "Fashion", "Food & Beverage"]
+  }
+]
