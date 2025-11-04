@@ -29,9 +29,8 @@ class ML101BotChat {
             return 'http://localhost:8001/api';
         } else if (isHttps) {
             // HTTPS page (GitHub Pages) - need HTTPS API
-            // TODO: Replace with your HTTPS API URL (see docs/HTTPS-SETUP.md)
-            // Options: Cloudflare Tunnel, ngrok, or reverse proxy with SSL
-            return 'https://YOUR_HTTPS_API_URL/api'; // ⚠️ UPDATE THIS!
+            // Using ngrok tunnel for HTTPS access
+            return 'https://12ccf0a4b473.ngrok-free.app/api';
         } else {
             // HTTP page - can use HTTP API
             return 'http://192.218.175.132:8001/api';
