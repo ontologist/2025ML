@@ -1,15 +1,41 @@
 // ML-101 Bot Chat Interface
-// Connects to backend API at http://192.218.175.132:8001
+// Connects to backend API - automatically detects environment
 
 class ML101BotChat {
     constructor() {
-        this.apiUrl = 'http://192.218.175.132:8001/api';
+        // Determine API URL based on environment
+        this.apiUrl = this.getApiUrl();
         this.conversationHistory = [];
         this.currentUserId = this.getUserId();
         this.currentLanguage = 'en';
         this.isLoading = false;
         
         this.init();
+    }
+    
+    getApiUrl() {
+        // Check if we're on localhost (development)
+        const isLocal = window.location.hostname === 'localhost' || 
+                       window.location.hostname === '127.0.0.1' ||
+                       window.location.hostname === '';
+        
+        // Check if we're on HTTPS (GitHub Pages)
+        const isHttps = window.location.protocol === 'https:';
+        
+        // For HTTPS pages, we need HTTPS API URL
+        // For local development, HTTP is fine
+        if (isLocal) {
+            // Local development - use HTTP
+            return 'http://localhost:8001/api';
+        } else if (isHttps) {
+            // HTTPS page (GitHub Pages) - need HTTPS API
+            // TODO: Replace with your HTTPS API URL (see docs/HTTPS-SETUP.md)
+            // Options: Cloudflare Tunnel, ngrok, or reverse proxy with SSL
+            return 'https://YOUR_HTTPS_API_URL/api'; // ⚠️ UPDATE THIS!
+        } else {
+            // HTTP page - can use HTTP API
+            return 'http://192.218.175.132:8001/api';
+        }
     }
     
     getUserId() {
@@ -25,6 +51,23 @@ class ML101BotChat {
     init() {
         this.setupEventListeners();
         this.loadConversationHistory();
+        this.checkApiUrl();
+    }
+    
+    checkApiUrl() {
+        // Show notice if API URL is not configured for HTTPS
+        const isHttps = window.location.protocol === 'https:';
+        const needsHttps = isHttps && (this.apiUrl.includes('YOUR_HTTPS_API_URL') || 
+                                      (this.apiUrl.startsWith('http://') && !this.apiUrl.includes('localhost')));
+        
+        if (needsHttps) {
+            const notice = document.getElementById('bot-https-notice');
+            if (notice) {
+                notice.style.display = 'block';
+            }
+            console.warn('⚠️ HTTPS API URL not configured. See docs/HTTPS-SETUP.md');
+            console.warn('Current API URL:', this.apiUrl);
+        }
     }
     
     setupEventListeners() {

@@ -438,6 +438,30 @@ footer p {
 }
 
 /* Bot Chat Interface */
+.bot-notice {
+    background-color: #fef3c7;
+    border: 2px solid #f59e0b;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    color: #92400e;
+}
+
+.bot-notice p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.bot-notice a {
+    color: #92400e;
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+.bot-notice a:hover {
+    color: #78350f;
+}
+
 .bot-chat-container {
     background-color: var(--bg-white);
     border-radius: 10px;
