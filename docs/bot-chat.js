@@ -135,11 +135,33 @@ class ML101BotChat {
             
         } catch (error) {
             console.error('Chat error:', error);
-            this.addMessageToUI('system', 
-                this.currentLanguage === 'ja' 
-                    ? 'エラーが発生しました。しばらくしてからもう一度お試しください。'
-                    : 'An error occurred. Please try again in a moment.'
-            );
+            
+            // Provide more detailed error messages
+            let errorMessage = '';
+            if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+                // Network/CORS error
+                const isHttps = window.location.protocol === 'https:';
+                const apiIsHttp = this.apiUrl.startsWith('http://');
+                
+                if (isHttps && apiIsHttp) {
+                    // Mixed content error (HTTPS page trying to access HTTP API)
+                    errorMessage = this.currentLanguage === 'ja'
+                        ? 'セキュリティ上の理由により、HTTPSページからHTTP APIに接続できません。ローカルでテストする場合は、http://localhost:8000 でページを開いてください。'
+                        : 'Cannot connect to HTTP API from HTTPS page (mixed content blocked). For local testing, open this page at http://localhost:8000 or use a proxy.';
+                } else {
+                    // General network error
+                    errorMessage = this.currentLanguage === 'ja'
+                        ? 'APIサーバーに接続できません。バックエンドサーバーが起動しているか確認してください。'
+                        : 'Cannot connect to API server. Please ensure the backend server is running at ' + this.apiUrl;
+                }
+            } else {
+                // Other errors
+                errorMessage = this.currentLanguage === 'ja'
+                    ? 'エラーが発生しました: ' + error.message
+                    : 'An error occurred: ' + error.message;
+            }
+            
+            this.addMessageToUI('system', errorMessage);
         } finally {
             this.setLoading(false);
         }
