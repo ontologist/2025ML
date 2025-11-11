@@ -18,8 +18,15 @@ class ML101BotChat {
     
     initAuth() {
         // Check if login is required
-        const requiresAuth = this.apiUrl.includes('cloudflare') || 
-                            this.apiUrl.includes('https://') && !this.apiUrl.includes('localhost');
+        const authOverride = localStorage.getItem('bot_require_auth');
+        let requiresAuth;
+
+        if (authOverride !== null) {
+            requiresAuth = authOverride === 'true';
+        } else {
+            // Default: allow access without OTP to avoid blocking while email is unconfigured.
+            requiresAuth = false;
+        }
         
         if (requiresAuth) {
             // Initialize login
