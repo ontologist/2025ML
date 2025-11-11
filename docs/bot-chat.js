@@ -6,11 +6,35 @@ class ML101BotChat {
         // Determine API URL based on environment
         this.apiUrl = this.getApiUrl();
         this.conversationHistory = [];
-        this.currentUserId = this.getUserId();
+        this.currentUserId = null;
+        this.currentUserEmail = null;
         this.currentLanguage = 'en';
         this.isLoading = false;
+        this.isAuthenticated = false;
         
-        this.init();
+        // Initialize login first
+        this.initAuth();
+    }
+    
+    initAuth() {
+        // Check if login is required
+        const requiresAuth = this.apiUrl.includes('cloudflare') || 
+                            this.apiUrl.includes('https://') && !this.apiUrl.includes('localhost');
+        
+        if (requiresAuth) {
+            // Initialize login
+            this.login = new BotLogin(this.apiUrl, (userId, email) => {
+                this.currentUserId = userId;
+                this.currentUserEmail = email;
+                this.isAuthenticated = true;
+                this.init();
+            });
+        } else {
+            // No auth required - use local storage
+            this.currentUserId = this.getUserId();
+            this.isAuthenticated = true;
+            this.init();
+        }
     }
     
     getApiUrl() {
@@ -26,23 +50,33 @@ class ML101BotChat {
         // For local development, HTTP is fine
         if (isLocal) {
             // Local development - use HTTP
-            return 'http://localhost:8001/api';
+            // Check for port override in URL hash or localStorage
+            const port = localStorage.getItem('bot_api_port') || '8001';
+            return `http://localhost:${port}/api`;
         } else if (isHttps) {
             // HTTPS page (GitHub Pages) - need HTTPS API
-            // Using ngrok tunnel for HTTPS access
-            return 'https://12ccf0a4b473.ngrok-free.app/api';
+            // Check for Cloudflare Tunnel URL in localStorage or default
+            const cloudflareUrl = localStorage.getItem('bot_cloudflare_url');
+            if (cloudflareUrl) {
+                return `${cloudflareUrl}/api`;
+            }
+            // Fallback: Default to latest ngrok/Cloudflare URL
+            // Update this when tunnel changes
+            return 'https://8073b9e974bf.ngrok-free.app/api';
         } else {
-            // HTTP page - can use HTTP API
-            return 'http://192.218.175.132:8001/api';
+            // HTTP page - can use HTTP API with fixed IP
+            const port = localStorage.getItem('bot_api_port') || '8001';
+            return `http://192.218.175.132:${port}/api`;
         }
     }
     
     getUserId() {
         // Try to get user ID from localStorage or generate one
-        let userId = localStorage.getItem('ml101_user_id');
+        let userId = localStorage.getItem('bot_user_id');
         if (!userId) {
+            // Fallback for non-authenticated local use
             userId = 'user_' + Math.random().toString(36).substr(2, 9);
-            localStorage.setItem('ml101_user_id', userId);
+            localStorage.setItem('bot_user_id', userId);
         }
         return userId;
     }
