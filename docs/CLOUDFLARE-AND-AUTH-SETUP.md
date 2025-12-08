@@ -43,7 +43,7 @@ Use the setup script for each course:
     -CourseName "ML-101 Machine Learning and Intelligence" `
     -Port 8001 `
     -Domain "tijerino.ai" `
-    -Subdomain "2025ml"
+    -Subdomain "ml101bot"
 
 # For 2025HCI
 .\scripts\setup-cloudflare-tunnel.ps1 `
@@ -106,12 +106,12 @@ Update `docs/bot-chat.js` or set in localStorage:
 
 ```javascript
 // Set Cloudflare URL
-localStorage.setItem('bot_cloudflare_url', 'https://2025ml.tijerino.ai');
+localStorage.setItem('bot_cloudflare_url', 'https://ml101bot.tijerino.ai');
 ```
 
 Or edit `bot-chat.js` line ~65:
 ```javascript
-return 'https://2025ml.tijerino.ai/api';
+return 'https://ml101bot.tijerino.ai/api';
 ```
 
 ## Part 2: Email OTP Authentication Setup

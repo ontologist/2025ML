@@ -68,7 +68,7 @@ class ML101BotChat {
                 return `${cloudflareUrl}/api`;
             }
             // Fallback: Default to Cloudflare Tunnel URL (when configured)
-            // Cloudflare URL: https://2025ml.tijerino.ai/api
+            // Cloudflare URL: https://ml101bot.tijerino.ai/api
             // Currently using ngrok as temporary fallback until Cloudflare is configured
             return 'https://8073b9e974bf.ngrok-free.app/api';
         } else {

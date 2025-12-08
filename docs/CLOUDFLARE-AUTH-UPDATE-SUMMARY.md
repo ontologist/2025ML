@@ -60,7 +60,7 @@ FROM_EMAIL=your.email@gmail.com
 #### Cloudflare Configuration:
 - Tunnel config stored in `~/.cloudflared/config.yml`
 - DNS records created in Cloudflare Dashboard
-- Each course gets its own domain/subdomain (e.g., `2025ml.tijerino.ai` for ML-101)
+- Each course gets its own subdomain (e.g., `ml101bot.tijerino.ai` for ML-101)
 
 ## How It Works
 
@@ -102,7 +102,7 @@ FROM_EMAIL=your.email@gmail.com
     -CourseName "ML-101" `
     -Port 8001 `
     -Domain "tijerino.ai" `
-    -Subdomain "2025ml"
+    -Subdomain "ml101bot"
 ```
 
 ### Configuring Email OTP:
