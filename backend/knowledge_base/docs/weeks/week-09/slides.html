@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 9: Feature Engineering for Text</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            color: #333;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            background: white;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px 80px;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide h1 {
+            font-size: 3em;
+            color: #2563eb;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .slide h2 {
+            font-size: 2.2em;
+            color: #7c3aed;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 10px;
+        }
+
+        .slide h3 {
+            font-size: 1.8em;
+            color: #2563eb;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .slide h4 {
+            font-size: 1.4em;
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .slide p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        .slide ul, .slide ol {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-left: 40px;
+            margin-bottom: 20px;
+        }
+
+        .slide li {
+            margin-bottom: 10px;
+        }
+
+        .bilingual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 20px 0;
+        }
+
+        .english, .japanese {
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .english {
+            background: #dbeafe;
+            border-left: 4px solid #2563eb;
+        }
+
+        .japanese {
+            background: #f3e8ff;
+            border-left: 4px solid #7c3aed;
+        }
+
+        .highlight-box {
+            background: #fef3cd;
+            border-left: 5px solid #f59e0b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .code-box {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: white;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:hover {
+            background: #2563eb;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-number {
+            position: fixed;
+            top: 70px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            color: #2563eb;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .title-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+
+        .title-slide h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .title-slide .subtitle {
+            font-size: 2em;
+            color: #7c3aed;
+            margin-bottom: 40px;
+        }
+
+        .title-slide .info {
+            font-size: 1.3em;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 1024px) {
+            .slide {
+                padding: 40px 50px;
+            }
+
+            .slide h1 {
+                font-size: 2.5em;
+            }
+
+            .slide h2 {
+                font-size: 2em;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .slide-container {
+                padding: 0;
+            }
+
+            .slide {
+                width: 100vw;
+                height: auto;
+                min-height: 100vh;
+                padding: 20px;
+                border-radius: 0;
+            }
+
+            .slide h1 {
+                font-size: 2em;
+            }
+
+            .slide h2 {
+                font-size: 1.6em;
+            }
+
+            .bilingual {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .title-slide h1 {
+                font-size: 2.5em;
+            }
+
+            .title-slide .subtitle {
+                font-size: 1.4em;
+            }
+
+            .navigation {
+                bottom: 15px;
+                gap: 10px;
+            }
+
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 0.95em;
+            }
+        }
+
+        .slides-nav {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+            padding: 10px 20px;
+        }
+
+        .slides-nav .container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .slides-nav a {
+            color: #1f2937;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .slides-nav a:hover {
+            color: #2563eb;
+        }
+
+        body {
+            padding-top: 50px;
+        }
+    </style>
+    <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+    <nav class="slides-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="lecture.html">Lecture Notes</a>
+            <a href="assignment.html">Assignment</a>
+        </div>
+    </nav>
+
+    <div class="slide-number" id="slideNumber">Slide 1 / 12</div>
+
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active title-slide">
+            <h1>Week 9</h1>
+            <p class="subtitle">Feature Engineering for Text<br>テキストのための特徴量エンジニアリング</p>
+            <p class="info"><strong>Course:</strong> Machine Learning and Intelligence</p>
+            <p class="info"><strong>Instructor:</strong> Yuri Tijerino</p>
+            <p class="info"><strong>Duration:</strong> 15-20 minutes / 15-20分</p>
+        </div>
+
+        <!-- Slide 2: Welcome and Overview -->
+        <div class="slide">
+            <h2>Welcome to Week 9!</h2>
+            <h2>第9週へようこそ！</h2>
+            <div class="bilingual">
+                <div class="english">
+                    <h3>Today's Objectives:</h3>
+                    <ul>
+                        <li>Understand what features are and why they matter</li>
+                        <li>Create categorical features from company attributes</li>
+                        <li>Extract text features from descriptions</li>
+                        <li>Prepare ML-ready feature dataset</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <h3>今日の目標:</h3>
+                    <ul>
+                        <li>特徴量とは何か、なぜ重要かを理解する</li>
+                        <li>企業属性からカテゴリカル特徴量を作成する</li>
+                        <li>説明からテキスト特徴量を抽出する</li>
+                        <li>ML準備完了の特徴量データセットを準備する</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: What are Features? -->
+        <div class="slide">
+            <h2>What are Features?</h2>
+            <h2>特徴量とは？</h2>
+            <div class="highlight-box">
+                <h3>Definition / 定義:</h3>
+                <p><strong>Features = The "clues" that ML uses to make predictions</strong></p>
+                <p><strong>特徴量 = MLが予測を行うために使用する「手がかり」</strong></p>
+            </div>
+            <div class="two-column">
+                <div>
+                    <h4>Raw Data</h4>
+                    <p><strong>生データ</strong></p>
+                    <ul>
+                        <li>Company name: "Toyota"</li>
+                        <li>Industry: "Automotive"</li>
+                        <li>Description: "Leading car manufacturer..."</li>
+                        <li>Employee count: 50,000</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Features (ML-Ready)</h4>
+                    <p><strong>特徴量（ML準備完了）</strong></p>
+                    <ul>
+                        <li>industry_Automotive: 1</li>
+                        <li>size_Large: 1</li>
+                        <li>has_innovation: 1</li>
+                        <li>has_global: 1</li>
+                        <li>description_length: 250</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <p><strong>Key Idea:</strong> Good features make it easier for ML to find patterns!</p>
+                <p><strong>重要なアイデア:</strong> 良い特徴量はMLがパターンを見つけやすくします！</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Why Features Matter -->
+        <div class="slide">
+            <h2>Why Feature Engineering Matters</h2>
+            <h2>なぜ特徴量エンジニアリングが重要か</h2>
+            <div class="bilingual">
+                <div class="english">
+                    <h3>The Challenge:</h3>
+                    <p>ML algorithms work with numbers, not text!</p>
+                    <ul>
+                        <li>Can't directly use: "This is a technology company"</li>
+                        <li>Must convert to: industry_Technology = 1</li>
+                    </ul>
+                    <h3>The Goal:</h3>
+                    <p>Transform raw data into numeric features that capture meaningful patterns</p>
+                </div>
+                <div class="japanese">
+                    <h3>課題:</h3>
+                    <p>MLアルゴリズムはテキストではなく数値で動作します！</p>
+                    <ul>
+                        <li>直接使用できない: 「これはテクノロジー企業です」</li>
+                        <li>変換する必要がある: industry_Technology = 1</li>
+                    </ul>
+                    <h3>目標:</h3>
+                    <p>生データを意味のあるパターンをキャプチャする数値特徴量に変換する</p>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <h4>Example / 例:</h4>
+                <p><strong>Your Goal:</strong> Classify companies as "Interested" or "Not Interested"</p>
+                <p><strong>Features needed:</strong> What characteristics make a company interesting to YOU?</p>
+                <p><strong>あなたの目標:</strong> 企業を「興味あり」または「興味なし」に分類</p>
+                <p><strong>必要な特徴量:</strong> どのような特性が企業をあなたにとって興味深くしますか？</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Categorical Features -->
+        <div class="slide">
+            <h2>Creating Categorical Features</h2>
+            <h2>カテゴリカル特徴量の作成</h2>
+            <h3>One-Hot Encoding / ワンホットエンコーディング</h3>
+            <div class="highlight-box">
+                <p><strong>Convert categories into separate True/False columns</strong></p>
+                <p><strong>カテゴリを個別のTrue/False列に変換</strong></p>
+            </div>
+            <div class="code-box"># Before: One column with text
+Industry: ["Technology", "Finance", "Technology"]
+
+# After: Multiple numeric columns
+industry_Technology: [1, 0, 1]
+industry_Finance:    [0, 1, 0]</div>
+            <div class="code-box"># Python implementation
+industry_encoded = pd.get_dummies(df['industry'], prefix='industry')
+df = pd.concat([df, industry_encoded], axis=1)</div>
+            <h4>Other Categorical Features / その他のカテゴリカル特徴量:</h4>
+            <ul>
+                <li><strong>Location:</strong> location_Tokyo, location_Osaka, etc.</li>
+                <li><strong>Company Size:</strong> size_Small, size_Medium, size_Large</li>
+            </ul>
+        </div>
+
+        <!-- Slide 6: Creating Size Categories -->
+        <div class="slide">
+            <h2>Creating Company Size Features</h2>
+            <h2>企業規模特徴量の作成</h2>
+            <div class="code-box">def categorize_size(count):
+    if pd.isna(count):
+        return 'Unknown'
+    elif count < 50:
+        return 'Small'
+    elif count < 500:
+        return 'Medium'
+    else:
+        return 'Large'
+
+df['company_size'] = df['employee_count'].apply(categorize_size)
+
+# Then one-hot encode
+size_encoded = pd.get_dummies(df['company_size'], prefix='size')
+df = pd.concat([df, size_encoded], axis=1)</div>
+            <div class="bilingual">
+                <div class="english">
+                    <h4>Why categorize?</h4>
+                    <ul>
+                        <li>Captures "small vs large" concept</li>
+                        <li>Easier for ML to learn</li>
+                        <li>Reduces impact of exact numbers</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <h4>なぜカテゴリ化するか？</h4>
+                    <ul>
+                        <li>「小さい vs 大きい」コンセプトをキャプチャ</li>
+                        <li>MLが学習しやすくなる</li>
+                        <li>正確な数値の影響を減らす</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Text Feature Extraction - Keywords -->
+        <div class="slide">
+            <h2>Text Features: Keyword Detection</h2>
+            <h2>テキスト特徴量：キーワード検出</h2>
+            <div class="highlight-box">
+                <h3>The Idea / アイデア:</h3>
+                <p><strong>Check if specific keywords appear in company descriptions</strong></p>
+                <p><strong>特定のキーワードが企業説明に現れるかをチェック</strong></p>
+            </div>
+            <h3>Step 1: Define Keywords / ステップ1：キーワードを定義</h3>
+            <div class="code-box">keywords = ['innovation', 'technology', 'global', 'startup', 'research']</div>
+            <h3>Step 2: Create Binary Features / ステップ2：バイナリ特徴量を作成</h3>
+            <div class="code-box">for keyword in keywords:
+    df[f'has_{keyword}'] = df['description'].str.lower().str.contains(
+        keyword, na=False
+    ).astype(int)
+
+# Result:
+# has_innovation: [1, 0, 1, 0, ...]
+# has_technology: [1, 1, 0, 1, ...]
+# has_global:     [0, 1, 0, 1, ...]</div>
+            <h3>Step 3: Count Total Keywords / ステップ3：合計キーワードをカウント</h3>
+            <div class="code-box">df['keyword_count'] = df[[f'has_{kw}' for kw in keywords]].sum(axis=1)</div>
+        </div>
+
+        <!-- Slide 8: Additional Text Features -->
+        <div class="slide">
+            <h2>Additional Text Features</h2>
+            <h2>追加のテキスト特徴量</h2>
+            <h3>Description Length / 説明の長さ</h3>
+            <div class="code-box"># Character count
+df['description_length'] = df['description'].str.len()
+
+# Word count
+df['description_word_count'] = df['description'].str.split().str.len()</div>
+            <div class="bilingual">
+                <div class="english">
+                    <h4>Why length matters:</h4>
+                    <ul>
+                        <li>Longer descriptions might indicate more established companies</li>
+                        <li>Or companies that emphasize communication</li>
+                        <li>Can be a useful signal for classification</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <h4>なぜ長さが重要か:</h4>
+                    <ul>
+                        <li>長い説明はより確立された企業を示すかもしれない</li>
+                        <li>またはコミュニケーションを重視する企業</li>
+                        <li>分類のための有用なシグナルになり得る</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: TF-IDF (Optional Advanced) -->
+        <div class="slide">
+            <h2>Advanced: TF-IDF Features</h2>
+            <h2>高度：TF-IDF特徴量</h2>
+            <div class="highlight-box">
+                <h3>What is TF-IDF?</h3>
+                <h3>TF-IDFとは？</h3>
+                <p><strong>Term Frequency-Inverse Document Frequency</strong></p>
+                <p><strong>Identifies words that are distinctive for each company</strong></p>
+                <p><strong>各企業に特徴的な単語を特定</strong></p>
+            </div>
+            <div class="code-box">from sklearn.feature_extraction.text import TfidfVectorizer
+
+# Create TF-IDF features (top 20 words)
+tfidf = TfidfVectorizer(max_features=20, stop_words='english')
+tfidf_matrix = tfidf.fit_transform(df['description'].fillna(''))
+
+# Convert to DataFrame
+tfidf_df = pd.DataFrame(
+    tfidf_matrix.toarray(),
+    columns=[f'tfidf_{word}' for word in tfidf.get_feature_names_out()]
+)
+
+# Add to main dataset
+df = pd.concat([df.reset_index(drop=True), tfidf_df], axis=1)</div>
+            <div class="highlight-box">
+                <p><strong>Note:</strong> TF-IDF is optional but can capture nuanced patterns!</p>
+                <p><strong>注意:</strong> TF-IDFはオプションですが、ニュアンスのあるパターンをキャプチャできます！</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Feature Selection -->
+        <div class="slide">
+            <h2>Selecting Final Features</h2>
+            <h2>最終特徴量の選択</h2>
+            <div class="bilingual">
+                <div class="english">
+                    <h3>What to Include:</h3>
+                    <ul>
+                        <li><strong>Categorical Features:</strong> industry_*, location_*, size_*</li>
+                        <li><strong>Keyword Features:</strong> has_innovation, has_technology, etc.</li>
+                        <li><strong>Count Features:</strong> keyword_count, description_length</li>
+                        <li><strong>Numeric Features:</strong> employee_count (if relevant)</li>
+                        <li><strong>Optional:</strong> TF-IDF features</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <h3>何を含めるか:</h3>
+                    <ul>
+                        <li><strong>カテゴリカル特徴量:</strong> industry_*, location_*, size_*</li>
+                        <li><strong>キーワード特徴量:</strong> has_innovation, has_technology など</li>
+                        <li><strong>カウント特徴量:</strong> keyword_count, description_length</li>
+                        <li><strong>数値特徴量:</strong> employee_count（関連性がある場合）</li>
+                        <li><strong>オプション:</strong> TF-IDF特徴量</li>
+                    </ul>
+                </div>
+            </div>
+            <h3>What to Exclude / 何を除外するか:</h3>
+            <ul>
+                <li>Original text columns (company_name, description)</li>
+                <li>Non-predictive fields (URLs, IDs)</li>
+                <li>Redundant features</li>
+            </ul>
+        </div>
+
+        <!-- Slide 11: Feature Dataset Preparation -->
+        <div class="slide">
+            <h2>Creating Final Feature Dataset</h2>
+            <h2>最終特徴量データセットの作成</h2>
+            <div class="code-box"># Identify feature columns
+feature_columns = [col for col in df.columns if any([
+    col.startswith('industry_'),
+    col.startswith('location_'),
+    col.startswith('size_'),
+    col.startswith('has_'),
+    col.startswith('tfidf_'),
+    col == 'keyword_count',
+    col == 'description_length',
+    col == 'employee_count'
+])]
+
+# Create feature dataset (keep company_name for reference)
+features_df = df[['company_name'] + feature_columns].copy()
+
+print(f"Total features created: {len(feature_columns)}")
+print(f"Feature columns: {feature_columns}")
+
+# Export
+features_df.to_csv('company_features.csv', index=False)</div>
+            <div class="highlight-box">
+                <h4>Validation Checklist / 検証チェックリスト:</h4>
+                <ul>
+                    <li>✓ All features are numeric</li>
+                    <li>✓ No missing values</li>
+                    <li>✓ Reasonable number of features (15-50)</li>
+                    <li>✓ Features align with classification goal</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 12: Key Takeaways -->
+        <div class="slide">
+            <h2>Key Takeaways</h2>
+            <h2>重要なポイント</h2>
+            <div class="bilingual">
+                <div class="english">
+                    <h3>Remember:</h3>
+                    <ul>
+                        <li><strong>Features are clues</strong> - they help ML find patterns</li>
+                        <li><strong>ML needs numbers</strong> - convert text to numeric features</li>
+                        <li><strong>Think about YOUR goal</strong> - what makes a company interesting to you?</li>
+                        <li><strong>Categorical → One-hot encoding</strong></li>
+                        <li><strong>Text → Keywords, length, TF-IDF</strong></li>
+                        <li><strong>Quality over quantity</strong> - meaningful features matter more than many features</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <h3>覚えておいてください:</h3>
+                    <ul>
+                        <li><strong>特徴量は手がかり</strong> - MLがパターンを見つけるのを助ける</li>
+                        <li><strong>MLは数値が必要</strong> - テキストを数値特徴量に変換</li>
+                        <li><strong>あなたの目標について考える</strong> - 何が企業をあなたにとって興味深くしますか？</li>
+                        <li><strong>カテゴリカル → ワンホットエンコーディング</strong></li>
+                        <li><strong>テキスト → キーワード、長さ、TF-IDF</strong></li>
+                        <li><strong>量より質</strong> - 意味のある特徴量が多くの特徴量より重要</li>
+                    </ul>
+                </div>
+            </div>
+            <h3 style="text-align: center; margin-top: 40px;">Next: Hands-On Activity</h3>
+            <p style="text-align: center; font-size: 1.2em;">Engineer features from your company dataset with the ML-101 Bot!</p>
+            <p style="text-align: center; font-size: 1.2em;">ML-101ボットであなたの企業データセットから特徴量をエンジニアリングしましょう！</p>
+        </div>
+
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">◀ Previous</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next ▶</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+
+            document.getElementById('slideNumber').textContent = `Slide ${currentSlide + 1} / ${totalSlides}`;
+
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (event.key === 'ArrowRight' || event.key === ' ') {
+                event.preventDefault();
+                changeSlide(1);
+            } else if (event.key === 'Home') {
+                showSlide(0);
+            } else if (event.key === 'End') {
+                showSlide(totalSlides - 1);
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>

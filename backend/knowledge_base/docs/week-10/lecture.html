@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 10: Classification Concepts | ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .lecture-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .lecture-content h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .lecture-content h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .lecture-content h4 {
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .objectives-list {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .objectives-list ul {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+        .highlight-box {
+            background: #fef3cd;
+            border-left: 5px solid var(--warning);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-box {
+            background: var(--bg-light);
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary-color);
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            white-space: pre-wrap;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .bilingual-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        .english-col {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+        .japanese-col {
+            background: #f3e8ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        @media (max-width: 768px) {
+            .bilingual-section {
+                grid-template-columns: 1fr;
+            }
+            .lecture-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Week 10: Classification Concepts</h1>
+            <p class="subtitle">第10週：分類のコンセプト</p>
+            <p class="instructor">Instructor: Yuri Tijerino</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="slides.html">Presentation Slides</a>
+            <a href="assignment.html">Assignment</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="lecture-content">
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+                <a href="assignment.html" class="btn btn-accent">View Assignment</a>
+            </div>
+
+            <div class="objectives-list">
+                <h3>Learning Objectives / 学習目標</h3>
+                <p><strong>English:</strong> By the end of this lecture, students will be able to:</p>
+                <ul>
+                    <li>Define classification in the context of machine learning</li>
+                    <li>Explain how supervised learning works with labeled data</li>
+                    <li>Distinguish between features (X) and labels (y)</li>
+                    <li>Understand the importance of training vs testing data</li>
+                    <li>Apply classification concepts to the company recommendation project</li>
+                </ul>
+                <p><strong>日本語:</strong> この講義の終了までに、学生は以下ができるようになります：</p>
+                <ul>
+                    <li>機械学習のコンテキストで分類を定義する</li>
+                    <li>ラベル付きデータで教師あり学習がどのように機能するかを説明する</li>
+                    <li>特徴量 (X) とラベル (y) を区別する</li>
+                    <li>訓練データとテストデータの重要性を理解する</li>
+                    <li>企業推薦プロジェクトに分類コンセプトを適用する</li>
+                </ul>
+            </div>
+
+            <h2>What is Classification?</h2>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h3>Definition</h3>
+                    <p><strong>Classification is the task of predicting which category or class something belongs to.</strong></p>
+                    <p>In machine learning, classification algorithms learn from labeled examples to automatically categorize new, unseen data.</p>
+                </div>
+                <div class="japanese-col">
+                    <h3>定義</h3>
+                    <p><strong>分類とは、何かがどのカテゴリまたはクラスに属するかを予測するタスクです。</strong></p>
+                    <p>機械学習では、分類アルゴリズムはラベル付きの例から学習して、新しい未見のデータを自動的に分類します。</p>
+                </div>
+            </div>
+
+            <h3>Everyday Classification Examples</h3>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Email Spam Detection</h4>
+                    <ul>
+                        <li>Categories: Spam or Not Spam</li>
+                        <li>System learns from thousands of labeled emails</li>
+                        <li>Automatically filters new incoming messages</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>メールスパム検出</h4>
+                    <ul>
+                        <li>カテゴリ: スパムまたは非スパム</li>
+                        <li>システムは数千のラベル付きメールから学習</li>
+                        <li>新しい受信メッセージを自動的にフィルタリング</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Medical Diagnosis</h4>
+                    <ul>
+                        <li>Categories: Disease Present or Absent</li>
+                        <li>Learns from patient records and test results</li>
+                        <li>Assists doctors in diagnosing new patients</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>医療診断</h4>
+                    <ul>
+                        <li>カテゴリ: 病気あり、または病気なし</li>
+                        <li>患者記録と検査結果から学習</li>
+                        <li>医師が新しい患者を診断するのを支援</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>Types of Classification</h2>
+
+            <h3>Binary Classification / 二項分類</h3>
+            <div class="highlight-box">
+                <p><strong>Definition:</strong> Classification with exactly two categories</p>
+                <p><strong>定義:</strong> 正確に2つのカテゴリを持つ分類</p>
+            </div>
+
+            <div class="code-box">Examples / 例:
+
+• Email: Spam (1) or Not Spam (0)
+  メール: スパム (1) または非スパム (0)
+
+• Medical Test: Positive (1) or Negative (0)
+  医療検査: 陽性 (1) または陰性 (0)
+
+• Credit Card: Fraudulent (1) or Legitimate (0)
+  クレジットカード: 詐欺 (1) または正当 (0)
+
+• Our Project: Interested (1) or Not Interested (0)
+  私たちのプロジェクト: 興味あり (1) または興味なし (0)</div>
+
+            <h3>Multi-Class Classification / 多クラス分類</h3>
+            <div class="highlight-box">
+                <p><strong>Definition:</strong> Classification with three or more categories</p>
+                <p><strong>定義:</strong> 3つ以上のカテゴリを持つ分類</p>
+            </div>
+
+            <div class="code-box">Examples / 例:
+
+• Handwritten Digits: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+  手書き数字: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+
+• Sentiment Analysis: Positive, Neutral, Negative
+  感情分析: ポジティブ、中立、ネガティブ
+
+• Fruit Classification: Apple, Orange, Banana, Grape
+  果物分類: リンゴ、オレンジ、バナナ、ブドウ
+
+• Industry Type: Tech, Finance, Healthcare, Retail, etc.
+  業界タイプ: テクノロジー、金融、医療、小売など</div>
+
+            <h2>Supervised Learning Explained</h2>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h3>What is Supervised Learning?</h3>
+                    <p><strong>Supervised learning is a type of machine learning where the algorithm learns from labeled training data.</strong></p>
+                    <p>The "supervisor" provides the correct answers (labels) during training, so the algorithm can learn the relationship between inputs and outputs.</p>
+                </div>
+                <div class="japanese-col">
+                    <h3>教師あり学習とは？</h3>
+                    <p><strong>教師あり学習は、アルゴリズムがラベル付き訓練データから学習する機械学習のタイプです。</strong></p>
+                    <p>「教師」が訓練中に正しい答え（ラベル）を提供するため、アルゴリズムは入力と出力の間の関係を学習できます。</p>
+                </div>
+            </div>
+
+            <h3>The Supervised Learning Process</h3>
+
+            <div class="code-box">STEP 1: COLLECT LABELED DATA / ステップ1: ラベル付きデータを収集
+→ Gather examples where you already know the correct answer
+  正しい答えがすでにわかっている例を収集
+→ Example: Companies you've manually classified as "interested" or "not"
+  例: 手動で「興味あり」または「興味なし」に分類した企業
+
+STEP 2: TRAIN THE MODEL / ステップ2: モデルを訓練
+→ Feed labeled data to the ML algorithm
+  ラベル付きデータをMLアルゴリズムに供給
+→ Algorithm finds patterns that connect features to labels
+  アルゴリズムは特徴量をラベルに接続するパターンを見つける
+→ Learns: "Companies with X features tend to be interesting"
+  学習: 「X特徴量を持つ企業は興味深い傾向がある」
+
+STEP 3: MAKE PREDICTIONS / ステップ3: 予測を行う
+→ Present new, unlabeled data to the trained model
+  訓練されたモデルに新しいラベルなしデータを提示
+→ Model predicts the label based on learned patterns
+  モデルは学習したパターンに基づいてラベルを予測
+→ Output: "This new company is likely to be interesting"
+  出力: 「この新しい企業は興味深い可能性が高い」</div>
+
+            <h2>Features vs Labels</h2>
+
+            <h3>Features (X) - The Input</h3>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>What are Features?</h4>
+                    <p>Features are the <strong>characteristics or attributes</strong> that describe your data. They are the inputs to your ML model.</p>
+                    <p><strong>Think of features as:</strong></p>
+                    <ul>
+                        <li>The information the model uses to make decisions</li>
+                        <li>Variables that might influence the outcome</li>
+                        <li>Descriptive properties of your data</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>特徴量とは？</h4>
+                    <p>特徴量は、データを記述する<strong>特性または属性</strong>です。これらはMLモデルへの入力です。</p>
+                    <p><strong>特徴量を考える:</strong></p>
+                    <ul>
+                        <li>モデルが意思決定に使用する情報</li>
+                        <li>結果に影響を与える可能性のある変数</li>
+                        <li>データの記述的特性</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>Example: Company Classification Features</h4>
+            <ul>
+                <li><strong>Industry:</strong> Technology, Finance, Healthcare, etc.</li>
+                <li><strong>Company Size:</strong> Number of employees</li>
+                <li><strong>Location:</strong> Tokyo, Osaka, Remote, etc.</li>
+                <li><strong>Founded Year:</strong> Age of the company</li>
+                <li><strong>Keywords:</strong> "innovation", "global", "startup", etc.</li>
+                <li><strong>Salary Range:</strong> Compensation offered</li>
+            </ul>
+
+            <h3>Labels (y) - The Output</h3>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>What are Labels?</h4>
+                    <p>Labels are the <strong>categories or outcomes</strong> you want to predict. They are the outputs of your ML model.</p>
+                    <p><strong>Think of labels as:</strong></p>
+                    <ul>
+                        <li>The "answer" the model is trying to learn</li>
+                        <li>The category you're trying to predict</li>
+                        <li>The target variable in your dataset</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>ラベルとは？</h4>
+                    <p>ラベルは、予測したい<strong>カテゴリまたは結果</strong>です。これらはMLモデルの出力です。</p>
+                    <p><strong>ラベルを考える:</strong></p>
+                    <ul>
+                        <li>モデルが学習しようとしている「答え」</li>
+                        <li>予測しようとしているカテゴリ</li>
+                        <li>データセット内のターゲット変数</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>Example: Company Classification Labels</h4>
+            <div class="code-box">For Binary Classification:
+Label = 1 → "I am interested in this company"
+Label = 0 → "I am not interested in this company"
+
+二項分類の場合:
+ラベル = 1 → 「この企業に興味があります」
+ラベル = 0 → 「この企業に興味がありません」</div>
+
+            <h2>Training Data vs Test Data</h2>
+
+            <div class="highlight-box">
+                <h3>Why Split Data?</h3>
+                <p>We split our labeled dataset into two parts to properly evaluate how well our model generalizes to new, unseen data.</p>
+                <p>ラベル付きデータセットを2つの部分に分割して、モデルが新しい未見のデータにどれだけうまく汎化するかを適切に評価します。</p>
+            </div>
+
+            <h3>Training Data (70-80%)</h3>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Purpose</h4>
+                    <p>Used to <strong>train</strong> the model - the model learns patterns from this data.</p>
+                    <h4>What Happens</h4>
+                    <ul>
+                        <li>Model sees both features and labels</li>
+                        <li>Learns which features predict which labels</li>
+                        <li>Adjusts internal parameters to minimize errors</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>目的</h4>
+                    <p>モデルを<strong>訓練</strong>するために使用 - モデルはこのデータからパターンを学習します。</p>
+                    <h4>何が起こるか</h4>
+                    <ul>
+                        <li>モデルは特徴量とラベルの両方を見る</li>
+                        <li>どの特徴量がどのラベルを予測するかを学習</li>
+                        <li>エラーを最小限に抑えるために内部パラメータを調整</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Test Data (20-30%)</h3>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Purpose</h4>
+                    <p>Used to <strong>evaluate</strong> the model - tests how well the model performs on data it hasn't seen during training.</p>
+                    <h4>What Happens</h4>
+                    <ul>
+                        <li>Hidden during training</li>
+                        <li>Model makes predictions without seeing labels</li>
+                        <li>Predictions compared to true labels to measure accuracy</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>目的</h4>
+                    <p>モデルを<strong>評価</strong>するために使用 - 訓練中に見ていないデータでモデルがどれだけうまく機能するかをテストします。</p>
+                    <h4>何が起こるか</h4>
+                    <ul>
+                        <li>訓練中は隠される</li>
+                        <li>モデルはラベルを見ずに予測を行う</li>
+                        <li>予測は真のラベルと比較され、精度が測定される</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Critical Rule / 重要なルール</h4>
+                <p><strong>Never train on test data!</strong> This would be like studying the exact questions that will be on an exam - the model would "memorize" instead of learning to generalize.</p>
+                <p><strong>テストデータで訓練しないでください！</strong> これは試験に出る正確な質問を勉強するようなものです - モデルは汎化することを学ぶ代わりに「暗記」してしまいます。</p>
+            </div>
+
+            <h2>The Importance of Label Quality</h2>
+
+            <h3>Garbage In, Garbage Out</h3>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <p>A fundamental principle in machine learning: <strong>The quality of your model depends on the quality of your training data.</strong></p>
+                    <p>If your labels are inconsistent, random, or incorrect, the model will learn incorrect patterns and make poor predictions.</p>
+                </div>
+                <div class="japanese-col">
+                    <p>機械学習の基本原則: <strong>モデルの品質は訓練データの品質に依存します。</strong></p>
+                    <p>ラベルが不整合、ランダム、または不正確な場合、モデルは誤ったパターンを学習し、予測が不良になります。</p>
+                </div>
+            </div>
+
+            <h3>Characteristics of Good Labels</h3>
+            <ul>
+                <li><strong>Consistent / 一貫性:</strong> Similar items should have similar labels. If two companies are nearly identical, they should have the same label.</li>
+                <li><strong>Thoughtful / 思慮深い:</strong> Based on clear, articulated criteria rather than random decisions.</li>
+                <li><strong>Honest / 正直:</strong> Reflect your TRUE preferences, not what you think you "should" prefer.</li>
+                <li><strong>Balanced / バランス:</strong> Not extremely skewed (e.g., not 95% in one category). Aim for reasonable distribution.</li>
+            </ul>
+
+            <h3>Common Labeling Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Random labeling:</strong> Assigning labels without thought or criteria</li>
+                <li><strong>Inconsistency:</strong> Labeling similar items differently without justification</li>
+                <li><strong>Extreme imbalance:</strong> Having 90%+ of data in one category</li>
+                <li><strong>Changing criteria mid-labeling:</strong> Using different rules for different batches</li>
+            </ul>
+
+            <h2>Applying Classification to Our Project</h2>
+
+            <h3>The Company Recommendation Task</h3>
+            <div class="highlight-box">
+                <p><strong>Goal:</strong> Build a classification model that predicts whether you'd be interested in a company based on its features.</p>
+                <p><strong>目標:</strong> 企業の特徴量に基づいて、その企業に興味があるかどうかを予測する分類モデルを構築します。</p>
+            </div>
+
+            <h4>Our Classification Setup</h4>
+            <div class="code-box">Classification Type: Binary Classification
+分類タイプ: 二項分類
+
+Features (X): Company characteristics from Week 9
+特徴量 (X): 第9週の企業特性
+• Industry type
+• Company size
+• Location
+• Keywords in description
+• Salary information
+• Founded year
+• etc.
+
+Labels (y): Your interest decision
+ラベル (y): あなたの興味の決定
+• 1 = Interested in this company
+• 0 = Not interested in this company
+
+Training: You manually label companies based on YOUR criteria
+訓練: あなたの基準に基づいて企業を手動でラベル付け
+
+Prediction: Model recommends new companies you haven't seen
+予測: モデルはあなたが見ていない新しい企業を推薦</div>
+
+            <h2>Today's Activity: Creating Your Training Dataset</h2>
+
+            <p>In today's hands-on activity, you will:</p>
+            <p>今日のハンズオンアクティビティでは、以下を行います:</p>
+
+            <ol>
+                <li><strong>Define your classification criteria</strong><br>
+                    What makes a company "interesting" to you? Be specific!<br>
+                    <em>分類基準を定義 - 企業を「興味深い」ものにするのは何ですか？具体的に！</em></li>
+
+                <li><strong>Manually classify each company</strong><br>
+                    Go through your company dataset and assign labels (1 or 0)<br>
+                    <em>各企業を手動で分類 - 企業データセットを確認し、ラベル（1または0）を割り当てる</em></li>
+
+                <li><strong>Check label quality</strong><br>
+                    Verify consistency and balance in your labels<br>
+                    <em>ラベル品質をチェック - ラベルの一貫性とバランスを検証</em></li>
+
+                <li><strong>Prepare training dataset</strong><br>
+                    Create final CSV with features and labels ready for ML<br>
+                    <em>訓練データセットを準備 - MLの準備ができた特徴量とラベルを含む最終CSVを作成</em></li>
+            </ol>
+
+            <div class="highlight-box">
+                <h4>Important Note</h4>
+                <p>Your labels should reflect YOUR personal preferences for companies. There are no "right" or "wrong" labels - only honest ones. The ML model will learn to predict what YOU find interesting.</p>
+                <p>あなたのラベルは、企業に対するあなたの個人的な好みを反映する必要があります。「正しい」または「間違った」ラベルはありません - 正直なものだけです。MLモデルは、あなたが興味深いと思うものを予測することを学習します。</p>
+            </div>
+
+            <h2>Key Takeaways</h2>
+
+            <div class="objectives-list">
+                <h4>Remember / 覚えておいてください</h4>
+                <ul>
+                    <li>✅ <strong>Classification = categorizing data into classes</strong> / 分類 = データをクラスに分類すること</li>
+                    <li>✅ <strong>Supervised learning requires labeled examples</strong> / 教師あり学習にはラベル付き例が必要</li>
+                    <li>✅ <strong>Features (X) describe, Labels (y) categorize</strong> / 特徴量 (X) が記述、ラベル (y) が分類</li>
+                    <li>✅ <strong>Training data teaches, test data evaluates</strong> / 訓練データが教え、テストデータが評価</li>
+                    <li>✅ <strong>Label quality determines model quality</strong> / ラベル品質がモデル品質を決定</li>
+                    <li>✅ <strong>Your labels teach the model YOUR preferences</strong> / あなたのラベルがモデルにあなたの好みを教える</li>
+                </ul>
+            </div>
+
+            <h2>Next Steps</h2>
+
+            <ol style="font-size: 1.2em; line-height: 2;">
+                <li>Open the ML-101 Bot portal / ML-101ボットポータルを開く</li>
+                <li>Begin Week 10 Activity / 第10週アクティビティを開始</li>
+                <li>Follow bot guidance to create your labeled dataset / ラベル付きデータセットを作成するためのボットガイダンスに従う</li>
+                <li>Submit your training dataset / 訓練データセットを提出</li>
+            </ol>
+
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+                <a href="assignment.html" class="btn btn-accent">View Assignment</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>著作権 &copy; 2025 Yuri Tijerino. 無断転載を禁じます。</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5 Assignment: No-Code Web Scraping Tools - ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .assignment-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .assignment-header {
+            border-bottom: 3px solid #10b981;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .assignment-header h1 {
+            color: #10b981;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .assignment-meta {
+            background: #d1fae5;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .assignment-meta p {
+            margin: 5px 0;
+            color: #065f46;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #059669;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            border-left: 5px solid #10b981;
+            padding-left: 15px;
+        }
+
+        .section h3 {
+            color: #667eea;
+            font-size: 1.5rem;
+            margin: 25px 0 15px 0;
+        }
+
+        .section h4 {
+            color: #059669;
+            font-size: 1.2rem;
+            margin: 20px 0 10px 0;
+        }
+
+        .japanese {
+            color: #6b7280;
+            font-size: 0.9em;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .deliverable-box {
+            background: #f0fdf4;
+            border: 2px solid #10b981;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .deliverable-box h3 {
+            color: #059669;
+            margin-top: 0;
+        }
+
+        .warning-box {
+            background: #fee2e2;
+            border-left: 5px solid #ef4444;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .info-box {
+            background: #e0e7ff;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background: #d1fae5;
+            border-left: 5px solid #10b981;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .highlight-box {
+            background: #fef3c7;
+            border-left: 5px solid #f59e0b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .rubric-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .rubric-table th,
+        .rubric-table td {
+            border: 1px solid #e5e7eb;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .rubric-table th {
+            background: #10b981;
+            color: white;
+            font-weight: 600;
+        }
+
+        .rubric-table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .rubric-table .points {
+            text-align: center;
+            font-weight: bold;
+            color: #059669;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 10px 0;
+            line-height: 1.8;
+        }
+
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .requirements-list {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .tool-option {
+            background: white;
+            border: 2px solid #10b981;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .tool-option h4 {
+            color: #059669;
+            margin-top: 0;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: #764ba2;
+        }
+
+        .submit-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 30px;
+            background: #10b981;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background: #059669;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>ML-101: Machine Learning and Intelligence</h1>
+            <p class="subtitle">Week 5 Assignment</p>
+        </div>
+    </header>
+
+    <main class="container" style="padding: 40px 20px;">
+        <div class="assignment-content">
+            <div class="assignment-header">
+                <h1>Week 5 Assignment: No-Code Web Scraping Tools</h1>
+                <span class="japanese">第5週課題：ノーコードWebスクレイピングツール</span>
+            </div>
+
+            <div class="assignment-meta">
+                <p><strong>Course:</strong> Machine Learning and Intelligence | 機械学習と知能</p>
+                <p><strong>Week:</strong> 5 | 第5週</p>
+                <p><strong>Due Date:</strong> End of Week 5 class session | 第5週授業終了時</p>
+                <p><strong>Weight:</strong> Part of 40% Weekly Activities grade | 週次アクティビティ評価40%の一部</p>
+                <p><strong>Submission:</strong> Through ML-101 Bot Portal | ML-101ボットポータル経由</p>
+                <p><strong>Total Points:</strong> 100 points</p>
+            </div>
+
+            <!-- Assignment Overview -->
+            <div class="section">
+                <h2>Assignment Overview</h2>
+                <span class="japanese">課題概要</span>
+
+                <p>This assignment introduces you to no-code web scraping tools and practical data collection. You'll set up a scraping tool, practice on sample websites, and collect your first company data for the course project. This hands-on experience bridges the gap between planning (Week 4) and full project implementation (Week 6).</p>
+
+                <p class="japanese">この課題は、ノーコードWebスクレイピングツールと実践的なデータ収集を紹介します。スクレイピングツールをセットアップし、サンプルウェブサイトで練習し、コースプロジェクトのために最初の企業データを収集します。</p>
+            </div>
+
+            <!-- Learning Objectives -->
+            <div class="section">
+                <h2>Learning Objectives</h2>
+                <span class="japanese">学習目標</span>
+
+                <p>By completing this assignment, you will be able to:</p>
+
+                <ul class="checklist">
+                    <li>Set up and configure no-code web scraping tools<br>
+                    <span class="japanese">ノーコードWebスクレイピングツールをセットアップして設定する</span></li>
+
+                    <li>Create scraping workflows using point-and-click interfaces<br>
+                    <span class="japanese">ポイントアンドクリックインターフェースを使用してスクレイピングワークフローを作成する</span></li>
+
+                    <li>Extract structured data from websites without writing code<br>
+                    <span class="japanese">コードを書かずにウェブサイトから構造化データを抽出する</span></li>
+
+                    <li>Export and validate scraped data in CSV format<br>
+                    <span class="japanese">スクレイプされたデータをCSV形式でエクスポートして検証する</span></li>
+
+                    <li>Troubleshoot common scraping issues and errors<br>
+                    <span class="japanese">一般的なスクレイピングの問題とエラーをトラブルシューティングする</span></li>
+                </ul>
+            </div>
+
+            <!-- Prerequisites -->
+            <div class="section">
+                <h2>Prerequisites</h2>
+                <span class="japanese">前提条件</span>
+
+                <ul class="checklist">
+                    <li>Attended Week 5 lecture (or reviewed lecture slides)</li>
+                    <li>Completed Week 4 assignment (ethical analysis and feasibility report)</li>
+                    <li>Identified approved websites for scraping from Week 4</li>
+                    <li>Computer with internet access and ability to install software (or use browser extension)</li>
+                </ul>
+            </div>
+
+            <!-- Deliverables -->
+            <div class="section">
+                <h2>Assignment Deliverables</h2>
+                <span class="japanese">課題成果物</span>
+
+                <!-- Deliverable 1 -->
+                <div class="deliverable-box">
+                    <h3>Deliverable 1: Tool Setup Documentation (15 points)</h3>
+                    <span class="japanese">成果物1：ツールセットアップ文書（15点）</span>
+
+                    <p style="margin-top: 15px;">Document your successful setup of a no-code scraping tool.</p>
+
+                    <h4>Recommended Tools (choose ONE):</h4>
+
+                    <div class="tool-option">
+                        <h4>1. Octoparse</h4>
+                        <p><strong>Type:</strong> Desktop application (free tier available)</p>
+                        <p><strong>Best for:</strong> Comprehensive features, good for beginners</p>
+                        <p class="japanese">最適：包括的な機能、初心者に適している</p>
+                    </div>
+
+                    <div class="tool-option">
+                        <h4>2. ParseHub</h4>
+                        <p><strong>Type:</strong> Desktop application (free tier available)</p>
+                        <p><strong>Best for:</strong> JavaScript-heavy sites, visual interface</p>
+                        <p class="japanese">最適：JavaScript重視のサイト、ビジュアルインターフェース</p>
+                    </div>
+
+                    <div class="tool-option">
+                        <h4>3. Web Scraper (Chrome Extension)</h4>
+                        <p><strong>Type:</strong> Browser extension</p>
+                        <p><strong>Best for:</strong> Quick setup, no download required</p>
+                        <p class="japanese">最適：クイックセットアップ、ダウンロード不要</p>
+                    </div>
+
+                    <h4 style="margin-top: 25px;">Documentation Requirements:</h4>
+
+                    <div class="requirements-list">
+                        <p><strong>A. Tool Selection and Installation</strong></p>
+                        <ul>
+                            <li>Which tool did you choose? Why?</li>
+                            <li>Installation steps followed</li>
+                            <li>Screenshot showing successful installation</li>
+                        </ul>
+
+                        <p><strong>B. Account Creation</strong></p>
+                        <ul>
+                            <li>Account username (NOT password)</li>
+                            <li>Email confirmation received</li>
+                            <li>Screenshot of account dashboard or main interface</li>
+                        </ul>
+
+                        <p><strong>C. Initial Configuration</strong></p>
+                        <ul>
+                            <li>Settings configured (if any)</li>
+                            <li>Tutorial or walkthrough completed</li>
+                            <li>Screenshot showing you're ready to create first scraping task</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>Format:</strong> Include in main submission document with clearly labeled section: "Tool Setup Documentation". Include 2-3 screenshots.
+                    </div>
+
+                    <div class="success-box">
+                        <strong>Scoring (15 points):</strong>
+                        <ul style="margin-top: 10px;">
+                            <li>Tool installed successfully: 5 points</li>
+                            <li>Account created and confirmed: 5 points</li>
+                            <li>Clear documentation with screenshots: 5 points</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Deliverable 2 -->
+                <div class="deliverable-box">
+                    <h3>Deliverable 2: Practice Scraping Workflow Results (20 points)</h3>
+                    <span class="japanese">成果物2：練習スクレイピングワークフロー結果（20点）</span>
+
+                    <p style="margin-top: 15px;">Complete a practice scraping exercise on a <strong>safe, legal sample website</strong> (provided by instructor/bot).</p>
+
+                    <div class="info-box">
+                        <strong>Sample Site:</strong> Books to Scrape (http://books.toscrape.com/) or equivalent provided by instructor
+                    </div>
+
+                    <h4>Scraping Task:</h4>
+                    <p>Scrape <strong>at least 20 book entries</strong> from the sample website with the following data fields:</p>
+                    <ul>
+                        <li>Book title (書籍タイトル)</li>
+                        <li>Price (価格)</li>
+                        <li>Availability status (在庫状況)</li>
+                        <li>Star rating (星評価)</li>
+                    </ul>
+
+                    <h4>Required Documentation:</h4>
+
+                    <div class="requirements-list">
+                        <p><strong>A. Workflow Creation Process</strong></p>
+                        <ul>
+                            <li>Step-by-step description of how you created the scraping workflow</li>
+                            <li>How did you select elements (click, CSS selector, XPath)?</li>
+                            <li>Screenshot of workflow configuration in the tool</li>
+                        </ul>
+
+                        <p><strong>B. Data Extraction</strong></p>
+                        <ul>
+                            <li>Number of entries scraped (minimum 20)</li>
+                            <li>Screenshot showing data preview in the tool</li>
+                            <li>Screenshot of successful scraping completion</li>
+                        </ul>
+
+                        <p><strong>C. CSV Export</strong></p>
+                        <ul>
+                            <li>Export data to CSV format</li>
+                            <li>Submit the CSV file with your assignment</li>
+                            <li>CSV must have clean headers and readable data</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>Format:</strong> Documentation in main document with screenshots. CSV file: <code>Week05_[YourName]_PracticeScrape.csv</code>
+                    </div>
+
+                    <div class="success-box">
+                        <strong>Scoring (20 points):</strong>
+                        <ul style="margin-top: 10px;">
+                            <li>Workflow created and documented: 6 points</li>
+                            <li>20+ entries successfully scraped: 8 points</li>
+                            <li>Clean CSV export with all fields: 6 points</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Deliverable 3 -->
+                <div class="deliverable-box">
+                    <h3>Deliverable 3: Intermediate Scraping Results (25 points)</h3>
+                    <span class="japanese">成果物3：中級スクレイピング結果（25点）</span>
+
+                    <p style="margin-top: 15px;">Complete a more complex scraping task with <strong>multiple pages</strong> and additional data fields.</p>
+
+                    <h4>Scraping Task:</h4>
+                    <p>From the same or similar practice website, scrape <strong>at least 30 product/item entries across multiple pages</strong>.</p>
+
+                    <p><strong>Required Data Fields (minimum 4):</strong></p>
+                    <ul>
+                        <li>Product/Item name</li>
+                        <li>Price</li>
+                        <li>Rating or review score (if available)</li>
+                        <li>Availability or stock status</li>
+                        <li>Any additional relevant field</li>
+                    </ul>
+
+                    <h4>Required Documentation:</h4>
+
+                    <div class="requirements-list">
+                        <p><strong>A. Pagination Configuration</strong></p>
+                        <ul>
+                            <li>How did you set up multi-page scraping?</li>
+                            <li>Screenshot showing pagination settings</li>
+                            <li>Number of pages scraped</li>
+                        </ul>
+
+                        <p><strong>B. Data Extraction</strong></p>
+                        <ul>
+                            <li>Total entries collected (minimum 30)</li>
+                            <li>Screenshot of data preview showing entries from different pages</li>
+                            <li>Evidence that pagination worked correctly</li>
+                        </ul>
+
+                        <p><strong>C. CSV Export and Validation</strong></p>
+                        <ul>
+                            <li>Export as CSV file</li>
+                            <li>Open in spreadsheet software to verify data quality</li>
+                            <li>Check for: complete data, no duplicates, correct formatting</li>
+                            <li>Screenshot showing clean data in spreadsheet</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>Format:</strong> Documentation in main document. CSV file: <code>Week05_[YourName]_IntermediateScrape.csv</code>
+                    </div>
+
+                    <div class="success-box">
+                        <strong>Scoring (25 points):</strong>
+                        <ul style="margin-top: 10px;">
+                            <li>Pagination configured correctly: 8 points</li>
+                            <li>30+ entries from multiple pages: 10 points</li>
+                            <li>Clean CSV with all required fields: 7 points</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Deliverable 4 -->
+                <div class="deliverable-box">
+                    <h3>Deliverable 4: Company Data Sample Scrape (25 points)</h3>
+                    <span class="japanese">成果物4：企業データサンプルスクレイプ（25点）</span>
+
+                    <p style="margin-top: 15px;">Scrape <strong>5-10 company entries</strong> from one of your <strong>approved websites</strong> from Week 4's feasibility report.</p>
+
+                    <div class="warning-box">
+                        <strong>⚠️ IMPORTANT:</strong> Only scrape websites that you evaluated as ethical and legal in Week 4. This must be a site where:
+                        <ul style="margin-top: 10px;">
+                            <li>robots.txt allows scraping</li>
+                            <li>Terms of Service don't prohibit it</li>
+                            <li>Data is publicly accessible | 公的にアクセス可能なデータ</li>
+                        </ul>
+                    </div>
+
+                    <h4>Required Data Fields:</h4>
+                    <p>Collect at least <strong>4-5 data fields</strong> per company:</p>
+                    <ul>
+                        <li>Company name (required) | 企業名（必須）</li>
+                        <li>Industry or sector (required) | 業界またはセクター（必須）</li>
+                        <li>Company size or employee count (if available)</li>
+                        <li>Location or headquarters (if available)</li>
+                        <li>Brief description or tags (if available)</li>
+                    </ul>
+
+                    <h4>Required Documentation:</h4>
+
+                    <div class="requirements-list">
+                        <p><strong>A. Website Selection and Justification</strong></p>
+                        <ul>
+                            <li>Which website did you scrape?</li>
+                            <li>Why is this scraping ethical and legal? (reference Week 4 analysis)</li>
+                            <li>What specific page/section did you scrape?</li>
+                        </ul>
+
+                        <p><strong>B. Scraping Process</strong></p>
+                        <ul>
+                            <li>Workflow configuration screenshots</li>
+                            <li>Challenges encountered (if any)</li>
+                            <li>How you resolved issues</li>
+                            <li>Screenshot of successful data extraction</li>
+                        </ul>
+
+                        <p><strong>C. Data Quality Check</strong></p>
+                        <ul>
+                            <li>Are all fields populated with data?</li>
+                            <li>Is data consistent and accurate?</li>
+                            <li>Any missing values or errors?</li>
+                            <li>Screenshot showing data in spreadsheet</li>
+                        </ul>
+
+                        <p><strong>D. CSV Export</strong></p>
+                        <ul>
+                            <li>Submit CSV file with company data</li>
+                            <li>Must include 5-10 companies with 4-5 fields each</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>Format:</strong> Documentation in main document. CSV file: <code>Week05_[YourName]_CompanyData.csv</code>
+                    </div>
+
+                    <div class="success-box">
+                        <strong>Scoring (25 points):</strong>
+                        <ul style="margin-top: 10px;">
+                            <li>Website selection justified ethically: 5 points</li>
+                            <li>5-10 companies successfully scraped: 10 points</li>
+                            <li>4-5 data fields per company: 5 points</li>
+                            <li>Data quality and completeness: 5 points</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Deliverable 5 -->
+                <div class="deliverable-box">
+                    <h3>Deliverable 5: Complete Documentation Package (10 points)</h3>
+                    <span class="japanese">成果物5：完全な文書化パッケージ（10点）</span>
+
+                    <p style="margin-top: 15px;">Create a comprehensive documentation package summarizing your scraping experience.</p>
+
+                    <h4>A. Workflow Documentation (1-2 pages)</h4>
+
+                    <p>For each scraping task (Practice, Intermediate, Company Data), document:</p>
+
+                    <ol>
+                        <li><strong>Objective:</strong> What were you trying to scrape?</li>
+                        <li><strong>URL/Website:</strong> Where did you scrape from?</li>
+                        <li><strong>Data Fields:</strong> What information did you collect?</li>
+                        <li><strong>Number of Entries:</strong> How many records did you get?</li>
+                        <li><strong>Workflow Steps:</strong> Briefly describe the scraping process</li>
+                        <li><strong>Challenges:</strong> What problems did you encounter?</li>
+                        <li><strong>Solutions:</strong> How did you solve them?</li>
+                    </ol>
+
+                    <h4>B. Reflection and Learning (1 paragraph)</h4>
+
+                    <ul>
+                        <li>What was easier than expected with no-code tools?</li>
+                        <li>What was more challenging?</li>
+                        <li>How will these skills help with the final project?</li>
+                        <li>What do you want to learn more about?</li>
+                    </ul>
+
+                    <h4>C. Screenshots Collection</h4>
+
+                    <p>Organize all screenshots in clear sections:</p>
+                    <ul>
+                        <li>Tool setup</li>
+                        <li>Practice scrape workflow</li>
+                        <li>Intermediate scrape workflow</li>
+                        <li>Company data scrape workflow</li>
+                        <li>Data quality checks</li>
+                    </ul>
+
+                    <div class="info-box">
+                        <strong>Format:</strong> Comprehensive document (PDF or Word) with clear sections and headings. All screenshots properly labeled.
+                    </div>
+
+                    <div class="success-box">
+                        <strong>Scoring (10 points):</strong>
+                        <ul style="margin-top: 10px;">
+                            <li>Complete workflow documentation: 5 points</li>
+                            <li>Thoughtful reflection: 3 points</li>
+                            <li>Well-organized with clear screenshots: 2 points</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Deliverable 6 -->
+                <div class="deliverable-box">
+                    <h3>Deliverable 6: AI Transparency Statement (5 points - if applicable)</h3>
+                    <span class="japanese">成果物6：AI透明性声明（5点 - 該当する場合）</span>
+
+                    <p style="margin-top: 15px;">If your institution requires AI transparency documentation OR if you used external AI tools, include a statement (3-5 sentences) describing:</p>
+
+                    <ul>
+                        <li>Which AI tools you used (ML-101 Bot, ChatGPT, etc.)</li>
+                        <li>How you used them (troubleshooting errors, understanding tool features, selector help)</li>
+                        <li>What you did independently (configuration, data validation, problem-solving)</li>
+                        <li>How you verified AI suggestions worked correctly</li>
+                    </ul>
+
+                    <div class="info-box">
+                        <strong>Format:</strong> Include at the end of your main document, clearly labeled: "AI Transparency Statement"
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>Note:</strong> This deliverable is <strong>required only if</strong> your institution has an AI transparency policy OR if you used external AI tools.
+                    </div>
+
+                    <div class="success-box">
+                        <strong>Scoring (5 points):</strong> Honest and clear documentation
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submission Instructions -->
+            <div class="section">
+                <h2>Submission Instructions</h2>
+                <span class="japanese">提出指示</span>
+
+                <h3>How to Submit</h3>
+
+                <ol>
+                    <li><strong>Organize all files:</strong>
+                        <ul>
+                            <li>Main documentation (PDF or Word) with all deliverables 1, 2, 3, 4, 5, 6</li>
+                            <li>3 CSV files (practice, intermediate, company data)</li>
+                        </ul>
+                    </li>
+
+                    <li><strong>Name your files:</strong>
+                        <ul>
+                            <li>Main document: <code>Week05_[YourName]_NoCodeScraping.pdf</code></li>
+                            <li>Practice CSV: <code>Week05_[YourName]_PracticeScrape.csv</code></li>
+                            <li>Intermediate CSV: <code>Week05_[YourName]_IntermediateScrape.csv</code></li>
+                            <li>Company CSV: <code>Week05_[YourName]_CompanyData.csv</code></li>
+                        </ul>
+                    </li>
+
+                    <li><strong>Verify all files before submission:</strong>
+                        <ul>
+                            <li>Main document includes all screenshots and documentation</li>
+                            <li>All 3 CSV files are readable and properly formatted</li>
+                            <li>CSV files open correctly in spreadsheet software</li>
+                            <li>Total file size is reasonable (compress images if needed)</li>
+                        </ul>
+                    </li>
+
+                    <li><strong>Upload through ML-101 Bot Portal:</strong>
+                        <ul>
+                            <li>Log in to bot portal</li>
+                            <li>Navigate to "Week 5 Assignment Submission"</li>
+                            <li>Upload all 4 files (1 document + 3 CSVs)</li>
+                            <li>Click "Submit"</li>
+                        </ul>
+                    </li>
+
+                    <li><strong>Confirm submission:</strong>
+                        <ul>
+                            <li>Receive automated confirmation</li>
+                            <li>Verify all files were uploaded</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h3>Submission Deadline</h3>
+
+                <div class="warning-box">
+                    <p><strong>Due:</strong> End of Week 5 class session</p>
+                    <p><strong>期限:</strong> 第5週授業終了時</p>
+
+                    <p style="margin-top: 15px;"><strong>Late Policy:</strong></p>
+                    <ul>
+                        <li>Submissions up to 24 hours late: -10%</li>
+                        <li>Submissions 24-48 hours late: -20%</li>
+                        <li>Submissions more than 48 hours late: Not accepted without prior arrangement</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Grading Rubric -->
+            <div class="section">
+                <h2>Grading Rubric</h2>
+                <span class="japanese">評価ルーブリック</span>
+
+                <table class="rubric-table">
+                    <thead>
+                        <tr>
+                            <th>Deliverable</th>
+                            <th>Points</th>
+                            <th>Criteria</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Tool Setup Documentation</strong></td>
+                            <td class="points">15</td>
+                            <td>Installation, account creation, configuration screenshots</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Practice Scraping Results</strong></td>
+                            <td class="points">20</td>
+                            <td>20+ entries, workflow documentation, clean CSV</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Intermediate Scraping</strong></td>
+                            <td class="points">25</td>
+                            <td>30+ entries, pagination, multi-page data, CSV export</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Company Data Sample</strong></td>
+                            <td class="points">25</td>
+                            <td>5-10 companies, ethical justification, quality data</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Complete Documentation</strong></td>
+                            <td class="points">10</td>
+                            <td>Workflow docs, reflection, organized screenshots</td>
+                        </tr>
+                        <tr>
+                            <td><strong>AI Transparency</strong></td>
+                            <td class="points">5</td>
+                            <td>Clear documentation (if required/applicable)</td>
+                        </tr>
+                        <tr style="background: #d1fae5; font-weight: bold;">
+                            <td><strong>TOTAL</strong></td>
+                            <td class="points">100</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Tips for Success -->
+            <div class="section">
+                <h2>Tips for Success</h2>
+                <span class="japanese">成功のためのヒント</span>
+
+                <h3>Tool Setup Tips</h3>
+                <ul class="checklist">
+                    <li>Choose the right tool for your needs (browser extension: quick setup; desktop app: more powerful)</li>
+                    <li>Complete the tutorial - don't skip the tool's built-in walkthrough</li>
+                    <li>Test on simple sites first - practice websites are designed to be easy</li>
+                </ul>
+
+                <h3>Scraping Workflow Tips</h3>
+                <ul class="checklist">
+                    <li>Select multiple similar elements - click 2-3 items to establish a pattern</li>
+                    <li>Preview before running - always check the data preview</li>
+                    <li>Start small, then scale up - test on 1-2 pages before scraping 50 pages</li>
+                </ul>
+
+                <h3>Data Quality Tips</h3>
+                <ul class="checklist">
+                    <li>Validate data in spreadsheet - open CSV in Excel or Google Sheets to verify</li>
+                    <li>Clean data during export if possible - use tool's formatting options</li>
+                    <li>Document data quality issues - note any problems you encountered</li>
+                </ul>
+
+                <h3>Troubleshooting Tips</h3>
+                <ul class="checklist">
+                    <li>Read error messages carefully - tools usually tell you what's wrong</li>
+                    <li>Use bot for troubleshooting - ML-101 Bot can help diagnose issues</li>
+                    <li>Try different selector methods - if click selection doesn't work, try manual selectors</li>
+                </ul>
+            </div>
+
+            <!-- FAQs -->
+            <div class="section">
+                <h2>Frequently Asked Questions</h2>
+                <span class="japanese">よくある質問</span>
+
+                <div class="info-box">
+                    <h4>Q: Which scraping tool should I use?</h4>
+                    <p><strong>A:</strong> Any recommended tool is fine. Web Scraper (Chrome extension) is quickest to set up. Octoparse and ParseHub have more features but require installation. Choose based on your computer and comfort level.</p>
+                </div>
+
+                <div class="info-box">
+                    <h4>Q: What if the tool won't install on my computer?</h4>
+                    <p><strong>A:</strong> Try the browser extension version (Web Scraper for Chrome). If that doesn't work, contact your instructor for alternatives or lab computer access.</p>
+                </div>
+
+                <div class="info-box">
+                    <h4>Q: Can I scrape more than 10 companies?</h4>
+                    <p><strong>A:</strong> Yes! The minimum is 5-10, but collecting more data is excellent preparation for Week 6. Just ensure quality over quantity.</p>
+                </div>
+
+                <div class="info-box">
+                    <h4>Q: What if my CSV file has formatting issues?</h4>
+                    <p><strong>A:</strong> Open it in a spreadsheet program and check for proper column headers, no merged cells, and consistent data types. You can clean minor issues in Excel/Sheets before submitting.</p>
+                </div>
+
+                <div class="info-box">
+                    <h4>Q: How long should this assignment take?</h4>
+                    <p><strong>A:</strong> Plan for 3-4 hours: 1 hour for tool setup and practice scrape, 1 hour for intermediate scrape, 1 hour for company data, 1 hour for documentation.</p>
+                </div>
+            </div>
+
+            <!-- Academic Integrity -->
+            <div class="section">
+                <h2>Academic Integrity & Ethics</h2>
+                <span class="japanese">学術的誠実性と倫理</span>
+
+                <h3>Permitted:</h3>
+                <ul class="checklist">
+                    <li>Using ML-101 Bot for tool guidance</li>
+                    <li>Using AI to understand tool features or troubleshoot</li>
+                    <li>Helping classmates understand concepts</li>
+                    <li>Looking at tool documentation and tutorials</li>
+                </ul>
+
+                <h3>Not Permitted:</h3>
+                <div class="warning-box">
+                    <ul>
+                        <li>Copying another student's CSV data files</li>
+                        <li>Sharing workflow configuration files</li>
+                        <li>Submitting data you didn't personally scrape</li>
+                        <li>Scraping websites not approved in Week 4</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box" style="margin-top: 20px;">
+                    <h3>⚠️ ETHICAL SCRAPING REMINDER ⚠️</h3>
+                    <p><strong>For this assignment, you must ONLY scrape:</strong></p>
+                    <ol>
+                        <li><strong>Practice websites</strong> provided by instructor (Books to Scrape, etc.)</li>
+                        <li><strong>Approved company websites</strong> from your Week 4 feasibility report</li>
+                    </ol>
+
+                    <p style="margin-top: 15px;"><strong>DO NOT scrape:</strong></p>
+                    <ul>
+                        <li>Websites that prohibit scraping in robots.txt or ToS</li>
+                        <li>Personal data or private information</li>
+                        <li>Sites you haven't ethically evaluated</li>
+                    </ul>
+
+                    <p style="margin-top: 15px; font-weight: bold; color: #b91c1c;">Violation of ethical guidelines will result in assignment failure.</p>
+                </div>
+            </div>
+
+            <!-- Getting Help -->
+            <div class="section">
+                <h2>Getting Help</h2>
+                <span class="japanese">ヘルプを得る</span>
+
+                <div class="success-box">
+                    <h4>During Activity:</h4>
+                    <ul>
+                        <li>Ask the ML-101 Bot for tool-specific help</li>
+                        <li>Raise hand for instructor assistance with errors</li>
+                        <li>Share troubleshooting tips with classmates</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h4>Outside of Class:</h4>
+                    <ul>
+                        <li>Use bot portal (24/7) for technical issues</li>
+                        <li>Email instructor with screenshots of problems</li>
+                        <li>Office hours for complex troubleshooting</li>
+                    </ul>
+                </div>
+
+                <h4>Tool-Specific Resources:</h4>
+                <ul>
+                    <li><a href="https://www.octoparse.com/tutorial" target="_blank">Octoparse Tutorials</a></li>
+                    <li><a href="https://help.parsehub.com/" target="_blank">ParseHub Help Center</a></li>
+                    <li><a href="https://webscraper.io/documentation" target="_blank">Web Scraper Documentation</a></li>
+                </ul>
+            </div>
+
+            <!-- Footer Navigation -->
+            <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #e5e7eb; text-align: center;">
+                <p style="font-size: 1.2rem; margin-bottom: 20px;"><strong>Good luck with your no-code scraping!</strong><br>
+                <span class="japanese">ノーコードスクレイピングを頑張ってください！</span></p>
+
+                <p style="margin-bottom: 30px;">Remember: This week you're building practical skills for Week 6's full project implementation.<br>
+                <span class="japanese">覚えておいてください：今週は第6週の完全なプロジェクト実装のための実践的なスキルを構築しています。</span></p>
+
+                <a href="../../index.html" class="back-link">← Back to Course Home</a>
+                <a href="lecture.html" class="back-link" style="margin-left: 15px; background: #667eea;">View Lecture Notes</a>
+                <a href="#" class="submit-button" style="margin-left: 15px;">Submit Assignment via ML-101 Bot Portal</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>ML-101: Machine Learning and Intelligence</p>
+        </div>
+    </footer>
+</body>
+</html>

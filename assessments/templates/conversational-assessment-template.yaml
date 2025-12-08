@@ -1,0 +1,79 @@
+# Conversational Assessment Template
+# Copy this file and customize for your assessment
+
+assessment:
+  id: [assessment-id]  # e.g., "week06-data-collection"
+  title: "[Assessment Title]"  # e.g., "Week 6: Data Collection Assessment"
+  description: "[Brief description]"  # What topics does this cover?
+  duration_minutes: 15  # Estimated time
+  difficulty: [beginner|intermediate|advanced]  # Difficulty level
+  week: [week-number]  # Which week does this assess?
+  
+questions:
+  - id: q1
+    type: [scenario-based|open-ended|practical|multiple-choice]
+    question: |
+      [Your question here. Can be multiple lines.
+      Use | for multi-line YAML strings.]
+    
+    # What concepts should the answer demonstrate?
+    expected_concepts:
+      - concept1
+      - concept2
+      - concept3
+    
+    # How will you evaluate the answer?
+    evaluation_criteria:
+      - Criterion 1: Mentions key approach
+      - Criterion 2: Considers alternatives
+      - Criterion 3: Understands practical implications
+    
+    # Follow-up if student shows partial understanding
+    follow_up_if_partial: |
+      [Follow-up question to probe deeper]
+    
+    # Follow-up if student shows excellent understanding
+    follow_up_if_correct: |
+      [Challenge question to test deeper knowledge]
+    
+    # Optional: Hints if student struggles
+    hints:
+      - "Think about [hint 1]"
+      - "Consider [hint 2]"
+  
+  - id: q2
+    type: open-ended
+    question: |
+      [Your second question]
+    expected_concepts:
+      - concept1
+      - concept2
+    evaluation_criteria:
+      - Clear definition
+      - Accurate example
+      - Practical application
+
+# Feedback messages based on overall performance
+feedback:
+  excellent: |
+    Excellent work! You demonstrate strong understanding of [topic] 
+    and practical problem-solving skills.
+  
+  good: |
+    Good understanding! You've covered the main concepts. 
+    Consider exploring [specific area] more deeply.
+  
+  needs_improvement: |
+    You're on the right track! I recommend reviewing the course materials 
+    on [topic]. Let's discuss specific areas where you need more practice.
+
+# Optional: Resources to recommend
+resources:
+  - title: "Resource 1"
+    url: "[link or path]"
+    description: "Helpful for [topic]"
+  
+  - title: "Resource 2"
+    url: "[link or path]"
+    description: "Covers [concept]"
+

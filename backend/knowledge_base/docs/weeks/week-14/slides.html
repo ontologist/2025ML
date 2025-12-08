@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 14: Final Presentations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            color: #333;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            background: white;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px 80px;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide h1 {
+            font-size: 3em;
+            color: #2563eb;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .slide h2 {
+            font-size: 2.2em;
+            color: #7c3aed;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 10px;
+        }
+
+        .slide h3 {
+            font-size: 1.8em;
+            color: #2563eb;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .slide h4 {
+            font-size: 1.4em;
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .slide p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        .slide ul, .slide ol {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-left: 40px;
+            margin-bottom: 20px;
+        }
+
+        .slide li {
+            margin-bottom: 10px;
+        }
+
+        .bilingual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 20px 0;
+        }
+
+        .english, .japanese {
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .english {
+            background: #dbeafe;
+            border-left: 4px solid #2563eb;
+        }
+
+        .japanese {
+            background: #f3e8ff;
+            border-left: 4px solid #7c3aed;
+        }
+
+        .highlight-box {
+            background: #fef3cd;
+            border-left: 5px solid #f59e0b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .celebration-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 5px solid #10b981;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .code-box {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: white;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:hover {
+            background: #2563eb;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-number {
+            position: fixed;
+            top: 70px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            color: #2563eb;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .title-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+
+        .title-slide h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .title-slide .subtitle {
+            font-size: 2em;
+            color: #7c3aed;
+            margin-bottom: 40px;
+        }
+
+        .title-slide .info {
+            font-size: 1.3em;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 1024px) {
+            .slide {
+                padding: 40px 50px;
+            }
+
+            .slide h1 {
+                font-size: 2.5em;
+            }
+
+            .slide h2 {
+                font-size: 2em;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .slide-container {
+                padding: 0;
+            }
+
+            .slide {
+                width: 100vw;
+                height: auto;
+                min-height: 100vh;
+                padding: 20px;
+                border-radius: 0;
+            }
+
+            .slide h1 {
+                font-size: 2em;
+            }
+
+            .slide h2 {
+                font-size: 1.6em;
+            }
+
+            .bilingual {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .title-slide h1 {
+                font-size: 2.5em;
+            }
+
+            .title-slide .subtitle {
+                font-size: 1.4em;
+            }
+
+            .navigation {
+                bottom: 15px;
+                gap: 10px;
+            }
+
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 0.95em;
+            }
+        }
+
+        .slides-nav {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+            padding: 10px 20px;
+        }
+
+        .slides-nav .container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .slides-nav a {
+            color: #1f2937;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .slides-nav a:hover {
+            color: #2563eb;
+        }
+
+        body {
+            padding-top: 50px;
+        }
+    </style>
+    <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+    <nav class="slides-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="lecture.html">Lecture Notes</a>
+            <a href="assignment.html">Assignment</a>
+        </div>
+    </nav>
+
+    <div class="slide-number" id="slideNumber">Slide 1 / 11</div>
+
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active title-slide">
+            <h1>Week 14</h1>
+            <p class="subtitle">Final Presentations<br>最終プレゼンテーション</p>
+            <p class="info"><strong>Course:</strong> Machine Learning and Intelligence</p>
+            <p class="info"><strong>Instructor:</strong> Yuri Tijerino</p>
+            <p class="info"><strong>Duration:</strong> 15-20 minutes / 15-20分</p>
+        </div>
+
+        <!-- Slide 2: Welcome to the Final Week -->
+        <div class="slide">
+            <h2>Welcome to Week 14!</h2>
+            <h2>第14週へようこそ！</h2>
+            <div class="celebration-box">
+                <h3>You Made It!</h3>
+                <h3>あなたはやり遂げました！</h3>
+                <p style="font-size: 1.3em; margin-top: 15px;">14 weeks of learning, building, and growing</p>
+                <p style="font-size: 1.3em;">14週間の学習、構築、成長</p>
+            </div>
+            <div class="bilingual">
+                <div class="english">
+                    <h3>Today's Objectives:</h3>
+                    <ul>
+                        <li>Celebrate your ML journey</li>
+                        <li>Present your complete projects</li>
+                        <li>Reflect on your learning</li>
+                        <li>Plan your future with ML</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <h3>今日の目標:</h3>
+                    <ul>
+                        <li>あなたのMLの旅を祝う</li>
+                        <li>完全なプロジェクトを提示する</li>
+                        <li>学習を振り返る</li>
+                        <li>MLとの未来を計画する</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Your ML Journey -->
+        <div class="slide">
+            <h2>Your ML Journey</h2>
+            <h2>あなたのMLの旅</h2>
+            <h3>From Week 1 to Week 14 / 第1週から第14週まで</h3>
+            <div class="code-box">Week 1: "What is ML?" → Week 14: "I built an ML system!"
+第1週：「MLとは？」 → 第14週：「MLシステムを構築しました！」
+
+Week 1-5:  Data Collection & Preparation
+第1-5週：データ収集と準備
+           📊 Scraping, cleaning, labeling
+
+Week 6-9:  Model Training & Evaluation
+第6-9週：モデル訓練と評価
+           🤖 Algorithms, features, metrics
+
+Week 10-12: Advanced Topics & Project Development
+第10-12週：高度なトピックとプロジェクト開発
+            🚀 Optimization, deployment, documentation
+
+Week 13-14: Presentation & Reflection
+第13-14週：プレゼンテーションと振り返り
+            🎯 Sharing your work, celebrating achievements</div>
+        </div>
+
+        <!-- Slide 4: What You Built -->
+        <div class="slide">
+            <h2>What You Built</h2>
+            <h2>あなたが構築したもの</h2>
+            <div class="highlight-box">
+                <h3>Company Recommendation System</h3>
+                <h3>企業推薦システム</h3>
+                <p><strong>A Complete ML Workflow from Scratch</strong></p>
+                <p><strong>ゼロから完全なMLワークフロー</strong></p>
+            </div>
+            <h3>The Four Steps You Mastered / あなたがマスターした4つのステップ</h3>
+            <ol>
+                <li><strong>Data Collection</strong> - Scraped real company data from mynavi.jp<br>
+                    <strong>データ収集</strong> - mynavi.jpから実際の企業データをスクレイピング</li>
+                <li><strong>Data Preparation</strong> - Cleaned, labeled, created features<br>
+                    <strong>データ準備</strong> - クリーニング、ラベル付け、特徴量作成</li>
+                <li><strong>Model Training</strong> - Trained ML models on YOUR preferences<br>
+                    <strong>モデル訓練</strong> - あなたの好みでMLモデルを訓練</li>
+                <li><strong>Prediction</strong> - Generated personalized company recommendations<br>
+                    <strong>予測</strong> - パーソナライズされた企業推薦を生成</li>
+            </ol>
+            <p style="margin-top: 20px;"><strong>This is a REAL ML system you can actually use!</strong></p>
+            <p><strong>これは実際に使用できる実際のMLシステムです！</strong></p>
+        </div>
+
+        <!-- Slide 5: Presentation Format -->
+        <div class="slide">
+            <h2>Presentation Format</h2>
+            <h2>プレゼンテーション形式</h2>
+            <h3>5-Minute Presentation Structure / 5分プレゼンテーション構造</h3>
+            <div class="bilingual">
+                <div class="english">
+                    <h4>1. Introduction (30 seconds)</h4>
+                    <ul>
+                        <li>Project overview and motivation</li>
+                    </ul>
+                    <h4>2. The Problem (30 seconds)</h4>
+                    <ul>
+                        <li>Why company recommendations matter</li>
+                    </ul>
+                    <h4>3. Data Collection (1 minute)</h4>
+                    <ul>
+                        <li>Sources, process, dataset overview</li>
+                    </ul>
+                    <h4>4. ML Workflow (2 minutes)</h4>
+                    <ul>
+                        <li>Cleaning, features, training, evaluation</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <h4>1. イントロダクション（30秒）</h4>
+                    <ul>
+                        <li>プロジェクト概要と動機</li>
+                    </ul>
+                    <h4>2. 問題（30秒）</h4>
+                    <ul>
+                        <li>企業推薦がなぜ重要か</li>
+                    </ul>
+                    <h4>3. データ収集（1分）</h4>
+                    <ul>
+                        <li>ソース、プロセス、データセット概要</li>
+                    </ul>
+                    <h4>4. MLワークフロー（2分）</h4>
+                    <ul>
+                        <li>クリーニング、特徴量、訓練、評価</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Presentation Format Continued -->
+        <div class="slide">
+            <h2>Presentation Format (continued)</h2>
+            <h2>プレゼンテーション形式（続き）</h2>
+            <div class="bilingual">
+                <div class="english">
+                    <h4>5. Results (45 seconds)</h4>
+                    <ul>
+                        <li>Model performance metrics</li>
+                        <li>Example predictions</li>
+                        <li>What worked well?</li>
+                    </ul>
+                    <h4>6. Learnings (45 seconds)</h4>
+                    <ul>
+                        <li>Key insights from your project</li>
+                        <li>Challenges you overcame</li>
+                        <li>What surprised you?</li>
+                    </ul>
+                    <h4>7. Conclusion (30 seconds)</h4>
+                    <ul>
+                        <li>How you'll apply this knowledge</li>
+                        <li>Future improvements</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <h4>5. 結果（45秒）</h4>
+                    <ul>
+                        <li>モデル性能メトリクス</li>
+                        <li>予測の例</li>
+                        <li>何がうまくいきましたか？</li>
+                    </ul>
+                    <h4>6. 学習（45秒）</h4>
+                    <ul>
+                        <li>プロジェクトからの主要な洞察</li>
+                        <li>克服した課題</li>
+                        <li>何があなたを驚かせましたか？</li>
+                    </ul>
+                    <h4>7. 結論（30秒）</h4>
+                    <ul>
+                        <li>この知識をどのように適用するか</li>
+                        <li>将来の改善</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Tips for Great Presentations -->
+        <div class="slide">
+            <h2>Tips for Great Presentations</h2>
+            <h2>素晴らしいプレゼンテーションのためのヒント</h2>
+            <div class="two-column">
+                <div>
+                    <h4>Content / 内容</h4>
+                    <ul>
+                        <li>Focus on YOUR journey and learnings</li>
+                        <li>あなたの旅と学習に焦点を当てる</li>
+                        <li>Show, don't just tell (examples!)</li>
+                        <li>ただ説明するのではなく示す（例！）</li>
+                        <li>Be honest about challenges</li>
+                        <li>課題について正直であること</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Delivery / 配信</h4>
+                    <ul>
+                        <li>Practice with a timer</li>
+                        <li>タイマーで練習する</li>
+                        <li>Speak clearly and confidently</li>
+                        <li>明確に自信を持って話す</li>
+                        <li>Make eye contact</li>
+                        <li>アイコンタクトをする</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <p><strong>Remember:</strong> Your peers WANT you to succeed. This is a supportive environment!</p>
+                <p><strong>覚えておいてください:</strong> あなたのピアはあなたの成功を望んでいます。これは支持的な環境です！</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Final Bot Assessment -->
+        <div class="slide">
+            <h2>Final Bot Assessment</h2>
+            <h2>最終ボット評価</h2>
+            <h3>One-on-One Interview with ML-101 Bot</h3>
+            <h3>ML-101ボットとの1対1インタビュー</h3>
+            <div class="bilingual">
+                <div class="english">
+                    <h4>Topics Covered:</h4>
+                    <ul>
+                        <li><strong>Technical Understanding</strong><br>
+                            - Complete ML workflow<br>
+                            - Feature engineering decisions<br>
+                            - Model training process</li>
+                        <li><strong>Critical Thinking</strong><br>
+                            - ML system limitations<br>
+                            - Bias and ethical considerations<br>
+                            - Real-world applications</li>
+                        <li><strong>Personal Growth</strong><br>
+                            - What you learned<br>
+                            - How your understanding changed<br>
+                            - Future applications</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <h4>カバーされるトピック:</h4>
+                    <ul>
+                        <li><strong>技術的理解</strong><br>
+                            - 完全なMLワークフロー<br>
+                            - 特徴量エンジニアリングの決定<br>
+                            - モデル訓練プロセス</li>
+                        <li><strong>批判的思考</strong><br>
+                            - MLシステムの限界<br>
+                            - バイアスと倫理的考慮事項<br>
+                            - 実世界への応用</li>
+                        <li><strong>個人的成長</strong><br>
+                            - 学んだこと<br>
+                            - 理解がどのように変わったか<br>
+                            - 将来の応用</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Course Reflection -->
+        <div class="slide">
+            <h2>Course Reflection</h2>
+            <h2>コース振り返り</h2>
+            <h3>Think About Your Journey / あなたの旅について考える</h3>
+            <div class="two-column">
+                <div>
+                    <h4>Week 1 / 第1週</h4>
+                    <ul>
+                        <li>"What is machine learning?"</li>
+                        <li>「機械学習とは？」</li>
+                        <li>Discovering ML in daily life</li>
+                        <li>日常生活でMLを発見</li>
+                        <li>Meeting the bot</li>
+                        <li>ボットに会う</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Week 14 / 第14週</h4>
+                    <ul>
+                        <li>Built a complete ML system</li>
+                        <li>完全なMLシステムを構築</li>
+                        <li>Understanding ML workflow</li>
+                        <li>MLワークフローを理解</li>
+                        <li>Ready to apply ML knowledge</li>
+                        <li>ML知識を適用する準備ができている</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <h4>Reflection Questions / 振り返り質問:</h4>
+                <ul>
+                    <li>What was your most valuable learning experience?<br>
+                        最も価値のある学習経験は何でしたか？</li>
+                    <li>What challenged you the most?<br>
+                        何が最も挑戦的でしたか？</li>
+                    <li>How will you use this knowledge in the future?<br>
+                        将来この知識をどのように使用しますか？</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 10: Future Learning Paths -->
+        <div class="slide">
+            <h2>Future Learning Paths</h2>
+            <h2>将来の学習パス</h2>
+            <h3>Where to Go Next / 次にどこに行くか</h3>
+            <div class="bilingual">
+                <div class="english">
+                    <h4>Deepen Your ML Skills:</h4>
+                    <ul>
+                        <li>Advanced ML courses</li>
+                        <li>Deep learning and neural networks</li>
+                        <li>Specialized ML (NLP, Computer Vision)</li>
+                        <li>ML engineering and deployment</li>
+                    </ul>
+                    <h4>Apply ML to Your Field:</h4>
+                    <ul>
+                        <li>Business analytics with ML</li>
+                        <li>ML for healthcare, finance, marketing</li>
+                        <li>Industry-specific applications</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <h4>MLスキルを深める:</h4>
+                    <ul>
+                        <li>高度なMLコース</li>
+                        <li>ディープラーニングとニューラルネットワーク</li>
+                        <li>専門的なML（NLP、コンピュータビジョン）</li>
+                        <li>MLエンジニアリングと展開</li>
+                    </ul>
+                    <h4>あなたの分野にMLを適用:</h4>
+                    <ul>
+                        <li>MLを使用したビジネス分析</li>
+                        <li>医療、金融、マーケティングのためのML</li>
+                        <li>業界固有のアプリケーション</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Celebration and Thank You -->
+        <div class="slide">
+            <h2>Congratulations!</h2>
+            <h2>おめでとうございます！</h2>
+            <div class="celebration-box">
+                <h3>You Completed ML-101!</h3>
+                <h3>ML-101を完了しました！</h3>
+                <p style="font-size: 1.4em; margin: 20px 0;">You have:</p>
+                <p style="font-size: 1.4em; margin: 20px 0;">あなたは以下を行いました：</p>
+            </div>
+            <div class="bilingual">
+                <div class="english">
+                    <ul>
+                        <li>Built a complete ML system from scratch</li>
+                        <li>Learned the entire ML workflow</li>
+                        <li>Developed critical thinking about AI</li>
+                        <li>Created a practical tool for your career</li>
+                        <li>Gained skills for the future</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <ul>
+                        <li>ゼロから完全なMLシステムを構築</li>
+                        <li>完全なMLワークフローを学習</li>
+                        <li>AIに関する批判的思考を開発</li>
+                        <li>キャリアのための実用的なツールを作成</li>
+                        <li>将来のためのスキルを取得</li>
+                    </ul>
+                </div>
+            </div>
+            <h3 style="text-align: center; margin-top: 40px;">Keep building, keep learning, keep questioning!</h3>
+            <h3 style="text-align: center;">構築を続け、学習を続け、質問を続けてください！</h3>
+            <p style="text-align: center; margin-top: 30px; font-size: 1.4em;"><strong>Thank you and best wishes for your future!</strong></p>
+            <p style="text-align: center; font-size: 1.4em;"><strong>ありがとうございました。あなたの未来に幸あれ！</strong></p>
+        </div>
+
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">◀ Previous</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next ▶</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+
+            document.getElementById('slideNumber').textContent = `Slide ${currentSlide + 1} / ${totalSlides}`;
+
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (event.key === 'ArrowRight' || event.key === ' ') {
+                event.preventDefault();
+                changeSlide(1);
+            } else if (event.key === 'Home') {
+                showSlide(0);
+            } else if (event.key === 'End') {
+                showSlide(totalSlides - 1);
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>

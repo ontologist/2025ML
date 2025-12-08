@@ -1,0 +1,16 @@
+company_id,company_name,industry,employee_count,location,founded_year,is_hiring
+1,TechVision株式会社,Technology,450,Tokyo,2015,TRUE
+2,Global Finance Corp,Finance,1200,Osaka,2008,TRUE
+3,Healthcare Innovations,Healthcare,680,Yokohama,2012,FALSE
+4,Green Energy Solutions,Energy,320,Fukuoka,2018,TRUE
+5,Digital Marketing Pro,Marketing,150,Tokyo,2019,TRUE
+6,Manufacturing Excellence,Manufacturing,2500,Nagoya,1995,TRUE
+7,Retail Connect,Retail,890,Sapporo,2010,FALSE
+8,EduTech Japan,Education,220,Kyoto,2016,TRUE
+9,Food Service Innovation,Food & Beverage,540,Tokyo,2013,TRUE
+10,Consulting Partners,Consulting,95,Osaka,2020,TRUE
+11,Transportation Systems,Transportation,1800,Tokyo,2005,FALSE
+12,Real Estate Ventures,Real Estate,430,Yokohama,2014,TRUE
+13,Software Solutions Inc,Technology,275,Tokyo,2017,TRUE
+14,Banking & Finance,Finance,3200,Tokyo,1985,TRUE
+15,Pharmaceutical Research,Healthcare,960,Osaka,2000,TRUE

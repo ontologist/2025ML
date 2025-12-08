@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 13 Assignment: Final Project Development | ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .assignment-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .assignment-content h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .assignment-content h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .assignment-content h4 {
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .info-box {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color);
+            margin: 20px 0;
+        }
+        .warning-box {
+            background: #fef3cd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--warning);
+            margin: 20px 0;
+        }
+        .success-box {
+            background: #d1fae5;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--success);
+            margin: 20px 0;
+        }
+        .deliverable-box {
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid var(--border-color);
+        }
+        .rubric-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .rubric-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .rubric-table td {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .rubric-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+        .example-box {
+            background: #f3e8ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--secondary-color);
+            margin: 20px 0;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        code {
+            background: var(--bg-light);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        .checklist {
+            background: #f0f9ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .checklist li {
+            margin: 8px 0;
+        }
+        @media (max-width: 768px) {
+            .assignment-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Week 13 Assignment</h1>
+            <p class="subtitle">Final Project Development<br>最終プロジェクト開発</p>
+            <p class="instructor">Instructor: Yuri Tijerino</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="lecture.html">Lecture Notes</a>
+            <a href="slides.html">Presentation Slides</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="assignment-content">
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="lecture.html" class="btn btn-primary">View Lecture</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+            </div>
+
+            <div class="info-box">
+                <h3>Assignment Overview / 課題概要</h3>
+                <p><strong>Course:</strong> Machine Learning and Intelligence | 機械学習と知能</p>
+                <p><strong>Week:</strong> 13 | 第13週</p>
+                <p><strong>Due Date:</strong> End of Week 13 | 第13週末</p>
+                <p><strong>Weight:</strong> Part of 40% Weekly Activities grade | 週次アクティビティ評価40%の一部</p>
+                <p><strong>Submission:</strong> Through Course Portal (ZIP file) | コースポータル経由（ZIPファイル）</p>
+            </div>
+
+            <p>This assignment represents the culmination of 13 weeks of learning. You will complete your company recommendation system by finalizing all components, creating comprehensive documentation, and preparing your presentation for Week 14.</p>
+            <p>この課題は13週間の学習の集大成です。すべてのコンポーネントを完成させ、包括的な文書を作成し、第14週のプレゼンテーションを準備することで、企業推薦システムを完成させます。</p>
+
+            <h2>Learning Objectives / 学習目標</h2>
+
+            <p>By completing this assignment, you will be able to:</p>
+            <p>この課題を完了することで、以下ができるようになります：</p>
+
+            <ul>
+                <li>✅ Integrate all project components into a complete ML system<br>
+                    すべてのプロジェクトコンポーネントを完全なMLシステムに統合する</li>
+                <li>✅ Create comprehensive project documentation<br>
+                    包括的なプロジェクト文書を作成する</li>
+                <li>✅ Demonstrate understanding of the complete ML workflow<br>
+                    完全なMLワークフローの理解を実証する</li>
+                <li>✅ Prepare effective presentation materials<br>
+                    効果的なプレゼンテーション資料を準備する</li>
+                <li>✅ Document AI usage transparently and ethically<br>
+                    AI使用を透明かつ倫理的に文書化する</li>
+            </ul>
+
+            <h2>Prerequisites / 前提条件</h2>
+
+            <div class="checklist">
+                <p><strong>Completed Components from Previous Weeks:</strong></p>
+                <ul>
+                    <li>✓ Week 6: Data collection (20-30 companies)</li>
+                    <li>✓ Week 7: Data cleaning</li>
+                    <li>✓ Week 8: Missing data handling</li>
+                    <li>✓ Week 9: Feature engineering</li>
+                    <li>✓ Week 10: Manual labeling</li>
+                    <li>✓ Week 11: Model training</li>
+                    <li>✓ Week 12: Model evaluation</li>
+                </ul>
+            </div>
+
+            <h2>Assignment Deliverables / 課題成果物</h2>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 1: Complete Project Documentation</h3>
+                <h4>成果物1：完全なプロジェクト文書</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Create comprehensive documentation (10-15 pages) covering your entire ML project journey.</p>
+                <p>あなたのML プロジェクト全体の旅をカバーする包括的な文書（10-15ページ）を作成します。</p>
+
+                <h4>Required Sections / 必要なセクション:</h4>
+
+                <ol>
+                    <li>
+                        <strong>1. Project Overview (1-2 pages) | プロジェクト概要（1-2ページ）</strong>
+                        <ul>
+                            <li>Project goal and motivation | プロジェクト目標と動機</li>
+                            <li>ML workflow summary | MLワークフロー要約</li>
+                            <li>Personal relevance to career planning | キャリアプランニングへの個人的な関連性</li>
+                            <li>Brief description of the company recommendation problem | 企業推薦問題の簡単な説明</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>2. Data Collection Process (1-2 pages) | データ収集プロセス（1-2ページ）</strong>
+                        <ul>
+                            <li>Data sources used (websites, databases, etc.) | 使用されたデータソース（ウェブサイト、データベースなど）</li>
+                            <li>Collection methodology | 収集方法論</li>
+                            <li>Ethical considerations | 倫理的考慮事項</li>
+                            <li>Final dataset statistics (number of companies, fields collected) | 最終データセット統計（企業数、収集されたフィールド）</li>
+                            <li>Include screenshots or examples of data collection process | データ収集プロセスのスクリーンショットまたは例を含める</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>3. Data Preparation (2-3 pages) | データ準備（2-3ページ）</strong>
+                        <ul>
+                            <li>Cleaning operations performed (duplicates, formatting, etc.) | 実行されたクリーニング操作（重複、フォーマットなど）</li>
+                            <li>Missing data handling strategies | 欠損データ処理戦略</li>
+                            <li>Before/after quality comparison | 前後の品質比較</li>
+                            <li>Challenges encountered and solutions | 遭遇した課題と解決策</li>
+                            <li>Include code snippets or screenshots showing key operations | 主要な操作を示すコードスニペットまたはスクリーンショットを含める</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>4. Feature Engineering (1-2 pages) | 特徴量エンジニアリング（1-2ページ）</strong>
+                        <ul>
+                            <li>Features created and rationale for each | 作成された特徴量とそれぞれの根拠</li>
+                            <li>Feature importance insights | 特徴量の重要性の洞察</li>
+                            <li>Connection to classification goal | 分類目標へのつながり</li>
+                            <li>Examples of how features help distinguish "Good Fit" vs "Not Good Fit" companies | 特徴量が「適合」と「不適合」企業を区別するのにどのように役立つかの例</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>5. Model Training and Evaluation (2-3 pages) | モデル訓練と評価（2-3ページ）</strong>
+                        <ul>
+                            <li>Training configuration (algorithm used, parameters) | 訓練設定（使用されたアルゴリズム、パラメータ）</li>
+                            <li>Model performance metrics (accuracy, precision, recall, etc.) | モデルパフォーマンスメトリクス（精度、適合率、再現率など）</li>
+                            <li>Critical analysis of results | 結果の批判的分析</li>
+                            <li>What worked well and what didn't | うまくいったこととうまくいかなかったこと</li>
+                            <li>Limitations and potential improvements | 制限と潜在的な改善</li>
+                            <li>Include evaluation visualizations (confusion matrix, charts, etc.) | 評価の可視化（混同行列、チャートなど）を含める</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>6. System Refinements (1 page) | システム改良（1ページ）</strong>
+                        <ul>
+                            <li>Improvements made based on Week 12 evaluation | 第12週の評価に基づいて行われた改善</li>
+                            <li>Rationale for changes | 変更の根拠</li>
+                            <li>Impact on performance | 性能への影響</li>
+                            <li>OR justification for not making changes if system already strong | またはシステムがすでに強力な場合、変更を行わなかった正当化</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>7. Conclusion and Reflection (1 page) | 結論と考察（1ページ）</strong>
+                        <ul>
+                            <li>Key learnings from the project | プロジェクトからの主要な学習</li>
+                            <li>ML workflow understanding gained | 得られたMLワークフロー理解</li>
+                            <li>Future applications to career planning | キャリアプランニングへの将来の応用</li>
+                            <li>Personal growth and insights | 個人的な成長と洞察</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li><strong>Document format:</strong> PDF (preferred) or Word | 文書形式：PDF（推奨）またはWord</li>
+                        <li><strong>Length:</strong> 10-15 pages total | 長さ：合計10-15ページ</li>
+                        <li><strong>Include:</strong> Screenshots, code snippets, visualizations, tables | 含める：スクリーンショット、コードスニペット、可視化、表</li>
+                        <li><strong>Use clear headings</strong> and section numbers | 明確な見出しとセクション番号を使用</li>
+                        <li><strong>Professional formatting</strong> with consistent style | 一貫したスタイルのプロフェッショナルなフォーマット</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (40 points) / 採点（40点）:</h4>
+                <ul>
+                    <li>All required sections included and complete: <strong>15 points</strong></li>
+                    <li>Clear, professional documentation quality: <strong>10 points</strong></li>
+                    <li>Evidence of complete ML journey (screenshots, code, data): <strong>10 points</strong></li>
+                    <li>Critical analysis and reflection: <strong>5 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 2: Presentation Slides</h3>
+                <h4>成果物2：プレゼンテーションスライド</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Create presentation slides (5-7 slides) designed for a 5-minute presentation in Week 14.</p>
+                <p>第14週の5分間のプレゼンテーション用に設計されたプレゼンテーションスライド（5-7スライド）を作成します。</p>
+
+                <h4>Required Slides / 必要なスライド:</h4>
+
+                <ol>
+                    <li>
+                        <strong>Slide 1: Title and Introduction | タイトルと紹介</strong>
+                        <ul>
+                            <li>Project title: "Company Recommendation System for [Your Field/Career]"</li>
+                            <li>Your name | あなたの名前</li>
+                            <li>Brief project description (1-2 sentences) | 簡単なプロジェクト説明（1-2文）</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Slide 2: The Problem | 問題</strong>
+                        <ul>
+                            <li>Why company recommendation matters for career planning | 企業推薦がキャリアプランニングにとってなぜ重要か</li>
+                            <li>What you wanted to achieve | 達成したかったこと</li>
+                            <li>Your motivation for this project | このプロジェクトへのあなたの動機</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Slide 3: Data Collection and Preparation | データ収集と準備</strong>
+                        <ul>
+                            <li>Data sources used | 使用されたデータソース</li>
+                            <li>Dataset statistics (number of companies, features) | データセット統計（企業数、特徴量）</li>
+                            <li>Key cleaning and preparation steps | 主要なクリーニングと準備ステップ</li>
+                            <li>Visual: Screenshot or diagram of data pipeline | ビジュアル：データパイプラインのスクリーンショットまたは図</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Slide 4: Feature Engineering and Model Training | 特徴量エンジニアリングとモデル訓練</strong>
+                        <ul>
+                            <li>Features created (keyword matching, company size, etc.) | 作成された特徴量（キーワードマッチング、企業規模など）</li>
+                            <li>Training approach used | 使用された訓練アプローチ</li>
+                            <li>Model type (e.g., Random Forest, Decision Tree) | モデルタイプ（例：ランダムフォレスト、決定木）</li>
+                            <li>Visual: Feature importance chart or model diagram | ビジュアル：特徴量重要度チャートまたはモデル図</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Slide 5: Results and Evaluation | 結果と評価</strong>
+                        <ul>
+                            <li>Model performance metrics | モデルパフォーマンスメトリクス</li>
+                            <li>Example predictions (1-2 actual companies) | 予測の例（1-2の実際の企業）</li>
+                            <li>What worked well | うまくいったこと</li>
+                            <li>Visual: Confusion matrix or performance chart | ビジュアル：混同行列またはパフォーマンスチャート</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Slide 6: Challenges and Learnings | 課題と学習</strong>
+                        <ul>
+                            <li>Key difficulties encountered | 遭遇した主要な困難</li>
+                            <li>How you overcame them | それらをどのように克服したか</li>
+                            <li>Main learnings about ML workflow | MLワークフローについての主要な学習</li>
+                            <li>Personal insights gained | 得られた個人的な洞察</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Slide 7: Conclusion and Future Applications | 結論と将来の応用</strong>
+                        <ul>
+                            <li>Project summary | プロジェクト要約</li>
+                            <li>How you'll use this system for job search | 就職活動にこのシステムをどのように使用するか</li>
+                            <li>ML workflow understanding gained | 得られたMLワークフロー理解</li>
+                            <li>Next steps or potential improvements | 次のステップまたは潜在的な改善</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li><strong>Slide software:</strong> PowerPoint, Google Slides, or Keynote | スライドソフトウェア：PowerPoint、Google Slides、またはKeynote</li>
+                        <li><strong>Number of slides:</strong> 5-7 slides | スライド数：5-7スライド</li>
+                        <li><strong>Design:</strong> Clear visuals, minimal text, professional appearance | デザイン：明確なビジュアル、最小限のテキスト、プロフェッショナルな外観</li>
+                        <li><strong>Submit both:</strong> PDF version AND original format (PPT/PPTX or Google Slides link) | 両方を提出：PDFバージョンと元のフォーマット（PPT/PPTXまたはGoogle Slidesリンク）</li>
+                        <li><strong>Time target:</strong> Designed for 5-minute presentation | 時間目標：5分のプレゼンテーション用に設計</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (25 points) / 採点（25点）:</h4>
+                <ul>
+                    <li>All required slides included: <strong>10 points</strong></li>
+                    <li>Clear visual design and professional quality: <strong>8 points</strong></li>
+                    <li>Appropriate for 5-minute presentation: <strong>4 points</strong></li>
+                    <li>Personal narrative and insights: <strong>3 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 3: Complete AI Transparency Log</h3>
+                <h4>成果物3：完全なAI透明性ログ</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Compile a comprehensive log of ALL AI interactions throughout the course (Weeks 1-13).</p>
+                <p>コース全体（第1-13週）のすべてのAIインタラクションの包括的なログをまとめます。</p>
+
+                <h4>For each week/activity where AI was used, document:</h4>
+                <h4>AIが使用された各週/アクティビティについて、以下を文書化します：</h4>
+
+                <ol>
+                    <li>
+                        <strong>Week/Activity Number | 週/アクティビティ番号</strong>
+                        <p>Example: "Week 6: Data Collection" | 例：「第6週：データ収集」</p>
+                    </li>
+                    <li>
+                        <strong>All Prompts Sent to AI Systems | AIシステムに送信されたすべてのプロンプト</strong>
+                        <p>Include complete text of questions/requests | 質問/リクエストの完全なテキストを含める</p>
+                    </li>
+                    <li>
+                        <strong>All Responses Received | 受け取ったすべての応答</strong>
+                        <p>Copy key parts of AI responses (can summarize very long responses) | AI応答の主要部分をコピー（非常に長い応答は要約可能）</p>
+                    </li>
+                    <li>
+                        <strong>Verification Process Used | 使用された検証プロセス</strong>
+                        <p>How did you verify the AI's suggestions were correct? | AIの提案が正しいことをどのように検証しましたか？</p>
+                    </li>
+                    <li>
+                        <strong>Hallucination Checks Performed | 実行された幻覚チェック</strong>
+                        <p>Did you check if AI suggested things that weren't real or applicable? | AIが実在しない、または適用できないことを提案したかどうかを確認しましたか？</p>
+                    </li>
+                </ol>
+
+                <div class="info-box">
+                    <h4>Organization Tips / 整理のヒント:</h4>
+                    <ul>
+                        <li>Organize by week for easy reference | 簡単な参照のために週ごとに整理</li>
+                        <li>Use clear headings for each interaction | 各インタラクションに明確な見出しを使用</li>
+                        <li>If you didn't use AI for certain weeks, note: "No AI assistance used for this activity" | 特定の週にAIを使用しなかった場合、「このアクティビティにはAI支援を使用していません」と記録</li>
+                        <li>Be honest about all AI usage - this is about transparency, not punishment | すべてのAI使用について正直に - これは透明性についてであり、罰についてではありません</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li><strong>Document format:</strong> PDF or Word | 文書形式：PDFまたはWord</li>
+                        <li><strong>Organization:</strong> Chronological by week/activity | 整理：週/アクティビティごとの時系列</li>
+                        <li><strong>Completeness:</strong> All 13 weeks covered (note if no AI used) | 完全性：すべての13週をカバー（AIを使用していない場合は記録）</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (15 points) / 採点（15点）:</h4>
+                <ul>
+                    <li>All weeks documented (1-13): <strong>5 points</strong></li>
+                    <li>Complete prompts and responses: <strong>5 points</strong></li>
+                    <li>Verification and hallucination checks documented: <strong>3 points</strong></li>
+                    <li>Honest and transparent documentation: <strong>2 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 4: Project Datasets Package</h3>
+                <h4>成果物4：プロジェクトデータセットパッケージ</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Organize and submit ALL datasets created throughout your project.</p>
+                <p>プロジェクト全体で作成されたすべてのデータセットを整理して提出します。</p>
+
+                <h4>Required Dataset Files / 必要なデータセットファイル:</h4>
+
+                <ol>
+                    <li>
+                        <strong>Raw Dataset | 生データセット</strong>
+                        <p>Original data as collected in Week 6 | 第6週に収集された元のデータ</p>
+                        <p>File name: <code>raw_companies_data.csv</code></p>
+                    </li>
+                    <li>
+                        <strong>Cleaned Dataset | クリーニング済みデータセット</strong>
+                        <p>After cleaning operations in Week 7 | 第7週のクリーニング操作後</p>
+                        <p>File name: <code>cleaned_companies_data.csv</code></p>
+                    </li>
+                    <li>
+                        <strong>Missing Data Handled Dataset | 欠損データ処理済みデータセット</strong>
+                        <p>After missing data handling in Week 8 | 第8週の欠損データ処理後</p>
+                        <p>File name: <code>complete_companies_data.csv</code></p>
+                    </li>
+                    <li>
+                        <strong>Features Dataset | 特徴量データセット</strong>
+                        <p>After feature engineering in Week 9 | 第9週の特徴量エンジニアリング後</p>
+                        <p>File name: <code>companies_with_features.csv</code></p>
+                    </li>
+                    <li>
+                        <strong>Labeled Training Dataset | ラベル付き訓練データセット</strong>
+                        <p>Data used for model training in Week 11 | 第11週のモデル訓練に使用されたデータ</p>
+                        <p>File name: <code>training_data.csv</code></p>
+                    </li>
+                    <li>
+                        <strong>Test Dataset | テストデータセット</strong>
+                        <p>Data used for model evaluation in Week 12 | 第12週のモデル評価に使用されたデータ</p>
+                        <p>File name: <code>test_data.csv</code></p>
+                    </li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li><strong>File format:</strong> CSV files (preferred) | ファイル形式：CSVファイル（推奨）</li>
+                        <li><strong>Organization:</strong> All datasets in a single folder named "datasets" | 整理：「datasets」という名前の単一フォルダにすべてのデータセット</li>
+                        <li><strong>File naming:</strong> Use suggested names above for clarity | ファイル命名：明確さのために上記の推奨名を使用</li>
+                        <li><strong>Include:</strong> A README.txt file explaining what each dataset contains | 含める：各データセットが何を含むかを説明するREADME.txtファイル</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (10 points) / 採点（10点）:</h4>
+                <ul>
+                    <li>All required datasets included: <strong>6 points</strong> (1 point each)</li>
+                    <li>Clear file naming and organization: <strong>2 points</strong></li>
+                    <li>README documentation: <strong>2 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 5: Model Access Information</h3>
+                <h4>成果物5：モデルアクセス情報</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Provide either your trained model file OR detailed instructions for accessing/reproducing your model.</p>
+                <p>訓練済みモデルファイルまたはモデルへのアクセス/再現のための詳細な指示を提供します。</p>
+
+                <h4>Option A: Model File Submission | オプションA：モデルファイル提出</h4>
+                <p>If you can export your model (e.g., from scikit-learn, Google AutoML):</p>
+                <p>モデルをエクスポートできる場合（例：scikit-learn、Google AutoMLから）：</p>
+                <ul>
+                    <li>Submit the model file (e.g., <code>company_classifier.pkl</code>, <code>model.joblib</code>)</li>
+                    <li>Include a brief document explaining:
+                        <ul>
+                            <li>Model type used | 使用されたモデルタイプ</li>
+                            <li>How to load and use the model | モデルのロードと使用方法</li>
+                            <li>Required libraries/dependencies | 必要なライブラリ/依存関係</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>Option B: Access Instructions | オプションB：アクセス指示</h4>
+                <p>If you used a cloud service (e.g., Google AutoML, Azure ML):</p>
+                <p>クラウドサービスを使用した場合（例：Google AutoML、Azure ML）：</p>
+                <ul>
+                    <li>Provide detailed instructions document including:
+                        <ul>
+                            <li>Platform used | 使用されたプラットフォーム</li>
+                            <li>Model configuration details | モデル設定詳細</li>
+                            <li>How to access the model (API endpoint, project ID, etc.) | モデルへのアクセス方法（APIエンドポイント、プロジェクトIDなど）</li>
+                            <li>Screenshots of model configuration | モデル設定のスクリーンショット</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li><strong>Model file:</strong> .pkl, .joblib, or platform-specific format | モデルファイル：.pkl、.joblib、またはプラットフォーム固有のフォーマット</li>
+                        <li><strong>Documentation:</strong> PDF with access/usage instructions | 文書：アクセス/使用指示を含むPDF</li>
+                        <li><strong>File name:</strong> <code>model_access_info.pdf</code></li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (10 points) / 採点（10点）:</h4>
+                <ul>
+                    <li>Model file OR complete access instructions: <strong>6 points</strong></li>
+                    <li>Clear usage documentation: <strong>2 points</strong></li>
+                    <li>Model configuration details: <strong>2 points</strong></li>
+                </ul>
+            </div>
+
+            <h2>Submission Instructions / 提出指示</h2>
+
+            <div class="success-box">
+                <h3>How to Submit / 提出方法</h3>
+                <ol>
+                    <li>
+                        <strong>Organize all deliverables into a folder structure:</strong><br>
+                        すべての成果物をフォルダ構造に整理：
+                        <pre style="background: white; padding: 15px; border-radius: 5px; margin: 10px 0;">
+Week13_YourName_FinalProject/
+├── 1_Project_Documentation.pdf
+├── 2_Presentation_Slides.pdf
+├── 2_Presentation_Slides_Original.pptx (or Google Slides link in .txt file)
+├── 3_AI_Transparency_Log.pdf
+├── 4_Datasets/
+│   ├── raw_companies_data.csv
+│   ├── cleaned_companies_data.csv
+│   ├── complete_companies_data.csv
+│   ├── companies_with_features.csv
+│   ├── training_data.csv
+│   ├── test_data.csv
+│   └── README.txt
+└── 5_Model_Access_Info.pdf (and model file if applicable)
+                        </pre>
+                    </li>
+                    <li>
+                        <strong>Create a ZIP file:</strong><br>
+                        ZIPファイルを作成：
+                        <ul>
+                            <li>Compress the entire folder into a single ZIP file</li>
+                            <li>File name: <code>Week13_[YourName]_FinalProject.zip</code></li>
+                            <li>Example: <code>Week13_YuriTijerino_FinalProject.zip</code></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Upload through Course Portal:</strong><br>
+                        コースポータルを通じてアップロード：
+                        <ul>
+                            <li>Log in to course portal | コースポータルにログイン</li>
+                            <li>Navigate to "Week 13 Assignment Submission" | 「第13週課題提出」に移動</li>
+                            <li>Upload your ZIP file | ZIPファイルをアップロード</li>
+                            <li>Click "Submit" | 「提出」をクリック</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Verify submission:</strong><br>
+                        提出を確認：
+                        <ul>
+                            <li>You should receive an automated confirmation email | 自動確認メールを受け取るはずです</li>
+                            <li>Check that all files are included in the ZIP | すべてのファイルがZIPに含まれていることを確認</li>
+                            <li>File size should be reasonable (typically 10-50 MB) | ファイルサイズは妥当である必要があります（通常10-50 MB）</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="warning-box">
+                <h3>Submission Deadline / 提出期限</h3>
+                <p><strong>Due:</strong> End of Week 13 (before Week 14 class) | <strong>期限:</strong> 第13週末（第14週授業前）</p>
+
+                <h4>Late Policy / 遅延ポリシー:</h4>
+                <ul>
+                    <li>This is the final project submission - late submissions may not be accepted</li>
+                    <li>Contact instructor immediately if you anticipate problems meeting the deadline</li>
+                    <li>Emergency extensions require documentation and must be requested before the deadline</li>
+                </ul>
+            </div>
+
+            <h2>Grading Rubric / 評価ルーブリック</h2>
+
+            <table class="rubric-table">
+                <thead>
+                    <tr>
+                        <th>Deliverable</th>
+                        <th>Points</th>
+                        <th>Criteria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Complete Project Documentation</strong><br>完全なプロジェクト文書</td>
+                        <td><strong>40</strong></td>
+                        <td>All sections complete, professional quality, evidence of ML journey, critical analysis<br>すべてのセクション完了、プロフェッショナル品質、ML旅の証拠、批判的分析</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Presentation Slides</strong><br>プレゼンテーションスライド</td>
+                        <td><strong>25</strong></td>
+                        <td>All slides included, clear visuals, appropriate for 5 minutes, personal narrative<br>すべてのスライド含む、明確なビジュアル、5分に適切、個人的な物語</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Complete AI Transparency Log</strong><br>完全なAI透明性ログ</td>
+                        <td><strong>15</strong></td>
+                        <td>All weeks documented, complete prompts/responses, verification documented, honest<br>すべての週を文書化、完全なプロンプト/応答、検証を文書化、正直</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Project Datasets Package</strong><br>プロジェクトデータセットパッケージ</td>
+                        <td><strong>10</strong></td>
+                        <td>All datasets included, clear organization, proper naming, README included<br>すべてのデータセット含む、明確な整理、適切な命名、READMEを含む</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Model Access Information</strong><br>モデルアクセス情報</td>
+                        <td><strong>10</strong></td>
+                        <td>Model file OR access instructions, clear documentation, configuration details<br>モデルファイルまたはアクセス指示、明確な文書、設定詳細</td>
+                    </tr>
+                    <tr style="background: var(--primary-color); color: white; font-weight: bold;">
+                        <td><strong>TOTAL</strong><br>合計</td>
+                        <td><strong>100</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Quality Expectations / 品質期待</h2>
+
+            <div class="info-box">
+                <h4>This is your final project - demonstrate your best work!</h4>
+                <h4>これはあなたの最終プロジェクトです - 最高の作品を実証してください！</h4>
+
+                <ul>
+                    <li><strong>Completeness:</strong> All components present and fully developed | 完全性：すべてのコンポーネントが存在し完全に開発されている</li>
+                    <li><strong>Professional quality:</strong> Clear writing, proper formatting, polished appearance | プロフェッショナル品質：明確な執筆、適切なフォーマット、洗練された外観</li>
+                    <li><strong>Evidence of learning:</strong> Clear demonstration of 13-week ML journey | 学習の証拠：13週間のML旅の明確な実証</li>
+                    <li><strong>Critical thinking:</strong> Analysis, not just description | 批判的思考：説明だけでなく分析</li>
+                    <li><strong>Personal connection:</strong> Your insights, reflections, and career relevance | 個人的なつながり：あなたの洞察、考察、キャリアの関連性</li>
+                    <li><strong>Transparency:</strong> Honest documentation of AI usage and challenges faced | 透明性：AI使用と直面した課題の正直な文書化</li>
+                </ul>
+            </div>
+
+            <h2>Tips for Creating Comprehensive Documentation / 包括的な文書作成のヒント</h2>
+
+            <h3>Documentation Best Practices / 文書ベストプラクティス</h3>
+            <ul>
+                <li><strong>Use visuals liberally:</strong> Screenshots, charts, diagrams make documentation clearer<br>
+                    ビジュアルを自由に使用：スクリーンショット、チャート、図は文書をより明確にします</li>
+                <li><strong>Tell your story:</strong> This isn't just technical documentation - it's YOUR learning journey<br>
+                    あなたのストーリーを伝える：これは単なる技術文書ではありません - あなたの学習の旅です</li>
+                <li><strong>Be specific:</strong> Instead of "I cleaned the data," say "I removed 3 duplicate companies and standardized date formats"<br>
+                    具体的に：「データをクリーニングしました」ではなく、「3つの重複企業を削除し、日付フォーマットを標準化しました」と言う</li>
+                <li><strong>Include code snippets:</strong> Show key code that demonstrates important steps<br>
+                    コードスニペットを含める：重要なステップを実証する主要なコードを示す</li>
+                <li><strong>Analyze, don't just describe:</strong> Explain WHY you made decisions, not just WHAT you did<br>
+                    分析する、説明するだけでない：何をしたかだけでなく、なぜ決定を下したかを説明する</li>
+            </ul>
+
+            <h3>Presentation Design Tips / プレゼンテーションデザインのヒント</h3>
+            <ul>
+                <li><strong>Less text, more visuals:</strong> Use bullet points, not paragraphs<br>
+                    テキストを少なく、ビジュアルを多く：段落ではなく箇条書きを使用</li>
+                <li><strong>One main idea per slide:</strong> Don't overcrowd slides<br>
+                    スライドごとに1つの主なアイデア：スライドを過密にしない</li>
+                <li><strong>Use consistent design:</strong> Same fonts, colors, layout throughout<br>
+                    一貫したデザインを使用：同じフォント、色、レイアウトを全体に</li>
+                <li><strong>Practice your timing:</strong> 5 minutes goes quickly - practice with a timer<br>
+                    タイミングを練習：5分はすぐに過ぎます - タイマーで練習</li>
+                <li><strong>Focus on your journey:</strong> What YOU learned, not just technical details<br>
+                    あなたの旅に焦点を当てる：技術的な詳細だけでなく、あなたが学んだこと</li>
+            </ul>
+
+            <h3>AI Transparency Log Tips / AI透明性ログのヒント</h3>
+            <ul>
+                <li><strong>Be honest:</strong> This is about transparency, not punishment - document all AI usage<br>
+                    正直に：これは透明性についてであり、罰についてではありません - すべてのAI使用を文書化</li>
+                <li><strong>Organize chronologically:</strong> By week makes it easy to reference<br>
+                    時系列に整理：週ごとに参照しやすくなります</li>
+                <li><strong>Include verification:</strong> Show that you didn't blindly accept AI suggestions<br>
+                    検証を含める：AI提案を盲目的に受け入れなかったことを示す</li>
+                <li><strong>Note when AI wasn't used:</strong> It's fine to say "No AI used for this week" for some activities<br>
+                    AIを使用しなかった場合に記録：一部のアクティビティについて「この週はAIを使用していません」と言っても構いません</li>
+            </ul>
+
+            <h2>Common Questions / よくある質問</h2>
+
+            <div class="info-box">
+                <h4>Q: What if my model accuracy isn't very high?</h4>
+                <h4>Q: モデルの精度があまり高くない場合は？</h4>
+                <p><strong>A:</strong> That's okay! This is a learning project. What matters is that you completed the ML workflow and can analyze why accuracy might be limited (small dataset, challenging classification task, etc.). Be honest about limitations in your documentation.</p>
+                <p><strong>A:</strong> 大丈夫です！これは学習プロジェクトです。重要なのは、MLワークフローを完了し、なぜ精度が制限されている可能性があるか（小さなデータセット、困難な分類タスクなど）を分析できることです。文書で制限について正直に述べてください。</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Q: Can I make improvements to my model in Week 13?</h4>
+                <h4>Q: 第13週にモデルの改善を行うことはできますか？</h4>
+                <p><strong>A:</strong> Yes! You can add more data, refine features, or retrain your model based on Week 12 insights. Document these improvements in Section 6 of your documentation. However, don't over-refine - focus on completing the documentation if time is limited.</p>
+                <p><strong>A:</strong> はい！第12週の洞察に基づいて、より多くのデータを追加したり、特徴量を改良したり、モデルを再訓練したりできます。文書のセクション6でこれらの改善を文書化してください。ただし、過度に改良しないでください - 時間が限られている場合は文書の完成に焦点を当ててください。</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Q: What if I lost some of my early datasets?</h4>
+                <h4>Q: 初期のデータセットの一部を失った場合は？</h4>
+                <p><strong>A:</strong> Include what you have and note in your documentation which datasets are missing. Explain what happened. For future projects, keep better backups! If you have screenshots or code showing the datasets, include those as evidence.</p>
+                <p><strong>A:</strong> 持っているものを含め、文書でどのデータセットが欠落しているかを記録してください。何が起こったかを説明してください。将来のプロジェクトのために、より良いバックアップを保持してください！データセットを示すスクリーンショットまたはコードがある場合は、それらを証拠として含めてください。</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Q: How long should my presentation actually be?</h4>
+                <h4>Q: プレゼンテーションは実際にどのくらいの長さであるべきですか？</h4>
+                <p><strong>A:</strong> Target 5 minutes. In Week 14, you'll present to the class. Practice with a timer. It's better to be slightly under 5 minutes than over. You can't cover everything - that's what your documentation is for. Focus on highlights and your personal journey.</p>
+                <p><strong>A:</strong> 5分を目標にしてください。第14週では、クラスでプレゼンテーションを行います。タイマーで練習してください。5分をわずかに下回る方が超過するよりも良いです。すべてをカバーすることはできません - それが文書の目的です。ハイライトとあなたの個人的な旅に焦点を当ててください。</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Q: What if I didn't keep AI logs for earlier weeks?</h4>
+                <h4>Q: 以前の週のAIログを保持していなかった場合は？</h4>
+                <p><strong>A:</strong> Do your best to recreate what you remember. For weeks where you can't remember specifics, note "AI assistance likely used but details not recorded." Be honest about gaps. Document what you have. This is a learning experience - in future projects, keep logs as you go!</p>
+                <p><strong>A:</strong> 覚えていることを再作成するために最善を尽くしてください。詳細を覚えていない週については、「AI支援を使用した可能性がありますが、詳細は記録されていません」と記録してください。ギャップについて正直に述べてください。持っているものを文書化してください。これは学習体験です - 将来のプロジェクトでは、進むにつれてログを保持してください！</p>
+            </div>
+
+            <h2>Getting Help / ヘルプを得る</h2>
+
+            <div class="success-box">
+                <h4>Available Support / 利用可能なサポート:</h4>
+                <ul>
+                    <li><strong>ML-101 Bot:</strong> Use for project completeness checks, documentation guidance, presentation feedback<br>
+                        プロジェクト完全性チェック、文書ガイダンス、プレゼンテーションフィードバックに使用</li>
+                    <li><strong>Office Hours:</strong> Schedule time to review your documentation or presentation<br>
+                        文書またはプレゼンテーションをレビューする時間をスケジュール</li>
+                    <li><strong>Email Instructor:</strong> For questions about requirements or submission issues<br>
+                        要件または提出の問題についての質問のため</li>
+                    <li><strong>Classmates:</strong> Discuss ideas but create your own work<br>
+                        アイデアを議論しますが、自分の作品を作成</li>
+                </ul>
+            </div>
+
+            <h2>Academic Integrity / 学術的誠実性</h2>
+
+            <div class="warning-box">
+                <h4>This is YOUR project - make it your own!</h4>
+                <h4>これはあなたのプロジェクトです - 自分のものにしてください！</h4>
+
+                <h4>Permitted / 許可されている:</h4>
+                <ul>
+                    <li>✅ Using AI tools with proper transparency documentation</li>
+                    <li>✅ Getting feedback from instructors and peers</li>
+                    <li>✅ Using documentation templates provided</li>
+                    <li>✅ Referencing course materials and examples</li>
+                </ul>
+
+                <h4>Not Permitted / 許可されていない:</h4>
+                <ul>
+                    <li>❌ Submitting someone else's project or data</li>
+                    <li>❌ Having AI write your entire documentation</li>
+                    <li>❌ Copying another student's work</li>
+                    <li>❌ Fabricating data or results</li>
+                </ul>
+            </div>
+
+            <div class="success-box" style="text-align: center; margin-top: 40px;">
+                <h2>Congratulations on reaching Week 13!</h2>
+                <h2>第13週に到達したことを祝福します！</h2>
+                <p style="font-size: 1.1em; margin-top: 15px;">
+                    You've completed an entire ML workflow from data collection to model evaluation.<br>
+                    Now show the world what you've learned and built!
+                </p>
+                <p style="font-size: 1.1em;">
+                    あなたはデータ収集からモデル評価までの完全なMLワークフローを完了しました。<br>
+                    今、あなたが学び、構築したものを世界に示してください！
+                </p>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="lecture.html" class="btn btn-primary">View Lecture</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>著作権 &copy; 2025 Yuri Tijerino. 無断転載を禁じます。</p>
+        </div>
+    </footer>
+</body>
+</html>

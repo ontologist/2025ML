@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 12: Model Evaluation & Optimization | ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .lecture-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .lecture-content h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .lecture-content h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .lecture-content h4 {
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .objectives-list {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .objectives-list ul {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+        .highlight-box {
+            background: #fef3cd;
+            border-left: 5px solid var(--warning);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-box {
+            background: var(--bg-light);
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary-color);
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            white-space: pre-wrap;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .bilingual-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        .english-col {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+        .japanese-col {
+            background: #f3e8ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        @media (max-width: 768px) {
+            .bilingual-section {
+                grid-template-columns: 1fr;
+            }
+            .lecture-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Week 12: Model Evaluation & Optimization</h1>
+            <p class="subtitle">第12週：モデル評価と最適化</p>
+            <p class="instructor">Instructor: Yuri Tijerino</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="slides.html">Presentation Slides</a>
+            <a href="assignment.html">Assignment</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="lecture-content">
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+                <a href="assignment.html" class="btn btn-accent">View Assignment</a>
+            </div>
+
+            <div class="objectives-list">
+                <h3>Learning Objectives / 学習目標</h3>
+                <p><strong>English:</strong> By the end of this lecture, students will be able to:</p>
+                <ul>
+                    <li>Understand the difference between training and test data</li>
+                    <li>Calculate and interpret key evaluation metrics (accuracy, confusion matrix, precision, recall)</li>
+                    <li>Test trained models on new data and make predictions</li>
+                    <li>Critically analyze model performance, limitations, and ethical implications</li>
+                    <li>Apply evaluation insights to improve ML systems</li>
+                </ul>
+                <p><strong>日本語:</strong> この講義の終了までに、学生は以下ができるようになります：</p>
+                <ul>
+                    <li>訓練データとテストデータの違いを理解する</li>
+                    <li>主要な評価メトリクス（精度、混同行列、精密度、再現率）を計算し解釈する</li>
+                    <li>訓練済みモデルを新しいデータでテストし予測を行う</li>
+                    <li>モデルの性能、限界、倫理的影響を批判的に分析する</li>
+                    <li>評価の洞察を適用してMLシステムを改善する</li>
+                </ul>
+            </div>
+
+            <h2>Your ML Journey So Far</h2>
+
+            <p>Congratulations! You've come a long way in building your company recommendation system. Let's review what you've accomplished over the past 11 weeks:</p>
+            <p>おめでとうございます！企業推薦システムの構築で大きな進歩を遂げました。過去11週間で達成したことを振り返りましょう：</p>
+
+            <div class="code-box">Week 6:  Data Collection - Scraped 20-30 companies from mynavi.jp
+第6週:  データ収集 - mynavi.jpから20-30社をスクレイピング
+
+Week 7:  Data Cleaning - Removed duplicates, standardized formats
+第7週:  データクリーニング - 重複削除、フォーマット標準化
+
+Week 8:  Missing Data - Handled null values and incomplete records
+第8週:  欠損データ - null値と不完全なレコードを処理
+
+Week 9:  Feature Engineering - Created keywords, one-hot encoding
+第9週:  特徴量エンジニアリング - キーワード作成、ワンホットエンコーディング
+
+Week 10: Manual Labeling - Classified companies as "Interested" or "Not"
+第10週: 手動ラベリング - 企業を「興味あり」または「なし」に分類
+
+Week 11: Model Training - Trained classification model on labeled data
+第11週: モデル訓練 - ラベル付けされたデータで分類モデルを訓練
+
+→ Week 12: MODEL EVALUATION - Does it actually work? 実際に機能するか？</div>
+
+            <h2>Why Model Evaluation Matters</h2>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h3>The Critical Question</h3>
+                    <p>You've spent weeks building an ML system, but <strong>can you trust it?</strong></p>
+                    <p>Without evaluation, you have no idea if your model:</p>
+                    <ul>
+                        <li>Makes good predictions</li>
+                        <li>Generalizes to new data</li>
+                        <li>Is better than random guessing</li>
+                        <li>Has learned meaningful patterns</li>
+                    </ul>
+                    <p><strong>Model evaluation answers:</strong> "Does this system work, and how well?"</p>
+                </div>
+                <div class="japanese-col">
+                    <h3>重要な質問</h3>
+                    <p>何週間もMLシステムの構築に費やしましたが、<strong>それを信頼できますか？</strong></p>
+                    <p>評価がなければ、モデルが以下かどうかわかりません：</p>
+                    <ul>
+                        <li>良い予測をする</li>
+                        <li>新しいデータに一般化する</li>
+                        <li>ランダムな推測よりも優れている</li>
+                        <li>意味のあるパターンを学習した</li>
+                    </ul>
+                    <p><strong>モデル評価が答えます：</strong> 「このシステムは機能し、どれくらいうまく機能するか？」</p>
+                </div>
+            </div>
+
+            <h2>Training Data vs Test Data</h2>
+
+            <h3>A Fundamental Concept in ML</h3>
+
+            <div class="highlight-box">
+                <h4>Critical Rule / 重要なルール</h4>
+                <p><strong>NEVER evaluate your model on the same data it was trained on!</strong></p>
+                <p><strong>モデルが訓練されたのと同じデータでモデルを評価しないでください！</strong></p>
+            </div>
+
+            <h3>Why This Rule Matters / なぜこのルールが重要か</h3>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>The Memorization Problem</h4>
+                    <p>Imagine studying for an exam by memorizing answers to specific questions. On the exact same test, you'd score 100%. But on a different test with new questions, you might fail completely.</p>
+                    <p><strong>ML models can do the same thing!</strong> They might "memorize" training data without learning general patterns.</p>
+                    <p><strong>Example:</strong> Your model might remember "Company A is interesting" without learning WHY (tech focus, startup culture, etc.).</p>
+                </div>
+                <div class="japanese-col">
+                    <h4>暗記の問題</h4>
+                    <p>特定の質問への答えを暗記して試験勉強をすると想像してください。全く同じテストでは100点を取れるでしょう。しかし、新しい質問がある別のテストでは完全に失敗するかもしれません。</p>
+                    <p><strong>MLモデルも同じことができます！</strong> 一般的なパターンを学習せずに訓練データを「暗記」するかもしれません。</p>
+                    <p><strong>例：</strong> モデルは、なぜか（技術志向、スタートアップ文化など）を学習せずに「企業Aは興味深い」と覚えているかもしれません。</p>
+                </div>
+            </div>
+
+            <h3>Training vs Test Data: The Comparison</h3>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <thead>
+                    <tr style="background: var(--primary-color); color: white;">
+                        <th style="padding: 12px; text-align: left;">Aspect / 側面</th>
+                        <th style="padding: 12px; text-align: left;">Training Data / 訓練データ</th>
+                        <th style="padding: 12px; text-align: left;">Test Data / テストデータ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: var(--bg-light);">
+                        <td style="padding: 12px;"><strong>Purpose</strong><br>目的</td>
+                        <td style="padding: 12px;">Teaching the model<br>モデルに教える</td>
+                        <td style="padding: 12px;">Evaluating the model<br>モデルを評価する</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px;"><strong>When Used</strong><br>いつ使用</td>
+                        <td style="padding: 12px;">During training (Week 11)<br>訓練中（第11週）</td>
+                        <td style="padding: 12px;">After training (Week 12)<br>訓練後（第12週）</td>
+                    </tr>
+                    <tr style="background: var(--bg-light);">
+                        <td style="padding: 12px;"><strong>Model Exposure</strong><br>モデルの露出</td>
+                        <td style="padding: 12px;">Model has seen this data<br>モデルはこのデータを見た</td>
+                        <td style="padding: 12px;">Model has NEVER seen this<br>モデルはこれを見たことがない</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px;"><strong>Size</strong><br>サイズ</td>
+                        <td style="padding: 12px;">Usually larger (20-30 companies)<br>通常より大きい（20-30社）</td>
+                        <td style="padding: 12px;">Smaller (5-10 companies)<br>より小さい（5-10社）</td>
+                    </tr>
+                    <tr style="background: var(--bg-light);">
+                        <td style="padding: 12px;"><strong>What It Tests</strong><br>何をテストするか</td>
+                        <td style="padding: 12px;">How well model learns<br>モデルがどれだけ学習するか</td>
+                        <td style="padding: 12px;">How well model generalizes<br>モデルがどれだけ一般化するか</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Key Evaluation Metrics</h2>
+
+            <h3>1. Accuracy / 精度</h3>
+
+            <p>Accuracy is the simplest and most intuitive metric. It answers: "What percentage of predictions were correct?"</p>
+            <p>精度は最もシンプルで直感的なメトリクスです。「予測の何パーセントが正しかったか？」に答えます。</p>
+
+            <div class="code-box">Accuracy = (Number of Correct Predictions) / (Total Number of Predictions)
+精度 = (正しい予測の数) / (予測の総数)
+
+Example / 例:
+Test on 10 companies / 10社でテスト:
+- 7 predicted correctly / 7つが正しく予測された
+- 3 predicted incorrectly / 3つが誤って予測された
+
+Accuracy = 7/10 = 0.70 = 70%
+精度 = 7/10 = 0.70 = 70%</div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Interpreting Accuracy</h4>
+                    <p><strong>For small datasets (10 test companies):</strong></p>
+                    <ul>
+                        <li><strong>50%:</strong> Random guessing (coin flip)</li>
+                        <li><strong>60-70%:</strong> Model is learning something, but room for improvement</li>
+                        <li><strong>70-80%:</strong> Good performance!</li>
+                        <li><strong>80-90%:</strong> Excellent performance</li>
+                        <li><strong>90-100%:</strong> Suspiciously high - might be overfitting</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>精度の解釈</h4>
+                    <p><strong>小さなデータセット（10のテスト企業）の場合：</strong></p>
+                    <ul>
+                        <li><strong>50%:</strong> ランダムな推測（コイン投げ）</li>
+                        <li><strong>60-70%:</strong> モデルは何かを学習しているが、改善の余地あり</li>
+                        <li><strong>70-80%:</strong> 良いパフォーマンス！</li>
+                        <li><strong>80-90%:</strong> 優れたパフォーマンス</li>
+                        <li><strong>90-100%:</strong> 疑わしく高い - 過学習の可能性</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>2. Confusion Matrix / 混同行列</h3>
+
+            <p>A confusion matrix provides a detailed breakdown of correct and incorrect predictions. It's called "confusion" matrix because it shows where the model gets "confused."</p>
+            <p>混同行列は、正しい予測と誤った予測の詳細な内訳を提供します。モデルがどこで「混乱」するかを示すため「混同」行列と呼ばれます。</p>
+
+            <div class="code-box">                      PREDICTED / 予測
+                  Not Interested | Interested
+                  興味なし        | 興味あり
+              --------------------------------
+ACTUAL  Not    |      TN         |    FP
+実際    興味   |   真陰性        | 偽陽性
+        なし   | (Correct ✅)    | (Type 1 Error ❌)
+              --------------------------------
+        興味   |      FN         |    TP
+        あり   |   偽陰性        | 真陽性
+              | (Type 2 Error ❌)| (Correct ✅)</div>
+
+            <h4>Four Outcomes Explained / 4つの結果の説明</h4>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <p><strong>True Positive (TP) / 真陽性:</strong></p>
+                    <ul>
+                        <li>Model predicted: "Interested"</li>
+                        <li>Your actual label: "Interested"</li>
+                        <li>Result: ✅ Correct match!</li>
+                        <li>Example: Model correctly identified a tech startup you like</li>
+                    </ul>
+
+                    <p><strong>True Negative (TN) / 真陰性:</strong></p>
+                    <ul>
+                        <li>Model predicted: "Not Interested"</li>
+                        <li>Your actual label: "Not Interested"</li>
+                        <li>Result: ✅ Correct rejection!</li>
+                        <li>Example: Model correctly filtered out a company you wouldn't want</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <p><strong>False Positive (FP) / 偽陽性:</strong></p>
+                    <ul>
+                        <li>モデルの予測: 「興味あり」</li>
+                        <li>実際のラベル: 「興味なし」</li>
+                        <li>結果: ❌ タイプ1エラー</li>
+                        <li>例: モデルは実際には興味のない企業を推薦した</li>
+                    </ul>
+
+                    <p><strong>False Negative (FN) / 偽陰性:</strong></p>
+                    <ul>
+                        <li>モデルの予測: 「興味なし」</li>
+                        <li>実際のラベル: 「興味あり」</li>
+                        <li>結果: ❌ タイプ2エラー（機会損失！）</li>
+                        <li>例: モデルは素晴らしい企業の機会を逃した</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>Example Confusion Matrix / 混同行列の例</h4>
+
+            <div class="code-box">Test Results on 10 Companies / 10社のテスト結果:
+
+                  Predicted: Not | Predicted: Interested
+                  予測: 興味なし  | 予測: 興味あり
+              ----------------------------------
+Actual: Not    |      4 (TN)    |    1 (FP)
+実際: 興味なし  |                |
+              ----------------------------------
+Actual: Yes    |      2 (FN)    |    3 (TP)
+実際: 興味あり  |                |
+
+Interpretation / 解釈:
+- True Positives (TP): 3 companies correctly identified as interesting
+  真陽性: 興味深いと正しく識別された3社
+- True Negatives (TN): 4 companies correctly identified as not interesting
+  真陰性: 興味深くないと正しく識別された4社
+- False Positives (FP): 1 company wrongly recommended
+  偽陽性: 誤って推薦された1社
+- False Negatives (FN): 2 great companies missed!
+  偽陰性: 逃した素晴らしい2社！
+
+Total Correct = TP + TN = 3 + 4 = 7
+Accuracy = 7/10 = 70%</div>
+
+            <h3>3. Precision / 精密度（適合率）</h3>
+
+            <p>Precision answers: "Of the companies my model said I'd be interested in, how many was I actually interested in?"</p>
+            <p>精密度が答える：「モデルが興味があると言った企業のうち、実際に興味があったのは何社か？」</p>
+
+            <div class="code-box">Precision = TP / (TP + FP)
+精密度 = 真陽性 / (真陽性 + 偽陽性)
+
+Using the example above / 上記の例を使用:
+Precision = 3 / (3 + 1) = 3/4 = 0.75 = 75%
+
+Interpretation / 解釈:
+Of the 4 companies model recommended, 3 were actually good matches (75%)
+モデルが推薦した4社のうち、3社が実際に良いマッチでした（75%）</div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>When Precision Matters</h4>
+                    <p><strong>High precision is important when:</strong></p>
+                    <ul>
+                        <li>False positives are costly</li>
+                        <li>You only want to see companies you'll definitely like</li>
+                        <li>You have limited time to review recommendations</li>
+                    </ul>
+                    <p><strong>Example:</strong> Job search - you don't want to waste time applying to companies you're not interested in.</p>
+                </div>
+                <div class="japanese-col">
+                    <h4>精密度が重要な場合</h4>
+                    <p><strong>高い精密度が重要な場合：</strong></p>
+                    <ul>
+                        <li>偽陽性のコストが高い</li>
+                        <li>確実に気に入る企業のみを見たい</li>
+                        <li>推薦をレビューする時間が限られている</li>
+                    </ul>
+                    <p><strong>例：</strong> 就職活動 - 興味のない企業に応募するのに時間を無駄にしたくない。</p>
+                </div>
+            </div>
+
+            <h3>4. Recall / 再現率</h3>
+
+            <p>Recall answers: "Of all the companies I'm actually interested in, how many did my model find?"</p>
+            <p>再現率が答える：「実際に興味がある全ての企業のうち、モデルは何社見つけたか？」</p>
+
+            <div class="code-box">Recall = TP / (TP + FN)
+再現率 = 真陽性 / (真陽性 + 偽陰性)
+
+Using the example above / 上記の例を使用:
+Recall = 3 / (3 + 2) = 3/5 = 0.60 = 60%
+
+Interpretation / 解釈:
+Of the 5 companies you're actually interested in, model found 3 (60%)
+実際に興味がある5社のうち、モデルは3社を見つけた（60%）
+It missed 2 good opportunities! / 2つの良い機会を逃した！</div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>When Recall Matters</h4>
+                    <p><strong>High recall is important when:</strong></p>
+                    <ul>
+                        <li>False negatives are costly</li>
+                        <li>You don't want to miss good opportunities</li>
+                        <li>You're willing to review more candidates to find all good matches</li>
+                    </ul>
+                    <p><strong>Example:</strong> Medical diagnosis - you don't want to miss detecting a disease.</p>
+                </div>
+                <div class="japanese-col">
+                    <h4>再現率が重要な場合</h4>
+                    <p><strong>高い再現率が重要な場合：</strong></p>
+                    <ul>
+                        <li>偽陰性のコストが高い</li>
+                        <li>良い機会を逃したくない</li>
+                        <li>すべての良いマッチを見つけるためにより多くの候補をレビューする意欲がある</li>
+                    </ul>
+                    <p><strong>例：</strong> 医療診断 - 病気の検出を逃したくない。</p>
+                </div>
+            </div>
+
+            <h3>The Precision-Recall Trade-off / 精密度-再現率のトレードオフ</h3>
+
+            <div class="highlight-box">
+                <h4>You Can't Maximize Both! / 両方を最大化できない！</h4>
+                <p><strong>English:</strong> There's often a trade-off between precision and recall. Improving one typically reduces the other.</p>
+                <p><strong>日本語:</strong> 精密度と再現率の間にはトレードオフがあることが多いです。一方を改善すると通常他方が減少します。</p>
+                <ul>
+                    <li><strong>High Precision, Lower Recall:</strong> Strict model - only recommends when very confident. Fewer false positives, but misses opportunities.<br>
+                        <strong>高精密度、低再現率：</strong> 厳格なモデル - 非常に確信がある場合のみ推薦。偽陽性は少ないが、機会を逃す。</li>
+                    <li><strong>High Recall, Lower Precision:</strong> Generous model - recommends broadly. Finds all opportunities, but includes false positives.<br>
+                        <strong>高再現率、低精密度：</strong> 寛大なモデル - 広範囲に推薦。すべての機会を見つけるが、偽陽性を含む。</li>
+                </ul>
+            </div>
+
+            <h2>Making Predictions on New Data</h2>
+
+            <h3>The Testing Process / テストプロセス</h3>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Step-by-Step</h4>
+                    <ol>
+                        <li><strong>Collect NEW test companies</strong><br>Find 5-10 companies NOT in your training data</li>
+                        <li><strong>Prepare test data</strong><br>Apply same feature engineering as training data</li>
+                        <li><strong>Make predictions</strong><br>Use your Week 11 model to predict "Interested" or "Not"</li>
+                        <li><strong>Compare to truth</strong><br>Check predictions against your actual interest</li>
+                        <li><strong>Calculate metrics</strong><br>Compute accuracy, confusion matrix, precision, recall</li>
+                    </ol>
+                </div>
+                <div class="japanese-col">
+                    <h4>ステップバイステップ</h4>
+                    <ol>
+                        <li><strong>新しいテスト企業を収集</strong><br>訓練データにない5-10社を見つける</li>
+                        <li><strong>テストデータを準備</strong><br>訓練データと同じ特徴量エンジニアリングを適用</li>
+                        <li><strong>予測を行う</strong><br>第11週のモデルを使用して「興味あり」または「なし」を予測</li>
+                        <li><strong>真実と比較</strong><br>予測を実際の興味と照合</li>
+                        <li><strong>メトリクスを計算</strong><br>精度、混同行列、精密度、再現率を計算</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h3>Important: Feature Consistency / 重要：特徴量の一貫性</h3>
+
+            <div class="highlight-box">
+                <p><strong>Your test data MUST have the exact same features as training data!</strong></p>
+                <p><strong>テストデータは訓練データと全く同じ特徴量を持つ必要があります！</strong></p>
+                <p>If your training data had:</p>
+                <ul>
+                    <li>Company name, industry, location, description</li>
+                    <li>Keywords: "tech", "startup", "AI", "remote"</li>
+                    <li>One-hot encoding for industry categories</li>
+                </ul>
+                <p>Your test data needs THE SAME features in THE SAME format!</p>
+            </div>
+
+            <h2>Critical Analysis of Model Performance</h2>
+
+            <h3>Beyond the Numbers / 数字を超えて</h3>
+
+            <p>Evaluation isn't just about calculating metrics. The most important part is understanding WHY the model succeeds or fails.</p>
+            <p>評価はメトリクスを計算するだけではありません。最も重要な部分は、モデルがなぜ成功または失敗するかを理解することです。</p>
+
+            <h3>Questions to Ask / 尋ねるべき質問</h3>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Analyzing Errors</h4>
+                    <ul>
+                        <li><strong>Which companies were misclassified?</strong><br>Look at specific examples of failures</li>
+                        <li><strong>Why did the model fail?</strong><br>Missing features? Unclear patterns? Borderline cases?</li>
+                        <li><strong>Are errors systematic?</strong><br>Does model consistently miss certain types of companies?</li>
+                    </ul>
+
+                    <h4>Understanding Successes</h4>
+                    <ul>
+                        <li><strong>What did the model learn correctly?</strong><br>Which patterns are most predictive?</li>
+                        <li><strong>Which features matter most?</strong><br>Keywords? Industry? Location?</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>エラーの分析</h4>
+                    <ul>
+                        <li><strong>どの企業が誤分類されたか？</strong><br>失敗の具体的な例を見る</li>
+                        <li><strong>なぜモデルは失敗したか？</strong><br>特徴量の欠落？不明確なパターン？境界線ケース？</li>
+                        <li><strong>エラーは体系的か？</strong><br>モデルは特定のタイプの企業を一貫して見逃すか？</li>
+                    </ul>
+
+                    <h4>成功の理解</h4>
+                    <ul>
+                        <li><strong>モデルは何を正しく学習したか？</strong><br>どのパターンが最も予測的か？</li>
+                        <li><strong>どの特徴量が最も重要か？</strong><br>キーワード？業界？場所？</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Ethical Considerations / 倫理的考慮事項</h3>
+
+            <div class="highlight-box">
+                <h4>Critical Thinking About AI / AIに関する批判的思考</h4>
+                <p>As ML systems become more powerful, we must think critically about their limitations and impacts.</p>
+                <p>MLシステムがより強力になるにつれて、その限界と影響について批判的に考える必要があります。</p>
+            </div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Important Questions</h4>
+                    <ul>
+                        <li><strong>Bias:</strong> Did my training labels introduce bias?<br>
+                            <em>Example: Only labeled tech companies as interesting → Model won't recommend non-tech</em></li>
+                        <li><strong>Transparency:</strong> Can I explain WHY the model made a prediction?<br>
+                            <em>Black box models vs interpretable models</em></li>
+                        <li><strong>Fairness:</strong> What if this was used for automated hiring?<br>
+                            <em>Could errors discriminate against certain candidates?</em></li>
+                        <li><strong>Trust:</strong> Would I actually use this for real job decisions?<br>
+                            <em>What level of accuracy would I need to trust it?</em></li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>重要な質問</h4>
+                    <ul>
+                        <li><strong>バイアス:</strong> 訓練ラベルがバイアスを導入したか？<br>
+                            <em>例：技術企業のみを興味深いとラベル付け → モデルは非技術企業を推薦しない</em></li>
+                        <li><strong>透明性:</strong> モデルがなぜ予測を行ったかを説明できるか？<br>
+                            <em>ブラックボックスモデル vs 解釈可能なモデル</em></li>
+                        <li><strong>公平性:</strong> これが自動採用に使用されたらどうなるか？<br>
+                            <em>エラーが特定の候補者を差別する可能性はあるか？</em></li>
+                        <li><strong>信頼:</strong> 実際の仕事の決定にこれを使用するか？<br>
+                            <em>それを信頼するためにどのレベルの精度が必要か？</em></li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>Improving Your Model</h2>
+
+            <h3>Insights from Evaluation / 評価からの洞察</h3>
+
+            <p>The purpose of evaluation isn't just to get a score—it's to understand how to make your model better.</p>
+            <p>評価の目的は単にスコアを取得することではなく、モデルをより良くする方法を理解することです。</p>
+
+            <h3>Common Improvement Strategies / 一般的な改善戦略</h3>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <thead>
+                    <tr style="background: var(--primary-color); color: white;">
+                        <th style="padding: 12px; text-align: left;">Problem / 問題</th>
+                        <th style="padding: 12px; text-align: left;">Possible Solution / 可能な解決策</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: var(--bg-light);">
+                        <td style="padding: 12px;">Low accuracy overall<br>全体的に低い精度</td>
+                        <td style="padding: 12px;">• Add more training data<br>訓練データを追加<br>• Improve feature engineering<br>特徴量エンジニアリングを改善<br>• Try different model type<br>異なるモデルタイプを試す</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px;">Missing key companies (low recall)<br>主要企業を逃す（低再現率）</td>
+                        <td style="padding: 12px;">• Add more diverse training examples<br>より多様な訓練例を追加<br>• Add missing keywords as features<br>欠落しているキーワードを特徴量として追加</td>
+                    </tr>
+                    <tr style="background: var(--bg-light);">
+                        <td style="padding: 12px;">Too many bad recommendations (low precision)<br>悪い推薦が多すぎる（低精密度）</td>
+                        <td style="padding: 12px;">• Refine labeling of training data<br>訓練データのラベリングを改良<br>• Add more specific features<br>より具体的な特徴量を追加</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px;">Model confused by certain types<br>特定のタイプでモデルが混乱</td>
+                        <td style="padding: 12px;">• Add training examples of those types<br>それらのタイプの訓練例を追加<br>• Create new features to distinguish them<br>それらを区別する新しい特徴量を作成</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Key Takeaways</h2>
+
+            <div class="objectives-list">
+                <h4>Remember / 覚えておいてください</h4>
+                <ul>
+                    <li>✅ <strong>Always test on NEW data</strong> the model hasn't seen / モデルが見ていない新しいデータで常にテスト</li>
+                    <li>✅ <strong>Accuracy is simple</strong> but doesn't tell the whole story / 精度はシンプルだが全体像は語らない</li>
+                    <li>✅ <strong>Confusion matrix</strong> shows where model succeeds and fails / 混同行列はモデルが成功および失敗する場所を示す</li>
+                    <li>✅ <strong>Precision and recall</strong> measure different aspects of performance / 精密度と再現率はパフォーマンスの異なる側面を測定</li>
+                    <li>✅ <strong>Critical analysis</strong> is more important than the numbers / 批判的分析は数字よりも重要</li>
+                    <li>✅ <strong>ML systems have limitations</strong> - think ethically about their use / MLシステムには限界があります - その使用について倫理的に考える</li>
+                </ul>
+            </div>
+
+            <h2>Today's Activity</h2>
+
+            <p>Now you'll apply these concepts hands-on! The ML-101 Bot will guide you through:</p>
+            <p>今、これらのコンセプトをハンズオンで適用します！ML-101ボットがガイドします：</p>
+
+            <ol style="font-size: 1.1em; line-height: 2;">
+                <li>Collecting 5-10 NEW test companies / 5-10の新しいテスト企業を収集</li>
+                <li>Making predictions with your Week 11 model / 第11週のモデルで予測を行う</li>
+                <li>Calculating evaluation metrics / 評価メトリクスを計算</li>
+                <li>Critically analyzing your model's performance / モデルのパフォーマンスを批判的に分析</li>
+                <li>Completing a conversational assessment / 会話的評価を完了</li>
+            </ol>
+
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+                <a href="assignment.html" class="btn btn-accent">View Assignment</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>著作権 &copy; 2025 Yuri Tijerino. 無断転載を禁じます。</p>
+        </div>
+    </footer>
+</body>
+</html>

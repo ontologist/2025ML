@@ -1,0 +1,147 @@
+# Week 6: Data Collection Assessment - Example
+# This is a complete example you can use as a reference
+
+assessment:
+  id: week06-data-collection
+  title: "Week 6: Data Collection Assessment"
+  description: "Assessment on data collection, web scraping, and handling missing data"
+  duration_minutes: 15
+  difficulty: intermediate
+  week: 6
+  
+questions:
+  - id: q1
+    type: scenario-based
+    question: |
+      You've collected data from 30 companies, but notice that 5 companies 
+      are missing their 'Industry' field. What should you do?
+      
+      Please explain your reasoning and approach.
+    
+    expected_concepts:
+      - data quality assessment
+      - missing data handling
+      - data collection strategies
+      - scalability considerations
+    
+    evaluation_criteria:
+      - Mentions checking/identifying the data quality issue
+      - Considers scalability (what if there were 1000 companies?)
+      - Suggests practical solutions (manual or automated)
+      - Understands trade-offs between different approaches
+    
+    follow_up_if_partial: |
+      That's a good start! Now, what if you had 1000 companies with missing 
+      industries? Would manual research still be practical? 
+      Can you think of an automated approach that might work?
+    
+    follow_up_if_correct: |
+      Excellent thinking! Now, can you think of a way to use machine learning 
+      to automatically fill in missing industry data? What would you need 
+      to train such a model?
+    
+    hints:
+      - "Think about the scale of the problem"
+      - "Consider both manual and automated approaches"
+      - "What data do you already have that could help?"
+  
+  - id: q2
+    type: open-ended
+    question: |
+      Explain the difference between structured, semi-structured, and 
+      unstructured data. Give a concrete example of each type.
+    
+    expected_concepts:
+      - structured data (CSV, databases)
+      - semi-structured data (JSON, XML)
+      - unstructured data (text, images)
+      - data format understanding
+    
+    evaluation_criteria:
+      - Clear definitions of each data type
+      - Accurate examples
+      - Understanding of when each type is used
+      - Ability to distinguish between types
+    
+    follow_up_if_partial: |
+      Good! You've identified the main types. Can you think of a scenario 
+      where you might need to work with all three types together?
+    
+    follow_up_if_correct: |
+      Perfect! Now, if you're building a company recommendation system, 
+      which data types would you likely encounter, and how would you 
+      handle each one?
+    
+    hints:
+      - "Think about how data is organized"
+      - "Consider what format company websites might use"
+      - "What about text descriptions or images?"
+  
+  - id: q3
+    type: practical
+    question: |
+      You're scraping data from a website and notice that some pages 
+      have different HTML structure than others. How would you handle 
+      this situation to make your scraper robust?
+    
+    expected_concepts:
+      - web scraping robustness
+      - error handling
+      - data validation
+      - fallback strategies
+      - edge case handling
+    
+    evaluation_criteria:
+      - Mentions error handling or try-except blocks
+      - Suggests validation checks
+      - Considers edge cases
+      - Proposes fallback methods
+      - Understands importance of robust scraping
+    
+    follow_up_if_partial: |
+      Good thinking! Can you think of specific Python techniques or 
+      libraries that could help detect and handle these differences?
+    
+    follow_up_if_correct: |
+      Excellent! Now, how would you test your scraper to make sure it 
+      handles all these edge cases? What kind of test data would you use?
+    
+    hints:
+      - "What Python tools can handle different HTML structures?"
+      - "How can you validate the data you extract?"
+      - "What happens if a page structure is completely different?"
+
+# Feedback messages
+feedback:
+  excellent: |
+    Excellent work! You demonstrate strong understanding of data collection 
+    principles, practical problem-solving skills, and awareness of real-world 
+    challenges. Your ability to think about scalability and automation shows 
+    you're ready for more advanced topics!
+  
+  good: |
+    Good understanding! You've covered the main concepts well. Consider 
+    exploring automated solutions and scalability more deeply. You might 
+    want to review the course materials on ML-based data preparation 
+    techniques.
+  
+  needs_improvement: |
+    You're on the right track! I recommend reviewing the course materials on 
+    data collection strategies, missing data handling, and web scraping 
+    robustness. Let's discuss specific areas where you'd like more practice. 
+    Don't hesitate to ask questions!
+
+# Resources for further learning
+resources:
+  - title: "Week 6 Lecture: Data Collection"
+    url: "docs/week06.md"
+    description: "Review the lecture materials on data collection"
+  
+  - title: "Web Scraping Best Practices"
+    url: "resources/week04-materials/ethical-scraping-checklist.md"
+    description: "Guidelines for robust web scraping"
+  
+  - title: "Handling Missing Data"
+    url: "activities/week-plans/week08-missing-data-activity.md"
+    description: "Activity on dealing with incomplete data"
+

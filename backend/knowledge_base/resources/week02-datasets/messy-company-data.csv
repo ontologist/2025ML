@@ -1,0 +1,33 @@
+company_id,company_name,industry,employee_count,location,founded_year,avg_rating,is_hiring,last_updated
+C001,TechVision株式会社,Technology,450,Tokyo,2015,4.2,Yes,2024-01-15
+C002,Global Finance,Finance,1200,Osaka,2008,4.5,TRUE,2023-12-20
+C003,Healthcare Innovations,Healthcare,680,Yokohama,2012,3.8,Yes,2024-02-01
+C004,,Energy,320,Fukuoka,2018,4.1,1,2024-01-28
+C005,Digital Marketing Pro,marketing,150,tokyo,2019,4.3,Yes,2024-02-10
+C002,Global Finance Corp,Finance,1200,Osaka,2008,4.5,TRUE,2023-12-20
+C006,Manufacturing Excellence,Manufacturing,-50,Nagoya,1995,4.0,No,2023-11-15
+C007,Retail Connect,Retail,,Sapporo,2010,3.9,FALSE,2024-01-05
+C008,EduTech Japan,Education,220,Kyoto,2016,,Yes,2024-02-08
+C009,Food Service Innovation,Food & Beverage,540,Tokyo,2013,4.4,Yes,
+C010,Consulting Partners,Consulting,95,Osaka,2020,4.6,TRUE,2024-02-12
+C011,Transportation Systems,Transportation,1800,TOKYO,2005,3.7,No,2020-06-30
+C012,Real Estate Ventures,Real Estate,430,Yokohama,2014,N/A,Yes,2024-01-22
+C013,Software Solutions Inc,Technology,275,Tokyo,2017,4.2,1,2024-02-05
+C014,Banking & Finance,Finance,3200,Tokyo,1985,4.3,TRUE,2024-01-30
+C015,Pharmaceutical Research,,960,Osaka,2000,4.1,Yes,2024-02-11
+C016,Construction Corp,Construction,1500,Nagoya,1999,4.0,Yes,2024-02-03
+C017,Advertising Agency,Marketing,380,Tokyo,2011,3.6,FALSE,2024-01-18
+C005,Digital Marketing Pro,Marketing,155,Tokyo,2019,4.3,Yes,2024-02-14
+C018,Logistics Solutions,Logistics,720,Osaka,2013,4.2,,2024-02-07
+C019,Chemical Industries,Chemicals,890,Yokohama,2005,3.8,No,2024-01-25
+C020,Automotive Parts,Automotive,2100,Nagoya,1988,4.4,TRUE,2024-02-09
+C021,,Technology,340,Tokyo,2016,4.5,Yes,2024-02-02
+C022,Fashion Retail,Retail,560,Tokyo,2012,3.9,Yes,2024-01-29
+C023,Publishing House,Media,420,Tokyo,1978,3.5,FALSE,2024-02-06
+C024,Telecommunications,Telecom,2800,tokyo,1995,4.1,TRUE,2024-02-10
+C025,Insurance Services,Finance,1350,Osaka,2001,4.0,Yes,2024-02-13
+C026,Hotel Chain,Hospitality,980,Kyoto,2007,4.3,Yes,2024-01-31
+C027,Gaming Company,Entertainment,450,Tokyo,2015,4.7,TRUE,2024-02-08
+C028,Agricultural Tech,Agriculture,180,Fukuoka,2019,4.2,1,2024-02-04
+C029,Robotics Inc,Technology,520,Tokyo,2014,4.6,Yes,2024-02-11
+C030,Legal Services,Legal,125,Tokyo,2010,4.1,No,2024-01-27

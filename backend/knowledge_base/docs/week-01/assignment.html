@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1 Assignment: ML Discovery | ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .assignment-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .assignment-content h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .assignment-content h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .assignment-content h4 {
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .info-box {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color);
+            margin: 20px 0;
+        }
+        .warning-box {
+            background: #fef3cd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--warning);
+            margin: 20px 0;
+        }
+        .success-box {
+            background: #d1fae5;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--success);
+            margin: 20px 0;
+        }
+        .deliverable-box {
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid var(--border-color);
+        }
+        .rubric-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .rubric-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .rubric-table td {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .rubric-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+        .example-box {
+            background: #f3e8ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--secondary-color);
+            margin: 20px 0;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        code {
+            background: var(--bg-light);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        @media (max-width: 768px) {
+            .assignment-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Week 1 Assignment</h1>
+            <p class="subtitle">ML Discovery and Course Orientation<br>ML発見とコースオリエンテーション</p>
+            <p class="instructor">Instructor: Yuri Tijerino</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="lecture.html">Lecture Notes</a>
+            <a href="slides.html">Presentation Slides</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="assignment-content">
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="lecture.html" class="btn btn-primary">View Lecture</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+            </div>
+
+            <div class="info-box">
+                <h3>Assignment Overview / 課題概要</h3>
+                <p><strong>Course:</strong> Machine Learning and Intelligence | 機械学習と知能</p>
+                <p><strong>Week:</strong> 1 | 第1週</p>
+                <p><strong>Due Date:</strong> End of Week 1 class session | 第1週授業終了時</p>
+                <p><strong>Weight:</strong> Part of 40% Weekly Activities grade | 週次アクティビティ評価40%の一部</p>
+                <p><strong>Submission:</strong> Through ML-101 Bot Portal | ML-101ボットポータル経由</p>
+            </div>
+
+            <p>This assignment introduces you to machine learning concepts through hands-on discovery of ML applications in your daily life. You'll work with the ML-101 Bot to identify, categorize, and analyze real-world ML systems.</p>
+            <p>この課題は、日常生活でのMLアプリケーションのハンズオン発見を通じて機械学習のコンセプトを紹介します。ML-101ボットと協力して、実世界のMLシステムを特定、分類、分析します。</p>
+
+            <h2>Learning Objectives / 学習目標</h2>
+
+            <p>By completing this assignment, you will be able to:</p>
+            <p>この課題を完了することで、以下ができるようになります：</p>
+
+            <ul>
+                <li>✅ Identify machine learning applications in everyday technology<br>
+                    日常的な技術における機械学習アプリケーションを特定する</li>
+                <li>✅ Distinguish between ML and traditional rule-based systems<br>
+                    MLと従来のルールベースシステムを区別する</li>
+                <li>✅ Categorize ML tasks by type (supervised, unsupervised, reinforcement)<br>
+                    MLタスクをタイプ別に分類する（教師あり、教師なし、強化学習）</li>
+                <li>✅ Connect ML concepts to the course project<br>
+                    MLコンセプトをコースプロジェクトに関連付ける</li>
+                <li>✅ Use AI chatbots effectively for learning<br>
+                    学習のためにAIチャットボットを効果的に使用する</li>
+            </ul>
+
+            <h2>Prerequisites / 前提条件</h2>
+
+            <ul>
+                <li>✅ Attended Week 1 lecture (or reviewed lecture slides)<br>
+                    第1週講義に出席（または講義スライドをレビュー）</li>
+                <li>✅ Access to ML-101 Bot portal<br>
+                    ML-101ボットポータルへのアクセス</li>
+                <li>✅ Basic computer and internet access<br>
+                    基本的なコンピュータとインターネットアクセス</li>
+            </ul>
+
+            <h2>Assignment Deliverables / 課題成果物</h2>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 1: ML Applications Discovery Document</h3>
+                <h4>成果物1：MLアプリケーション発見文書</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Identify and document <strong>5-7 real-world ML applications</strong> that you use or encounter regularly.</p>
+                <p>あなたが定期的に使用または遭遇する<strong>5-7の実世界MLアプリケーション</strong>を特定し文書化します。</p>
+
+                <h4>For each application, include:</h4>
+                <h4>各アプリケーションについて、以下を含めます：</h4>
+
+                <ol>
+                    <li>
+                        <strong>Application Name / アプリケーション名</strong>
+                        <p>Example: "Netflix Movie Recommendations" | 例：「Netflix映画推薦」</p>
+                    </li>
+                    <li>
+                        <strong>Brief Description / 簡単な説明</strong>
+                        <p>What does it do? (2-3 sentences) | 何をするか？（2-3文）</p>
+                        <p><em>Example: "Netflix recommends movies and shows based on my viewing history. It learns what I like to watch and suggests similar content."</em></p>
+                    </li>
+                    <li>
+                        <strong>ML Task Type / MLタスクタイプ</strong>
+                        <p>Classification, Recommendation, Prediction, Clustering, or Other</p>
+                        <p>分類、推薦、予測、クラスタリング、またはその他</p>
+                    </li>
+                    <li>
+                        <strong>Why is this ML (not traditional programming)? / なぜこれはML（従来のプログラミングではない）か？</strong>
+                        <p>1-2 sentences explaining the learning component | 学習コンポーネントを説明する1-2文</p>
+                        <p><em>Example: "Netflix learns from millions of users' watching patterns. The system adapts to my preferences over time without being explicitly programmed."</em></p>
+                    </li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li><strong>Document format:</strong> PDF, Word, or Google Doc | 文書形式：PDF、Word、またはGoogle Doc</li>
+                        <li><strong>Length:</strong> 2-3 pages (1-2 pages minimum) | 長さ：2-3ページ（最低1-2ページ）</li>
+                        <li><strong>Use clear headings</strong> for each application | 各アプリケーションに明確な見出しを使用</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (40 points) / 採点（40点）:</h4>
+                <ul>
+                    <li>5-7 applications identified: <strong>20 points</strong> (4 points each for 5 minimum)</li>
+                    <li>Clear descriptions: <strong>10 points</strong></li>
+                    <li>Correct ML task categorization: <strong>5 points</strong></li>
+                    <li>ML vs traditional programming explanations: <strong>5 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 2: Project Connection Reflection</h3>
+                <h4>成果物2：プロジェクト関連の考察</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Write <strong>1-2 paragraphs</strong> (150-250 words) reflecting on how ML concepts apply to the course project (company recommendation system).</p>
+                <p>MLコンセプトがコースプロジェクト（企業推薦システム）にどのように適用されるかについて<strong>1-2段落</strong>（150-250語）を書きます。</p>
+
+                <h4>Guiding Questions / ガイド質問:</h4>
+                <ul>
+                    <li>How is recommending companies similar to other ML recommendation systems you identified?<br>
+                        企業推薦は、あなたが特定した他のML推薦システムとどのように類似していますか？</li>
+                    <li>What data might the system need to learn your career preferences?<br>
+                        システムがあなたのキャリア好みを学習するためにどのようなデータが必要でしょうか？</li>
+                    <li>How could this ML system be useful for your actual job search?<br>
+                        このMLシステムは実際の就職活動にどのように役立つでしょうか？</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li>Include in the same document as Deliverable 1 | 成果物1と同じ文書に含める</li>
+                        <li>Clearly labeled section: "Project Connection Reflection" | 明確にラベル付けされたセクション：「プロジェクト関連の考察」</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (30 points) / 採点（30点）:</h4>
+                <ul>
+                    <li>Connection to ML concepts: <strong>10 points</strong></li>
+                    <li>Understanding of course project: <strong>10 points</strong></li>
+                    <li>Thoughtful reflection: <strong>10 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 3: ML-101 Bot Interaction Log</h3>
+                <h4>成果物3：ML-101ボットインタラクションログ</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Document <strong>3 meaningful interactions</strong> with the ML-101 Bot during your activity work.</p>
+                <p>アクティビティ作業中にML-101ボットとの<strong>3つの意味のあるインタラクション</strong>を文書化します。</p>
+
+                <h4>For each interaction, include:</h4>
+                <h4>各インタラクションについて、以下を含めます：</h4>
+
+                <ol>
+                    <li><strong>Your Question/Prompt / あなたの質問/プロンプト</strong><br>
+                        What did you ask the bot? | ボットに何を尋ねましたか？</li>
+                    <li><strong>Bot's Response Summary / ボットの応答要約</strong><br>
+                        Key points from the bot's answer (2-3 sentences) | ボットの答えからの主要ポイント（2-3文）</li>
+                    <li><strong>How This Helped Your Learning / これがあなたの学習をどのように助けたか</strong><br>
+                        What did you understand better after this interaction? | このインタラクションの後、何をより良く理解しましたか？</li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li>Include in the same document as Deliverables 1 & 2 | 成果物1と2と同じ文書に含める</li>
+                        <li>Clearly labeled section: "Bot Interaction Log" | 明確にラベル付けされたセクション：「ボットインタラクションログ」</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (20 points) / 採点（20点）:</h4>
+                <ul>
+                    <li>Three meaningful interactions documented: <strong>12 points</strong> (4 points each)</li>
+                    <li>Quality of questions asked: <strong>4 points</strong></li>
+                    <li>Reflection on learning: <strong>4 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 4: AI Transparency Statement (if applicable)</h3>
+                <h4>成果物4：AI透明性声明（該当する場合）</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>If your institution requires AI transparency documentation, include a brief statement (3-5 sentences) describing:</p>
+                <p>あなたの機関がAI透明性文書を要求する場合、以下を説明する簡単な声明（3-5文）を含めます：</p>
+
+                <ul>
+                    <li>Which AI tools you used (ML-101 Bot, ChatGPT, etc.) | どのAIツールを使用したか</li>
+                    <li>How you used them | どのように使用したか</li>
+                    <li>What you learned independently vs with AI assistance | AIアシスタンスなしで学習したこととAIアシスタンスありで学習したこと</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li>Include at the end of your main document | メイン文書の最後に含める</li>
+                        <li>Clearly labeled: "AI Transparency Statement" | 明確にラベル付け：「AI透明性声明」</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (10 points) / 採点（10点）:</h4>
+                <ul>
+                    <li>Honest and clear documentation: <strong>10 points</strong></li>
+                </ul>
+
+                <p><strong>Note:</strong> This deliverable is <strong>required only if</strong> your institution has an AI transparency policy. Check with your instructor.</p>
+                <p><strong>注意:</strong> この成果物は、あなたの機関がAI透明性ポリシーを持つ<strong>場合のみ必要</strong>です。インストラクターに確認してください。</p>
+            </div>
+
+            <h2>Submission Instructions / 提出指示</h2>
+
+            <div class="success-box">
+                <h3>How to Submit / 提出方法</h3>
+                <ol>
+                    <li><strong>Combine all deliverables</strong> into a single document<br>
+                        すべての成果物を単一の文書に結合</li>
+                    <li><strong>Name your file:</strong> <code>Week01_[YourName]_MLDiscovery</code><br>
+                        ファイル名を付ける：<code>Week01_[あなたの名前]_MLDiscovery</code><br>
+                        <em>Example: Week01_YuriTijerino_MLDiscovery.pdf</em></li>
+                    <li><strong>Upload through ML-101 Bot Portal:</strong><br>
+                        ML-101ボットポータルを通じてアップロード：
+                        <ul>
+                            <li>Log in to bot portal</li>
+                            <li>Navigate to "Week 1 Assignment Submission"</li>
+                            <li>Upload your document</li>
+                            <li>Click "Submit"</li>
+                        </ul>
+                    </li>
+                    <li><strong>Confirm submission:</strong><br>
+                        提出を確認：
+                        <ul>
+                            <li>You should receive an automated confirmation</li>
+                            <li>If you don't receive confirmation within 5 minutes, contact instructor</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="warning-box">
+                <h3>Submission Deadline / 提出期限</h3>
+                <p><strong>Due:</strong> End of Week 1 class session | <strong>期限:</strong> 第1週授業終了時</p>
+
+                <h4>Late Policy / 遅延ポリシー:</h4>
+                <ul>
+                    <li>Submissions up to 24 hours late: <strong>-10%</strong><br>
+                        24時間以内の遅延提出：<strong>-10%</strong></li>
+                    <li>Submissions 24-48 hours late: <strong>-20%</strong><br>
+                        24-48時間の遅延提出：<strong>-20%</strong></li>
+                    <li>Submissions more than 48 hours late: <strong>Not accepted</strong> without prior arrangement<br>
+                        48時間以上の遅延提出：事前の取り決めなしでは<strong>受理されません</strong></li>
+                </ul>
+            </div>
+
+            <h2>Grading Rubric / 評価ルーブリック</h2>
+
+            <table class="rubric-table">
+                <thead>
+                    <tr>
+                        <th>Deliverable</th>
+                        <th>Points</th>
+                        <th>Criteria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>ML Applications Discovery</strong><br>MLアプリケーション発見</td>
+                        <td><strong>40</strong></td>
+                        <td>5-7 apps identified, clear descriptions, correct categorization<br>5-7のアプリ特定、明確な説明、正しい分類</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Project Reflection</strong><br>プロジェクト考察</td>
+                        <td><strong>30</strong></td>
+                        <td>Connection to ML concepts, project understanding, thoughtfulness<br>MLコンセプトへの関連付け、プロジェクト理解、思慮深さ</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bot Interaction Log</strong><br>ボットインタラクションログ</td>
+                        <td><strong>20</strong></td>
+                        <td>3 meaningful interactions, quality questions, learning reflection<br>3つの意味のあるインタラクション、質の高い質問、学習の振り返り</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI Transparency</strong><br>AI透明性</td>
+                        <td><strong>10</strong></td>
+                        <td>Clear, honest documentation (if required)<br>明確で正直な文書化（必要な場合）</td>
+                    </tr>
+                    <tr style="background: var(--primary-color); color: white; font-weight: bold;">
+                        <td><strong>TOTAL</strong><br>合計</td>
+                        <td><strong>100</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Example Submission Excerpt / 提出例の抜粋</h2>
+
+            <div class="example-box">
+                <h3>Application Example / アプリケーション例</h3>
+
+                <h4>Application Name: Spotify Discover Weekly Playlist</h4>
+                <h4>アプリケーション名: Spotify Discover Weeklyプレイリスト</h4>
+
+                <p><strong>Description:</strong> Spotify's Discover Weekly is a personalized playlist that updates every Monday with 30 song recommendations. The system analyzes my listening history, including which songs I play repeatedly, skip, or save. It also looks at what similar users listen to and finds patterns in music characteristics like tempo, genre, and mood.</p>
+
+                <p><strong>説明:</strong> SpotifyのDiscover Weeklyは、毎週月曜日に30曲の推薦で更新されるパーソナライズされたプレイリストです。システムは、繰り返し再生する曲、スキップする曲、保存する曲を含む私の聴取履歴を分析します。また、類似したユーザーが聴いているものを見て、テンポ、ジャンル、ムードなどの音楽特性のパターンを見つけます。</p>
+
+                <p><strong>ML Task Type:</strong> Recommendation System (Collaborative Filtering + Content-Based)</p>
+                <p><strong>MLタスクタイプ:</strong> 推薦システム（協調フィルタリング + コンテンツベース）</p>
+
+                <p><strong>Why is this ML?</strong> Spotify learns my music preferences from data rather than following pre-programmed rules. The system adapts over time—if I start listening to more jazz, my recommendations shift accordingly. No programmer explicitly told Spotify "recommend jazz to this user"—it learned this pattern from my behavior.</p>
+
+                <p><strong>なぜこれはMLか?</strong> Spotifyは事前にプログラムされたルールに従うのではなく、データから私の音楽の好みを学習します。システムは時間とともに適応します—もっとジャズを聴き始めると、推薦もそれに応じて変わります。プログラマーがSpotifyに明示的に「このユーザーにジャズを推薦する」と指示したわけではありません—私の行動からこのパターンを学習しました。</p>
+            </div>
+
+            <h2>Tips for Success / 成功のためのヒント</h2>
+
+            <h3>Getting Started / 始め方</h3>
+            <ul>
+                <li>✅ <strong>Start with familiar apps</strong> | 使い慣れたアプリから始める<br>
+                    Think about apps you use daily (social media, music, shopping) | 毎日使用するアプリについて考える（ソーシャルメディア、音楽、ショッピング）</li>
+                <li>✅ <strong>Use the bot as a guide</strong> | ボットをガイドとして使用する<br>
+                    The ML-101 Bot will ask helpful questions | ML-101ボットが役立つ質問をします</li>
+                <li>✅ <strong>Be specific in your descriptions</strong> | 説明において具体的であること<br>
+                    Explain HOW the ML works, not just WHAT it does | MLが何をするかだけでなく、どのように機能するかを説明する</li>
+            </ul>
+
+            <h3>Common Mistakes to Avoid / 避けるべきよくある間違い</h3>
+            <ul>
+                <li>❌ <strong>Confusing ML with traditional programming</strong><br>
+                    A calculator is NOT ML (it follows fixed rules). A spam filter IS ML (it learns from examples).</li>
+                <li>❌ <strong>Too brief descriptions</strong><br>
+                    "Netflix uses ML" is not enough. Explain HOW and WHY it's ML.</li>
+                <li>❌ <strong>Not connecting to course project</strong><br>
+                    Your reflection should explicitly mention the company recommendation system.</li>
+            </ul>
+
+            <h2>Frequently Asked Questions / よくある質問</h2>
+
+            <div class="info-box">
+                <h4>Q: Can I include the same apps everyone else uses (Netflix, Spotify)?</h4>
+                <h4>Q: 他の人が使うのと同じアプリ（Netflix、Spotify）を含めてもいいですか？</h4>
+                <p><strong>A:</strong> Yes! It's fine to include common apps. What matters is YOUR explanation of how they use ML.</p>
+                <p><strong>A:</strong> はい！一般的なアプリを含めても構いません。重要なのは、それらがどのようにMLを使用するかのあなた自身の説明です。</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Q: What if I can't think of 7 applications?</h4>
+                <h4>Q: 7つのアプリケーションが思いつかない場合は？</h4>
+                <p><strong>A:</strong> 5 is the minimum requirement. Use the bot to help brainstorm—it will ask guiding questions.</p>
+                <p><strong>A:</strong> 5つが最低要件です。ブレインストーミングを助けるためにボットを使用してください—ガイド質問をします。</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Q: Can I work with classmates?</h4>
+                <h4>Q: クラスメートと一緒に作業できますか？</h4>
+                <p><strong>A:</strong> You can discuss ideas, but your submission must be your own work with your own examples and writing.</p>
+                <p><strong>A:</strong> アイデアを議論することはできますが、提出物はあなた自身の作業であり、あなた自身の例と執筆である必要があります。</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Q: What if the bot gives me wrong information?</h4>
+                <h4>Q: ボットが間違った情報を与えた場合は？</h4>
+                <p><strong>A:</strong> Use critical thinking! If something seems wrong, verify it or ask your instructor. The bot is a tool, not the final authority.</p>
+                <p><strong>A:</strong> 批判的思考を使用してください！何かが間違っているように見える場合は、それを検証するか、インストラクターに尋ねてください。ボットはツールであり、最終的な権威ではありません。</p>
+            </div>
+
+            <h2>Getting Help / ヘルプを得る</h2>
+
+            <div class="success-box">
+                <h4>During Class Activity / 授業アクティビティ中:</h4>
+                <ul>
+                    <li>Ask the ML-101 Bot questions</li>
+                    <li>Raise your hand for instructor help</li>
+                    <li>Discuss with classmates (but write your own submission)</li>
+                </ul>
+
+                <h4>Outside of Class / 授業外:</h4>
+                <ul>
+                    <li>Use the bot portal (available 24/7)</li>
+                    <li>Email instructor: [instructor email]</li>
+                    <li>Office hours: [office hours schedule]</li>
+                </ul>
+            </div>
+
+            <h2>Academic Integrity / 学術的誠実性</h2>
+
+            <div class="warning-box">
+                <h4>Permitted / 許可されている:</h4>
+                <ul>
+                    <li>✅ Using the ML-101 Bot for guidance</li>
+                    <li>✅ Discussing ideas with classmates</li>
+                    <li>✅ Asking clarifying questions</li>
+                    <li>✅ Using AI tools with transparency documentation</li>
+                </ul>
+
+                <h4>Not Permitted / 許可されていない:</h4>
+                <ul>
+                    <li>❌ Copying another student's work</li>
+                    <li>❌ Having AI write your entire reflection</li>
+                    <li>❌ Submitting someone else's examples as your own</li>
+                    <li>❌ Plagiarizing from websites without citation</li>
+                </ul>
+
+                <h4>Violation Consequences / 違反の結果:</h4>
+                <p>First offense: Zero on assignment + academic integrity report</p>
+                <p>First offense: 課題でゼロ + 学術的誠実性報告</p>
+            </div>
+
+            <div class="success-box" style="text-align: center; margin-top: 40px;">
+                <h2>Good luck and enjoy discovering ML in your daily life!</h2>
+                <h2>頑張って、日常生活でMLを発見することを楽しんでください！</h2>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="lecture.html" class="btn btn-primary">View Lecture</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>著作権 &copy; 2025 Yuri Tijerino. 無断転載を禁じます。</p>
+        </div>
+    </footer>
+</body>
+</html>

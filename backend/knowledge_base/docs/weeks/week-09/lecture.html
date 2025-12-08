@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 9: Feature Engineering for Text | ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .lecture-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .lecture-content h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .lecture-content h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .lecture-content h4 {
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .objectives-list {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .objectives-list ul {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+        .highlight-box {
+            background: #fef3cd;
+            border-left: 5px solid var(--warning);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-box {
+            background: var(--bg-light);
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary-color);
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            white-space: pre-wrap;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .bilingual-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        .english-col {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+        .japanese-col {
+            background: #f3e8ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        @media (max-width: 768px) {
+            .bilingual-section {
+                grid-template-columns: 1fr;
+            }
+            .lecture-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Week 9: Feature Engineering for Text</h1>
+            <p class="subtitle">第9週：テキストのための特徴量エンジニアリング</p>
+            <p class="instructor">Instructor: Yuri Tijerino</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="slides.html">Presentation Slides</a>
+            <a href="assignment.html">Assignment</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="lecture-content">
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+                <a href="assignment.html" class="btn btn-accent">View Assignment</a>
+            </div>
+
+            <div class="objectives-list">
+                <h3>Learning Objectives / 学習目標</h3>
+                <p><strong>English:</strong> By the end of this lecture, students will be able to:</p>
+                <ul>
+                    <li>Understand what features are and why they matter for machine learning</li>
+                    <li>Create categorical features using one-hot encoding</li>
+                    <li>Extract meaningful features from text descriptions</li>
+                    <li>Apply keyword-based feature extraction</li>
+                    <li>Prepare a feature-engineered dataset ready for ML training</li>
+                </ul>
+                <p><strong>日本語:</strong> この講義の終了までに、学生は以下ができるようになります：</p>
+                <ul>
+                    <li>特徴量とは何か、そしてなぜ機械学習にとって重要かを理解する</li>
+                    <li>ワンホットエンコーディングを使用してカテゴリカル特徴量を作成する</li>
+                    <li>テキスト説明から意味のある特徴量を抽出する</li>
+                    <li>キーワードベースの特徴量抽出を適用する</li>
+                    <li>ML訓練準備完了の特徴量エンジニアリング済みデータセットを準備する</li>
+                </ul>
+            </div>
+
+            <h2>What are Features?</h2>
+
+            <div class="highlight-box">
+                <h3>Core Concept / 核心的なコンセプト</h3>
+                <p><strong>Features = The measurable properties that ML algorithms use to make predictions</strong></p>
+                <p><strong>特徴量 = MLアルゴリズムが予測を行うために使用する測定可能な特性</strong></p>
+            </div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Think of features as "clues"</h4>
+                    <p>When you're deciding if a company interests you, what do you look at?</p>
+                    <ul>
+                        <li>Industry type?</li>
+                        <li>Company size?</li>
+                        <li>Keywords in description?</li>
+                        <li>Location?</li>
+                    </ul>
+                    <p>These become your features!</p>
+                </div>
+                <div class="japanese-col">
+                    <h4>特徴量を「手がかり」と考える</h4>
+                    <p>企業が興味深いかどうかを決定するとき、何を見ますか？</p>
+                    <ul>
+                        <li>業界タイプ？</li>
+                        <li>企業規模？</li>
+                        <li>説明のキーワード？</li>
+                        <li>所在地？</li>
+                    </ul>
+                    <p>これらがあなたの特徴量になります！</p>
+                </div>
+            </div>
+
+            <h3>Example Transformation / 変換例</h3>
+
+            <div class="code-box">BEFORE (Raw Data):
+Company: "Toyota Motor Corporation"
+Industry: "Automotive"
+Description: "Leading global manufacturer of automobiles..."
+Employees: 50,000
+
+AFTER (Features):
+industry_Automotive: 1
+industry_Technology: 0
+size_Large: 1
+size_Medium: 0
+size_Small: 0
+has_global: 1
+has_innovation: 0
+description_length: 250
+keyword_count: 3</div>
+
+            <h2>Why Features Matter for Machine Learning</h2>
+
+            <div class="highlight-box">
+                <h3>The Fundamental Challenge / 基本的な課題</h3>
+                <p><strong>ML algorithms work with numbers, not text!</strong></p>
+                <p><strong>MLアルゴリズムはテキストではなく数値で動作します！</strong></p>
+            </div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>The Problem:</h4>
+                    <p>You have text data:</p>
+                    <ul>
+                        <li>Company names</li>
+                        <li>Industry categories</li>
+                        <li>Text descriptions</li>
+                        <li>Location names</li>
+                    </ul>
+                    <p>But ML models need numeric input!</p>
+                </div>
+                <div class="japanese-col">
+                    <h4>問題：</h4>
+                    <p>テキストデータがあります：</p>
+                    <ul>
+                        <li>企業名</li>
+                        <li>業界カテゴリ</li>
+                        <li>テキスト説明</li>
+                        <li>所在地名</li>
+                    </ul>
+                    <p>しかし、MLモデルは数値入力が必要です！</p>
+                </div>
+            </div>
+
+            <h3>Good Features Make Learning Easier</h3>
+
+            <p>The quality of your features directly impacts model performance:</p>
+            <ul>
+                <li><strong>Good features</strong> = Patterns are easy to find = Better predictions</li>
+                <li><strong>Poor features</strong> = Patterns are hidden = Worse predictions</li>
+            </ul>
+
+            <h2>Type 1: Categorical Features</h2>
+
+            <h3>One-Hot Encoding / ワンホットエンコーディング</h3>
+
+            <div class="highlight-box">
+                <h4>What it does / 何をするか</h4>
+                <p><strong>Converts each category into a separate True/False column</strong></p>
+                <p><strong>各カテゴリを個別のTrue/False列に変換</strong></p>
+            </div>
+
+            <div class="code-box">BEFORE:
+Industry
+---------
+Technology
+Finance
+Technology
+Automotive
+
+AFTER:
+industry_Technology  industry_Finance  industry_Automotive
+-----------------------------------------------------------
+       1                    0                   0
+       0                    1                   0
+       1                    0                   0
+       0                    0                   1</div>
+
+            <h3>Implementing One-Hot Encoding / ワンホットエンコーディングの実装</h3>
+
+            <div class="code-box">import pandas as pd
+
+# One-hot encode industry
+industry_encoded = pd.get_dummies(df['industry'], prefix='industry')
+
+# Add to original dataframe
+df = pd.concat([df, industry_encoded], axis=1)
+
+# Result: New columns like industry_Technology, industry_Finance, etc.</div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Why use one-hot encoding?</h4>
+                    <ul>
+                        <li>Converts text categories to numbers</li>
+                        <li>Each category gets its own column</li>
+                        <li>ML can learn which categories matter</li>
+                        <li>No artificial ordering (unlike 1,2,3...)</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>なぜワンホットエンコーディングを使用するか？</h4>
+                    <ul>
+                        <li>テキストカテゴリを数値に変換</li>
+                        <li>各カテゴリが独自の列を取得</li>
+                        <li>MLがどのカテゴリが重要かを学習できる</li>
+                        <li>人工的な順序付けなし（1,2,3...とは異なり）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Additional Categorical Features / 追加のカテゴリカル特徴量</h3>
+
+            <div class="code-box"># Encode location
+location_encoded = pd.get_dummies(df['location'], prefix='location')
+df = pd.concat([df, location_encoded], axis=1)
+
+# Create and encode company size categories
+def categorize_size(count):
+    if pd.isna(count):
+        return 'Unknown'
+    elif count < 50:
+        return 'Small'
+    elif count < 500:
+        return 'Medium'
+    else:
+        return 'Large'
+
+df['company_size'] = df['employee_count'].apply(categorize_size)
+size_encoded = pd.get_dummies(df['company_size'], prefix='size')
+df = pd.concat([df, size_encoded], axis=1)</div>
+
+            <h2>Type 2: Text Features from Descriptions</h2>
+
+            <h3>Keyword-Based Feature Extraction / キーワードベースの特徴量抽出</h3>
+
+            <div class="highlight-box">
+                <h4>The Approach / アプローチ</h4>
+                <p><strong>Check if specific keywords appear in company descriptions</strong></p>
+                <p><strong>特定のキーワードが企業説明に現れるかをチェック</strong></p>
+            </div>
+
+            <p>This is one of the most powerful and intuitive feature engineering techniques for text data!</p>
+
+            <h3>Step 1: Define Relevant Keywords / ステップ1：関連キーワードを定義</h3>
+
+            <p>Think about what words indicate companies you'd be interested in:</p>
+
+            <div class="code-box"># Define keywords based on YOUR interests
+keywords = [
+    'innovation',
+    'technology',
+    'global',
+    'startup',
+    'research',
+    'AI',
+    'development'
+]</div>
+
+            <h3>Step 2: Create Binary Features / ステップ2：バイナリ特徴量を作成</h3>
+
+            <div class="code-box"># Create a feature for each keyword
+for keyword in keywords:
+    # Check if keyword appears in description (case-insensitive)
+    df[f'has_{keyword}'] = df['description'].str.lower().str.contains(
+        keyword,
+        na=False  # Treat missing descriptions as False
+    ).astype(int)
+
+# Result: New columns like has_innovation, has_technology, etc.
+# Values are 1 (keyword present) or 0 (keyword absent)</div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Why this works:</h4>
+                    <ul>
+                        <li>Captures what companies emphasize</li>
+                        <li>Simple and interpretable</li>
+                        <li>You choose keywords that matter to YOU</li>
+                        <li>Easy to explain and validate</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>なぜこれが機能するか：</h4>
+                    <ul>
+                        <li>企業が強調していることをキャプチャ</li>
+                        <li>シンプルで解釈可能</li>
+                        <li>あなたにとって重要なキーワードを選択</li>
+                        <li>説明と検証が簡単</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Step 3: Count Total Keywords / ステップ3：合計キーワードをカウント</h3>
+
+            <div class="code-box"># Count how many keywords appear in each description
+keyword_columns = [f'has_{keyword}' for keyword in keywords]
+df['keyword_count'] = df[keyword_columns].sum(axis=1)
+
+# Higher count might indicate more relevant companies</div>
+
+            <h3>Additional Text Features / 追加のテキスト特徴量</h3>
+
+            <h4>Description Length / 説明の長さ</h4>
+
+            <div class="code-box"># Character count
+df['description_length'] = df['description'].str.len()
+
+# Word count
+df['description_word_count'] = df['description'].str.split().str.len()</div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Why length matters:</h4>
+                    <ul>
+                        <li>Longer descriptions = more detail</li>
+                        <li>Might indicate established companies</li>
+                        <li>Or companies that value communication</li>
+                        <li>Can be a useful signal for classification</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>なぜ長さが重要か：</h4>
+                    <ul>
+                        <li>長い説明 = より詳細</li>
+                        <li>確立された企業を示すかもしれない</li>
+                        <li>またはコミュニケーションを重視する企業</li>
+                        <li>分類のための有用なシグナルになり得る</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>Optional Advanced: TF-IDF Features</h2>
+
+            <div class="highlight-box">
+                <h3>What is TF-IDF?</h3>
+                <p><strong>Term Frequency-Inverse Document Frequency</strong></p>
+                <p>A statistical measure that identifies words that are important and distinctive for each document.</p>
+            </div>
+
+            <h3>How TF-IDF Works / TF-IDFの仕組み</h3>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>The Logic:</h4>
+                    <ul>
+                        <li><strong>TF (Term Frequency):</strong> How often a word appears in a document</li>
+                        <li><strong>IDF (Inverse Document Frequency):</strong> How rare the word is across all documents</li>
+                        <li><strong>TF-IDF = TF × IDF:</strong> High score = frequent in this doc but rare overall</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>ロジック：</h4>
+                    <ul>
+                        <li><strong>TF（用語頻度）:</strong> 単語が文書に現れる頻度</li>
+                        <li><strong>IDF（逆文書頻度）:</strong> すべての文書にわたって単語がどれだけまれか</li>
+                        <li><strong>TF-IDF = TF × IDF:</strong> 高スコア = この文書で頻繁だが全体的にはまれ</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Implementing TF-IDF / TF-IDFの実装</h3>
+
+            <div class="code-box">from sklearn.feature_extraction.text import TfidfVectorizer
+
+# Create TF-IDF vectorizer
+# max_features=20: Keep only top 20 most important words
+# stop_words='english': Remove common words like 'the', 'is', 'and'
+tfidf = TfidfVectorizer(max_features=20, stop_words='english')
+
+# Fit and transform descriptions
+tfidf_matrix = tfidf.fit_transform(df['description'].fillna(''))
+
+# Convert to DataFrame
+tfidf_df = pd.DataFrame(
+    tfidf_matrix.toarray(),
+    columns=[f'tfidf_{word}' for word in tfidf.get_feature_names_out()]
+)
+
+# Add to main dataset
+df = pd.concat([df.reset_index(drop=True), tfidf_df], axis=1)
+
+# See which words are most important
+print("Top TF-IDF features:", tfidf.get_feature_names_out())</div>
+
+            <div class="highlight-box">
+                <h4>Note / 注意</h4>
+                <p><strong>TF-IDF is optional!</strong> It can capture nuanced patterns but adds complexity. Start with keyword features first.</p>
+                <p><strong>TF-IDFはオプションです！</strong> ニュアンスのあるパターンをキャプチャできますが、複雑さが増します。まずキーワード特徴量から始めてください。</p>
+            </div>
+
+            <h2>Creating the Final Feature Dataset</h2>
+
+            <h3>Selecting Features / 特徴量の選択</h3>
+
+            <p>Now you need to create a clean dataset with only the features (no original text):</p>
+
+            <div class="code-box"># Identify all feature columns
+feature_columns = [col for col in df.columns if any([
+    col.startswith('industry_'),
+    col.startswith('location_'),
+    col.startswith('size_'),
+    col.startswith('has_'),
+    col.startswith('tfidf_'),
+    col == 'keyword_count',
+    col == 'description_length',
+    col == 'description_word_count',
+    col == 'employee_count'  # if using as feature
+])]
+
+# Create feature dataset
+# Keep company_name for reference, but it won't be used as a feature
+features_df = df[['company_name'] + feature_columns].copy()
+
+print(f"Total features created: {len(feature_columns)}")
+print(f"Features: {feature_columns}")</div>
+
+            <h3>Feature Dataset Validation / 特徴量データセット検証</h3>
+
+            <div class="objectives-list">
+                <h4>Quality Checklist / 品質チェックリスト</h4>
+                <ul>
+                    <li>✓ <strong>All features are numeric</strong> (no text columns except company_name for reference)</li>
+                    <li>✓ <strong>No missing values</strong> in feature columns</li>
+                    <li>✓ <strong>Reasonable number of features</strong> (15-50 for small datasets)</li>
+                    <li>✓ <strong>Features align with classification goal</strong> (they represent characteristics you care about)</li>
+                </ul>
+            </div>
+
+            <div class="code-box"># Validate
+print("Feature data types:")
+print(features_df.dtypes)
+
+print("\nMissing values in features:")
+print(features_df[feature_columns].isnull().sum())
+
+print("\nFeature statistics:")
+print(features_df[feature_columns].describe())</div>
+
+            <h3>Export for ML Training / ML訓練のためにエクスポート</h3>
+
+            <div class="code-box"># Export feature dataset
+features_df.to_csv('company_features.csv', index=False)
+
+print("Feature dataset saved! Ready for ML training.")</div>
+
+            <h2>Connecting Features to Your Goal</h2>
+
+            <div class="highlight-box">
+                <h3>Critical Thinking / 批判的思考</h3>
+                <p><strong>Your features should reflect what makes a company interesting to YOU</strong></p>
+                <p><strong>あなたの特徴量は、企業をあなたにとって興味深くするものを反映する必要があります</strong></p>
+            </div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Example Goals and Features:</h4>
+                    <p><strong>Goal:</strong> Find innovative tech companies</p>
+                    <p><strong>Relevant features:</strong></p>
+                    <ul>
+                        <li>industry_Technology</li>
+                        <li>has_innovation</li>
+                        <li>has_AI</li>
+                        <li>has_research</li>
+                        <li>keyword_count (high values)</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>目標と特徴量の例：</h4>
+                    <p><strong>目標:</strong> 革新的なテクノロジー企業を見つける</p>
+                    <p><strong>関連特徴量:</strong></p>
+                    <ul>
+                        <li>industry_Technology</li>
+                        <li>has_innovation</li>
+                        <li>has_AI</li>
+                        <li>has_research</li>
+                        <li>keyword_count（高い値）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>Key Takeaways</h2>
+
+            <div class="objectives-list">
+                <h4>Remember / 覚えておいてください</h4>
+                <ul>
+                    <li><strong>Features are the clues</strong> ML uses to make predictions<br>
+                        特徴量はMLが予測を行うために使用する手がかりです</li>
+                    <li><strong>ML needs numbers, not text</strong> - feature engineering converts text to numeric format<br>
+                        MLはテキストではなく数値が必要 - 特徴量エンジニアリングはテキストを数値形式に変換します</li>
+                    <li><strong>Categorical → One-hot encoding</strong> (industry, location, size)<br>
+                        カテゴリカル → ワンホットエンコーディング（業界、所在地、サイズ）</li>
+                    <li><strong>Text → Keywords, length, TF-IDF</strong> (description features)<br>
+                        テキスト → キーワード、長さ、TF-IDF（説明特徴量）</li>
+                    <li><strong>Quality over quantity</strong> - meaningful features matter more than many features<br>
+                        量より質 - 意味のある特徴量が多くの特徴量より重要です</li>
+                    <li><strong>Think about YOUR goal</strong> - features should capture what matters to you<br>
+                        あなたの目標について考える - 特徴量はあなたにとって重要なことをキャプチャする必要があります</li>
+                </ul>
+            </div>
+
+            <h2>Next Steps</h2>
+
+            <ol style="font-size: 1.2em; line-height: 2;">
+                <li>Open your Week 8 validated dataset / 第8週検証済みデータセットを開く</li>
+                <li>Begin Week 9 hands-on activity with ML-101 Bot / ML-101ボットで第9週ハンズオンアクティビティを開始</li>
+                <li>Identify features relevant to your interests / あなたの興味に関連する特徴量を特定</li>
+                <li>Create categorical features with one-hot encoding / ワンホットエンコーディングでカテゴリカル特徴量を作成</li>
+                <li>Extract text features from descriptions / 説明からテキスト特徴量を抽出</li>
+                <li>Validate and export feature dataset / 特徴量データセットを検証してエクスポート</li>
+            </ol>
+
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+                <a href="assignment.html" class="btn btn-accent">View Assignment</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>著作権 &copy; 2025 Yuri Tijerino. 無断転載を禁じます。</p>
+        </div>
+    </footer>
+</body>
+</html>

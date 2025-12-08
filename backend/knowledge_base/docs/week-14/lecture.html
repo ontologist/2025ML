@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 14: Final Presentations | ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .lecture-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .lecture-content h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .lecture-content h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .lecture-content h4 {
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .objectives-list {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .objectives-list ul {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+        .highlight-box {
+            background: #fef3cd;
+            border-left: 5px solid var(--warning);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .celebration-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 5px solid #10b981;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .code-box {
+            background: var(--bg-light);
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary-color);
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            white-space: pre-wrap;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .bilingual-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        .english-col {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+        .japanese-col {
+            background: #f3e8ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        @media (max-width: 768px) {
+            .bilingual-section {
+                grid-template-columns: 1fr;
+            }
+            .lecture-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Week 14: Final Presentations</h1>
+            <p class="subtitle">第14週：最終プレゼンテーション</p>
+            <p class="instructor">Instructor: Yuri Tijerino</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="slides.html">Presentation Slides</a>
+            <a href="assignment.html">Assignment</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="lecture-content">
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+                <a href="assignment.html" class="btn btn-accent">View Assignment</a>
+            </div>
+
+            <div class="celebration-box">
+                <h2 style="text-align: center; color: #10b981;">Congratulations on Completing ML-101!</h2>
+                <h2 style="text-align: center; color: #10b981;">ML-101完了おめでとうございます！</h2>
+                <p style="text-align: center; font-size: 1.2em; margin-top: 15px;">You've come an incredible distance in 14 weeks</p>
+                <p style="text-align: center; font-size: 1.2em;">14週間で信じられない距離を歩んできました</p>
+            </div>
+
+            <div class="objectives-list">
+                <h3>Learning Objectives / 学習目標</h3>
+                <p><strong>English:</strong> By the end of this week, students will be able to:</p>
+                <ul>
+                    <li>Present a complete ML project to peers in a professional manner</li>
+                    <li>Articulate ML workflow understanding through demonstration</li>
+                    <li>Reflect critically on personal learning journey and growth</li>
+                    <li>Provide and receive constructive feedback on ML projects</li>
+                    <li>Consider future applications of ML to career and life</li>
+                </ul>
+                <p><strong>日本語:</strong> この週の終了までに、学生は以下ができるようになります：</p>
+                <ul>
+                    <li>プロフェッショナルな方法でピアに完全なMLプロジェクトを提示する</li>
+                    <li>実演を通じてMLワークフロー理解を明確にする</li>
+                    <li>個人的な学習の旅と成長を批判的に振り返る</li>
+                    <li>MLプロジェクトに関する建設的なフィードバックを提供および受け取る</li>
+                    <li>キャリアと生活へのMLの将来の応用を検討する</li>
+                </ul>
+            </div>
+
+            <h2>Reflecting on Your ML Journey</h2>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h3>Week 1: The Beginning</h3>
+                    <p>Remember when you first walked into this course? Machine learning might have seemed like magic—complex, mysterious, something only experts could understand.</p>
+                    <p>You asked questions like:</p>
+                    <ul>
+                        <li>"What is machine learning?"</li>
+                        <li>"How is it different from regular programming?"</li>
+                        <li>"Where do I even see ML in my life?"</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h3>第1週：始まり</h3>
+                    <p>このコースに初めて入った時のことを覚えていますか？機械学習は魔法のように見えたかもしれません—複雑で、神秘的で、専門家だけが理解できるもの。</p>
+                    <p>あなたはこのような質問をしました：</p>
+                    <ul>
+                        <li>「機械学習とは何ですか？」</li>
+                        <li>「通常のプログラミングとどう違うのですか？」</li>
+                        <li>「自分の生活のどこでMLを見るのですか？」</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h3>Week 14: Now</h3>
+                    <p>Look at where you are now. You've built a complete machine learning system from scratch. You understand:</p>
+                    <ul>
+                        <li>How to collect and prepare data</li>
+                        <li>How to train ML models</li>
+                        <li>How to evaluate performance</li>
+                        <li>How to think critically about AI</li>
+                    </ul>
+                    <p><strong>You went from consumer to creator.</strong></p>
+                </div>
+                <div class="japanese-col">
+                    <h3>第14週：今</h3>
+                    <p>今あなたがどこにいるか見てください。あなたはゼロから完全な機械学習システムを構築しました。あなたは理解しています：</p>
+                    <ul>
+                        <li>データを収集して準備する方法</li>
+                        <li>MLモデルを訓練する方法</li>
+                        <li>性能を評価する方法</li>
+                        <li>AIについて批判的に考える方法</li>
+                    </ul>
+                    <p><strong>あなたは消費者から創造者になりました。</strong></p>
+                </div>
+            </div>
+
+            <h2>What You Accomplished</h2>
+
+            <h3>The Complete ML Workflow / 完全なMLワークフロー</h3>
+
+            <div class="code-box">YOUR ML PROJECT JOURNEY / あなたのMLプロジェクトの旅:
+
+Weeks 1-5: DATA COLLECTION & PREPARATION
+第1-5週：データ収集と準備
+→ Scraped real company data from mynavi.jp
+  mynavi.jpから実際の企業データをスクレイピング
+→ Cleaned messy real-world data
+  乱雑な実世界データをクリーニング
+→ Labeled companies based on YOUR interests
+  あなたの興味に基づいて企業をラベル付け
+→ Created meaningful features
+  意味のある特徴量を作成
+
+Weeks 6-9: MODEL TRAINING & EVALUATION
+第6-9週：モデル訓練と評価
+→ Trained multiple ML algorithms
+  複数のMLアルゴリズムを訓練
+→ Understood how models learn patterns
+  モデルがパターンを学習する方法を理解
+→ Evaluated model performance
+  モデル性能を評価
+→ Optimized for better predictions
+  より良い予測のために最適化
+
+Weeks 10-12: ADVANCED TOPICS & PROJECT DEVELOPMENT
+第10-12週：高度なトピックとプロジェクト開発
+→ Applied advanced techniques
+  高度な技術を適用
+→ Documented your complete workflow
+  完全なワークフローを文書化
+→ Prepared professional presentation
+  プロフェッショナルなプレゼンテーションを準備
+→ Reflected on ethical implications
+  倫理的影響を考察
+
+Weeks 13-14: PRESENTATION & REFLECTION
+第13-14週：プレゼンテーションと振り返り
+→ Sharing your work with peers
+  ピアと作業を共有
+→ Demonstrating ML mastery
+  MLマスタリーを実証
+→ Planning your ML future
+  ML未来を計画</div>
+
+            <h2>Your Presentation: Sharing Your Work</h2>
+
+            <p>This week, you'll present your complete ML project to your peers. This is your opportunity to:</p>
+            <p>今週、あなたはピアに完全なMLプロジェクトを提示します。これはあなたの機会です：</p>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Demonstrate Understanding</h4>
+                    <p>Show that you don't just know WHAT machine learning is, but HOW it works and WHY decisions matter.</p>
+                    <h4>Share Your Journey</h4>
+                    <p>Your challenges, breakthroughs, and learnings are valuable. Others will learn from your experience.</p>
+                    <h4>Celebrate Achievement</h4>
+                    <p>Building a complete ML system from scratch is a significant accomplishment. Be proud!</p>
+                </div>
+                <div class="japanese-col">
+                    <h4>理解を実証</h4>
+                    <p>機械学習が何であるかだけでなく、どのように機能するか、そしてなぜ決定が重要かを知っていることを示します。</p>
+                    <h4>あなたの旅を共有</h4>
+                    <p>あなたの課題、ブレークスルー、学習は価値があります。他の人はあなたの経験から学びます。</p>
+                    <h4>達成を祝う</h4>
+                    <p>ゼロから完全なMLシステムを構築することは重要な達成です。誇りに思ってください！</p>
+                </div>
+            </div>
+
+            <h3>Presentation Structure (5 Minutes) / プレゼンテーション構造（5分）</h3>
+
+            <h4>1. Introduction (30 seconds) / イントロダクション（30秒）</h4>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <ul>
+                        <li>Briefly introduce your project</li>
+                        <li>State your motivation: Why did you choose this?</li>
+                        <li>Preview what you'll cover</li>
+                    </ul>
+                    <p><strong>Example:</strong> "I built a company recommendation system to help me find companies that match my career interests. Today I'll walk you through how I collected data, trained my model, and what I learned."</p>
+                </div>
+                <div class="japanese-col">
+                    <ul>
+                        <li>プロジェクトを簡単に紹介</li>
+                        <li>動機を述べる：なぜこれを選んだのか？</li>
+                        <li>カバーする内容をプレビュー</li>
+                    </ul>
+                    <p><strong>例:</strong> 「私は自分のキャリアの興味に合う企業を見つけるのを助けるために企業推薦システムを構築しました。今日はデータを収集した方法、モデルを訓練した方法、そして学んだことを説明します。」</p>
+                </div>
+            </div>
+
+            <h4>2. The Problem (30 seconds) / 問題（30秒）</h4>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <ul>
+                        <li>Why does this problem matter?</li>
+                        <li>Who benefits from solving it?</li>
+                        <li>What makes it suitable for ML?</li>
+                    </ul>
+                    <p><strong>Example:</strong> "Job searching is overwhelming. There are thousands of companies, but manually reviewing them all is impossible. ML can learn my preferences and recommend companies I might not have discovered."</p>
+                </div>
+                <div class="japanese-col">
+                    <ul>
+                        <li>なぜこの問題が重要か？</li>
+                        <li>誰がそれを解決することから利益を得るか？</li>
+                        <li>何がそれをMLに適したものにするか？</li>
+                    </ul>
+                    <p><strong>例:</strong> 「就職活動は圧倒的です。何千もの企業がありますが、それらすべてを手動でレビューすることは不可能です。MLは私の好みを学習し、私が発見していないかもしれない企業を推薦できます。」</p>
+                </div>
+            </div>
+
+            <h4>3. Data Collection (1 minute) / データ収集（1分）</h4>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <ul>
+                        <li>Where did your data come from?</li>
+                        <li>What information did you collect?</li>
+                        <li>How much data did you gather?</li>
+                        <li>What challenges did you face?</li>
+                    </ul>
+                    <p><strong>Show examples:</strong> Display sample data or describe the scraping process.</p>
+                </div>
+                <div class="japanese-col">
+                    <ul>
+                        <li>データはどこから来ましたか？</li>
+                        <li>どのような情報を収集しましたか？</li>
+                        <li>どのくらいのデータを集めましたか？</li>
+                        <li>どのような課題に直面しましたか？</li>
+                    </ul>
+                    <p><strong>例を示す:</strong> サンプルデータを表示するか、スクレイピングプロセスを説明します。</p>
+                </div>
+            </div>
+
+            <h4>4. ML Workflow (2 minutes) / MLワークフロー（2分）</h4>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h5>Data Preparation:</h5>
+                    <ul>
+                        <li>How did you clean the data?</li>
+                        <li>How did you label companies?</li>
+                        <li>What features did you create and why?</li>
+                    </ul>
+                    <h5>Model Training:</h5>
+                    <ul>
+                        <li>What algorithm(s) did you use?</li>
+                        <li>How did the model learn?</li>
+                        <li>What parameters did you tune?</li>
+                    </ul>
+                    <h5>Evaluation:</h5>
+                    <ul>
+                        <li>How did you measure success?</li>
+                        <li>What metrics did you use?</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h5>データ準備:</h5>
+                    <ul>
+                        <li>データをどのようにクリーニングしましたか？</li>
+                        <li>企業をどのようにラベル付けしましたか？</li>
+                        <li>どのような特徴量を作成し、なぜですか？</li>
+                    </ul>
+                    <h5>モデル訓練:</h5>
+                    <ul>
+                        <li>どのアルゴリズムを使用しましたか？</li>
+                        <li>モデルはどのように学習しましたか？</li>
+                        <li>どのパラメータを調整しましたか？</li>
+                    </ul>
+                    <h5>評価:</h5>
+                    <ul>
+                        <li>成功をどのように測定しましたか？</li>
+                        <li>どのメトリクスを使用しましたか？</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>5. Results (45 seconds) / 結果（45秒）</h4>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <ul>
+                        <li>What were your model's performance metrics?</li>
+                        <li>Show example predictions</li>
+                        <li>What worked well?</li>
+                        <li>What could be improved?</li>
+                    </ul>
+                    <p><strong>Be specific:</strong> "My model achieved 85% accuracy in predicting companies I'd be interested in."</p>
+                </div>
+                <div class="japanese-col">
+                    <ul>
+                        <li>モデルの性能メトリクスは何でしたか？</li>
+                        <li>予測の例を示す</li>
+                        <li>何がうまくいきましたか？</li>
+                        <li>何を改善できますか？</li>
+                    </ul>
+                    <p><strong>具体的であること:</strong> 「私のモデルは、私が興味を持つであろう企業を予測する際に85%の精度を達成しました。」</p>
+                </div>
+            </div>
+
+            <h4>6. Learnings (45 seconds) / 学習（45秒）</h4>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <ul>
+                        <li>What surprised you during this project?</li>
+                        <li>What was the biggest challenge you overcame?</li>
+                        <li>What insights did you gain about ML?</li>
+                        <li>What would you do differently next time?</li>
+                    </ul>
+                    <p><strong>Be honest:</strong> Talk about both successes and struggles.</p>
+                </div>
+                <div class="japanese-col">
+                    <ul>
+                        <li>このプロジェクト中に何があなたを驚かせましたか？</li>
+                        <li>克服した最大の課題は何でしたか？</li>
+                        <li>MLについてどのような洞察を得ましたか？</li>
+                        <li>次回は何を違う方法で行いますか？</li>
+                    </ul>
+                    <p><strong>正直であること:</strong> 成功と苦闘の両方について話します。</p>
+                </div>
+            </div>
+
+            <h4>7. Conclusion (30 seconds) / 結論（30秒）</h4>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <ul>
+                        <li>How will you apply this ML knowledge in the future?</li>
+                        <li>What would you build next with ML?</li>
+                        <li>How has this changed your understanding of AI?</li>
+                    </ul>
+                    <p><strong>End strong:</strong> Leave your audience with a key takeaway.</p>
+                </div>
+                <div class="japanese-col">
+                    <ul>
+                        <li>将来このML知識をどのように適用しますか？</li>
+                        <li>次にMLで何を構築しますか？</li>
+                        <li>これはAIに関するあなたの理解をどのように変えましたか？</li>
+                    </ul>
+                    <p><strong>強く終わる:</strong> 聴衆に重要なポイントを残します。</p>
+                </div>
+            </div>
+
+            <h2>Final Bot Assessment Interview</h2>
+
+            <p>After presentations, you'll participate in a one-on-one conversational assessment with the ML-101 Bot. This is NOT a test you can fail—it's a conversation to demonstrate your understanding.</p>
+            <p>プレゼンテーション後、ML-101ボットとの1対1の会話的評価に参加します。これは失敗できるテストではありません—あなたの理解を実証するための会話です。</p>
+
+            <h3>What the Bot Will Ask About / ボットが尋ねること</h3>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Technical Understanding</h4>
+                    <ul>
+                        <li>Walk me through your complete ML workflow</li>
+                        <li>What was the most challenging aspect of your project?</li>
+                        <li>How did you decide which features to create?</li>
+                        <li>Explain what your model learned from your training data</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>技術的理解</h4>
+                    <ul>
+                        <li>完全なMLワークフローを通して説明してください</li>
+                        <li>プロジェクトの最も挑戦的な側面は何でしたか？</li>
+                        <li>どの特徴量を作成するかをどのように決定しましたか？</li>
+                        <li>モデルが訓練データから何を学んだかを説明してください</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Critical Thinking</h4>
+                    <ul>
+                        <li>What are the limitations of your ML system?</li>
+                        <li>How could biases in your training data affect predictions?</li>
+                        <li>Would you trust this system for real career decisions? Why or why not?</li>
+                        <li>What ethical considerations are important for recommendation systems?</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>批判的思考</h4>
+                    <ul>
+                        <li>MLシステムの限界は何ですか？</li>
+                        <li>訓練データのバイアスが予測にどのように影響する可能性がありますか？</li>
+                        <li>実際のキャリア決定のためにこのシステムを信頼しますか？なぜ、またはなぜしないのですか？</li>
+                        <li>推薦システムにとってどのような倫理的考慮事項が重要ですか？</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Personal Growth</h4>
+                    <ul>
+                        <li>What did you learn about ML that surprised you?</li>
+                        <li>How has your understanding of AI changed since Week 1?</li>
+                        <li>How will you apply this knowledge in your career?</li>
+                        <li>What would you tell someone starting ML-101?</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>個人的成長</h4>
+                    <ul>
+                        <li>あなたを驚かせたMLについて何を学びましたか？</li>
+                        <li>第1週以来、AIに関するあなたの理解はどのように変わりましたか？</li>
+                        <li>キャリアでこの知識をどのように適用しますか？</li>
+                        <li>ML-101を始める人に何を伝えますか？</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>Course Reflection</h2>
+
+            <p>Take time to reflect on your entire learning journey through ML-101.</p>
+            <p>ML-101を通じたあなたの全学習の旅を振り返る時間を取ってください。</p>
+
+            <div class="highlight-box">
+                <h4>Reflection Questions / 振り返り質問</h4>
+                <ol>
+                    <li><strong>Most Valuable Learning Experience / 最も価値のある学習経験</strong><br>
+                        What was the single most valuable thing you learned in this course?<br>
+                        このコースで学んだ最も価値のあることは何でしたか？</li>
+                    <li><strong>Greatest Challenge / 最大の課題</strong><br>
+                        What challenged you the most, and how did you overcome it?<br>
+                        何が最も挑戦的で、それをどのように克服しましたか？</li>
+                    <li><strong>Perspective Shift / 視点の変化</strong><br>
+                        How has your understanding of AI and ML changed?<br>
+                        AIとMLに関するあなたの理解はどのように変わりましたか？</li>
+                    <li><strong>Future Application / 将来の応用</strong><br>
+                        How will you use ML knowledge in your future career?<br>
+                        将来のキャリアでML知識をどのように使用しますか？</li>
+                    <li><strong>Course Improvement / コース改善</strong><br>
+                        What suggestions do you have for improving ML-101?<br>
+                        ML-101を改善するためのどのような提案がありますか？</li>
+                </ol>
+            </div>
+
+            <h2>Future Learning Paths</h2>
+
+            <p>Completing ML-101 is not the end—it's the beginning of your ML journey.</p>
+            <p>ML-101を完了することは終わりではありません—それはあなたのML旅の始まりです。</p>
+
+            <h3>Ways to Continue Your ML Education / ML教育を続ける方法</h3>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Deepen ML Skills</h4>
+                    <ul>
+                        <li><strong>Advanced ML Courses:</strong> Deep learning, neural networks, advanced algorithms</li>
+                        <li><strong>Specialized ML:</strong> Natural Language Processing (NLP), Computer Vision, Reinforcement Learning</li>
+                        <li><strong>ML Engineering:</strong> Deployment, scaling, production systems</li>
+                        <li><strong>ML Theory:</strong> Mathematical foundations, statistical learning</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>MLスキルを深める</h4>
+                    <ul>
+                        <li><strong>高度なMLコース:</strong> ディープラーニング、ニューラルネットワーク、高度なアルゴリズム</li>
+                        <li><strong>専門的なML:</strong> 自然言語処理（NLP）、コンピュータビジョン、強化学習</li>
+                        <li><strong>MLエンジニアリング:</strong> 展開、スケーリング、本番システム</li>
+                        <li><strong>ML理論:</strong> 数学的基礎、統計学習</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Apply ML to Your Field</h4>
+                    <ul>
+                        <li><strong>Business Analytics:</strong> Customer segmentation, sales forecasting, churn prediction</li>
+                        <li><strong>Healthcare:</strong> Disease diagnosis, treatment recommendations, medical imaging</li>
+                        <li><strong>Finance:</strong> Risk assessment, fraud detection, algorithmic trading</li>
+                        <li><strong>Marketing:</strong> Personalization, recommendation engines, campaign optimization</li>
+                        <li><strong>Your Industry:</strong> Find ML applications specific to your career path</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>あなたの分野にMLを適用</h4>
+                    <ul>
+                        <li><strong>ビジネス分析:</strong> 顧客セグメンテーション、販売予測、離脱予測</li>
+                        <li><strong>医療:</strong> 疾患診断、治療推薦、医療画像</li>
+                        <li><strong>金融:</strong> リスク評価、不正検出、アルゴリズム取引</li>
+                        <li><strong>マーケティング:</strong> パーソナライゼーション、推薦エンジン、キャンペーン最適化</li>
+                        <li><strong>あなたの業界:</strong> あなたのキャリアパスに固有のMLアプリケーションを見つける</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Develop Related Skills</h4>
+                    <ul>
+                        <li><strong>Programming:</strong> Python mastery, software engineering practices</li>
+                        <li><strong>Data Skills:</strong> SQL, data visualization, big data technologies</li>
+                        <li><strong>AI Ethics:</strong> Fairness, accountability, transparency in AI systems</li>
+                        <li><strong>Domain Expertise:</strong> Combine ML with deep knowledge of your field</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>関連スキルを開発</h4>
+                    <ul>
+                        <li><strong>プログラミング:</strong> Pythonマスタリー、ソフトウェアエンジニアリングプラクティス</li>
+                        <li><strong>データスキル:</strong> SQL、データ可視化、ビッグデータ技術</li>
+                        <li><strong>AI倫理:</strong> AIシステムにおける公平性、説明責任、透明性</li>
+                        <li><strong>ドメイン専門知識:</strong> MLとあなたの分野の深い知識を組み合わせる</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="celebration-box">
+                <h2 style="text-align: center;">You Built a Complete ML System from Scratch</h2>
+                <h2 style="text-align: center;">あなたはゼロから完全なMLシステムを構築しました</h2>
+                <p style="text-align: center; font-size: 1.2em; margin-top: 20px;">From collecting data to making predictions, you mastered the entire ML workflow.</p>
+                <p style="text-align: center; font-size: 1.2em;">データ収集から予測まで、完全なMLワークフローをマスターしました。</p>
+                <p style="text-align: center; font-size: 1.2em; margin-top: 20px;"><strong>That's an amazing achievement!</strong></p>
+                <p style="text-align: center; font-size: 1.2em;"><strong>それは驚くべき達成です！</strong></p>
+            </div>
+
+            <h2>Final Thoughts</h2>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Remember</h4>
+                    <p>Machine learning is a tool. Like any tool, its value depends on how you use it.</p>
+                    <ul>
+                        <li>Use ML to solve real problems</li>
+                        <li>Think critically about AI's limitations</li>
+                        <li>Consider ethical implications</li>
+                        <li>Keep learning and stay curious</li>
+                        <li>Share your knowledge with others</li>
+                    </ul>
+                    <p style="margin-top: 20px;"><strong>You're not just a user of AI technology anymore—you're a creator.</strong></p>
+                </div>
+                <div class="japanese-col">
+                    <h4>覚えておいてください</h4>
+                    <p>機械学習はツールです。どのツールも同様に、その価値はそれをどのように使用するかに依存します。</p>
+                    <ul>
+                        <li>実際の問題を解決するためにMLを使用する</li>
+                        <li>AIの限界について批判的に考える</li>
+                        <li>倫理的影響を考慮する</li>
+                        <li>学習を続け、好奇心を持ち続ける</li>
+                        <li>他の人とあなたの知識を共有する</li>
+                    </ul>
+                    <p style="margin-top: 20px;"><strong>あなたはもはやAI技術のユーザーだけではありません—あなたは創造者です。</strong></p>
+                </div>
+            </div>
+
+            <div class="celebration-box" style="margin-top: 40px;">
+                <h2 style="text-align: center; margin-bottom: 20px;">Thank You!</h2>
+                <h2 style="text-align: center; margin-bottom: 20px;">ありがとうございました！</h2>
+                <p style="text-align: center; font-size: 1.3em;">It's been an honor to guide you through this ML journey.</p>
+                <p style="text-align: center; font-size: 1.3em;">このML旅を通じてあなたをガイドできたことは光栄でした。</p>
+                <p style="text-align: center; font-size: 1.3em; margin-top: 20px;"><strong>Keep building, keep learning, keep questioning!</strong></p>
+                <p style="text-align: center; font-size: 1.3em;"><strong>構築を続け、学習を続け、質問を続けてください！</strong></p>
+                <p style="text-align: center; font-size: 1.3em; margin-top: 20px;"><strong>Best wishes for your future with ML!</strong></p>
+                <p style="text-align: center; font-size: 1.3em;"><strong>MLとのあなたの未来に幸あれ！</strong></p>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+                <a href="assignment.html" class="btn btn-accent">View Assignment</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>著作権 &copy; 2025 Yuri Tijerino. 無断転載を禁じます。</p>
+        </div>
+    </footer>
+</body>
+</html>

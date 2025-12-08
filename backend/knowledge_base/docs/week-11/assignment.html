@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 11 Assignment: Training ML Classification Models | ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .assignment-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .assignment-content h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .assignment-content h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .assignment-content h4 {
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .info-box {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color);
+            margin: 20px 0;
+        }
+        .warning-box {
+            background: #fef3cd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--warning);
+            margin: 20px 0;
+        }
+        .success-box {
+            background: #d1fae5;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--success);
+            margin: 20px 0;
+        }
+        .deliverable-box {
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid var(--border-color);
+        }
+        .rubric-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .rubric-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .rubric-table td {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .rubric-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+        .example-box {
+            background: #f3e8ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--secondary-color);
+            margin: 20px 0;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        code {
+            background: var(--bg-light);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        @media (max-width: 768px) {
+            .assignment-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Week 11 Assignment</h1>
+            <p class="subtitle">Training Company Classification Model Using No-Code ML Tool<br>ノーコードMLツールを使用した企業分類モデルの訓練</p>
+            <p class="instructor">Instructor: Yuri Tijerino</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="lecture.html">Lecture Notes</a>
+            <a href="slides.html">Presentation Slides</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="assignment-content">
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="lecture.html" class="btn btn-primary">View Lecture</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+            </div>
+
+            <div class="info-box">
+                <h3>Assignment Overview / 課題概要</h3>
+                <p><strong>Course:</strong> Machine Learning and Intelligence | 機械学習と知能</p>
+                <p><strong>Week:</strong> 11 | 第11週</p>
+                <p><strong>Duration:</strong> 40-60 minutes | 40-60分</p>
+                <p><strong>Due Date:</strong> End of Week 11 class session | 第11週授業終了時</p>
+                <p><strong>Weight:</strong> Part of 40% Weekly Activities grade | 週次アクティビティ評価40%の一部</p>
+                <p><strong>Submission:</strong> Through ML-101 Bot Portal | ML-101ボットポータル経由</p>
+            </div>
+
+            <p>This assignment focuses on training your first machine learning classification model using a no-code ML platform. You'll take your Week 10 labeled dataset and train a model that learns your company preferences.</p>
+            <p>この課題は、ノーコードMLプラットフォームを使用して初めての機械学習分類モデルを訓練することに焦点を当てています。第10週のラベル付きデータセットを使用して、あなたの企業の好みを学習するモデルを訓練します。</p>
+
+            <h2>Learning Objectives / 学習目標</h2>
+
+            <p>By completing this assignment, you will be able to:</p>
+            <p>この課題を完了することで、以下ができるようになります：</p>
+
+            <ul>
+                <li>✅ Use a no-code ML platform to train classification models<br>
+                    ノーコードMLプラットフォームを使用して分類モデルを訓練する</li>
+                <li>✅ Configure training parameters and settings<br>
+                    訓練パラメータと設定を設定する</li>
+                <li>✅ Understand the model training process<br>
+                    モデル訓練プロセスを理解する</li>
+                <li>✅ Interpret training results and metrics<br>
+                    訓練結果とメトリクスを解釈する</li>
+                <li>✅ Save and export trained ML models<br>
+                    訓練済みMLモデルを保存およびエクスポートする</li>
+            </ul>
+
+            <h2>Prerequisites / 前提条件</h2>
+
+            <ul>
+                <li>✅ Completed Week 10 - Manual Classification (labeled training dataset)<br>
+                    第10週完了 - 手動分類（ラベル付き訓練データセット）</li>
+                <li>✅ Attended Week 11 lecture (or reviewed lecture materials)<br>
+                    第11週講義に出席（または講義教材をレビュー）</li>
+                <li>✅ Access to recommended no-code ML platform<br>
+                    推奨されるノーコードMLプラットフォームへのアクセス</li>
+                <li>✅ Access to ML-101 Bot portal<br>
+                    ML-101ボットポータルへのアクセス</li>
+            </ul>
+
+            <h2>Assignment Deliverables / 課題成果物</h2>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 1: Training Results Documentation</h3>
+                <h4>成果物1：訓練結果文書</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Complete documentation of your model training process and results.</p>
+                <p>モデル訓練プロセスと結果の完全な文書化。</p>
+
+                <h4>Include the following / 以下を含める:</h4>
+
+                <ol>
+                    <li>
+                        <strong>Platform Information / プラットフォーム情報</strong>
+                        <ul>
+                            <li>Which no-code ML platform did you use?</li>
+                            <li>Why did you choose this platform?</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Training Configuration / 訓練設定</strong>
+                        <ul>
+                            <li>Target variable (label column)</li>
+                            <li>Features used (list all feature columns)</li>
+                            <li>Training mode (automatic or manual model selection)</li>
+                            <li>Train/test split ratio (if customizable)</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Model Type / モデルタイプ</strong>
+                        <ul>
+                            <li>What algorithm/model was selected?</li>
+                            <li>Was it automatic or did you choose manually?</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Training Process / 訓練プロセス</strong>
+                        <ul>
+                            <li>Training start time and date</li>
+                            <li>How long did training take?</li>
+                            <li>Any interesting observations during training?</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Performance Metrics / パフォーマンスメトリクス</strong>
+                        <ul>
+                            <li>Training accuracy (if shown)</li>
+                            <li>Test/validation accuracy</li>
+                            <li>Any other metrics reported (precision, recall, F1, etc.)</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Screenshots / スクリーンショット</strong>
+                        <ul>
+                            <li>Screenshot of training configuration screen</li>
+                            <li>Screenshot of training in progress</li>
+                            <li>Screenshot of final results/metrics</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li><strong>Document format:</strong> PDF or Word with embedded images</li>
+                        <li><strong>Length:</strong> 2-3 pages with screenshots</li>
+                        <li><strong>Clear sections</strong> for each required component</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (40 points) / 採点（40点）:</h4>
+                <ul>
+                    <li>Complete platform and configuration documentation: <strong>10 points</strong></li>
+                    <li>Training process documentation: <strong>10 points</strong></li>
+                    <li>Performance metrics reported: <strong>10 points</strong></li>
+                    <li>Screenshots included: <strong>10 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 2: Trained Model Access Information</h3>
+                <h4>成果物2：訓練済みモデルアクセス情報</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Information needed to access your trained model for Week 12 evaluation.</p>
+                <p>第12週の評価のために訓練済みモデルにアクセスするために必要な情報。</p>
+
+                <h4>Provide ONE of the following / 以下のいずれかを提供:</h4>
+
+                <ul>
+                    <li><strong>Option A: Model ID/Name in Platform</strong><br>
+                        If model is saved on the platform:
+                        <ul>
+                            <li>Model ID or unique name</li>
+                            <li>Platform account information (username/email)</li>
+                            <li>How to access the model next week</li>
+                        </ul>
+                    </li>
+                    <li><strong>Option B: Downloaded Model File</strong><br>
+                        If you downloaded the model:
+                        <ul>
+                            <li>Include the model file in your submission</li>
+                            <li>Note file format and size</li>
+                            <li>Instructions for loading the model</li>
+                        </ul>
+                    </li>
+                    <li><strong>Option C: API Access</strong><br>
+                        If model is accessible via API:
+                        <ul>
+                            <li>API endpoint URL</li>
+                            <li>Access credentials (if safe to share)</li>
+                            <li>Example API call</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>Important / 重要:</h4>
+                    <p>You MUST be able to access this model in Week 12 to test it on new companies!</p>
+                    <p>第12週で新しい企業でテストするためにこのモデルにアクセスできる必要があります！</p>
+                </div>
+
+                <h4>Scoring (20 points) / 採点（20点）:</h4>
+                <ul>
+                    <li>Model saved/accessible: <strong>10 points</strong></li>
+                    <li>Clear access instructions: <strong>10 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 3: Training Reflection</h3>
+                <h4>成果物3：訓練考察</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Write <strong>1-2 paragraphs</strong> (150-300 words) reflecting on your model training experience.</p>
+                <p>モデル訓練経験について<strong>1-2段落</strong>（150-300語）を書きます。</p>
+
+                <h4>Guiding Questions / ガイド質問:</h4>
+                <ul>
+                    <li>What did you observe during the training process?<br>
+                        訓練プロセス中に何を観察しましたか？</li>
+                    <li>Were there any surprises or challenges?<br>
+                        驚きや課題はありましたか？</li>
+                    <li>What do you think the model learned from your labels?<br>
+                        モデルはあなたのラベルから何を学んだと思いますか？</li>
+                    <li>How do you feel about the initial accuracy?<br>
+                        初期精度についてどう感じますか？</li>
+                    <li>What did you learn about no-code ML platforms?<br>
+                        ノーコードMLプラットフォームについて何を学びましたか？</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li>Include in same document as Deliverable 1</li>
+                        <li>Clearly labeled section: "Training Reflection"</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (30 points) / 採点（30点）:</h4>
+                <ul>
+                    <li>Observations about training process: <strong>10 points</strong></li>
+                    <li>Understanding of what model learned: <strong>10 points</strong></li>
+                    <li>Thoughtful reflection on experience: <strong>10 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 4: AI Transparency Log (if applicable)</h3>
+                <h4>成果物4：AI透明性ログ（該当する場合）</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>If you used external AI chatbots for help understanding concepts or troubleshooting:</p>
+                <p>コンセプトの理解やトラブルシューティングのために外部AIチャットボットを使用した場合：</p>
+
+                <ol>
+                    <li><strong>All prompts used / 使用したすべてのプロンプト</strong></li>
+                    <li><strong>All AI responses / すべてのAI応答</strong></li>
+                    <li><strong>Verification process / 検証プロセス</strong>
+                        <ul>
+                            <li>Did you verify AI's explanations?</li>
+                            <li>Did the information help you?</li>
+                        </ul>
+                    </li>
+                    <li><strong>Check for hallucinations / 幻覚をチェック</strong>
+                        <ul>
+                            <li>Was the AI information accurate?</li>
+                            <li>Were platform instructions correct?</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>Appropriate AI Use / 適切なAI使用:</h4>
+                    <p><strong>ALLOWED:</strong></p>
+                    <ul>
+                        <li>✅ Explaining ML training concepts</li>
+                        <li>✅ Understanding platform interface</li>
+                        <li>✅ Troubleshooting errors</li>
+                    </ul>
+                    <p><strong>Document all usage with transparency log!</strong></p>
+                </div>
+
+                <h4>Scoring (10 points) / 採点（10点）:</h4>
+                <ul>
+                    <li>Complete documentation: <strong>10 points</strong></li>
+                </ul>
+            </div>
+
+            <h2>Submission Instructions / 提出指示</h2>
+
+            <div class="success-box">
+                <h3>How to Submit / 提出方法</h3>
+                <ol>
+                    <li><strong>Prepare your files:</strong><br>
+                        <ul>
+                            <li>Main document with Deliverables 1, 3, and 4 (PDF/Word)</li>
+                            <li>Model file OR model access instructions (Deliverable 2)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Name your files:</strong><br>
+                        <ul>
+                            <li><code>Week11_[YourName]_ModelTraining.pdf</code></li>
+                            <li><code>Week11_[YourName]_ModelInfo.txt</code> (or model file)</li>
+                        </ul>
+                        <em>Example: Week11_YuriTijerino_ModelTraining.pdf</em>
+                    </li>
+                    <li><strong>Upload through ML-101 Bot Portal:</strong><br>
+                        <ul>
+                            <li>Log in to bot portal</li>
+                            <li>Navigate to "Week 11 Assignment Submission"</li>
+                            <li>Upload all files</li>
+                            <li>Click "Submit"</li>
+                        </ul>
+                    </li>
+                    <li><strong>Confirm submission:</strong><br>
+                        You should receive automated confirmation within 5 minutes
+                    </li>
+                </ol>
+            </div>
+
+            <div class="warning-box">
+                <h3>Submission Deadline / 提出期限</h3>
+                <p><strong>Due:</strong> End of Week 11 class session | <strong>期限:</strong> 第11週授業終了時</p>
+
+                <h4>Late Policy / 遅延ポリシー:</h4>
+                <ul>
+                    <li>Up to 24 hours late: <strong>-10%</strong></li>
+                    <li>24-48 hours late: <strong>-20%</strong></li>
+                    <li>More than 48 hours late: <strong>Not accepted</strong> without prior arrangement</li>
+                </ul>
+            </div>
+
+            <h2>Grading Rubric / 評価ルーブリック</h2>
+
+            <table class="rubric-table">
+                <thead>
+                    <tr>
+                        <th>Deliverable</th>
+                        <th>Points</th>
+                        <th>Criteria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Training Documentation</strong><br>訓練文書</td>
+                        <td><strong>40</strong></td>
+                        <td>Complete config, process, metrics, screenshots<br>完全な設定、プロセス、メトリクス、スクリーンショット</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Model Access</strong><br>モデルアクセス</td>
+                        <td><strong>20</strong></td>
+                        <td>Model saved, clear access instructions<br>モデル保存、明確なアクセス指示</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Training Reflection</strong><br>訓練考察</td>
+                        <td><strong>30</strong></td>
+                        <td>Thoughtful observations, understanding demonstrated<br>思慮深い観察、理解の実証</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI Transparency</strong><br>AI透明性</td>
+                        <td><strong>10</strong></td>
+                        <td>Complete documentation (if AI used)<br>完全な文書化（AIを使用した場合）</td>
+                    </tr>
+                    <tr style="background: var(--primary-color); color: white; font-weight: bold;">
+                        <td><strong>TOTAL</strong><br>合計</td>
+                        <td><strong>100</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Tips for Success / 成功のためのヒント</h2>
+
+            <h3>Platform Selection / プラットフォーム選択</h3>
+            <ul>
+                <li>✅ Use the platform recommended by your instructor</li>
+                <li>✅ If choosing your own, pick one with good documentation</li>
+                <li>✅ Ensure it supports CSV upload for classification</li>
+                <li>✅ Check that it provides free tier or trial</li>
+            </ul>
+
+            <h3>Data Preparation / データ準備</h3>
+            <ul>
+                <li>✅ Verify your Week 10 labeled dataset is complete</li>
+                <li>✅ Ensure all feature columns are numeric</li>
+                <li>✅ Check label column has only 0 and 1</li>
+                <li>✅ Remove or rename columns with special characters</li>
+            </ul>
+
+            <h3>Training Process / 訓練プロセス</h3>
+            <ul>
+                <li>✅ Start with automatic/default settings</li>
+                <li>✅ Take screenshots at each major step</li>
+                <li>✅ Document any errors and how you solved them</li>
+                <li>✅ Be patient - training may take 5-15 minutes</li>
+            </ul>
+
+            <h3>Model Saving / モデル保存</h3>
+            <ul>
+                <li>✅ Save/export model IMMEDIATELY after training</li>
+                <li>✅ Note exactly where model is stored</li>
+                <li>✅ Test that you can access it again</li>
+                <li>✅ Keep backup if possible</li>
+            </ul>
+
+            <h2>Common Issues & Solutions / 一般的な問題と解決策</h2>
+
+            <div class="info-box">
+                <h4>Problem: Platform won't accept CSV file</h4>
+                <p><strong>Solution:</strong> Open in Excel/Sheets and re-save as CSV. Ensure no special characters in column names. Check file size requirements. Try different browser.</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Problem: Platform says dataset is too small</h4>
+                <p><strong>Solution:</strong> 20-25 companies should work for most platforms. If not, try a different platform. Some have minimum row requirements - check documentation. This is a learning exercise!</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Problem: Training fails or returns error</h4>
+                <p><strong>Solution:</strong> Check for missing values in features. Verify all feature columns are numeric. Ensure label column has only 0 and 1. Review configuration - is target variable set correctly?</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Problem: Training takes very long (>20 minutes)</h4>
+                <p><strong>Solution:</strong> Check internet connection. Platform may be busy - try off-peak hours. Consider using a different platform. For ~25 companies, should not take more than 15 minutes.</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Problem: Training accuracy seems very low (e.g., 60%)</h4>
+                <p><strong>Solution:</strong> This is okay for first attempt! Random guessing = 50%, so 60% means model is learning. With small dataset, 60-80% is realistic. We'll evaluate properly next week. Don't worry yet!</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Problem: Can't figure out how to save/export model</h4>
+                <p><strong>Solution:</strong> Look for "Save Model", "Export", or "Download" buttons. Check platform documentation. Some platforms auto-save to your account. Take screenshot of model ID/name. Ask instructor or use bot for help.</p>
+            </div>
+
+            <h2>Example Reflection Excerpt / 考察例の抜粋</h2>
+
+            <div class="example-box">
+                <h3>Training Reflection Example</h3>
+
+                <p>"During the training process, I was surprised by how quickly the platform processed my data. It took about 8 minutes total from upload to final results. The platform automatically selected Random Forest as the best algorithm for my dataset, achieving 72% accuracy on the test set.</p>
+
+                <p>I think the model learned to identify companies I find interesting based on patterns in industry type and company size. The accuracy of 72% is better than random guessing (50%), which means the model is definitely learning something from my labels. I'm curious to see how it performs on completely new companies next week.</p>
+
+                <p>Using the no-code platform was much easier than I expected. I didn't have to write any code, just upload my CSV and click through configuration screens. This experience showed me that ML is accessible even without programming expertise."</p>
+
+                <p><strong>訓練考察の例</strong></p>
+
+                <p>「訓練プロセス中、プラットフォームがどれだけ速く私のデータを処理したかに驚きました。アップロードから最終結果まで約8分かかりました。プラットフォームは私のデータセットに最適なアルゴリズムとしてランダムフォレストを自動的に選択し、テストセットで72%の精度を達成しました。</p>
+
+                <p>モデルは、業界タイプと企業規模のパターンに基づいて、私が興味深いと思う企業を特定することを学習したと思います。72%の精度はランダム推測（50%）よりも優れており、これはモデルが私のラベルから確実に何かを学習していることを意味します。来週、完全に新しい企業でどのように機能するかを見るのが楽しみです。</p>
+
+                <p>ノーコードプラットフォームの使用は予想よりもはるかに簡単でした。コードを書く必要はなく、CSVをアップロードして設定画面をクリックするだけでした。この経験は、プログラミングの専門知識がなくてもMLがアクセス可能であることを示しました。」</p>
+            </div>
+
+            <h2>Academic Integrity / 学術的誠実性</h2>
+
+            <div class="warning-box">
+                <h4>Permitted / 許可されている:</h4>
+                <ul>
+                    <li>✅ Using ML-101 Bot for guidance</li>
+                    <li>✅ Using AI to understand training concepts</li>
+                    <li>✅ Asking classmates about platform recommendations</li>
+                    <li>✅ Consulting platform documentation</li>
+                </ul>
+
+                <h4>Not Permitted / 許可されていない:</h4>
+                <ul>
+                    <li>❌ Submitting someone else's trained model</li>
+                    <li>❌ Copying screenshots from another student</li>
+                    <li>❌ Fabricating training results</li>
+                </ul>
+
+                <h4>Remember:</h4>
+                <p>This is YOUR learning experience. Train your own model using YOUR labeled data!</p>
+            </div>
+
+            <div class="success-box" style="text-align: center; margin-top: 40px;">
+                <h2>Congratulations - you're about to train your first ML model!</h2>
+                <h2>おめでとうございます - 初めてのMLモデルを訓練しようとしています！</h2>
+                <p>This is a major milestone in your ML journey.</p>
+                <p>これはあなたのML旅程における主要なマイルストーンです。</p>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="lecture.html" class="btn btn-primary">View Lecture</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>著作権 &copy; 2025 Yuri Tijerino. 無断転載を禁じます。</p>
+        </div>
+    </footer>
+</body>
+</html>

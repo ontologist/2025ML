@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 13: Final Project Development</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            color: #333;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            background: white;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px 80px;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide h1 {
+            font-size: 3em;
+            color: #2563eb;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .slide h2 {
+            font-size: 2.2em;
+            color: #7c3aed;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 10px;
+        }
+
+        .slide h3 {
+            font-size: 1.8em;
+            color: #2563eb;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .slide h4 {
+            font-size: 1.4em;
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .slide p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        .slide ul, .slide ol {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-left: 40px;
+            margin-bottom: 20px;
+        }
+
+        .slide li {
+            margin-bottom: 10px;
+        }
+
+        .bilingual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 20px 0;
+        }
+
+        .english, .japanese {
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .english {
+            background: #dbeafe;
+            border-left: 4px solid #2563eb;
+        }
+
+        .japanese {
+            background: #f3e8ff;
+            border-left: 4px solid #7c3aed;
+        }
+
+        .highlight-box {
+            background: #fef3cd;
+            border-left: 5px solid #f59e0b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background: #d1fae5;
+            border-left: 5px solid #10b981;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .code-box {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: white;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:hover {
+            background: #2563eb;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-number {
+            position: fixed;
+            top: 70px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            color: #2563eb;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .title-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+
+        .title-slide h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .title-slide .subtitle {
+            font-size: 2em;
+            color: #7c3aed;
+            margin-bottom: 40px;
+        }
+
+        .title-slide .info {
+            font-size: 1.3em;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .checklist {
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .checklist li {
+            margin-bottom: 8px;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 1024px) {
+            .slide {
+                padding: 40px 50px;
+            }
+
+            .slide h1 {
+                font-size: 2.5em;
+            }
+
+            .slide h2 {
+                font-size: 2em;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .slide-container {
+                padding: 0;
+            }
+
+            .slide {
+                width: 100vw;
+                height: auto;
+                min-height: 100vh;
+                padding: 20px;
+                border-radius: 0;
+            }
+
+            .slide h1 {
+                font-size: 2em;
+            }
+
+            .slide h2 {
+                font-size: 1.6em;
+            }
+
+            .bilingual {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .title-slide h1 {
+                font-size: 2.5em;
+            }
+
+            .title-slide .subtitle {
+                font-size: 1.4em;
+            }
+
+            .navigation {
+                bottom: 15px;
+                gap: 10px;
+            }
+
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 0.95em;
+            }
+        }
+
+        .slides-nav {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+            padding: 10px 20px;
+        }
+
+        .slides-nav .container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .slides-nav a {
+            color: #1f2937;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .slides-nav a:hover {
+            color: #2563eb;
+        }
+
+        body {
+            padding-top: 50px;
+        }
+    </style>
+    <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+    <nav class="slides-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="lecture.html">Lecture Notes</a>
+            <a href="assignment.html">Assignment</a>
+        </div>
+    </nav>
+
+    <div class="slide-number" id="slideNumber">Slide 1 / 12</div>
+
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active title-slide">
+            <h1>Week 13</h1>
+            <p class="subtitle">Final Project Development<br>最終プロジェクト開発</p>
+            <p class="info"><strong>Course:</strong> Machine Learning and Intelligence</p>
+            <p class="info"><strong>Instructor:</strong> Yuri Tijerino</p>
+            <p class="info"><strong>Duration:</strong> 15-20 minutes / 15-20分</p>
+        </div>
+
+        <!-- Slide 2: Welcome and Overview -->
+        <div class="slide">
+            <h2>Final Project Completion Week!</h2>
+            <h2>最終プロジェクト完成週！</h2>
+            <div class="bilingual">
+                <div class="english">
+                    <h3>Today's Objectives:</h3>
+                    <ul>
+                        <li>Review complete ML workflow progress</li>
+                        <li>Refine and improve your system</li>
+                        <li>Create comprehensive documentation</li>
+                        <li>Prepare final presentation</li>
+                        <li>Package all deliverables</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <h3>今日の目標:</h3>
+                    <ul>
+                        <li>完全なMLワークフローの進捗を確認</li>
+                        <li>システムを改良し改善</li>
+                        <li>包括的な文書を作成</li>
+                        <li>最終プレゼンテーションを準備</li>
+                        <li>すべての成果物をパッケージ化</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <p style="text-align: center; font-size: 1.3em;"><strong>This is it - bringing together 13 weeks of learning!</strong></p>
+                <p style="text-align: center; font-size: 1.3em;"><strong>これです - 13週間の学習をまとめます！</strong></p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Your ML Journey So Far -->
+        <div class="slide">
+            <h2>Your Complete ML Journey</h2>
+            <h2>あなたの完全なML旅</h2>
+            <h3>What You've Accomplished / 達成したこと</h3>
+            <div class="two-column">
+                <div>
+                    <h4>Data Collection & Preparation:</h4>
+                    <ul class="checklist">
+                        <li>Week 6: Data collection (20-30 companies)</li>
+                        <li>Week 7: Data cleaning</li>
+                        <li>Week 8: Missing data handling</li>
+                        <li>Week 9: Feature engineering</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Model Development:</h4>
+                    <ul class="checklist">
+                        <li>Week 10: Manual labeling</li>
+                        <li>Week 11: Model training</li>
+                        <li>Week 12: Model evaluation</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="success-box">
+                <p style="text-align: center; font-size: 1.2em;"><strong>You've completed the entire ML workflow from data to predictions!</strong></p>
+                <p style="text-align: center; font-size: 1.2em;"><strong>データから予測までの完全なMLワークフローを完了しました！</strong></p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Project Status Review -->
+        <div class="slide">
+            <h2>Project Status Review</h2>
+            <h2>プロジェクトステータス確認</h2>
+            <h3>Completeness Checklist / 完全性チェックリスト</h3>
+            <div class="bilingual">
+                <div class="english">
+                    <h4>Required Components:</h4>
+                    <ul class="checklist">
+                        <li>✓ Dataset with 20+ companies</li>
+                        <li>✓ Cleaned and processed data</li>
+                        <li>✓ Engineered features</li>
+                        <li>✓ Training and test datasets</li>
+                        <li>✓ Trained classification model</li>
+                        <li>✓ Evaluation results</li>
+                    </ul>
+                    <h4>Gap Analysis:</h4>
+                    <p>Identify any missing or incomplete components that need attention.</p>
+                </div>
+                <div class="japanese">
+                    <h4>必要なコンポーネント:</h4>
+                    <ul class="checklist">
+                        <li>✓ 20社以上のデータセット</li>
+                        <li>✓ クリーニングおよび処理されたデータ</li>
+                        <li>✓ エンジニアリングされた特徴量</li>
+                        <li>✓ 訓練およびテストデータセット</li>
+                        <li>✓ 訓練済み分類モデル</li>
+                        <li>✓ 評価結果</li>
+                    </ul>
+                    <h4>ギャップ分析:</h4>
+                    <p>注意が必要な欠落または不完全なコンポーネントを特定します。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: System Refinement -->
+        <div class="slide">
+            <h2>System Refinement</h2>
+            <h2>システム改良</h2>
+            <h3>Based on Week 12 Evaluation / 第12週の評価に基づいて</h3>
+            <div class="highlight-box">
+                <h4>Optional Refinements (Choose 1-2 Most Impactful):</h4>
+                <ul>
+                    <li>Add 2-5 more training companies to improve dataset<br>
+                        データセット改善のために2-5の訓練企業を追加</li>
+                    <li>Add new keywords based on what model missed<br>
+                        モデルが見逃したものに基づいて新しいキーワードを追加</li>
+                    <li>Refine feature engineering based on feature importance<br>
+                        特徴量の重要性に基づいて特徴量エンジニアリングを改良</li>
+                    <li>Re-train model with improvements<br>
+                        改善を伴ってモデルを再訓練</li>
+                    <li>Test refined model on same test set<br>
+                        同じテストセットで改良されたモデルをテスト</li>
+                </ul>
+            </div>
+            <p><strong>Important:</strong> Document WHY you made changes - that's as important as the results!</p>
+            <p><strong>重要:</strong> なぜ変更を行ったかを文書化してください - それは結果と同じくらい重要です！</p>
+        </div>
+
+        <!-- Slide 6: Documentation Requirements -->
+        <div class="slide">
+            <h2>Comprehensive Documentation</h2>
+            <h2>包括的な文書</h2>
+            <h3>Required Sections (10-15 pages total) / 必要なセクション（合計10-15ページ）</h3>
+            <ol>
+                <li><strong>Project Overview (1-2 pages)</strong> - Goal, motivation, ML workflow summary<br>
+                    プロジェクト概要 - 目標、動機、MLワークフロー要約</li>
+                <li><strong>Data Collection Process (1-2 pages)</strong> - Sources, methodology, ethical considerations<br>
+                    データ収集プロセス - ソース、方法論、倫理的考慮事項</li>
+                <li><strong>Data Preparation (2-3 pages)</strong> - Cleaning, missing data handling, quality comparison<br>
+                    データ準備 - クリーニング、欠損データ処理、品質比較</li>
+                <li><strong>Feature Engineering (1-2 pages)</strong> - Features created, rationale, importance insights<br>
+                    特徴量エンジニアリング - 作成された特徴量、根拠、重要性の洞察</li>
+                <li><strong>Model Training & Evaluation (2-3 pages)</strong> - Configuration, metrics, critical analysis<br>
+                    モデル訓練と評価 - 設定、メトリクス、批判的分析</li>
+                <li><strong>Complete AI Interaction Log (required)</strong> - All AI usage documented<br>
+                    完全なAIインタラクションログ（必須） - すべてのAI使用を文書化</li>
+                <li><strong>Conclusion & Reflection (1 page)</strong> - Key learnings, future applications<br>
+                    結論と考察 - 主要な学習、将来の応用</li>
+            </ol>
+        </div>
+
+        <!-- Slide 7: Presentation Preparation -->
+        <div class="slide">
+            <h2>Final Presentation Structure</h2>
+            <h2>最終プレゼンテーション構造</h2>
+            <h3>5-7 Slides for 5-Minute Presentation / 5分のプレゼンテーション用の5-7スライド</h3>
+            <div class="two-column">
+                <div>
+                    <h4>Slide 1: Title & Introduction</h4>
+                    <p>タイトルと紹介</p>
+                    <ul>
+                        <li>Project title and your name</li>
+                        <li>Brief project description</li>
+                    </ul>
+
+                    <h4>Slide 2: The Problem</h4>
+                    <p>問題</p>
+                    <ul>
+                        <li>Why company recommendation matters</li>
+                        <li>What you wanted to achieve</li>
+                    </ul>
+
+                    <h4>Slide 3: Data Collection</h4>
+                    <p>データ収集と準備</p>
+                    <ul>
+                        <li>Data sources and statistics</li>
+                        <li>Key preparation steps</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Slide 4: Model Training</h4>
+                    <p>特徴量エンジニアリングとモデル訓練</p>
+                    <ul>
+                        <li>Features created</li>
+                        <li>Training approach</li>
+                    </ul>
+
+                    <h4>Slide 5: Results</h4>
+                    <p>結果と評価</p>
+                    <ul>
+                        <li>Performance metrics</li>
+                        <li>Example predictions</li>
+                    </ul>
+
+                    <h4>Slide 6: Learnings</h4>
+                    <p>課題と学習</p>
+                    <ul>
+                        <li>Challenges encountered</li>
+                        <li>How you overcame them</li>
+                    </ul>
+
+                    <h4>Slide 7: Conclusion</h4>
+                    <p>結論と将来の応用</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Presentation Tips -->
+        <div class="slide">
+            <h2>Presentation Success Tips</h2>
+            <h2>プレゼンテーション成功のヒント</h2>
+            <div class="bilingual">
+                <div class="english">
+                    <h3>Content Focus:</h3>
+                    <ul>
+                        <li>Tell YOUR story - the journey matters</li>
+                        <li>Show what YOU learned, not just technical details</li>
+                        <li>Include 1-2 examples of actual predictions</li>
+                        <li>Explain why this project matters to YOU</li>
+                        <li>Less jargon, more narrative</li>
+                    </ul>
+                    <h3>Delivery:</h3>
+                    <ul>
+                        <li>Practice with a timer (aim for 5 minutes)</li>
+                        <li>Speak slowly - nerves make us rush</li>
+                        <li>Prepare for Q&A</li>
+                        <li>Export slides as PDF</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <h3>コンテンツの焦点:</h3>
+                    <ul>
+                        <li>あなたのストーリーを伝える - 旅が重要</li>
+                        <li>技術的詳細だけでなく、あなたが学んだことを示す</li>
+                        <li>実際の予測の1-2の例を含める</li>
+                        <li>このプロジェクトがあなたにとってなぜ重要かを説明</li>
+                        <li>専門用語を少なく、物語を多く</li>
+                    </ul>
+                    <h3>配信:</h3>
+                    <ul>
+                        <li>タイマーで練習（5分を目指す）</li>
+                        <li>ゆっくり話す - 緊張すると急ぐ</li>
+                        <li>Q&Aの準備</li>
+                        <li>スライドをPDFとしてエクスポート</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Final Deliverables -->
+        <div class="slide">
+            <h2>Final Project Deliverables</h2>
+            <h2>最終プロジェクト成果物</h2>
+            <h3>Required Submissions / 必須提出物</h3>
+            <div class="success-box">
+                <ol>
+                    <li><strong>Complete Project Documentation (PDF)</strong><br>
+                        完全なプロジェクト文書（PDF） - 10-15 pages with all 7 sections</li>
+                    <li><strong>Presentation Slides (PDF + Original)</strong><br>
+                        プレゼンテーションスライド（PDF+元のフォーマット） - 5-7 slides</li>
+                    <li><strong>Complete AI Transparency Log (PDF/Word)</strong><br>
+                        完全なAI透明性ログ（PDF/Word） - All AI interactions from Weeks 1-13</li>
+                    <li><strong>Project Datasets Package (ZIP)</strong><br>
+                        プロジェクトデータセットパッケージ（ZIP） - All datasets (raw, cleaned, features, training, test)</li>
+                    <li><strong>Model Access Information</strong><br>
+                        モデルアクセス情報 - Trained model file OR access instructions</li>
+                </ol>
+            </div>
+            <p style="text-align: center; margin-top: 20px;"><strong>File Naming:</strong> Week13_YourName_FinalProject.zip</p>
+            <p style="text-align: center;"><strong>ファイル命名:</strong> Week13_あなたの名前_FinalProject.zip</p>
+        </div>
+
+        <!-- Slide 10: Success Criteria -->
+        <div class="slide">
+            <h2>Success Criteria</h2>
+            <h2>成功基準</h2>
+            <h3>How Your Project Will Be Evaluated / プロジェクトの評価方法</h3>
+            <div class="two-column">
+                <div>
+                    <h4>System Completeness (2 points)</h4>
+                    <p>システム完全性（2ポイント）</p>
+                    <ul class="checklist">
+                        <li>All ML workflow components present</li>
+                        <li>Working end-to-end system</li>
+                        <li>Meets minimum requirements</li>
+                    </ul>
+
+                    <h4>Documentation Quality (4 points)</h4>
+                    <p>文書品質（4ポイント）</p>
+                    <ul class="checklist">
+                        <li>All required sections included</li>
+                        <li>Clear, comprehensive content</li>
+                        <li>Professional presentation</li>
+                        <li>Evidence of complete ML journey</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Presentation Preparation (2 points)</h4>
+                    <p>プレゼンテーション準備（2ポイント）</p>
+                    <ul class="checklist">
+                        <li>Well-structured slides</li>
+                        <li>Clear narrative of project journey</li>
+                        <li>Appropriate for 5-minute delivery</li>
+                        <li>Personal insights included</li>
+                    </ul>
+
+                    <h4>AI Transparency (2 points)</h4>
+                    <p>AI透明性（2ポイント）</p>
+                    <ul class="checklist">
+                        <li>Complete AI interaction log</li>
+                        <li>Proper documentation of all AI usage</li>
+                        <li>Verification processes described</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Timeline and Next Steps -->
+        <div class="slide">
+            <h2>Timeline and Deadlines</h2>
+            <h2>タイムラインと締め切り</h2>
+            <div class="highlight-box">
+                <h3>Today's Activity Timeline (40-60 minutes) / 今日のアクティビティタイムライン（40-60分）</h3>
+                <ol style="font-size: 1.1em;">
+                    <li><strong>Project Status Review (10 min)</strong> - Completeness checklist and gap analysis<br>
+                        プロジェクトステータス確認（10分） - 完全性チェックリストとギャップ分析</li>
+                    <li><strong>System Refinement (15 min)</strong> - Optional improvements based on evaluation<br>
+                        システム改良（15分） - 評価に基づくオプションの改善</li>
+                    <li><strong>Documentation Creation (20 min)</strong> - All 7 required sections<br>
+                        文書作成（20分） - すべての7つの必要なセクション</li>
+                    <li><strong>Presentation Preparation (12 min)</strong> - Create and practice slides<br>
+                        プレゼンテーション準備（12分） - スライドを作成し練習</li>
+                    <li><strong>Final Validation (3 min)</strong> - Submit preparation and checklist<br>
+                        最終検証（3分） - 提出準備とチェックリスト</li>
+                </ol>
+            </div>
+            <p style="text-align: center; font-size: 1.3em; margin-top: 30px;"><strong>Deadline: End of Week 13</strong></p>
+            <p style="text-align: center; font-size: 1.3em;"><strong>締め切り: 第13週末</strong></p>
+        </div>
+
+        <!-- Slide 12: Let's Complete Your ML Journey! -->
+        <div class="slide">
+            <h2>Let's Complete Your ML Journey!</h2>
+            <h2>MLの旅を完成させましょう！</h2>
+            <div class="success-box">
+                <h3 style="text-align: center;">"This is a LEARNING project, not a production system."</h3>
+                <h3 style="text-align: center;">「これは学習プロジェクトであり、本番システムではありません。」</h3>
+                <p style="text-align: center; font-size: 1.2em; margin-top: 15px;">
+                    What matters: Did you complete the ML workflow? Did you learn?<br>
+                    重要なこと: MLワークフローを完了しましたか？学びましたか？
+                </p>
+            </div>
+            <h3>Key Takeaways / 重要なポイント</h3>
+            <div class="bilingual">
+                <div class="english">
+                    <ul>
+                        <li>✓ You've completed the entire ML workflow</li>
+                        <li>✓ Documentation tells your project story</li>
+                        <li>✓ Presentation focuses on YOUR journey</li>
+                        <li>✓ Small improvements are fine - perfection not required</li>
+                        <li>✓ Be proud of what you built!</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <ul>
+                        <li>✓ 完全なMLワークフローを完了しました</li>
+                        <li>✓ 文書があなたのプロジェクトストーリーを伝えます</li>
+                        <li>✓ プレゼンテーションはあなたの旅に焦点を当てます</li>
+                        <li>✓ 小さな改善で十分 - 完璧は不要</li>
+                        <li>✓ あなたが構築したものを誇りに思ってください！</li>
+                    </ul>
+                </div>
+            </div>
+            <h3 style="text-align: center; margin-top: 40px;">Next Steps / 次のステップ</h3>
+            <ol style="font-size: 1.3em;">
+                <li>Open the ML-101 Bot portal / ML-101ボットポータルを開く</li>
+                <li>Begin Week 13 Activity / 第13週アクティビティを開始</li>
+                <li>Complete your ML journey! / MLの旅を完成させる！</li>
+            </ol>
+            <p style="text-align: center; margin-top: 30px; font-size: 1.3em;"><strong>Week 14: Final Presentations!</strong></p>
+            <p style="text-align: center; font-size: 1.3em;"><strong>第14週: 最終プレゼンテーション！</strong></p>
+        </div>
+
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">◀ Previous</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next ▶</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+
+            document.getElementById('slideNumber').textContent = `Slide ${currentSlide + 1} / ${totalSlides}`;
+
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (event.key === 'ArrowRight' || event.key === ' ') {
+                event.preventDefault();
+                changeSlide(1);
+            } else if (event.key === 'Home') {
+                showSlide(0);
+            } else if (event.key === 'End') {
+                showSlide(totalSlides - 1);
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>

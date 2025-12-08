@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# Environment
+.env
+
+# ChromaDB
+chroma_db/
+*.db
+
+# Logs
+logs/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Certificates (SSL/TLS)
+certificates/*.crt
+certificates/*.key
+certificates/*.pem
+certificates/*.p12
+certificates/*.pfx
+# Keep README.md in certificates directory
+!certificates/README.md
+

@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 6: Building Your Company Dataset | ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .lecture-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .lecture-content h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .lecture-content h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .lecture-content h4 {
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .objectives-list {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .objectives-list ul {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+        .highlight-box {
+            background: #fef3cd;
+            border-left: 5px solid var(--warning);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-box {
+            background: var(--bg-light);
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary-color);
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            white-space: pre-wrap;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .bilingual-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        .english-col {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+        .japanese-col {
+            background: #f3e8ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        @media (max-width: 768px) {
+            .bilingual-section {
+                grid-template-columns: 1fr;
+            }
+            .lecture-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Week 6: Building Your Company Dataset</h1>
+            <p class="subtitle">第6週：企業データセットの構築</p>
+            <p class="instructor">Instructor: Yuri Tijerino</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="slides.html">Presentation Slides</a>
+            <a href="assignment.html">Assignment</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="lecture-content">
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+                <a href="assignment.html" class="btn btn-accent">View Assignment</a>
+            </div>
+
+            <div class="objectives-list">
+                <h3>Learning Objectives / 学習目標</h3>
+                <p><strong>English:</strong> By the end of this lecture, students will be able to:</p>
+                <ul>
+                    <li>Design an effective data schema for company information</li>
+                    <li>Develop a strategic approach to data collection</li>
+                    <li>Apply data quality principles to ensure usable datasets</li>
+                    <li>Plan and execute systematic data collection for ML projects</li>
+                    <li>Identify and address common data collection challenges</li>
+                </ul>
+                <p><strong>日本語:</strong> この講義の終了までに、学生は以下ができるようになります：</p>
+                <ul>
+                    <li>企業情報のための効果的なデータスキーマを設計する</li>
+                    <li>データ収集への戦略的アプローチを開発する</li>
+                    <li>使用可能なデータセットを確保するためにデータ品質の原則を適用する</li>
+                    <li>MLプロジェクトのための体系的なデータ収集を計画および実行する</li>
+                    <li>一般的なデータ収集の課題を特定して対処する</li>
+                </ul>
+            </div>
+
+            <h2>What is a Data Schema?</h2>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h3>Definition</h3>
+                    <p><strong>A data schema is a blueprint that defines the structure, organization, and constraints of your dataset.</strong></p>
+                    <p>Think of it as the architectural plan for your data. Just as a building needs blueprints before construction, your dataset needs a schema before collection.</p>
+                </div>
+                <div class="japanese-col">
+                    <h3>定義</h3>
+                    <p><strong>データスキーマは、データセットの構造、組織、および制約を定義する設計図です。</strong></p>
+                    <p>データの建築計画として考えてください。建物が建設前に設計図を必要とするように、データセットは収集前にスキーマを必要とします。</p>
+                </div>
+            </div>
+
+            <h3>Key Components of a Data Schema</h3>
+
+            <h4>1. Field Names / フィールド名</h4>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <p>Field names identify what information each column contains.</p>
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li>company_name</li>
+                        <li>industry</li>
+                        <li>employee_count</li>
+                        <li>founding_year</li>
+                    </ul>
+                    <p><strong>Best Practices:</strong> Use clear, descriptive names. Be consistent (lowercase, underscores instead of spaces).</p>
+                </div>
+                <div class="japanese-col">
+                    <p>フィールド名は、各列にどのような情報が含まれているかを識別します。</p>
+                    <p><strong>例:</strong></p>
+                    <ul>
+                        <li>company_name（企業名）</li>
+                        <li>industry（業界）</li>
+                        <li>employee_count（従業員数）</li>
+                        <li>founding_year（設立年）</li>
+                    </ul>
+                    <p><strong>ベストプラクティス:</strong> 明確で説明的な名前を使用。一貫性を保つ（小文字、スペースの代わりにアンダースコア）。</p>
+                </div>
+            </div>
+
+            <h4>2. Data Types / データ型</h4>
+            <div class="code-box">TEXT / テキスト:
+- Company names, descriptions, addresses
+- 企業名、説明、住所
+
+NUMBER / 数値:
+- Employee counts, revenue, founding year
+- 従業員数、収益、設立年
+
+CATEGORICAL / カテゴリカル:
+- Industry (Technology, Healthcare, Finance)
+- Company size (Small, Medium, Large)
+- 業界、企業規模
+
+DATE / 日付:
+- Founding date, data collection date
+- 設立日、データ収集日
+
+URL:
+- Company website links
+- 企業ウェブサイトリンク</div>
+
+            <h4>3. Requirements / 要件</h4>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <p><strong>Required Fields:</strong> Must be present for every entry</p>
+                    <ul>
+                        <li>Company Name - Essential identifier</li>
+                        <li>Industry - Critical for classification</li>
+                        <li>Description - Provides context</li>
+                    </ul>
+                    <p><strong>Optional Fields:</strong> Nice to have, but can be missing</p>
+                    <ul>
+                        <li>Revenue - Often not publicly available</li>
+                        <li>Employee Count - May be estimates</li>
+                        <li>Culture Keywords - Subjective data</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <p><strong>必須フィールド:</strong> すべてのエントリに存在する必要がある</p>
+                    <ul>
+                        <li>企業名 - 本質的な識別子</li>
+                        <li>業界 - 分類に重要</li>
+                        <li>説明 - コンテキストを提供</li>
+                    </ul>
+                    <p><strong>オプションフィールド:</strong> あると良いが、欠損していても可</p>
+                    <ul>
+                        <li>収益 - 多くの場合公開されていない</li>
+                        <li>従業員数 - 推定値の可能性</li>
+                        <li>文化キーワード - 主観的データ</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>Designing an Effective Schema</h2>
+
+            <h3>Think About Your End Goal</h3>
+            <div class="highlight-box">
+                <p><strong>Question:</strong> What do you want to do with this data?</p>
+                <p><strong>質問:</strong> このデータで何をしたいですか？</p>
+                <p><strong>For our project:</strong> Build a recommendation system that suggests companies based on personal career interests.</p>
+                <p><strong>私たちのプロジェクトでは:</strong> 個人のキャリア興味に基づいて企業を提案する推薦システムを構築します。</p>
+            </div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>What Information Helps You Decide?</h4>
+                    <p>Think about what influences your interest in a company:</p>
+                    <ul>
+                        <li><strong>Industry:</strong> Do you prefer tech, healthcare, or finance?</li>
+                        <li><strong>Size:</strong> Startup or established corporation?</li>
+                        <li><strong>Location:</strong> Prefer local or willing to relocate?</li>
+                        <li><strong>Mission:</strong> Does their description align with your values?</li>
+                        <li><strong>Growth:</strong> Young company or long-established?</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>どの情報が決定に役立ちますか？</h4>
+                    <p>企業への興味に影響を与えるものについて考えてください：</p>
+                    <ul>
+                        <li><strong>業界:</strong> テック、ヘルスケア、金融のどれを好むか？</li>
+                        <li><strong>規模:</strong> スタートアップか確立された企業か？</li>
+                        <li><strong>所在地:</strong> 地元を好むか、移転する意志があるか？</li>
+                        <li><strong>ミッション:</strong> 説明はあなたの価値観と一致するか？</li>
+                        <li><strong>成長:</strong> 若い企業か長く確立された企業か？</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Recommended Schema for Company Dataset</h3>
+            <div class="code-box">REQUIRED FIELDS (Must Collect) / 必須フィールド（必ず収集）:
+1. company_name (text)
+   - Full official company name
+   - 正式な企業名の完全版
+
+2. industry (categorical text)
+   - Standardized industry category
+   - 標準化された業界カテゴリ
+
+3. description (text)
+   - Brief company overview (2-3 sentences)
+   - 簡単な企業概要（2-3文）
+
+RECOMMENDED FIELDS (High Priority) / 推奨フィールド（高優先度）:
+4. company_size (categorical: Small/Medium/Large)
+   - Based on employee count
+   - 従業員数に基づく
+
+5. location (text: "City, Country")
+   - Primary headquarters location
+   - 主要本社所在地
+
+6. founding_year (number: YYYY)
+   - Year company was established
+   - 企業が設立された年
+
+7. website (URL)
+   - Official company website
+   - 公式企業ウェブサイト
+
+OPTIONAL FIELDS (Nice to Have) / オプションフィールド（あると良い）:
+8. employee_count (number)
+   - Approximate number of employees
+   - おおよその従業員数
+
+9. revenue (number)
+   - Annual revenue if available
+   - 利用可能な場合の年間収益
+
+10. culture_keywords (text)
+    - Words describing company culture
+    - 企業文化を説明する言葉</div>
+
+            <h2>Data Collection Strategy</h2>
+
+            <h3>Step 1: Identify Data Sources</h3>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Primary Sources</h4>
+                    <p>Your main source for bulk data collection:</p>
+                    <ul>
+                        <li>Job listing websites (approved in Week 4)</li>
+                        <li>Company directory sites</li>
+                        <li>Industry-specific databases</li>
+                    </ul>
+                    <p><strong>Goal:</strong> Collect basic information for 20-30 companies from one comprehensive source.</p>
+                </div>
+                <div class="japanese-col">
+                    <h4>主要ソース</h4>
+                    <p>バルクデータ収集のためのメインソース：</p>
+                    <ul>
+                        <li>求人ウェブサイト（第4週で承認済み）</li>
+                        <li>企業ディレクトリサイト</li>
+                        <li>業界固有のデータベース</li>
+                    </ul>
+                    <p><strong>目標:</strong> 1つの包括的なソースから20-30社の基本情報を収集。</p>
+                </div>
+            </div>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Secondary Sources</h4>
+                    <p>Use to fill gaps in your data:</p>
+                    <ul>
+                        <li>Individual company websites</li>
+                        <li>Wikipedia or business profile sites</li>
+                        <li>LinkedIn company pages</li>
+                        <li>News articles about companies</li>
+                    </ul>
+                    <p><strong>Goal:</strong> Supplement missing fields like founding year, employee count, or better descriptions.</p>
+                </div>
+                <div class="japanese-col">
+                    <h4>二次ソース</h4>
+                    <p>データのギャップを埋めるために使用：</p>
+                    <ul>
+                        <li>個別企業ウェブサイト</li>
+                        <li>Wikipediaまたはビジネスプロフィールサイト</li>
+                        <li>LinkedIn企業ページ</li>
+                        <li>企業に関するニュース記事</li>
+                    </ul>
+                    <p><strong>目標:</strong> 設立年、従業員数、またはより良い説明などの欠損フィールドを補完。</p>
+                </div>
+            </div>
+
+            <h3>Step 2: Map Fields to Sources</h3>
+            <p>Before collecting, plan where each field will come from:</p>
+            <p>収集前に、各フィールドがどこから来るかを計画します：</p>
+
+            <div class="code-box">Job Listing Sites Usually Provide:
+✓ Company name
+✓ Industry
+✓ Basic description
+✓ Location
+✓ Sometimes company size
+
+求人サイトは通常以下を提供：
+企業名、業界、基本的な説明、所在地、時々企業規模
+
+Company Websites Usually Provide:
+✓ Detailed description
+✓ Founding year
+✓ Mission/culture information
+✓ Accurate employee counts
+
+企業ウェブサイトは通常以下を提供：
+詳細な説明、設立年、ミッション/文化情報、正確な従業員数
+
+LinkedIn/Wikipedia Usually Provide:
+✓ Founding information
+✓ Size estimates
+✓ Industry classification
+✓ Brief overviews
+
+LinkedIn/Wikipediaは通常以下を提供：
+設立情報、規模推定、業界分類、簡単な概要</div>
+
+            <h3>Step 3: Execute Collection Systematically</h3>
+            <div class="highlight-box">
+                <h4>Collection Workflow / 収集ワークフロー:</h4>
+                <ol>
+                    <li><strong>Start with primary source</strong> - Get bulk data (company names, industries, descriptions)<br>
+                        主要ソースから始める - バルクデータを取得</li>
+                    <li><strong>Export to CSV</strong> - Save your initial dataset<br>
+                        CSVにエクスポート - 初期データセットを保存</li>
+                    <li><strong>Identify gaps</strong> - Which fields are missing or incomplete?<br>
+                        ギャップを特定 - どのフィールドが欠損または不完全か？</li>
+                    <li><strong>Use secondary sources</strong> - Fill gaps systematically<br>
+                        二次ソースを使用 - 体系的にギャップを埋める</li>
+                    <li><strong>Standardize format</strong> - Apply consistent formatting rules<br>
+                        フォーマットを標準化 - 一貫したフォーマットルールを適用</li>
+                </ol>
+            </div>
+
+            <h2>Data Quality Principles</h2>
+
+            <h3>The 4 C's of Data Quality</h3>
+
+            <h4>1. Completeness / 完全性</h4>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <p><strong>Definition:</strong> How much of your data is filled in vs missing?</p>
+                    <p><strong>Goal:</strong> Aim for 80%+ completeness on required fields</p>
+                    <p><strong>How to Measure:</strong></p>
+                    <ul>
+                        <li>Count non-empty cells for each field</li>
+                        <li>Calculate: (filled cells / total cells) × 100%</li>
+                        <li>Example: 25 out of 30 companies have industry → 83% complete</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <p><strong>定義:</strong> データのどれだけが埋まっているか、対、欠損しているか？</p>
+                    <p><strong>目標:</strong> 必須フィールドで80%以上の完全性を目指す</p>
+                    <p><strong>測定方法:</strong></p>
+                    <ul>
+                        <li>各フィールドの空でないセルをカウント</li>
+                        <li>計算：（埋まったセル / 総セル）× 100%</li>
+                        <li>例：30社中25社が業界を持つ → 83%完全</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>2. Consistency / 一貫性</h4>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <p><strong>Definition:</strong> Are you using the same formats and categories throughout?</p>
+                    <p><strong>Examples of Inconsistency:</strong></p>
+                    <ul>
+                        <li>Industry: "Tech", "IT", "Technology", "Information Technology" (should all be "Technology")</li>
+                        <li>Location: "Tokyo", "Tokyo, Japan", "Tokyo JP" (should all be "Tokyo, Japan")</li>
+                        <li>Company names: "Sony Corp", "Sony Corporation", "SONY" (choose one standard)</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <p><strong>定義:</strong> 全体で同じフォーマットとカテゴリを使用していますか？</p>
+                    <p><strong>不整合の例:</strong></p>
+                    <ul>
+                        <li>業界：「Tech」、「IT」、「Technology」、「Information Technology」（すべて「Technology」であるべき）</li>
+                        <li>所在地：「Tokyo」、「Tokyo, Japan」、「Tokyo JP」（すべて「Tokyo, Japan」であるべき）</li>
+                        <li>企業名：「Sony Corp」、「Sony Corporation」、「SONY」（1つの標準を選択）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>3. Correctness / 正確性</h4>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <p><strong>Definition:</strong> Is your data factually accurate?</p>
+                    <p><strong>How to Verify:</strong></p>
+                    <ul>
+                        <li>Cross-reference with official company websites</li>
+                        <li>Check for obvious errors (founding year in future, negative employee counts)</li>
+                        <li>Validate URLs actually work</li>
+                        <li>Look for outdated information</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <p><strong>定義:</strong> データは事実として正確ですか？</p>
+                    <p><strong>検証方法:</strong></p>
+                    <ul>
+                        <li>公式企業ウェブサイトと相互参照</li>
+                        <li>明らかなエラーをチェック（未来の設立年、負の従業員数）</li>
+                        <li>URLが実際に機能することを検証</li>
+                        <li>古い情報を探す</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>4. Clarity / 明確性</h4>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <p><strong>Definition:</strong> Is your data understandable and well-organized?</p>
+                    <p><strong>Best Practices:</strong></p>
+                    <ul>
+                        <li>Use descriptive field names</li>
+                        <li>Avoid abbreviations unless standard (URL is OK, "emp_cnt" is not)</li>
+                        <li>Include metadata documenting your choices</li>
+                        <li>Write clear descriptions of what each field means</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <p><strong>定義:</strong> データは理解可能で適切に整理されていますか？</p>
+                    <p><strong>ベストプラクティス:</strong></p>
+                    <ul>
+                        <li>説明的なフィールド名を使用</li>
+                        <li>標準でない限り略語を避ける（URLは可、「emp_cnt」は不可）</li>
+                        <li>選択を文書化するメタデータを含める</li>
+                        <li>各フィールドが何を意味するかの明確な説明を書く</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>Common Challenges and Solutions</h2>
+
+            <h3>Challenge 1: Can't Find Enough Companies</h3>
+            <div class="highlight-box">
+                <p><strong>Problem:</strong> Only found 10-15 companies, need 20-30</p>
+                <p><strong>問題:</strong> 10-15社しか見つからず、20-30社が必要</p>
+                <p><strong>Solutions:</strong></p>
+                <ul>
+                    <li>Combine multiple approved sources</li>
+                    <li>Use different search terms or categories</li>
+                    <li>Expand geographic scope</li>
+                    <li>Include companies from different industries</li>
+                </ul>
+                <p><strong>解決策:</strong> 複数の承認されたソースを組み合わせる、異なる検索用語やカテゴリを使用、地理的範囲を拡大、異なる業界の企業を含める</p>
+            </div>
+
+            <h3>Challenge 2: Missing Data Fields</h3>
+            <div class="highlight-box">
+                <p><strong>Problem:</strong> Many companies missing founding year or employee count</p>
+                <p><strong>問題:</strong> 多くの企業で設立年や従業員数が欠落</p>
+                <p><strong>Solutions:</strong></p>
+                <ul>
+                    <li>Focus on required fields first (name, industry, description)</li>
+                    <li>Use secondary sources to fill critical gaps</li>
+                    <li>Mark uncertain data with notes</li>
+                    <li>Accept that optional fields may be incomplete</li>
+                </ul>
+                <p><strong>解決策:</strong> まず必須フィールドに焦点を当てる、二次ソースを使用して重要なギャップを埋める、不確実なデータにメモを付ける、オプションフィールドは不完全でも受け入れる</p>
+            </div>
+
+            <h3>Challenge 3: Inconsistent Formatting</h3>
+            <div class="highlight-box">
+                <p><strong>Problem:</strong> Industry categories vary wildly ("Tech", "IT", "Software", "Technology")</p>
+                <p><strong>問題:</strong> 業界カテゴリが大きく異なる</p>
+                <p><strong>Solutions:</strong></p>
+                <ul>
+                    <li>Create standardization rules early</li>
+                    <li>Choose 5-10 standard industry categories</li>
+                    <li>Map variations to standards (all tech-related → "Technology")</li>
+                    <li>Apply consistently to all entries</li>
+                </ul>
+                <p><strong>解決策:</strong> 早期に標準化ルールを作成、5-10の標準業界カテゴリを選択、バリエーションを標準にマッピング、すべてのエントリに一貫して適用</p>
+            </div>
+
+            <h2>Documentation Best Practices</h2>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>What to Document:</h4>
+                    <ul>
+                        <li><strong>Schema:</strong> List of all fields with descriptions and data types</li>
+                        <li><strong>Sources:</strong> Which websites you used, with URLs</li>
+                        <li><strong>Collection Date:</strong> When you collected the data</li>
+                        <li><strong>Methodology:</strong> How you collected and standardized</li>
+                        <li><strong>Quality Metrics:</strong> Completeness percentages</li>
+                        <li><strong>Known Limitations:</strong> What's missing or uncertain</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>文書化すべき内容:</h4>
+                    <ul>
+                        <li><strong>スキーマ:</strong> 説明とデータ型を含むすべてのフィールドのリスト</li>
+                        <li><strong>ソース:</strong> 使用したウェブサイト、URLあり</li>
+                        <li><strong>収集日:</strong> データを収集した日時</li>
+                        <li><strong>方法論:</strong> どのように収集して標準化したか</li>
+                        <li><strong>品質指標:</strong> 完全性パーセンテージ</li>
+                        <li><strong>既知の制限:</strong> 何が欠けているか、または不確実か</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>Connection to ML Project</h2>
+
+            <p>The dataset you build today is the foundation for your company recommendation system. Here's how it connects:</p>
+            <p>今日構築するデータセットは、企業推薦システムの基礎です。以下のように接続します：</p>
+
+            <div class="code-box">Week 6: BUILD DATASET
+→ Collect company information with schema
+→ スキーマを使用して企業情報を収集
+
+Week 7: CLEAN DATASET
+→ Standardize and fix data quality issues
+→ データ品質問題を標準化して修正
+
+Week 8: ENGINEER FEATURES
+→ Transform data for ML model
+→ MLモデルのためにデータを変換
+
+Week 9: LABEL DATA
+→ You classify companies as "Interested" or "Not Interested"
+→ 企業を「興味あり」または「興味なし」に分類
+
+Week 10-12: TRAIN & EVALUATE MODEL
+→ ML learns from your labeled data
+→ ラベル付きデータからMLが学習
+
+Week 13-14: DEPLOY & PRESENT
+→ Use your recommendation system!
+→ 推薦システムを使用！</div>
+
+            <div class="highlight-box">
+                <h4>Quality Matters!</h4>
+                <p>The quality of your dataset directly impacts ML model performance. A well-structured, complete dataset leads to better recommendations.</p>
+                <p><strong>品質が重要！</strong> データセットの品質はMLモデルのパフォーマンスに直接影響します。適切に構造化された完全なデータセットは、より良い推薦につながります。</p>
+            </div>
+
+            <h2>Key Takeaways</h2>
+
+            <div class="objectives-list">
+                <h4>Remember / 覚えておいてください</h4>
+                <ul>
+                    <li>A good schema guides effective data collection</li>
+                    <li>Plan before you collect - map fields to sources</li>
+                    <li>Focus on required fields first, then enhance</li>
+                    <li>Consistency is more important than perfection</li>
+                    <li>Document everything for future reference</li>
+                    <li>Quality data = Better ML performance</li>
+                </ul>
+                <p style="margin-top: 20px;">良いスキーマが効果的なデータ収集をガイド、収集前に計画する、まず必須フィールドに焦点を当てる、一貫性は完璧さより重要、将来の参照のためにすべてを文書化、品質データ = より良いMLパフォーマンス</p>
+            </div>
+
+            <h2>Next Steps</h2>
+
+            <ol style="font-size: 1.2em; line-height: 2;">
+                <li>Open the ML-101 Bot portal</li>
+                <li>Begin Week 6 hands-on activity</li>
+                <li>Design your schema (12 minutes)</li>
+                <li>Plan your collection strategy (10 minutes)</li>
+                <li>Collect your company dataset (20 minutes)</li>
+                <li>Supplement and standardize (12 minutes)</li>
+                <li>Quality check and document (6 minutes)</li>
+            </ol>
+
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+                <a href="assignment.html" class="btn btn-accent">View Assignment</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>著作権 &copy; 2025 Yuri Tijerino. 無断転載を禁じます。</p>
+        </div>
+    </footer>
+</body>
+</html>

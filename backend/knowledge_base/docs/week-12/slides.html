@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 12: Model Evaluation & Optimization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            color: #333;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            background: white;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px 80px;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide h1 {
+            font-size: 3em;
+            color: #2563eb;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .slide h2 {
+            font-size: 2.2em;
+            color: #7c3aed;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 10px;
+        }
+
+        .slide h3 {
+            font-size: 1.8em;
+            color: #2563eb;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .slide h4 {
+            font-size: 1.4em;
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .slide p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        .slide ul, .slide ol {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-left: 40px;
+            margin-bottom: 20px;
+        }
+
+        .slide li {
+            margin-bottom: 10px;
+        }
+
+        .bilingual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 20px 0;
+        }
+
+        .english, .japanese {
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .english {
+            background: #dbeafe;
+            border-left: 4px solid #2563eb;
+        }
+
+        .japanese {
+            background: #f3e8ff;
+            border-left: 4px solid #7c3aed;
+        }
+
+        .highlight-box {
+            background: #fef3cd;
+            border-left: 5px solid #f59e0b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .code-box {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: white;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:hover {
+            background: #2563eb;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-number {
+            position: fixed;
+            top: 70px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            color: #2563eb;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .title-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+
+        .title-slide h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .title-slide .subtitle {
+            font-size: 2em;
+            color: #7c3aed;
+            margin-bottom: 40px;
+        }
+
+        .title-slide .info {
+            font-size: 1.3em;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 1024px) {
+            .slide {
+                padding: 40px 50px;
+            }
+
+            .slide h1 {
+                font-size: 2.5em;
+            }
+
+            .slide h2 {
+                font-size: 2em;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .slide-container {
+                padding: 0;
+            }
+
+            .slide {
+                width: 100vw;
+                height: auto;
+                min-height: 100vh;
+                padding: 20px;
+                border-radius: 0;
+            }
+
+            .slide h1 {
+                font-size: 2em;
+            }
+
+            .slide h2 {
+                font-size: 1.6em;
+            }
+
+            .bilingual {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .title-slide h1 {
+                font-size: 2.5em;
+            }
+
+            .title-slide .subtitle {
+                font-size: 1.4em;
+            }
+
+            .navigation {
+                bottom: 15px;
+                gap: 10px;
+            }
+
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 0.95em;
+            }
+        }
+
+        .slides-nav {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+            padding: 10px 20px;
+        }
+
+        .slides-nav .container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .slides-nav a {
+            color: #1f2937;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .slides-nav a:hover {
+            color: #2563eb;
+        }
+
+        body {
+            padding-top: 50px;
+        }
+    </style>
+    <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+    <nav class="slides-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="lecture.html">Lecture Notes</a>
+            <a href="assignment.html">Assignment</a>
+        </div>
+    </nav>
+
+    <div class="slide-number" id="slideNumber">Slide 1 / 11</div>
+
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active title-slide">
+            <h1>Week 12</h1>
+            <p class="subtitle">Model Evaluation & Optimization<br>モデル評価と最適化</p>
+            <p class="info"><strong>Course:</strong> Machine Learning and Intelligence</p>
+            <p class="info"><strong>Instructor:</strong> Yuri Tijerino</p>
+            <p class="info"><strong>Duration:</strong> 15-20 minutes / 15-20分</p>
+        </div>
+
+        <!-- Slide 2: Welcome -->
+        <div class="slide">
+            <h2>Welcome to Week 12!</h2>
+            <h2>第12週へようこそ！</h2>
+            <div class="bilingual">
+                <div class="english">
+                    <h3>Today's Objectives:</h3>
+                    <ul>
+                        <li>Understand model evaluation metrics</li>
+                        <li>Learn how to test ML models</li>
+                        <li>Interpret prediction results</li>
+                        <li>Think critically about AI capabilities</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <h3>今日の目標:</h3>
+                    <ul>
+                        <li>モデル評価メトリクスを理解する</li>
+                        <li>MLモデルのテスト方法を学ぶ</li>
+                        <li>予測結果を解釈する</li>
+                        <li>AI能力について批判的に考える</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: The Big Picture -->
+        <div class="slide">
+            <h2>Your ML Journey So Far</h2>
+            <h2>これまでのMLの旅</h2>
+            <div class="code-box">Week 6:  Collected company data (20-30 companies)
+第6週:  企業データを収集（20-30社）
+
+Week 7:  Cleaned and prepared data
+第7週:  データをクリーニングして準備
+
+Week 8:  Handled missing data
+第8週:  欠損データを処理
+
+Week 9:  Engineered features
+第9週:  特徴量をエンジニアリング
+
+Week 10: Labeled data manually
+第10週: データを手動でラベル付け
+
+Week 11: Trained classification model
+第11週: 分類モデルを訓練
+
+→ Week 12: TIME TO EVALUATE! 評価の時間！</div>
+            <div class="highlight-box">
+                <p><strong>This Week:</strong> Test your model on NEW companies and see how well it performs!</p>
+                <p><strong>今週:</strong> 新しい企業でモデルをテストし、どれだけうまく機能するかを確認しましょう！</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Why Evaluation Matters -->
+        <div class="slide">
+            <h2>Why Model Evaluation Matters</h2>
+            <h2>なぜモデル評価が重要か</h2>
+            <h3>A Model That Can't Be Trusted is Useless</h3>
+            <h3>信頼できないモデルは役に立たない</h3>
+            <div class="bilingual">
+                <div class="english">
+                    <h4>Key Questions:</h4>
+                    <ul>
+                        <li><strong>How accurate is the model?</strong><br>Does it make good predictions?</li>
+                        <li><strong>Where does it fail?</strong><br>What types of companies does it get wrong?</li>
+                        <li><strong>Can we trust it?</strong><br>Would you use it for real job search decisions?</li>
+                        <li><strong>How can we improve it?</strong><br>What changes would make it better?</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <h4>主要な質問:</h4>
+                    <ul>
+                        <li><strong>モデルはどれくらい正確か？</strong><br>良い予測をするか？</li>
+                        <li><strong>どこで失敗するか？</strong><br>どのタイプの企業を間違えるか？</li>
+                        <li><strong>信頼できるか？</strong><br>実際の就職活動の決定に使用しますか？</li>
+                        <li><strong>どのように改善できるか？</strong><br>どんな変更がそれをより良くするか？</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Training vs Testing Data -->
+        <div class="slide">
+            <h2>Training Data vs Test Data</h2>
+            <h2>訓練データ vs テストデータ</h2>
+            <div class="two-column">
+                <div>
+                    <h3>Training Data</h3>
+                    <h3>訓練データ</h3>
+                    <p><strong>What it is:</strong> The 20-30 companies you already labeled and used to train your model</p>
+                    <p><strong>それは何か:</strong> すでにラベル付けしてモデルの訓練に使用した20-30社</p>
+                    <p><strong>Purpose:</strong> Teaching the model your preferences</p>
+                    <p><strong>目的:</strong> モデルにあなたの好みを教える</p>
+                    <p><strong>Risk:</strong> Model might just "memorize" these companies</p>
+                    <p><strong>リスク:</strong> モデルがこれらの企業を「暗記」するだけかもしれない</p>
+                </div>
+                <div>
+                    <h3>Test Data</h3>
+                    <h3>テストデータ</h3>
+                    <p><strong>What it is:</strong> NEW companies the model has NEVER seen before</p>
+                    <p><strong>それは何か:</strong> モデルが以前に見たことがない新しい企業</p>
+                    <p><strong>Purpose:</strong> Evaluating if model can generalize to new data</p>
+                    <p><strong>目的:</strong> モデルが新しいデータに一般化できるかを評価する</p>
+                    <p><strong>Why Important:</strong> True test of model's learning ability</p>
+                    <p><strong>なぜ重要か:</strong> モデルの学習能力の真のテスト</p>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <p><strong>Critical Rule:</strong> NEVER test on data the model was trained on!</p>
+                <p><strong>重要なルール:</strong> モデルが訓練されたデータでテストしないこと！</p>
+            </div>
+        </div>
+
+        <!-- Slide 6: Evaluation Metrics -->
+        <div class="slide">
+            <h2>Key Evaluation Metrics</h2>
+            <h2>主要な評価メトリクス</h2>
+            <h3>1. Accuracy / 精度</h3>
+            <div class="code-box">Accuracy = (Correct Predictions) / (Total Predictions)
+精度 = (正しい予測) / (総予測数)
+
+Example: 7 correct out of 10 companies = 70% accuracy
+例: 10社のうち7社正しい = 70%の精度</div>
+            <p><strong>Simple interpretation:</strong> "The model got 7 out of 10 right"</p>
+            <p><strong>シンプルな解釈:</strong> 「モデルは10のうち7を正しく予測した」</p>
+
+            <h3>2. Confusion Matrix / 混同行列</h3>
+            <div class="code-box">                  Predicted: Not Interested | Predicted: Interested
+                  予測: 興味なし           | 予測: 興味あり
+Actual: Not      True Negatives (TN)     | False Positives (FP)
+Interested       真陰性                  | 偽陽性
+実際: 興味なし    Correct rejections       | Wrong "interested"
+
+Actual:          False Negatives (FN)    | True Positives (TP)
+Interested       偽陰性                  | 真陽性
+実際: 興味あり    Missed opportunities     | Correct matches!</div>
+        </div>
+
+        <!-- Slide 7: Understanding the Confusion Matrix -->
+        <div class="slide">
+            <h2>Understanding Confusion Matrix</h2>
+            <h2>混同行列の理解</h2>
+            <div class="bilingual">
+                <div class="english">
+                    <h4>Four Outcomes:</h4>
+                    <ul>
+                        <li><strong>True Positive (TP):</strong><br>Model said "Interested" and you agree → ✅ Correct!</li>
+                        <li><strong>True Negative (TN):</strong><br>Model said "Not Interested" and you agree → ✅ Correct!</li>
+                        <li><strong>False Positive (FP):</strong><br>Model said "Interested" but you're actually not → ❌ Type 1 Error</li>
+                        <li><strong>False Negative (FN):</strong><br>Model said "Not Interested" but you actually are → ❌ Type 2 Error (Missed opportunity!)</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <h4>4つの結果:</h4>
+                    <ul>
+                        <li><strong>真陽性 (TP):</strong><br>モデルが「興味あり」と言い、あなたも同意 → ✅ 正しい！</li>
+                        <li><strong>真陰性 (TN):</strong><br>モデルが「興味なし」と言い、あなたも同意 → ✅ 正しい！</li>
+                        <li><strong>偽陽性 (FP):</strong><br>モデルが「興味あり」と言ったが実際は興味なし → ❌ タイプ1エラー</li>
+                        <li><strong>偽陰性 (FN):</strong><br>モデルが「興味なし」と言ったが実際は興味あり → ❌ タイプ2エラー（機会損失！）</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Advanced Metrics -->
+        <div class="slide">
+            <h2>Advanced Evaluation Metrics</h2>
+            <h2>高度な評価メトリクス</h2>
+            <h3>Precision / 精密度（適合率）</h3>
+            <div class="code-box">Precision = TP / (TP + FP)
+精密度 = 真陽性 / (真陽性 + 偽陽性)
+
+Question: Of companies model said "Interested", how many actually were?
+質問: モデルが「興味あり」と言った企業のうち、実際に何社がそうでしたか？</div>
+
+            <h3>Recall / 再現率</h3>
+            <div class="code-box">Recall = TP / (TP + FN)
+再現率 = 真陽性 / (真陽性 + 偽陰性)
+
+Question: Of companies you're ACTUALLY interested in, how many did model find?
+質問: 実際に興味がある企業のうち、モデルは何社見つけましたか？</div>
+
+            <div class="highlight-box">
+                <p><strong>Trade-off:</strong> High precision OR high recall? You often can't have both perfectly!</p>
+                <p><strong>トレードオフ:</strong> 高い精密度か高い再現率か？両方を完璧には持てないことが多い！</p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Interpreting Results -->
+        <div class="slide">
+            <h2>Interpreting Your Model's Results</h2>
+            <h2>モデルの結果の解釈</h2>
+            <h3>What's a "Good" Accuracy? / 「良い」精度とは？</h3>
+            <div class="bilingual">
+                <div class="english">
+                    <p><strong>For small datasets (20-30 companies):</strong></p>
+                    <ul>
+                        <li>60-70% → Okay, room for improvement</li>
+                        <li>70-80% → Good performance!</li>
+                        <li>80-90% → Excellent!</li>
+                        <li>90-100% → Suspicious... might be overfitting</li>
+                    </ul>
+                    <p><strong>Context matters:</strong></p>
+                    <ul>
+                        <li>50% accuracy = random guessing (like flipping a coin)</li>
+                        <li>Small datasets have more variability</li>
+                        <li>Learning from mistakes is more important than perfect accuracy</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <p><strong>小さなデータセット（20-30社）の場合:</strong></p>
+                    <ul>
+                        <li>60-70% → まあまあ、改善の余地あり</li>
+                        <li>70-80% → 良いパフォーマンス！</li>
+                        <li>80-90% → 優秀！</li>
+                        <li>90-100% → 疑わしい...過学習の可能性</li>
+                    </ul>
+                    <p><strong>文脈が重要:</strong></p>
+                    <ul>
+                        <li>50%の精度 = ランダムな推測（コインを投げるのと同じ）</li>
+                        <li>小さなデータセットはより変動性が高い</li>
+                        <li>間違いから学ぶことが完璧な精度より重要</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Critical Thinking About AI -->
+        <div class="slide">
+            <h2>Critical Thinking About AI Systems</h2>
+            <h2>AIシステムに関する批判的思考</h2>
+            <h3>Important Questions to Ask / 尋ねるべき重要な質問</h3>
+            <div class="bilingual">
+                <div class="english">
+                    <ul>
+                        <li><strong>Bias:</strong> Did my training labels introduce bias?<br>
+                            <em>Example: Only labeled tech companies as "interested"</em></li>
+                        <li><strong>Limitations:</strong> What can't this model do?<br>
+                            <em>Example: Can't understand company culture</em></li>
+                        <li><strong>Ethics:</strong> What if this was used for hiring decisions?<br>
+                            <em>Would errors be fair to job seekers?</em></li>
+                        <li><strong>Transparency:</strong> Can I explain WHY the model made a prediction?<br>
+                            <em>Black box vs interpretable models</em></li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <ul>
+                        <li><strong>バイアス:</strong> 訓練ラベルがバイアスを導入したか？<br>
+                            <em>例: 技術企業のみを「興味あり」とラベル付け</em></li>
+                        <li><strong>限界:</strong> このモデルができないことは何か？<br>
+                            <em>例: 企業文化を理解できない</em></li>
+                        <li><strong>倫理:</strong> これが採用決定に使用されたらどうなるか？<br>
+                            <em>エラーは求職者に公平か？</em></li>
+                        <li><strong>透明性:</strong> モデルがなぜ予測を行ったかを説明できるか？<br>
+                            <em>ブラックボックス vs 解釈可能なモデル</em></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <p><strong>Remember:</strong> ML is a tool, not magic. It has strengths AND weaknesses.</p>
+                <p><strong>覚えておいて:</strong> MLはツールであり、魔法ではありません。強みと弱みがあります。</p>
+            </div>
+        </div>
+
+        <!-- Slide 11: Today's Activity -->
+        <div class="slide">
+            <h2>Today's Activity</h2>
+            <h2>今日のアクティビティ</h2>
+            <h3>What You'll Do (40-60 minutes) / すること（40-60分）</h3>
+            <ol>
+                <li><strong>Collect Test Data (12 min)</strong><br>
+                    Find 5-10 NEW companies (never seen by model)<br>
+                    <em>新しい5-10社を見つける（モデルが見たことがない）</em></li>
+                <li><strong>Make Predictions (12 min)</strong><br>
+                    Use your Week 11 model to predict interest for test companies<br>
+                    <em>第11週のモデルを使用してテスト企業の興味を予測</em></li>
+                <li><strong>Calculate Metrics (13 min)</strong><br>
+                    Compute accuracy, confusion matrix, precision, recall<br>
+                    <em>精度、混同行列、精密度、再現率を計算</em></li>
+                <li><strong>Critical Analysis (13 min)</strong><br>
+                    Analyze errors, strengths, limitations, ethics<br>
+                    <em>エラー、強み、限界、倫理を分析</em></li>
+                <li><strong>Bot Assessment (10 min)</strong><br>
+                    Conversational interview about your understanding<br>
+                    <em>理解についての会話的インタビュー</em></li>
+            </ol>
+            <div class="highlight-box">
+                <p><strong>The ML-101 Bot will guide you through every step!</strong></p>
+                <p><strong>ML-101ボットが各ステップをガイドします！</strong></p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">◀ Previous</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next ▶</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+
+            document.getElementById('slideNumber').textContent = `Slide ${currentSlide + 1} / ${totalSlides}`;
+
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (event.key === 'ArrowRight' || event.key === ' ') {
+                event.preventDefault();
+                changeSlide(1);
+            } else if (event.key === 'Home') {
+                showSlide(0);
+            } else if (event.key === 'End') {
+                showSlide(totalSlides - 1);
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>

@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 7 Assignment: Data Cleaning Fundamentals | ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .assignment-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .assignment-content h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .assignment-content h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .assignment-content h4 {
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .info-box {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color);
+            margin: 20px 0;
+        }
+        .warning-box {
+            background: #fef3cd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--warning);
+            margin: 20px 0;
+        }
+        .success-box {
+            background: #d1fae5;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--success);
+            margin: 20px 0;
+        }
+        .deliverable-box {
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid var(--border-color);
+        }
+        .rubric-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .rubric-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .rubric-table td {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .rubric-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+        .example-box {
+            background: #f3e8ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--secondary-color);
+            margin: 20px 0;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        code {
+            background: var(--bg-light);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background: var(--bg-light);
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 3px solid var(--primary-color);
+        }
+        @media (max-width: 768px) {
+            .assignment-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Week 7 Assignment</h1>
+            <p class="subtitle">Data Cleaning Fundamentals<br>データクリーニングの基礎</p>
+            <p class="instructor">Instructor: Yuri Tijerino</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="lecture.html">Lecture Notes</a>
+            <a href="slides.html">Presentation Slides</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="assignment-content">
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="lecture.html" class="btn btn-primary">View Lecture</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+            </div>
+
+            <div class="info-box">
+                <h3>Assignment Overview / 課題概要</h3>
+                <p><strong>Course:</strong> Machine Learning and Intelligence | 機械学習と知能</p>
+                <p><strong>Week:</strong> 7 | 第7週</p>
+                <p><strong>Duration:</strong> 40-60 minutes | 40-60分</p>
+                <p><strong>Due Date:</strong> End of Week 7 | 第7週末まで</p>
+                <p><strong>Weight:</strong> Part of 40% Weekly Activities grade | 週次アクティビティ評価40%の一部</p>
+                <p><strong>Submission:</strong> Through course portal | コースポータル経由</p>
+            </div>
+
+            <p>This assignment guides you through cleaning the company dataset you collected in Week 6. You'll apply Python pandas functions in Google Colab to address real data quality issues: removing duplicates, standardizing text formatting, correcting data types, and validating consistency. This prepares your dataset for feature engineering in Week 8.</p>
+            <p>この課題は、第6週で収集した企業データセットのクリーニングを案内します。Google ColabでPythonのpandas関数を適用して、実際のデータ品質問題に対処します：重複の削除、テキストフォーマットの標準化、データ型の修正、一貫性の検証。これにより、第8週の特徴量エンジニアリングのためにデータセットを準備します。</p>
+
+            <h2>Learning Objectives / 学習目標</h2>
+
+            <p>By completing this assignment, you will be able to:</p>
+            <p>この課題を完了することで、以下ができるようになります：</p>
+
+            <ul>
+                <li>✅ Identify common data quality issues in real datasets<br>
+                    実際のデータセットにおける一般的なデータ品質問題を特定する</li>
+                <li>✅ Apply Python pandas functions to clean and standardize data<br>
+                    Pythonのpandas関数を適用してデータをクリーニングおよび標準化する</li>
+                <li>✅ Remove duplicates, inconsistencies, and formatting errors<br>
+                    重複、不整合、フォーマットエラーを削除する</li>
+                <li>✅ Document data cleaning decisions and transformations<br>
+                    データクリーニングの決定と変換を文書化する</li>
+                <li>✅ Validate cleaning effectiveness with before/after comparisons<br>
+                    前後比較でクリーニングの有効性を検証する</li>
+            </ul>
+
+            <h2>Prerequisites / 前提条件</h2>
+
+            <ul>
+                <li>✅ Completed Week 6: Company dataset collected<br>
+                    第6週完了：企業データセット収集済み</li>
+                <li>✅ Week 3 Python basics knowledge<br>
+                    第3週Python基礎知識</li>
+                <li>✅ Google Colab access<br>
+                    Google Colabへのアクセス</li>
+                <li>✅ Attended Week 7 lecture on data quality issues<br>
+                    データ品質問題に関する第7週講義に出席</li>
+            </ul>
+
+            <h2>Assignment Workflow / 課題ワークフロー</h2>
+
+            <p>Follow these five steps to complete your data cleaning assignment:</p>
+            <p>データクリーニング課題を完了するには、次の5つのステップに従ってください：</p>
+
+            <h3>Step 1: Data Quality Assessment (10 minutes)</h3>
+            <h4>ステップ1：データ品質評価（10分）</h4>
+
+            <div class="example-box">
+                <p><strong>Tasks:</strong></p>
+                <ol>
+                    <li>Open Google Colab and create new notebook: <code>ML101_Week7_DataCleaning</code></li>
+                    <li>Upload your Week 6 company dataset CSV file</li>
+                    <li>Load data using pandas: <code>df = pd.read_csv('companies.csv')</code></li>
+                    <li>Run diagnostic commands:</li>
+                </ol>
+
+                <pre><code>import pandas as pd
+
+# Load dataset
+df = pd.read_csv('companies.csv')
+
+# View first rows
+df.head()
+
+# Check data types and null values
+df.info()
+
+# Get statistics
+df.describe()
+
+# Count duplicates
+print(f"Duplicates found: {df.duplicated().sum()}")</code></pre>
+
+                <p><strong>Document identified issues:</strong> duplicates, missing values, inconsistent formatting, data type errors</p>
+            </div>
+
+            <h3>Step 2: Removing Duplicates and Standardizing Text (12 minutes)</h3>
+            <h4>ステップ2：重複の削除とテキストの標準化（12分）</h4>
+
+            <div class="example-box">
+                <p><strong>Cleaning operations:</strong></p>
+
+                <pre><code># Remove exact duplicates
+print(f"Duplicates found: {df.duplicated().sum()}")
+df = df.drop_duplicates()
+
+# Standardize company names
+df['company_name'] = df['company_name'].str.strip()
+df['company_name'] = df['company_name'].str.title()
+
+# Standardize industry categories
+df['industry'] = df['industry'].str.strip().str.lower()
+df['industry'] = df['industry'].replace({
+    'tech': 'technology',
+    'it': 'technology'
+})
+
+# Check unique values
+print(df['industry'].unique())</code></pre>
+            </div>
+
+            <h3>Step 3: Handling Data Type Issues (10 minutes)</h3>
+            <h4>ステップ3：データ型問題の処理（10分）</h4>
+
+            <div class="example-box">
+                <p><strong>Type conversions:</strong></p>
+
+                <pre><code># Check current data types
+print(df.dtypes)
+
+# Convert employee_count to numeric
+df['employee_count'] = pd.to_numeric(df['employee_count'], errors='coerce')
+
+# Convert founding_year to integer (Int64 allows NaN)
+df['founding_year'] = df['founding_year'].astype('Int64')
+
+# Remove currency symbols from revenue
+df['revenue'] = df['revenue'].str.replace('[$¥,]', '', regex=True)
+df['revenue'] = pd.to_numeric(df['revenue'], errors='coerce')
+
+# Verify conversions
+print(df.dtypes)</code></pre>
+            </div>
+
+            <h3>Step 4: Consistency Checks and Corrections (13 minutes)</h3>
+            <h4>ステップ4：一貫性チェックと修正（13分）</h4>
+
+            <div class="example-box">
+                <p><strong>Validation operations:</strong></p>
+
+                <pre><code># Check for logical inconsistencies
+current_year = 2025
+invalid_years = df[df['founding_year'] > current_year]
+print(f"Invalid founding years: {len(invalid_years)}")
+
+# Standardize location formats
+df['location'] = df['location'].str.strip().str.title()
+
+# Check for impossible values
+print(f"Negative employee counts: {(df['employee_count'] < 0).sum()}")
+
+# Mark suspicious entries
+df['needs_review'] = False
+df.loc[df['employee_count'] < 0, 'needs_review'] = True
+df.loc[df['founding_year'] > current_year, 'needs_review'] = True</code></pre>
+            </div>
+
+            <h3>Step 5: Final Validation and Documentation (15 minutes)</h3>
+            <h4>ステップ5：最終検証と文書化（15分）</h4>
+
+            <div class="example-box">
+                <p><strong>Final checks and export:</strong></p>
+
+                <pre><code># Final quality check
+print("Dataset shape:", df.shape)
+print("\nMissing values:")
+print(df.isnull().sum())
+print("\nData types:")
+print(df.dtypes)
+print("\nDuplicate check:", df.duplicated().sum())
+
+# Export cleaned dataset
+df.to_csv('companies_cleaned.csv', index=False)</code></pre>
+
+                <p><strong>Document in markdown cells:</strong></p>
+                <ul>
+                    <li>Issues identified</li>
+                    <li>Cleaning operations performed</li>
+                    <li>Impact of each operation</li>
+                    <li>Remaining limitations</li>
+                </ul>
+            </div>
+
+            <h2>Assignment Deliverables / 課題成果物</h2>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 1: Cleaned Company Dataset</h3>
+                <h4>成果物1：クリーニング済み企業データセット</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Submit your cleaned dataset as a CSV file with all cleaning operations applied.</p>
+                <p>すべてのクリーニング操作が適用されたクリーニング済みデータセットをCSVファイルとして提出します。</p>
+
+                <h4>Requirements / 要件:</h4>
+                <ul>
+                    <li>Duplicates removed | 重複が削除されている</li>
+                    <li>Text standardized (consistent formatting) | テキストが標準化されている（一貫したフォーマット）</li>
+                    <li>Data types corrected | データ型が修正されている</li>
+                    <li>Consistency issues addressed | 一貫性問題が対処されている</li>
+                    <li>File named: <code>companies_cleaned.csv</code></li>
+                </ul>
+
+                <h4>Scoring (30 points) / 採点（30点）:</h4>
+                <table class="rubric-table">
+                    <tr>
+                        <th>Criterion</th>
+                        <th>Points</th>
+                    </tr>
+                    <tr>
+                        <td>Duplicates removed successfully</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>Text standardized (names, industries, locations)</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>Data types corrected appropriately</td>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        <td>Consistency checks applied</td>
+                        <td>7</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 2: Data Cleaning Notebook</h3>
+                <h4>成果物2：データクリーニングノートブック</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Submit your complete Google Colab notebook (.ipynb file) containing all code, output, and markdown documentation.</p>
+                <p>すべてのコード、出力、マークダウン文書を含む完全なGoogle Colabノートブック（.ipynbファイル）を提出します。</p>
+
+                <h4>Requirements / 要件:</h4>
+                <ul>
+                    <li>All five steps included with code | 5つのステップすべてがコード付きで含まれている</li>
+                    <li>Code executes without errors | コードがエラーなしで実行される</li>
+                    <li>Markdown cells explaining each step | 各ステップを説明するマークダウンセル</li>
+                    <li>Output cells showing results | 結果を示す出力セル</li>
+                    <li>Appropriate pandas functions used | 適切なpandas関数が使用されている</li>
+                    <li>Code is organized and readable | コードが整理され読みやすい</li>
+                    <li>File named: <code>Week07_YourName_DataCleaning.ipynb</code></li>
+                </ul>
+
+                <h4>Scoring (35 points) / 採点（35点）:</h4>
+                <table class="rubric-table">
+                    <tr>
+                        <th>Criterion</th>
+                        <th>Points</th>
+                    </tr>
+                    <tr>
+                        <td>Code completeness (all steps present)</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>Code quality (executes without errors, appropriate functions)</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>Documentation (markdown cells explaining steps)</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>Organization and readability</td>
+                        <td>5</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 3: Data Cleaning Report</h3>
+                <h4>成果物3：データクリーニングレポート</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Create a comprehensive report documenting your data cleaning process and results.</p>
+                <p>データクリーニングプロセスと結果を文書化する包括的なレポートを作成します。</p>
+
+                <h4>Report Sections / レポートセクション:</h4>
+
+                <p><strong>1. Before/After Comparison Statistics</strong></p>
+                <ul>
+                    <li>Original dataset: number of companies, duplicates, missing values</li>
+                    <li>Cleaned dataset: number of companies, duplicates, missing values</li>
+                    <li>Show measurable improvement</li>
+                </ul>
+
+                <p><strong>2. Issues Identified</strong></p>
+                <ul>
+                    <li>List all data quality problems found</li>
+                    <li>Provide specific examples with counts</li>
+                    <li>Example: "Found 15 duplicate companies, 8 inconsistent industry names (tech, Tech, IT)"</li>
+                </ul>
+
+                <p><strong>3. Cleaning Operations Performed</strong></p>
+                <ul>
+                    <li>Document each cleaning operation</li>
+                    <li>Explain WHY you made each decision</li>
+                    <li>Example: "Converted all industry names to lowercase to ensure consistency for ML model training"</li>
+                </ul>
+
+                <p><strong>4. Impact of Each Operation</strong></p>
+                <ul>
+                    <li>Show before/after for major changes</li>
+                    <li>Quantify improvements where possible</li>
+                    <li>Example: "Removed 15 duplicates, reducing dataset from 100 to 85 unique companies"</li>
+                </ul>
+
+                <p><strong>5. Known Remaining Limitations</strong></p>
+                <ul>
+                    <li>Acknowledge any remaining issues</li>
+                    <li>Explain why they weren't fixed</li>
+                    <li>Example: "12 companies still have missing employee_count - source data unavailable"</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li><strong>Document format:</strong> Word/PDF or markdown cells in notebook | 文書形式：Word/PDFまたはノートブック内のマークダウンセル</li>
+                        <li><strong>Length:</strong> 2-4 pages | 長さ：2-4ページ</li>
+                        <li><strong>Include tables or charts</strong> showing before/after comparisons | 前後比較を示す表またはチャートを含める</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (25 points) / 採点（25点）:</h4>
+                <table class="rubric-table">
+                    <tr>
+                        <th>Criterion</th>
+                        <th>Points</th>
+                    </tr>
+                    <tr>
+                        <td>Before/after comparison with statistics</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>Issues identified (clear, specific)</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>Cleaning operations documented with justification</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>Impact analysis (quantified improvements)</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>Remaining limitations acknowledged</td>
+                        <td>3</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 4: AI Transparency Log</h3>
+                <h4>成果物4：AI透明性ログ</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>If you used external AI tools (ChatGPT, Claude, Gemini) for assistance, document all interactions.</p>
+                <p>外部AIツール（ChatGPT、Claude、Gemini）を使用した場合、すべてのインタラクションを文書化します。</p>
+
+                <h4>For each AI interaction, include:</h4>
+                <h4>各AIインタラクションについて、以下を含めます：</h4>
+
+                <ol>
+                    <li><strong>Your Prompt / あなたのプロンプト</strong><br>
+                        What did you ask the AI? (exact text)</li>
+                    <li><strong>AI Response / AI応答</strong><br>
+                        Copy the complete response</li>
+                    <li><strong>Verification Process / 検証プロセス</strong><br>
+                        Did you test the code? Did it work? Did you understand it?</li>
+                    <li><strong>Hallucination Check / 幻覚チェック</strong><br>
+                        Did the AI suggest non-existent functions? Did you verify against pandas documentation?</li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li>Include as separate document or section in notebook | 別の文書またはノートブック内のセクションとして含める</li>
+                        <li>Use provided template (available on course portal) | 提供されたテンプレートを使用（コースポータルで利用可能）</li>
+                        <li><strong>OR</strong> clearly state: "No external AI tools were used" | または「外部AIツールは使用されませんでした」と明確に述べる</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (10 points) / 採点（10点）:</h4>
+                <table class="rubric-table">
+                    <tr>
+                        <th>Criterion</th>
+                        <th>Points</th>
+                    </tr>
+                    <tr>
+                        <td>Complete documentation of all AI prompts and responses</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>Verification process documented</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>Hallucination check performed</td>
+                        <td>2</td>
+                    </tr>
+                </table>
+
+                <p><strong>Note:</strong> Using AI tools is permitted with proper documentation. Using ML-101 Bot does NOT require this log.</p>
+                <p><strong>注意:</strong> 適切な文書化があればAIツールの使用は許可されています。ML-101ボットの使用にはこのログは不要です。</p>
+            </div>
+
+            <h2>Submission Instructions / 提出指示</h2>
+
+            <div class="success-box">
+                <h3>How to Submit / 提出方法</h3>
+                <ol>
+                    <li><strong>Prepare your files:</strong><br>
+                        ファイルを準備：
+                        <ul>
+                            <li><code>companies_cleaned.csv</code> (Deliverable 1)</li>
+                            <li><code>Week07_YourName_DataCleaning.ipynb</code> (Deliverable 2)</li>
+                            <li>Cleaning report as PDF/Word or in notebook (Deliverable 3)</li>
+                            <li>AI transparency log if applicable (Deliverable 4)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Create a folder named:</strong> <code>Week07_YourName_DataCleaning</code><br>
+                        フォルダを作成：<code>Week07_あなたの名前_DataCleaning</code></li>
+                    <li><strong>Compress as ZIP file</strong><br>
+                        ZIPファイルとして圧縮</li>
+                    <li><strong>Upload through course portal</strong><br>
+                        コースポータル経由でアップロード</li>
+                    <li><strong>Confirm submission</strong> - you should receive automated confirmation<br>
+                        提出を確認 - 自動確認を受け取るはずです</li>
+                </ol>
+            </div>
+
+            <div class="warning-box">
+                <h3>Submission Deadline / 提出期限</h3>
+                <p><strong>Due:</strong> End of Week 7 | <strong>期限:</strong> 第7週末まで</p>
+
+                <h4>Late Policy / 遅延ポリシー:</h4>
+                <ul>
+                    <li>Submissions up to 24 hours late: <strong>-10%</strong><br>
+                        24時間以内の遅延提出：<strong>-10%</strong></li>
+                    <li>Submissions 24-48 hours late: <strong>-20%</strong><br>
+                        24-48時間の遅延提出：<strong>-20%</strong></li>
+                    <li>Submissions more than 48 hours late: <strong>Not accepted</strong> without prior arrangement<br>
+                        48時間以上の遅延提出：事前の取り決めなしでは<strong>受理されません</strong></li>
+                </ul>
+            </div>
+
+            <h2>Grading Rubric Summary / 評価ルーブリック概要</h2>
+
+            <table class="rubric-table">
+                <thead>
+                    <tr>
+                        <th>Deliverable</th>
+                        <th>Points</th>
+                        <th>Key Criteria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Cleaned Dataset</strong><br>クリーニング済みデータセット</td>
+                        <td><strong>30</strong></td>
+                        <td>Duplicates removed, text standardized, types corrected, consistency validated<br>重複削除、テキスト標準化、型修正、一貫性検証</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cleaning Notebook</strong><br>クリーニングノートブック</td>
+                        <td><strong>35</strong></td>
+                        <td>Complete code, executes without errors, well-documented, organized<br>完全なコード、エラーなし実行、文書化、整理</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cleaning Report</strong><br>クリーニングレポート</td>
+                        <td><strong>25</strong></td>
+                        <td>Before/after comparison, issues identified, operations justified, impact shown<br>前後比較、問題特定、操作正当化、影響表示</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI Transparency Log</strong><br>AI透明性ログ</td>
+                        <td><strong>10</strong></td>
+                        <td>Complete documentation, verification process, hallucination check<br>完全な文書化、検証プロセス、幻覚チェック</td>
+                    </tr>
+                    <tr style="background: var(--primary-color); color: white; font-weight: bold;">
+                        <td><strong>TOTAL</strong><br>合計</td>
+                        <td><strong>100</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Tips for Success / 成功のためのヒント</h2>
+
+            <h3>Getting Started / 始め方</h3>
+            <ul>
+                <li>✅ <strong>Start with data assessment</strong> | データ評価から始める<br>
+                    Don't clean randomly - first understand what issues exist | ランダムにクリーニングしない - 最初にどのような問題が存在するかを理解する</li>
+                <li>✅ <strong>Work systematically</strong> | 体系的に作業する<br>
+                    Follow the five-step workflow: assess, duplicates, types, consistency, validate | 5ステップワークフローに従う：評価、重複、型、一貫性、検証</li>
+                <li>✅ <strong>Save your work frequently</strong> | 頻繁に作業を保存する<br>
+                    Colab notebooks can disconnect - download regularly | Colabノートブックは切断される可能性がある - 定期的にダウンロード</li>
+                <li>✅ <strong>Test code incrementally</strong> | コードを段階的にテストする<br>
+                    Run each cleaning operation separately and check results with <code>df.head()</code> | 各クリーニング操作を個別に実行し、<code>df.head()</code>で結果を確認</li>
+            </ul>
+
+            <h3>Common Mistakes to Avoid / 避けるべきよくある間違い</h3>
+            <ul>
+                <li>❌ <strong>Forgetting to reassign DataFrame</strong><br>
+                    Use <code>df = df.drop_duplicates()</code> not just <code>df.drop_duplicates()</code></li>
+                <li>❌ <strong>Not checking column names</strong><br>
+                    Use <code>df.columns</code> to see exact names - they're case-sensitive!</li>
+                <li>❌ <strong>Over-cleaning</strong><br>
+                    Don't delete valuable data unnecessarily - some missing values are okay</li>
+                <li>❌ <strong>Poor documentation</strong><br>
+                    Explain WHY you made decisions, not just WHAT you did</li>
+                <li>❌ <strong>Not validating results</strong><br>
+                    Always check that your cleaning operations actually worked</li>
+            </ul>
+
+            <h2>Common Issues & Solutions / 一般的な問題と解決策</h2>
+
+            <div class="info-box">
+                <h4>Problem: Can't upload CSV file to Colab</h4>
+                <h4>問題：ColabにCSVファイルをアップロードできない</h4>
+                <p><strong>Solution:</strong> Click folder icon on left sidebar, then upload icon. Or mount Google Drive and access files from there. Make sure file name matches what you use in code.</p>
+                <p><strong>解決策:</strong> 左サイドバーのフォルダアイコンをクリックし、次にアップロードアイコンをクリック。またはGoogle Driveをマウントしてそこからファイルにアクセス。ファイル名がコードで使用するものと一致することを確認。</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Problem: Getting KeyError when accessing columns</h4>
+                <h4>問題：列にアクセスするとKeyErrorが発生する</h4>
+                <p><strong>Solution:</strong> Check exact column names with <code>df.columns</code>. Column names are case-sensitive. Make sure you're using the exact name including any spaces.</p>
+                <p><strong>解決策:</strong> <code>df.columns</code>で正確な列名を確認。列名は大文字小文字を区別します。スペースを含む正確な名前を使用していることを確認。</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Problem: Data type conversion creates NaN values</h4>
+                <h4>問題：データ型変換がNaN値を作成する</h4>
+                <p><strong>Solution:</strong> This is normal when there's invalid data. Use <code>errors='coerce'</code> parameter. Check which values became NaN: <code>df[df['column'].isna()]</code>. Decide if you should fix source data or handle these as missing values.</p>
+                <p><strong>解決策:</strong> これは無効なデータがある場合は正常です。<code>errors='coerce'</code>パラメータを使用。どの値がNaNになったかをチェック：<code>df[df['column'].isna()]</code>。ソースデータを修正すべきか、これらを欠損値として処理すべきかを決定。</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Problem: Code runs but doesn't change the data</h4>
+                <h4>問題：コードは実行されるがデータを変更しない</h4>
+                <p><strong>Solution:</strong> Remember to reassign to the DataFrame: <code>df = df.drop_duplicates()</code> not just <code>df.drop_duplicates()</code>. Some pandas operations return a new DataFrame. Check with <code>df.head()</code> after each operation.</p>
+                <p><strong>解決策:</strong> DataFrameに再割り当てすることを忘れないでください：<code>df.drop_duplicates()</code>だけでなく<code>df = df.drop_duplicates()</code>。一部のpandas操作は新しいDataFrameを返します。各操作後に<code>df.head()</code>でチェック。</p>
+            </div>
+
+            <h2>Getting Help / ヘルプを得る</h2>
+
+            <div class="success-box">
+                <h4>During Class Activity / 授業アクティビティ中:</h4>
+                <ul>
+                    <li>Use ML-101 Bot for code troubleshooting and cleaning strategy</li>
+                    <li>Raise your hand for instructor help</li>
+                    <li>Discuss with classmates (but submit your own work)</li>
+                </ul>
+
+                <h4>Outside of Class / 授業外:</h4>
+                <ul>
+                    <li>Use ML-101 Bot portal (available 24/7)</li>
+                    <li>Email instructor with error messages</li>
+                    <li>Office hours for complex issues</li>
+                    <li>Course forum for general questions</li>
+                </ul>
+
+                <h4>When to Ask for Help / いつ助けを求めるか:</h4>
+                <ul>
+                    <li>Python code errors you can't resolve</li>
+                    <li>Unsure if a cleaning operation is appropriate</li>
+                    <li>Data quality doesn't improve despite efforts</li>
+                    <li>Need help interpreting pandas output</li>
+                </ul>
+            </div>
+
+            <h2>Resources / リソース</h2>
+
+            <div class="info-box">
+                <h4>Course Materials / コース教材:</h4>
+                <ul>
+                    <li>Week 7 lecture slides on data quality issues</li>
+                    <li>Pandas data cleaning cheat sheet (course portal)</li>
+                    <li>Common cleaning operations guide (course portal)</li>
+                    <li>Data type conversion reference (course portal)</li>
+                    <li>AI transparency log template (course portal)</li>
+                </ul>
+
+                <h4>External Resources / 外部リソース:</h4>
+                <ul>
+                    <li><a href="https://pandas.pydata.org/docs/user_guide/missing_data.html" target="_blank">Pandas documentation: Working with missing data</a></li>
+                    <li><a href="https://pandas.pydata.org/docs/user_guide/text.html" target="_blank">Pandas documentation: Working with text data</a></li>
+                    <li><a href="https://pandas.pydata.org/docs/user_guide/duplicates.html" target="_blank">Pandas documentation: Duplicate labels</a></li>
+                </ul>
+            </div>
+
+            <h2>Academic Integrity / 学術的誠実性</h2>
+
+            <div class="warning-box">
+                <h4>Permitted / 許可されている:</h4>
+                <ul>
+                    <li>✅ Using ML-101 Bot for guidance and code assistance</li>
+                    <li>✅ Using external AI tools (ChatGPT, Claude, Gemini) with transparency documentation</li>
+                    <li>✅ Asking for help debugging specific errors</li>
+                    <li>✅ Discussing cleaning strategies with classmates</li>
+                    <li>✅ Referencing pandas documentation and tutorials</li>
+                </ul>
+
+                <h4>Not Permitted / 許可されていない:</h4>
+                <ul>
+                    <li>❌ Copying another student's code or notebook</li>
+                    <li>❌ Having AI write your entire notebook without understanding</li>
+                    <li>❌ Submitting someone else's cleaned dataset as your own</li>
+                    <li>❌ Using AI without documenting in transparency log</li>
+                    <li>❌ Sharing your complete solution files with other students</li>
+                </ul>
+
+                <h4>Violation Consequences / 違反の結果:</h4>
+                <p>First offense: Zero on assignment + academic integrity report</p>
+                <p>第1回違反：課題でゼロ + 学術的誠実性報告</p>
+                <p>Second offense: Course failure + institutional disciplinary action</p>
+                <p>第2回違反：コース不合格 + 機関の懲戒処分</p>
+            </div>
+
+            <div class="success-box" style="text-align: center; margin-top: 40px;">
+                <h2>Good luck with your data cleaning!</h2>
+                <h2>データクリーニング頑張ってください！</h2>
+                <p>Remember: Clean data is the foundation for successful ML models.</p>
+                <p>覚えておいてください：クリーンなデータは成功するMLモデルの基礎です。</p>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="lecture.html" class="btn btn-primary">View Lecture</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>著作権 &copy; 2025 Yuri Tijerino. 無断転載を禁じます。</p>
+        </div>
+    </footer>
+</body>
+</html>

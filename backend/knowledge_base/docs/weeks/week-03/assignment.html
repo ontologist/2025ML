@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 3 Assignment: Google Colab and Python Basics - ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin: -20px -20px 40px -20px;
+        }
+
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+        }
+
+        header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .assignment-meta {
+            background: #f0f7ff;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .assignment-meta table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .assignment-meta td {
+            padding: 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .assignment-meta td:first-child {
+            font-weight: bold;
+            width: 200px;
+        }
+
+        h2 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin-top: 30px;
+        }
+
+        h4 {
+            color: #667eea;
+            margin-top: 20px;
+        }
+
+        .deliverable-card {
+            background: #ffffff;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .deliverable-card h3 {
+            color: #667eea;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .points-badge {
+            background: #28a745;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+
+        .python-keyword {
+            color: #d73a49;
+            font-weight: bold;
+        }
+
+        .python-string {
+            color: #032f62;
+        }
+
+        .python-comment {
+            color: #6a737d;
+            font-style: italic;
+        }
+
+        .python-number {
+            color: #005cc5;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .danger-box {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 10px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 5px;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .checklist li:before {
+            content: "☐";
+            position: absolute;
+            left: 12px;
+            font-size: 1.5em;
+            color: #667eea;
+        }
+
+        .grading-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .grading-table th,
+        .grading-table td {
+            padding: 12px;
+            border: 1px solid #dee2e6;
+            text-align: left;
+        }
+
+        .grading-table th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .grading-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .grading-table .total-row {
+            background: #764ba2;
+            color: white;
+            font-weight: bold;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 5px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .bilingual {
+            color: #666;
+            font-style: italic;
+            display: block;
+            margin-top: 5px;
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            background: #f8f9fa;
+            text-align: center;
+            color: #666;
+            border-top: 3px solid #667eea;
+        }
+
+        .faq-item {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .faq-item strong {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Week 3 Assignment</h1>
+            <p class="subtitle">Introduction to Google Colab and Python Basics</p>
+            <p class="subtitle">Google Colabと基本的なPython入門</p>
+        </header>
+
+        <!-- Assignment Meta Information -->
+        <div class="assignment-meta">
+            <table>
+                <tr>
+                    <td>Course</td>
+                    <td>ML-101: Machine Learning and Intelligence | 機械学習と知能</td>
+                </tr>
+                <tr>
+                    <td>Week</td>
+                    <td>3 of 14 | 第3週</td>
+                </tr>
+                <tr>
+                    <td>Due Date</td>
+                    <td>End of Week 3 class session | 第3週授業終了時</td>
+                </tr>
+                <tr>
+                    <td>Weight</td>
+                    <td>Part of 40% Weekly Activities grade | 週次アクティビティ評価40%の一部</td>
+                </tr>
+                <tr>
+                    <td>Total Points</td>
+                    <td>100 points</td>
+                </tr>
+                <tr>
+                    <td>Submission Method</td>
+                    <td>Through ML-101 Bot Portal | ML-101ボットポータル経由</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Overview -->
+        <section>
+            <h2>Assignment Overview | 課題概要</h2>
+
+            <p>This assignment introduces you to programming fundamentals using Google Colab and Python. You'll learn to write basic Python code, manipulate data structures, and use pandas for data exploration - essential skills for collecting and analyzing company data in the course project.</p>
+
+            <p class="bilingual">この課題は、Google ColabとPythonを使用してプログラミングの基礎を紹介します。基本的なPythonコードを書き、データ構造を操作し、pandasを使用してデータ探索を行う方法を学びます。</p>
+
+            <div class="success-box">
+                <h4>Learning Objectives | 学習目標</h4>
+                <p>By completing this assignment, you will be able to:</p>
+                <ul>
+                    <li>Navigate and use Google Colab environment for Python programming</li>
+                    <li>Write and execute basic Python code with proper syntax</li>
+                    <li>Work with Python data structures (lists, dictionaries)</li>
+                    <li>Import and explore datasets using pandas DataFrames</li>
+                    <li>Apply Python skills to company data analysis</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h4>Prerequisites | 前提条件</h4>
+                <ul>
+                    <li>Attended Week 3 lecture (or reviewed lecture slides)</li>
+                    <li>Completed Week 2 assignment</li>
+                    <li>Google account for accessing Colab</li>
+                    <li>Access to ML-101 Bot portal</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Deliverables -->
+        <section>
+            <h2>Assignment Deliverables | 課題成果物</h2>
+
+            <!-- Deliverable 1 -->
+            <div class="deliverable-card">
+                <h3>
+                    <span>Deliverable 1: Completed Python Basics Notebook</span>
+                    <span class="points-badge">40 points</span>
+                </h3>
+                <p><strong>成果物1：完了したPython基礎ノートブック</strong></p>
+
+                <p>Complete all exercises in a Google Colab notebook with working code.</p>
+                <p class="bilingual">Google Colabノートブックですべての演習を動作中のコードで完了します。</p>
+
+                <h4>Section A: Variables and Data Types (10 points) | 変数とデータ型</h4>
+                <p>Create variables demonstrating each data type:</p>
+
+                <ol>
+                    <li><strong>String variable</strong> - Company name
+                        <div class="code-block">
+<pre>company_name = <span class="python-string">"Toyota Motor Corporation"</span></pre>
+                        </div>
+                    </li>
+
+                    <li><strong>Integer variable</strong> - Employee count
+                        <div class="code-block">
+<pre>employee_count = <span class="python-number">75000</span></pre>
+                        </div>
+                    </li>
+
+                    <li><strong>Float variable</strong> - Average rating or score
+                        <div class="code-block">
+<pre>avg_rating = <span class="python-number">4.5</span></pre>
+                        </div>
+                    </li>
+
+                    <li><strong>Boolean variable</strong> - Hiring status
+                        <div class="code-block">
+<pre>is_hiring = <span class="python-keyword">True</span></pre>
+                        </div>
+                    </li>
+
+                    <li><strong>Use type() function</strong> - Check types of all variables
+                        <div class="code-block">
+<pre><span class="python-keyword">print</span>(<span class="python-keyword">type</span>(company_name))
+<span class="python-keyword">print</span>(<span class="python-keyword">type</span>(employee_count))
+<span class="python-keyword">print</span>(<span class="python-keyword">type</span>(avg_rating))
+<span class="python-keyword">print</span>(<span class="python-keyword">type</span>(is_hiring))</pre>
+                        </div>
+                    </li>
+                </ol>
+
+                <h4>Section B: Lists and Dictionaries (10 points) | リストと辞書</h4>
+
+                <ol>
+                    <li><strong>Create a list</strong> of 5 company names
+                        <ul>
+                            <li>Access first and last items using indexing</li>
+                            <li>Add a new company to the list</li>
+                            <li>Print the updated list</li>
+                        </ul>
+                        <div class="code-block">
+<pre>companies = [<span class="python-string">"Sony"</span>, <span class="python-string">"Toyota"</span>, <span class="python-string">"Rakuten"</span>, <span class="python-string">"Nintendo"</span>, <span class="python-string">"Panasonic"</span>]
+<span class="python-keyword">print</span>(companies[<span class="python-number">0</span>])  <span class="python-comment"># First item</span>
+<span class="python-keyword">print</span>(companies[<span class="python-number">-1</span>]) <span class="python-comment"># Last item</span>
+companies.append(<span class="python-string">"Honda"</span>)
+<span class="python-keyword">print</span>(companies)</pre>
+                        </div>
+                    </li>
+
+                    <li><strong>Create a dictionary</strong> representing company information
+                        <ul>
+                            <li>Must include: name, industry, employee_count, location, is_hiring</li>
+                            <li>Access and print specific values using keys</li>
+                            <li>Add a new key-value pair (e.g., founded_year)</li>
+                        </ul>
+                        <div class="code-block">
+<pre>company_info = {
+    <span class="python-string">"name"</span>: <span class="python-string">"Sony Corporation"</span>,
+    <span class="python-string">"industry"</span>: <span class="python-string">"Technology"</span>,
+    <span class="python-string">"employee_count"</span>: <span class="python-number">50000</span>,
+    <span class="python-string">"location"</span>: <span class="python-string">"Tokyo"</span>,
+    <span class="python-string">"is_hiring"</span>: <span class="python-keyword">True</span>
+}
+<span class="python-keyword">print</span>(company_info[<span class="python-string">"name"</span>])
+company_info[<span class="python-string">"founded_year"</span>] = <span class="python-number">1946</span></pre>
+                        </div>
+                    </li>
+                </ol>
+
+                <h4>Section C: Pandas DataFrame Exercises (15 points) | pandasデータフレーム演習</h4>
+
+                <ol>
+                    <li><strong>Import pandas</strong> library
+                        <div class="code-block">
+<pre><span class="python-keyword">import</span> pandas <span class="python-keyword">as</span> pd</pre>
+                        </div>
+                    </li>
+
+                    <li><strong>Load sample CSV</strong> provided by bot
+                        <div class="code-block">
+<pre><span class="python-comment"># URL will be provided by ML-101 Bot</span>
+df = pd.read_csv(<span class="python-string">'url_provided_by_bot'</span>)</pre>
+                        </div>
+                    </li>
+
+                    <li><strong>Explore the data:</strong>
+                        <div class="code-block">
+<pre><span class="python-comment"># Display first 5 rows</span>
+<span class="python-keyword">print</span>(df.head())
+
+<span class="python-comment"># Check data shape</span>
+<span class="python-keyword">print</span>(df.shape)
+
+<span class="python-comment"># Show column names</span>
+<span class="python-keyword">print</span>(df.columns)
+
+<span class="python-comment"># Display data types</span>
+<span class="python-keyword">print</span>(df.dtypes)
+
+<span class="python-comment"># Get summary statistics</span>
+<span class="python-keyword">print</span>(df.describe())</pre>
+                        </div>
+                    </li>
+
+                    <li><strong>Access specific columns:</strong>
+                        <div class="code-block">
+<pre><span class="python-comment"># Select and print the company_name column</span>
+<span class="python-keyword">print</span>(df[<span class="python-string">'company_name'</span>])
+
+<span class="python-comment"># Select and print the industry column</span>
+<span class="python-keyword">print</span>(df[<span class="python-string">'industry'</span>])</pre>
+                        </div>
+                    </li>
+                </ol>
+
+                <h4>Code Quality and Documentation (5 points) | コード品質と文書化</h4>
+                <ul>
+                    <li>All code cells execute without errors</li>
+                    <li>Include text cells with explanations for each section</li>
+                    <li>Clear output displayed for all exercises</li>
+                    <li>Code is well-organized and readable</li>
+                </ul>
+
+                <div class="info-box">
+                    <h4>Format | 形式</h4>
+                    <ul>
+                        <li>Google Colab notebook (.ipynb file)</li>
+                        <li>File name: <code>Week03_[YourName]_PythonBasics.ipynb</code></li>
+                        <li>All code cells must execute without errors</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Deliverable 2 -->
+            <div class="deliverable-card">
+                <h3>
+                    <span>Deliverable 2: Exercise Output Screenshots</span>
+                    <span class="points-badge">25 points</span>
+                </h3>
+                <p><strong>成果物2：演習出力スクリーンショット</strong></p>
+
+                <p>Provide <strong>at least 3 screenshots</strong> showing successful execution of your code:</p>
+
+                <h4>Required Screenshots:</h4>
+
+                <ol>
+                    <li><strong>Colab Environment Screenshot (5 points)</strong>
+                        <ul>
+                            <li>Show the Colab interface with your notebook open</li>
+                            <li>Must clearly display notebook name and execution status</li>
+                        </ul>
+                    </li>
+
+                    <li><strong>Variables and Data Types Output (5 points)</strong>
+                        <ul>
+                            <li>Screenshot showing all variable assignments</li>
+                            <li>Must include type() function results</li>
+                        </ul>
+                    </li>
+
+                    <li><strong>Pandas DataFrame Output (5 points)</strong>
+                        <ul>
+                            <li>Screenshot of df.head() and df.describe() results</li>
+                            <li>Must show clear data preview</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h4>Additional Screenshots (Optional but Recommended):</h4>
+                <ul>
+                    <li>Lists and dictionaries exercises</li>
+                    <li>Column selection results</li>
+                    <li>Any challenges you solved</li>
+                </ul>
+
+                <h4>Quality and Organization (10 points):</h4>
+                <ul>
+                    <li>Clear and readable quality (5 points)</li>
+                    <li>Proper labeling and organization (5 points)</li>
+                </ul>
+
+                <div class="info-box">
+                    <h4>Format | 形式</h4>
+                    <ul>
+                        <li>PNG or JPG format</li>
+                        <li>Clear, readable screenshots</li>
+                        <li>Label each screenshot (Screenshot 1, 2, 3)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Deliverable 3 -->
+            <div class="deliverable-card">
+                <h3>
+                    <span>Deliverable 3: Reflection Notes</span>
+                    <span class="points-badge">25 points</span>
+                </h3>
+                <p><strong>成果物3：考察ノート</strong></p>
+
+                <p>Write <strong>1-2 paragraphs</strong> (150-250 words) reflecting on your Python learning experience.</p>
+                <p class="bilingual">Python学習体験について1-2段落（150-250語）の考察を書きます。</p>
+
+                <h4>Guiding Questions | ガイド質問:</h4>
+                <ul>
+                    <li>What was the most challenging aspect of Python for you?</li>
+                    <li>How did you overcome difficulties (bot help, trial and error, external resources)?</li>
+                    <li>What was easier than you expected?</li>
+                    <li>How do you see Python helping with the company data collection project?</li>
+                    <li>What Python concepts do you want to learn more about?</li>
+                </ul>
+
+                <h4>Example Reflection:</h4>
+                <div class="code-block" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa;">
+                    <p>"The most challenging aspect of Python for me was understanding how dictionaries work, especially accessing values with keys instead of positions like in lists. I overcame this by using the ML-101 Bot to get examples and then practicing with different company data. The pandas DataFrame exercises were easier than expected because the commands (head, describe) are very intuitive. I can see how Python will be essential for our company data project - we'll need pandas to organize and analyze the data we scrape from websites. I want to learn more about data cleaning techniques and how to handle missing values in DataFrames."</p>
+                </div>
+
+                <h4>Scoring (25 points) | 採点:</h4>
+                <ul>
+                    <li>Thoughtful reflection on challenges: 10 points</li>
+                    <li>Connection to course project: 10 points</li>
+                    <li>Clear writing and organization: 5 points</li>
+                </ul>
+
+                <div class="info-box">
+                    <h4>Format | 形式</h4>
+                    <ul>
+                        <li>Include in your main submission document</li>
+                        <li>Clearly labeled section: "Python Learning Reflection"</li>
+                        <li>1-2 paragraphs, 150-250 words</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Deliverable 4 -->
+            <div class="deliverable-card">
+                <h3>
+                    <span>Deliverable 4: AI Transparency Statement (if applicable)</span>
+                    <span class="points-badge">10 points</span>
+                </h3>
+                <p><strong>成果物4：AI透明性声明（該当する場合）</strong></p>
+
+                <div class="warning-box">
+                    <p><strong>Note:</strong> This deliverable is <strong>required only if</strong> your institution has an AI transparency policy OR if you used external AI tools.</p>
+                    <p class="bilingual">この成果物は、あなたの機関がAI透明性ポリシーを持つ場合、または外部AIツールを使用した場合のみ必要です。</p>
+                </div>
+
+                <p>If applicable, include a statement (3-5 sentences) describing:</p>
+
+                <ul>
+                    <li>Which AI tools you used (ML-101 Bot, ChatGPT, etc.)</li>
+                    <li>How you used them (explaining concepts, debugging code, syntax help)</li>
+                    <li>What you learned and coded independently vs with AI assistance</li>
+                    <li>How you verified that AI-suggested code works correctly</li>
+                </ul>
+
+                <h4>Example AI Transparency Statement:</h4>
+                <div class="code-block" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa;">
+                    <p>"I used the ML-101 Bot throughout the assignment for step-by-step guidance and concept explanations. When I encountered a 'KeyError' in my dictionary exercise, I also used ChatGPT to help me understand the error message and learn how to check if a key exists before accessing it. I wrote all the basic variable and list code independently, but used AI assistance to understand pandas syntax for the DataFrame exercises. I verified all AI-suggested code by running it in my notebook and ensuring I understood what each line does before including it in my submission."</p>
+                </div>
+
+                <h4>Scoring (10 points) | 採点:</h4>
+                <ul>
+                    <li>Honest and clear documentation</li>
+                    <li>Appropriate AI usage</li>
+                    <li>Evidence of independent learning</li>
+                </ul>
+
+                <div class="info-box">
+                    <h4>Format | 形式</h4>
+                    <ul>
+                        <li>Include at the end of your main document</li>
+                        <li>Clearly labeled: "AI Transparency Statement"</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Submission Instructions -->
+        <section>
+            <h2>Submission Instructions | 提出指示</h2>
+
+            <h3>How to Submit | 提出方法</h3>
+
+            <ul class="checklist">
+                <li><strong>Download your Colab notebook</strong><br>
+                File > Download > Download .ipynb</li>
+
+                <li><strong>Create a submission document</strong> with:<br>
+                - Exercise screenshots (Deliverable 2)<br>
+                - Reflection notes (Deliverable 3)<br>
+                - AI transparency statement (Deliverable 4, if applicable)</li>
+
+                <li><strong>Name your files:</strong><br>
+                - Notebook: <code>Week03_[YourName]_PythonBasics.ipynb</code><br>
+                - Document: <code>Week03_[YourName]_PythonBasics.pdf</code> (or .docx)</li>
+
+                <li><strong>Upload through ML-101 Bot Portal:</strong><br>
+                - Log in to bot portal<br>
+                - Navigate to "Week 3 Assignment Submission"<br>
+                - Upload both files (.ipynb notebook AND document)<br>
+                - Click "Submit"</li>
+
+                <li><strong>Confirm submission:</strong><br>
+                You should receive an automated confirmation within 5 minutes</li>
+            </ul>
+
+            <h3>Submission Deadline | 提出期限</h3>
+
+            <div class="warning-box">
+                <p><strong>Due:</strong> End of Week 3 class session</p>
+                <p><strong>期限:</strong> 第3週授業終了時</p>
+
+                <h4>Late Policy | 遅延ポリシー:</h4>
+                <ul>
+                    <li>Submissions up to 24 hours late: -10%</li>
+                    <li>Submissions 24-48 hours late: -20%</li>
+                    <li>Submissions more than 48 hours late: Not accepted without prior arrangement</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Grading Rubric -->
+        <section>
+            <h2>Grading Rubric | 評価ルーブリック</h2>
+
+            <table class="grading-table">
+                <thead>
+                    <tr>
+                        <th>Deliverable</th>
+                        <th>Points</th>
+                        <th>Criteria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Python Basics Notebook</strong></td>
+                        <td>40</td>
+                        <td>Variables (10), Lists & Dictionaries (10), Pandas (15), Code Quality (5)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Exercise Screenshots</strong></td>
+                        <td>25</td>
+                        <td>3+ clear screenshots (15), Quality & Organization (10)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Reflection Notes</strong></td>
+                        <td>25</td>
+                        <td>Challenges (10), Project Connection (10), Writing Quality (5)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI Transparency</strong></td>
+                        <td>10</td>
+                        <td>Clear documentation (if required/applicable)</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>TOTAL</strong></td>
+                        <td><strong>100</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Tips for Success -->
+        <section>
+            <h2>Tips for Success | 成功のためのヒント</h2>
+
+            <h3>Getting Started | 始め方</h3>
+
+            <div class="success-box">
+                <ul>
+                    <li><strong>Start with the Colab tutorial</strong> - The ML-101 Bot will guide you through setup</li>
+                    <li><strong>Run code frequently</strong> - Test each line before moving to the next</li>
+                    <li><strong>Read error messages carefully</strong> - They tell you what's wrong</li>
+                    <li><strong>Use print() statements</strong> - Check your work as you go</li>
+                </ul>
+            </div>
+
+            <h3>Common Mistakes to Avoid | 避けるべきよくある間違い</h3>
+
+            <div class="danger-box">
+                <ul>
+                    <li><strong>Forgetting to execute cells in order</strong> - Always run cells from top to bottom</li>
+                    <li><strong>Typos in variable names</strong> - Python is case-sensitive: <code>CompanyName</code> ≠ <code>companyname</code></li>
+                    <li><strong>Not saving your work</strong> - Download a backup copy regularly</li>
+                    <li><strong>Copying code without understanding</strong> - Add comments explaining what each line does</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section>
+            <h2>Frequently Asked Questions | よくある質問</h2>
+
+            <div class="faq-item">
+                <p><strong>Q: Do I need to install Python on my computer?</strong></p>
+                <p>A: No! Google Colab runs Python in the cloud. You only need a web browser and Google account.</p>
+            </div>
+
+            <div class="faq-item">
+                <p><strong>Q: What if my code has errors and won't run?</strong></p>
+                <p>A: Read the error message carefully - it usually tells you the problem. Ask the ML-101 Bot to explain the error. Common issues: typos, missing quotes, wrong indentation.</p>
+            </div>
+
+            <div class="faq-item">
+                <p><strong>Q: Can I use ChatGPT or other AI to help with coding?</strong></p>
+                <p>A: Yes, but you must document it in your AI Transparency Statement. Make sure you understand any code AI suggests and can explain what it does.</p>
+            </div>
+
+            <div class="faq-item">
+                <p><strong>Q: How long should this assignment take?</strong></p>
+                <p>A: Plan for 2-3 hours total: 1 hour for exercises, 30-60 minutes for documentation and screenshots, 30 minutes for reflection.</p>
+            </div>
+
+            <div class="faq-item">
+                <p><strong>Q: Can I work with a classmate?</strong></p>
+                <p>A: You can discuss concepts and help each other troubleshoot, but your code and submission must be your own work.</p>
+            </div>
+        </section>
+
+        <!-- Getting Help -->
+        <section>
+            <h2>Getting Help | ヘルプを得る</h2>
+
+            <h3>During Class Activity | 授業アクティビティ中:</h3>
+            <ul>
+                <li>Ask the ML-101 Bot questions about Python syntax and concepts</li>
+                <li>Raise your hand for instructor help with errors</li>
+                <li>Discuss approaches with classmates (but write your own code)</li>
+            </ul>
+
+            <h3>Outside of Class | 授業外:</h3>
+            <ul>
+                <li>Use the bot portal (available 24/7) for coding help</li>
+                <li>Email instructor for technical issues</li>
+                <li>Python documentation: <a href="https://docs.python.org/3/" target="_blank">docs.python.org</a></li>
+                <li>Pandas documentation: <a href="https://pandas.pydata.org/docs/" target="_blank">pandas.pydata.org</a></li>
+            </ul>
+        </section>
+
+        <!-- Academic Integrity -->
+        <section>
+            <h2>Academic Integrity | 学術的誠実性</h2>
+
+            <div class="success-box">
+                <h4>Permitted | 許可されている:</h4>
+                <ul>
+                    <li>Using the ML-101 Bot for guidance and explanations</li>
+                    <li>Asking AI tools to explain concepts or debug errors</li>
+                    <li>Looking at Python documentation and tutorials</li>
+                    <li>Discussing approaches with classmates</li>
+                    <li>Using code examples from lecture materials</li>
+                </ul>
+            </div>
+
+            <div class="danger-box">
+                <h4>Not Permitted | 許可されていない:</h4>
+                <ul>
+                    <li>Copying another student's code</li>
+                    <li>Submitting code you don't understand</li>
+                    <li>Having AI write your entire assignment</li>
+                    <li>Plagiarizing code from websites without understanding it</li>
+                    <li>Sharing your completed notebook before deadline</li>
+                </ul>
+
+                <p><strong>Violation Consequences:</strong> First offense: Zero on assignment + academic integrity report</p>
+            </div>
+        </section>
+
+        <!-- Final Notes -->
+        <section>
+            <div class="success-box" style="text-align: center; padding: 30px;">
+                <h3>Good luck with your Python journey!</h3>
+                <p style="font-size: 1.2em;">Python学習の旅を頑張ってください！</p>
+                <p style="margin-top: 20px;"><strong>Remember:</strong> Everyone starts as a beginner. Take it step by step, and don't be afraid to ask questions!</p>
+                <p class="bilingual">覚えておいてください：誰もが初心者として始まります。一歩ずつ進み、質問することを恐れないでください！</p>
+            </div>
+        </section>
+
+        <!-- Action Buttons -->
+        <div style="text-align: center; margin: 40px 0;">
+            <a href="slides.html" class="btn">View Presentation Slides</a>
+            <a href="lecture.html" class="btn">View Lecture Notes</a>
+            <a href="#" class="btn btn-success">Submit Assignment (Bot Portal)</a>
+            <a href="../../index.html" class="btn btn-secondary">Back to Course Home</a>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Yuri Tijerino. ML-101: Machine Learning and Intelligence</p>
+            <p class="bilingual">著作権 © 2025 Yuri Tijerino. ML-101: 機械学習と知能</p>
+            <p style="margin-top: 10px;">Assignment created for ML-101 Course</p>
+        </footer>
+    </div>
+</body>
+</html>

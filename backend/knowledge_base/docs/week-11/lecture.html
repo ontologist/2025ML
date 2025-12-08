@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 11: Training Your First Model | ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .lecture-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .lecture-content h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .lecture-content h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .lecture-content h4 {
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .objectives-list {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .objectives-list ul {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+        .highlight-box {
+            background: #fef3cd;
+            border-left: 5px solid var(--warning);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-box {
+            background: var(--bg-light);
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary-color);
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            white-space: pre-wrap;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .bilingual-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        .english-col {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+        .japanese-col {
+            background: #f3e8ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        @media (max-width: 768px) {
+            .bilingual-section {
+                grid-template-columns: 1fr;
+            }
+            .lecture-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Week 11: Training Your First Model</h1>
+            <p class="subtitle">第11週：初めてのモデル訓練</p>
+            <p class="instructor">Instructor: Yuri Tijerino</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="slides.html">Presentation Slides</a>
+            <a href="assignment.html">Assignment</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="lecture-content">
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+                <a href="assignment.html" class="btn btn-accent">View Assignment</a>
+            </div>
+
+            <div class="objectives-list">
+                <h3>Learning Objectives / 学習目標</h3>
+                <p><strong>English:</strong> By the end of this lecture, students will be able to:</p>
+                <ul>
+                    <li>Understand what no-code ML platforms are and why they're useful</li>
+                    <li>Explain the model training process from data upload to model generation</li>
+                    <li>Configure training settings for classification tasks</li>
+                    <li>Interpret basic training metrics like accuracy</li>
+                    <li>Successfully train a classification model using a no-code platform</li>
+                </ul>
+                <p><strong>日本語:</strong> この講義の終了までに、学生は以下ができるようになります：</p>
+                <ul>
+                    <li>ノーコードMLプラットフォームとは何か、なぜ有用かを理解する</li>
+                    <li>データアップロードからモデル生成までのモデル訓練プロセスを説明する</li>
+                    <li>分類タスクの訓練設定を設定する</li>
+                    <li>精度などの基本的な訓練メトリクスを解釈する</li>
+                    <li>ノーコードプラットフォームを使用して分類モデルを正常に訓練する</li>
+                </ul>
+            </div>
+
+            <h2>Introduction to No-Code ML Platforms</h2>
+
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h3>What are No-Code ML Platforms?</h3>
+                    <p><strong>No-code machine learning platforms allow users to build, train, and deploy ML models without writing any programming code.</strong></p>
+                    <p>Instead of coding, users interact with visual interfaces, upload data through simple forms, and configure models by clicking buttons and selecting options.</p>
+                </div>
+                <div class="japanese-col">
+                    <h3>ノーコードMLプラットフォームとは？</h3>
+                    <p><strong>ノーコード機械学習プラットフォームは、プログラミングコードを書かずにMLモデルを構築、訓練、デプロイできるようにします。</strong></p>
+                    <p>コーディングの代わりに、ユーザーは視覚的なインターフェースとやり取りし、シンプルなフォームを通じてデータをアップロードし、ボタンをクリックしてオプションを選択することでモデルを設定します。</p>
+                </div>
+            </div>
+
+            <h3>Why Use No-Code Platforms?</h3>
+
+            <h4>1. Accessibility / アクセシビリティ</h4>
+            <p>No programming knowledge required. Anyone can build ML models, regardless of coding experience.</p>
+            <p>プログラミング知識は不要です。コーディング経験に関係なく、誰でもMLモデルを構築できます。</p>
+
+            <h4>2. Speed / スピード</h4>
+            <p>Train models in minutes instead of hours. No time spent debugging code or configuring environments.</p>
+            <p>数時間ではなく数分でモデルを訓練します。コードのデバッグや環境の設定に時間を費やしません。</p>
+
+            <h4>3. Focus on Concepts / コンセプトに集中</h4>
+            <p>Learn ML principles without getting distracted by syntax errors and programming challenges.</p>
+            <p>構文エラーやプログラミングの課題に気を取られることなく、ML原則を学習します。</p>
+
+            <h4>4. Professional Algorithms / プロフェッショナルアルゴリズム</h4>
+            <p>No-code platforms use the same proven ML algorithms as code-based implementations. The quality is the same.</p>
+            <p>ノーコードプラットフォームは、コードベースの実装と同じ実証済みのMLアルゴリズムを使用します。品質は同じです。</p>
+
+            <h2>Popular No-Code ML Platforms</h2>
+
+            <h3>1. Google AutoML</h3>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <ul>
+                        <li>Enterprise-grade platform</li>
+                        <li>Automatic model selection and optimization</li>
+                        <li>Supports images, text, and tabular data</li>
+                        <li>Integrates with Google Cloud</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <ul>
+                        <li>エンタープライズグレードプラットフォーム</li>
+                        <li>自動モデル選択と最適化</li>
+                        <li>画像、テキスト、表形式データをサポート</li>
+                        <li>Google Cloudと統合</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>2. Teachable Machine (Google)</h3>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <ul>
+                        <li>Very beginner-friendly</li>
+                        <li>Great for image and audio classification</li>
+                        <li>Free and accessible</li>
+                        <li>Web-based, no installation needed</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <ul>
+                        <li>非常に初心者向け</li>
+                        <li>画像と音声分類に最適</li>
+                        <li>無料でアクセス可能</li>
+                        <li>Webベース、インストール不要</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>3. Orange Data Mining</h3>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <ul>
+                        <li>Open-source and free</li>
+                        <li>Visual workflow design</li>
+                        <li>Excellent for learning ML concepts</li>
+                        <li>Strong data visualization tools</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <ul>
+                        <li>オープンソースで無料</li>
+                        <li>視覚的なワークフロー設計</li>
+                        <li>MLコンセプトの学習に優れている</li>
+                        <li>強力なデータ可視化ツール</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>The Model Training Process</h2>
+
+            <p>Understanding what happens during model training helps you make better decisions when configuring your ML system.</p>
+            <p>モデル訓練中に何が起こるかを理解することで、MLシステムを設定する際により良い決定を下すことができます。</p>
+
+            <h3>Step-by-Step Training Workflow</h3>
+
+            <div class="code-box">STEP 1: DATA UPLOAD / データアップロード
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+→ Upload your Week 10 labeled dataset (CSV file)
+  第10週のラベル付きデータセット（CSVファイル）をアップロード
+→ Platform reads and validates the data
+  プラットフォームがデータを読み取り検証
+→ Checks for missing values, data types
+  欠損値、データ型をチェック
+
+STEP 2: CONFIGURATION / 設定
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+→ Identify TARGET VARIABLE (label column)
+  ターゲット変数を特定（ラベル列）
+  • This is what you want to predict
+    これは予測したいもの
+  • In our case: "label" column (1 or 0)
+    私たちの場合：「label」列（1または0）
+
+→ Identify FEATURES (input columns)
+  特徴量を特定（入力列）
+  • All the characteristics that describe companies
+    企業を記述するすべての特性
+  • Industry, size, location, keywords, etc.
+    業界、規模、所在地、キーワードなど
+
+→ Exclude non-feature columns
+  非特徴量列を除外
+  • company_name (just for reference, not a feature)
+    company_name（参照用のみ、特徴量ではない）
+
+STEP 3: DATA SPLITTING / データ分割
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+→ Platform automatically splits data:
+  プラットフォームが自動的にデータを分割：
+  • 70-80% → Training Set (model learns from this)
+    70-80% → 訓練セット（モデルがこれから学習）
+  • 20-30% → Test Set (model evaluated on this)
+    20-30% → テストセット（モデルがこれで評価される）
+
+→ Ensures test data is never seen during training
+  テストデータが訓練中に決して見られないことを保証
+
+STEP 4: MODEL SELECTION / モデル選択
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+→ Platform tries different ML algorithms:
+  プラットフォームが異なるMLアルゴリズムを試す：
+  • Logistic Regression
+    ロジスティック回帰
+  • Decision Trees
+    決定木
+  • Random Forest
+    ランダムフォレスト
+  • Neural Networks (if enough data)
+    ニューラルネットワーク（十分なデータがある場合）
+
+→ Compares performance of each
+  各パフォーマンスを比較
+→ Selects the best-performing algorithm
+  最高のパフォーマンスを持つアルゴリズムを選択
+
+STEP 5: TRAINING / 訓練
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+→ Model learns patterns from training data
+  モデルが訓練データからパターンを学習
+→ Iteratively adjusts internal parameters
+  内部パラメータを反復的に調整
+→ Minimizes prediction errors
+  予測エラーを最小化
+→ Process may take 5-15 minutes
+  プロセスには5-15分かかる場合があります
+
+STEP 6: VALIDATION / 検証
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+→ Tests trained model on held-out test data
+  保持されたテストデータで訓練済みモデルをテスト
+→ Calculates performance metrics:
+  パフォーマンスメトリクスを計算：
+  • Accuracy (% correct predictions)
+    精度（正しい予測の%）
+  • Precision, Recall, F1-Score
+    精密度、再現率、F1スコア
+→ Reports results to you
+  結果をあなたに報告
+
+STEP 7: MODEL EXPORT / モデルエクスポート
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+→ Save trained model for future use
+  将来使用するために訓練済みモデルを保存
+→ Can be used to predict on new companies
+  新しい企業で予測するために使用可能</div>
+
+            <h2>Understanding Model Algorithms</h2>
+
+            <h3>Logistic Regression / ロジスティック回帰</h3>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>How it works:</h4>
+                    <p>Finds a mathematical formula that best separates your two classes (Interested vs Not Interested). Simple and fast.</p>
+                    <h4>Best for:</h4>
+                    <ul>
+                        <li>Small datasets</li>
+                        <li>Linear relationships</li>
+                        <li>When you need speed</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>どのように機能するか：</h4>
+                    <p>2つのクラス（興味ありvs興味なし）を最もよく分離する数式を見つけます。シンプルで高速です。</p>
+                    <h4>最適な用途：</h4>
+                    <ul>
+                        <li>小さなデータセット</li>
+                        <li>線形関係</li>
+                        <li>スピードが必要な場合</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Decision Trees / 決定木</h3>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>How it works:</h4>
+                    <p>Creates a tree of yes/no questions about features. "Is industry = Tech? → Yes → Is size > 100? → Yes → Interested"</p>
+                    <h4>Best for:</h4>
+                    <ul>
+                        <li>Interpretability (easy to understand)</li>
+                        <li>Non-linear patterns</li>
+                        <li>Mixed data types</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>どのように機能するか：</h4>
+                    <p>特徴量に関するはい/いいえの質問の木を作成します。「業界=テクノロジー？→はい→規模>100？→はい→興味あり」</p>
+                    <h4>最適な用途：</h4>
+                    <ul>
+                        <li>解釈可能性（理解しやすい）</li>
+                        <li>非線形パターン</li>
+                        <li>混合データ型</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Random Forest / ランダムフォレスト</h3>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>How it works:</h4>
+                    <p>Creates many decision trees and combines their predictions. Like asking multiple experts and taking a vote.</p>
+                    <h4>Best for:</h4>
+                    <ul>
+                        <li>High accuracy</li>
+                        <li>Complex patterns</li>
+                        <li>Reducing overfitting</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>どのように機能するか：</h4>
+                    <p>多くの決定木を作成し、それらの予測を組み合わせます。複数の専門家に尋ねて投票するようなものです。</p>
+                    <h4>最適な用途：</h4>
+                    <ul>
+                        <li>高精度</li>
+                        <li>複雑なパターン</li>
+                        <li>過学習の軽減</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>Understanding Training Metrics</h2>
+
+            <h3>Accuracy - The Primary Metric</h3>
+            <div class="highlight-box">
+                <p><strong>Accuracy = Number of Correct Predictions / Total Number of Predictions</strong></p>
+                <p><strong>精度 = 正しい予測の数 / 予測の総数</strong></p>
+            </div>
+
+            <div class="code-box">Example / 例:
+
+Total companies: 25
+Test set (20%): 5 companies
+総企業数：25
+テストセット（20%）：5社
+
+Model predictions on test set:
+テストセットでのモデル予測：
+• Company A: Predicted = 1, Actual = 1 ✓ CORRECT
+• Company B: Predicted = 0, Actual = 0 ✓ CORRECT
+• Company C: Predicted = 1, Actual = 0 ✗ WRONG
+• Company D: Predicted = 1, Actual = 1 ✓ CORRECT
+• Company E: Predicted = 0, Actual = 1 ✗ WRONG
+
+Accuracy = 3 correct / 5 total = 60%
+精度 = 3正しい / 5合計 = 60%</div>
+
+            <h3>What's a Good Accuracy?</h3>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <thead>
+                    <tr style="background: var(--primary-color); color: white;">
+                        <th style="padding: 12px; text-align: left;">Accuracy Range</th>
+                        <th style="padding: 12px; text-align: left;">Interpretation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: var(--bg-light);">
+                        <td style="padding: 12px;"><strong>~50%</strong></td>
+                        <td style="padding: 12px;">Random guessing (no better than flipping a coin)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px;"><strong>60-70%</strong></td>
+                        <td style="padding: 12px;">Model is learning! Better than random</td>
+                    </tr>
+                    <tr style="background: var(--bg-light);">
+                        <td style="padding: 12px;"><strong>70-80%</strong></td>
+                        <td style="padding: 12px;">Good performance for small datasets</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px;"><strong>80-90%</strong></td>
+                        <td style="padding: 12px;">Very good performance</td>
+                    </tr>
+                    <tr style="background: var(--bg-light);">
+                        <td style="padding: 12px;"><strong>90%+</strong></td>
+                        <td style="padding: 12px;">Excellent (but check for overfitting)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Context Matters</h3>
+            <p>With ~25 companies in your dataset, <strong>60-80% accuracy is realistic and good!</strong></p>
+            <p>データセットに約25社の場合、<strong>60-80%の精度は現実的で良好です！</strong></p>
+
+            <h4>Why not higher?</h4>
+            <ul>
+                <li><strong>Small dataset:</strong> Limited examples for the model to learn from</li>
+                <li><strong>Complex task:</strong> Human career preferences are nuanced and sometimes inconsistent</li>
+                <li><strong>Feature limitations:</strong> Some important factors might not be captured in your features</li>
+            </ul>
+
+            <h2>What to Expect During Training</h2>
+
+            <h3>The Training Timeline</h3>
+            <ol>
+                <li><strong>Data Upload (1-2 minutes)</strong><br>
+                    Platform reads your CSV and validates format</li>
+                <li><strong>Configuration (2-3 minutes)</strong><br>
+                    You specify target variable and features</li>
+                <li><strong>Training Execution (5-15 minutes)</strong><br>
+                    Platform tries algorithms and trains model<br>
+                    You'll see progress indicators</li>
+                <li><strong>Results Display (instant)</strong><br>
+                    Platform shows accuracy and performance metrics</li>
+            </ol>
+
+            <h3>What You'll See</h3>
+            <ul>
+                <li><strong>Progress bar:</strong> Shows training completion percentage</li>
+                <li><strong>Status messages:</strong> "Training model...", "Evaluating performance..."</li>
+                <li><strong>Algorithm selection:</strong> Platform may show which algorithm it chose</li>
+                <li><strong>Training metrics:</strong> Accuracy, precision, recall displayed</li>
+                <li><strong>Feature importance:</strong> Which features mattered most (if shown)</li>
+            </ul>
+
+            <h2>Common Training Issues and Solutions</h2>
+
+            <h3>Issue 1: Platform won't accept CSV</h3>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Possible causes:</h4>
+                    <ul>
+                        <li>File format not pure CSV</li>
+                        <li>Special characters in column names</li>
+                        <li>File size too large/small</li>
+                    </ul>
+                    <h4>Solutions:</h4>
+                    <ul>
+                        <li>Open in Excel/Sheets, re-save as CSV</li>
+                        <li>Rename columns (no spaces or special chars)</li>
+                        <li>Check platform file size requirements</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>考えられる原因：</h4>
+                    <ul>
+                        <li>ファイル形式が純粋なCSVではない</li>
+                        <li>列名に特殊文字がある</li>
+                        <li>ファイルサイズが大きすぎる/小さすぎる</li>
+                    </ul>
+                    <h4>解決策：</h4>
+                    <ul>
+                        <li>Excel/Sheetsで開き、CSVとして再保存</li>
+                        <li>列名を変更（スペースや特殊文字なし）</li>
+                        <li>プラットフォームのファイルサイズ要件を確認</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Issue 2: Training fails or returns error</h3>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Possible causes:</h4>
+                    <ul>
+                        <li>Missing values in features</li>
+                        <li>Wrong data types</li>
+                        <li>Target column not properly set</li>
+                    </ul>
+                    <h4>Solutions:</h4>
+                    <ul>
+                        <li>Check all feature columns are numeric</li>
+                        <li>Verify label column has only 0 and 1</li>
+                        <li>Review configuration settings</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>考えられる原因：</h4>
+                    <ul>
+                        <li>特徴量の欠損値</li>
+                        <li>間違ったデータ型</li>
+                        <li>ターゲット列が適切に設定されていない</li>
+                    </ul>
+                    <h4>解決策：</h4>
+                    <ul>
+                        <li>すべての特徴量列が数値であることを確認</li>
+                        <li>ラベル列が0と1のみを持つことを確認</li>
+                        <li>設定を確認</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Issue 3: Training takes very long</h3>
+            <div class="bilingual-section">
+                <div class="english-col">
+                    <h4>Normal or problem?</h4>
+                    <p>For ~25 companies, training should take 5-15 minutes maximum. If longer:</p>
+                    <ul>
+                        <li>Check internet connection</li>
+                        <li>Platform may be busy (try off-peak hours)</li>
+                        <li>Consider different platform</li>
+                    </ul>
+                </div>
+                <div class="japanese-col">
+                    <h4>正常か問題か？</h4>
+                    <p>約25社の場合、訓練は最大5-15分かかるはずです。より長い場合：</p>
+                    <ul>
+                        <li>インターネット接続を確認</li>
+                        <li>プラットフォームが混雑している可能性（オフピーク時間を試す）</li>
+                        <li>別のプラットフォームを検討</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>Today's Activity: Training Your Model</h2>
+
+            <p>In today's hands-on activity, you will:</p>
+            <p>今日のハンズオンアクティビティでは、以下を行います：</p>
+
+            <ol>
+                <li><strong>Access the no-code ML platform</strong><br>
+                    Set up account and familiarize with interface<br>
+                    <em>ノーコードMLプラットフォームにアクセス - アカウントを設定しインターフェースに慣れる</em></li>
+
+                <li><strong>Upload your Week 10 labeled dataset</strong><br>
+                    Import the CSV file with features and labels<br>
+                    <em>第10週のラベル付きデータセットをアップロード - 特徴量とラベルを含むCSVファイルをインポート</em></li>
+
+                <li><strong>Configure training settings</strong><br>
+                    Specify target variable (label) and features<br>
+                    <em>訓練設定を設定 - ターゲット変数（ラベル）と特徴量を指定</em></li>
+
+                <li><strong>Run model training</strong><br>
+                    Start training and monitor progress<br>
+                    <em>モデル訓練を実行 - 訓練を開始し進捗を監視</em></li>
+
+                <li><strong>Review and save results</strong><br>
+                    Examine training metrics and export model<br>
+                    <em>結果をレビューして保存 - 訓練メトリクスを調べモデルをエクスポート</em></li>
+            </ol>
+
+            <div class="highlight-box">
+                <h4>Important!</h4>
+                <p>Save your trained model! You'll need it for Week 12 when we evaluate model performance on new companies.</p>
+                <p>訓練済みモデルを保存してください！第12週で新しい企業でモデルのパフォーマンスを評価する際に必要になります。</p>
+            </div>
+
+            <h2>Key Takeaways</h2>
+
+            <div class="objectives-list">
+                <h4>Remember / 覚えておいてください</h4>
+                <ul>
+                    <li>✅ <strong>No-code platforms make ML accessible without programming</strong> / ノーコードプラットフォームはプログラミングなしでMLをアクセス可能にする</li>
+                    <li>✅ <strong>Training = model learning patterns from labeled data</strong> / 訓練 = ラベル付きデータからモデルがパターンを学習</li>
+                    <li>✅ <strong>Platforms automatically split data and select algorithms</strong> / プラットフォームが自動的にデータを分割しアルゴリズムを選択</li>
+                    <li>✅ <strong>Accuracy measures % of correct predictions</strong> / 精度は正しい予測の%を測定</li>
+                    <li>✅ <strong>60-80% accuracy is good for small datasets</strong> / 60-80%の精度は小さなデータセットに良い</li>
+                    <li>✅ <strong>Save your trained model for future use</strong> / 将来の使用のために訓練済みモデルを保存</li>
+                </ul>
+            </div>
+
+            <h2>Next Steps</h2>
+
+            <ol style="font-size: 1.2em; line-height: 2;">
+                <li>Open the ML-101 Bot portal / ML-101ボットポータルを開く</li>
+                <li>Begin Week 11 Activity / 第11週アクティビティを開始</li>
+                <li>Follow bot guidance to train your model / モデルを訓練するためのボットガイダンスに従う</li>
+                <li>Document your training experience / 訓練経験を文書化</li>
+                <li>Save your trained model / 訓練済みモデルを保存</li>
+            </ol>
+
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+                <a href="assignment.html" class="btn btn-accent">View Assignment</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>著作権 &copy; 2025 Yuri Tijerino. 無断転載を禁じます。</p>
+        </div>
+    </footer>
+</body>
+</html>

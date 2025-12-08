@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 9 Assignment: Feature Engineering | ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .assignment-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .assignment-content h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .assignment-content h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .assignment-content h4 {
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .info-box {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color);
+            margin: 20px 0;
+        }
+        .warning-box {
+            background: #fef3cd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--warning);
+            margin: 20px 0;
+        }
+        .success-box {
+            background: #d1fae5;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--success);
+            margin: 20px 0;
+        }
+        .deliverable-box {
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid var(--border-color);
+        }
+        .rubric-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .rubric-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .rubric-table td {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .rubric-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+        .example-box {
+            background: #f3e8ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--secondary-color);
+            margin: 20px 0;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        code {
+            background: var(--bg-light);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        @media (max-width: 768px) {
+            .assignment-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Week 9 Assignment</h1>
+            <p class="subtitle">Feature Engineering for Text<br>テキストのための特徴量エンジニアリング</p>
+            <p class="instructor">Instructor: Yuri Tijerino</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="lecture.html">Lecture Notes</a>
+            <a href="slides.html">Presentation Slides</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="assignment-content">
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="lecture.html" class="btn btn-primary">View Lecture</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+            </div>
+
+            <div class="info-box">
+                <h3>Assignment Overview / 課題概要</h3>
+                <p><strong>Course:</strong> Machine Learning and Intelligence | 機械学習と知能</p>
+                <p><strong>Week:</strong> 9 | 第9週</p>
+                <p><strong>Title:</strong> Extracting Features from Company Descriptions | 企業説明から特徴量を抽出</p>
+                <p><strong>Duration:</strong> 40-60 minutes | 40-60分</p>
+                <p><strong>Due Date:</strong> End of Week 9 class session | 第9週授業終了時</p>
+                <p><strong>Weight:</strong> Part of 40% Weekly Activities grade | 週次アクティビティ評価40%の一部</p>
+                <p><strong>Submission:</strong> Through ML-101 Bot Portal | ML-101ボットポータル経由</p>
+            </div>
+
+            <p>This assignment transforms your cleaned company data into ML-usable features. You'll create categorical features, extract text features from descriptions, and prepare a feature-engineered dataset ready for classification.</p>
+            <p>この課題は、クリーニング済み企業データをML使用可能な特徴量に変換します。カテゴリカル特徴量を作成し、説明からテキスト特徴量を抽出し、分類準備完了の特徴量エンジニアリング済みデータセットを準備します。</p>
+
+            <h2>Learning Objectives / 学習目標</h2>
+
+            <p>By completing this assignment, you will be able to:</p>
+            <p>この課題を完了することで、以下ができるようになります：</p>
+
+            <ul>
+                <li>Understand what features are and why they matter for ML<br>
+                    特徴量とは何か、そしてなぜMLにとって重要かを理解する</li>
+                <li>Create categorical features from company attributes<br>
+                    企業属性からカテゴリカル特徴量を作成する</li>
+                <li>Extract meaningful features from text descriptions<br>
+                    テキスト説明から意味のある特徴量を抽出する</li>
+                <li>Prepare ML-ready feature dataset<br>
+                    ML準備完了の特徴量データセットを準備する</li>
+            </ul>
+
+            <h2>Prerequisites / 前提条件</h2>
+
+            <ul>
+                <li>Completed Week 8 - Missing Data Handling assignment<br>
+                    第8週完了 - 欠損データ処理課題</li>
+                <li>Week 8 validated company dataset available<br>
+                    第8週検証済み企業データセットが利用可能</li>
+                <li>Google Colab access<br>
+                    Google Colabアクセス</li>
+                <li>Access to ML-101 Bot portal<br>
+                    ML-101ボットポータルへのアクセス</li>
+            </ul>
+
+            <h2>Assignment Activities / 課題アクティビティ</h2>
+
+            <div class="deliverable-box">
+                <h3>Activity 1: Understanding Features for Classification (10 minutes)</h3>
+                <h4>アクティビティ1：分類のための特徴量の理解（10分）</h4>
+
+                <p><strong>What to Do:</strong></p>
+                <ol>
+                    <li>Load your Week 8 validated dataset in Google Colab<br>
+                        Google Colabで第8週検証済みデータセットをロード</li>
+                    <li>Review your project goal: classify companies as "Interested" or "Not Interested"<br>
+                        プロジェクト目標を確認：企業を「興味あり」または「興味なし」に分類</li>
+                    <li>Brainstorm: What characteristics make a company interesting to you?<br>
+                        ブレインストーム：どのような特性が企業をあなたにとって興味深くしますか？
+                        <ul>
+                            <li>Industry type? / 業界タイプ？</li>
+                            <li>Company size? / 企業規模？</li>
+                            <li>Keywords in description? / 説明のキーワード？</li>
+                            <li>Location? / 所在地？</li>
+                        </ul>
+                    </li>
+                    <li>List potential features that could predict your interest<br>
+                        あなたの興味を予測できる潜在的な特徴量をリスト</li>
+                </ol>
+
+                <p><strong>Expected Output:</strong></p>
+                <ul>
+                    <li>List of potential features relevant to your preferences<br>あなたの好みに関連する潜在的な特徴量のリスト</li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Activity 2: Creating Categorical Features (12 minutes)</h3>
+                <h4>アクティビティ2：カテゴリカル特徴量の作成（12分）</h4>
+
+                <p><strong>What to Do:</strong></p>
+                <ol>
+                    <li>One-hot encode the industry column<br>
+                        業界列をワンホットエンコード</li>
+                    <li>One-hot encode the location column (if using)<br>
+                        所在地列をワンホットエンコード（使用する場合）</li>
+                    <li>Create company size categories from employee count<br>
+                        従業員数から企業規模カテゴリを作成</li>
+                    <li>One-hot encode the size categories<br>
+                        サイズカテゴリをワンホットエンコード</li>
+                </ol>
+
+                <div class="example-box">
+                    <h4>Example Code / コード例:</h4>
+                    <pre><code># One-hot encode industry
+industry_encoded = pd.get_dummies(df['industry'], prefix='industry')
+df = pd.concat([df, industry_encoded], axis=1)
+
+# Create size categories
+def categorize_size(count):
+    if pd.isna(count):
+        return 'Unknown'
+    elif count < 50:
+        return 'Small'
+    elif count < 500:
+        return 'Medium'
+    else:
+        return 'Large'
+
+df['company_size'] = df['employee_count'].apply(categorize_size)
+size_encoded = pd.get_dummies(df['company_size'], prefix='size')
+df = pd.concat([df, size_encoded], axis=1)</code></pre>
+                </div>
+
+                <p><strong>Expected Output:</strong></p>
+                <ul>
+                    <li>Dataset with encoded categorical features<br>エンコードされたカテゴリカル特徴量を含むデータセット</li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Activity 3: Text Feature Extraction - Keywords (15 minutes)</h3>
+                <h4>アクティビティ3：テキスト特徴量抽出 - キーワード（15分）</h4>
+
+                <p><strong>What to Do:</strong></p>
+                <ol>
+                    <li>Define 5-10 keywords relevant to your interests<br>
+                        あなたの興味に関連する5-10のキーワードを定義</li>
+                    <li>Create binary features checking if keywords appear in descriptions<br>
+                        キーワードが説明に現れるかをチェックするバイナリ特徴量を作成</li>
+                    <li>Create keyword count feature<br>
+                        キーワードカウント特徴量を作成</li>
+                    <li>Create description length features<br>
+                        説明の長さ特徴量を作成</li>
+                </ol>
+
+                <div class="example-box">
+                    <h4>Example Code / コード例:</h4>
+                    <pre><code># Define your interest keywords
+keywords = ['innovation', 'technology', 'global', 'startup', 'research']
+
+# Create binary feature for each keyword
+for keyword in keywords:
+    df[f'has_{keyword}'] = df['description'].str.lower().str.contains(
+        keyword, na=False
+    ).astype(int)
+
+# Count total keywords present
+df['keyword_count'] = df[[f'has_{keyword}' for keyword in keywords]].sum(axis=1)
+
+# Description length
+df['description_length'] = df['description'].str.len()
+df['description_word_count'] = df['description'].str.split().str.len()</code></pre>
+                </div>
+
+                <p><strong>Expected Output:</strong></p>
+                <ul>
+                    <li>Dataset with keyword-based text features<br>キーワードベースのテキスト特徴量を含むデータセット</li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Activity 4: Advanced Text Features - TF-IDF (Optional) (13 minutes)</h3>
+                <h4>アクティビティ4：高度なテキスト特徴量 - TF-IDF（オプション）（13分）</h4>
+
+                <p><strong>What to Do:</strong></p>
+                <ol>
+                    <li>Learn about TF-IDF (Term Frequency-Inverse Document Frequency)<br>
+                        TF-IDFについて学ぶ</li>
+                    <li>Apply TF-IDF to company descriptions<br>
+                        企業説明にTF-IDFを適用</li>
+                    <li>Examine which words TF-IDF identified as important<br>
+                        TF-IDFがどの単語を重要として特定したかを調査</li>
+                </ol>
+
+                <div class="example-box">
+                    <h4>Example Code / コード例:</h4>
+                    <pre><code>from sklearn.feature_extraction.text import TfidfVectorizer
+
+# Create TF-IDF features (limit to top 20 words)
+tfidf = TfidfVectorizer(max_features=20, stop_words='english')
+tfidf_matrix = tfidf.fit_transform(df['description'].fillna(''))
+
+# Convert to DataFrame
+tfidf_df = pd.DataFrame(
+    tfidf_matrix.toarray(),
+    columns=[f'tfidf_{word}' for word in tfidf.get_feature_names_out()]
+)
+
+# Add to main dataset
+df = pd.concat([df.reset_index(drop=True), tfidf_df], axis=1)
+
+# See which words are most important
+print("Top TF-IDF features:", tfidf.get_feature_names_out())</code></pre>
+                </div>
+
+                <div class="warning-box">
+                    <p><strong>Note:</strong> This activity is optional. If it's too complex, you can skip it and focus on keyword features.</p>
+                    <p><strong>注意:</strong> このアクティビティはオプションです。複雑すぎる場合は、スキップしてキーワード特徴量に焦点を当てることができます。</p>
+                </div>
+
+                <p><strong>Expected Output:</strong></p>
+                <ul>
+                    <li>Dataset with TF-IDF features (if implemented)<br>TF-IDF特徴量を含むデータセット（実装された場合）</li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Activity 5: Feature Dataset Preparation and Validation (10 minutes)</h3>
+                <h4>アクティビティ5：特徴量データセット準備と検証（10分）</h4>
+
+                <p><strong>What to Do:</strong></p>
+                <ol>
+                    <li>Select final feature set for ML training<br>
+                        ML訓練のための最終特徴量セットを選択</li>
+                    <li>Remove original text columns (keep only engineered features)<br>
+                        元のテキスト列を削除（エンジニアリングされた特徴量のみを保持）</li>
+                    <li>Create clean feature dataset<br>
+                        クリーンな特徴量データセットを作成</li>
+                    <li>Validate feature quality<br>
+                        特徴量品質を検証</li>
+                    <li>Export feature dataset<br>
+                        特徴量データセットをエクスポート</li>
+                    <li>Document feature engineering process<br>
+                        特徴量エンジニアリングプロセスを文書化</li>
+                </ol>
+
+                <div class="example-box">
+                    <h4>Example Code / コード例:</h4>
+                    <pre><code># Identify feature columns
+feature_columns = [col for col in df.columns if any([
+    col.startswith('industry_'),
+    col.startswith('location_'),
+    col.startswith('size_'),
+    col.startswith('has_'),
+    col.startswith('tfidf_'),
+    col == 'keyword_count',
+    col == 'description_length',
+    col == 'employee_count'
+])]
+
+# Create feature dataset (keep company_name for reference)
+features_df = df[['company_name'] + feature_columns].copy()
+
+print(f"Total features created: {len(feature_columns)}")
+print(f"Feature columns: {feature_columns}")
+
+# Validate
+print("\nAll features numeric?", features_df[feature_columns].dtypes.apply(lambda x: x in ['int64', 'float64']).all())
+print("Any missing values?", features_df[feature_columns].isnull().sum().sum())
+
+# Export
+features_df.to_csv('company_features.csv', index=False)</code></pre>
+                </div>
+
+                <div class="success-box">
+                    <h4>Feature Quality Checklist / 特徴量品質チェックリスト:</h4>
+                    <ul>
+                        <li>✓ All features are numeric</li>
+                        <li>✓ No missing values in features</li>
+                        <li>✓ Reasonable number of features (15-50)</li>
+                        <li>✓ Features make sense for classification</li>
+                    </ul>
+                </div>
+
+                <p><strong>Expected Output:</strong></p>
+                <ul>
+                    <li>Clean, validated feature dataset ready for ML<br>ML準備完了のクリーンで検証済みの特徴量データセット</li>
+                </ul>
+            </div>
+
+            <h2>Assignment Deliverables / 課題成果物</h2>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 1: Feature-Engineered Dataset (Required)</h3>
+                <h4>成果物1：特徴量エンジニアリング済みデータセット（必須）</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <ul>
+                    <li>CSV file with all engineered features<br>すべてのエンジニアリングされた特徴量を含むCSVファイル</li>
+                    <li>All features are numeric<br>すべての特徴量が数値</li>
+                    <li>No missing values<br>欠損値なし</li>
+                </ul>
+
+                <p><strong>Format:</strong> CSV file | 形式：CSVファイル</p>
+                <p><strong>Filename:</strong> <code>Week09_[YourName]_company_features.csv</code></p>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 2: Feature Engineering Notebook (Required)</h3>
+                <h4>成果物2：特徴量エンジニアリングノートブック（必須）</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <ul>
+                    <li>Complete Colab notebook with all code<br>すべてのコードを含む完全なColabノートブック</li>
+                    <li>Categorical encoding<br>カテゴリカルエンコーディング</li>
+                    <li>Text feature extraction<br>テキスト特徴量抽出</li>
+                    <li>Feature validation<br>特徴量検証</li>
+                    <li>Clear explanations of each feature<br>各特徴量の明確な説明</li>
+                </ul>
+
+                <p><strong>Format:</strong> .ipynb file | 形式：.ipynbファイル</p>
+                <p><strong>Filename:</strong> <code>Week09_[YourName]_FeatureEngineering.ipynb</code></p>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 3: Feature Documentation (Required)</h3>
+                <h4>成果物3：特徴量文書（必須）</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <ul>
+                    <li>List of all features created<br>作成されたすべての特徴量のリスト</li>
+                    <li>Description of each feature and its purpose<br>各特徴量とその目的の説明</li>
+                    <li>Rationale for feature selection<br>特徴量選択の根拠</li>
+                    <li>How features relate to your classification goal<br>特徴量があなたの分類目標にどのように関連するか</li>
+                </ul>
+
+                <p><strong>Format:</strong> Word/PDF or markdown in notebook | 形式：Word/PDFまたはノートブック内のマークダウン</p>
+                <p><strong>Filename:</strong> <code>Week09_[YourName]_FeatureDoc.pdf</code></p>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 4: AI Transparency Log (If Applicable)</h3>
+                <h4>成果物4：AI透明性ログ（該当する場合）</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>If you used external AI chatbots:</p>
+                <ul>
+                    <li>All AI prompts and responses<br>すべてのAIプロンプトと応答</li>
+                    <li>Verification documentation<br>検証文書</li>
+                </ul>
+
+                <p><strong>Format:</strong> Use provided template | 形式：提供されたテンプレートを使用</p>
+            </div>
+
+            <h2>Submission Instructions / 提出指示</h2>
+
+            <div class="success-box">
+                <h3>How to Submit / 提出方法</h3>
+                <ol>
+                    <li><strong>Organize your files:</strong><br>
+                        ファイルを整理：
+                        <ul>
+                            <li>Week09_[YourName]_company_features.csv</li>
+                            <li>Week09_[YourName]_FeatureEngineering.ipynb</li>
+                            <li>Week09_[YourName]_FeatureDoc.pdf</li>
+                            <li>Week09_[YourName]_AILog.pdf (if applicable)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Upload through ML-101 Bot Portal</strong></li>
+                    <li><strong>Confirm submission</strong></li>
+                </ol>
+            </div>
+
+            <div class="warning-box">
+                <h3>Submission Deadline / 提出期限</h3>
+                <p><strong>Due:</strong> End of Week 9 class session | <strong>期限:</strong> 第9週授業終了時</p>
+
+                <h4>Late Policy / 遅延ポリシー:</h4>
+                <ul>
+                    <li>Up to 24 hours late: <strong>-10%</strong></li>
+                    <li>24-48 hours late: <strong>-20%</strong></li>
+                    <li>More than 48 hours late: <strong>Not accepted</strong> without prior arrangement</li>
+                </ul>
+            </div>
+
+            <h2>Grading Rubric / 評価ルーブリック</h2>
+
+            <table class="rubric-table">
+                <thead>
+                    <tr>
+                        <th>Component / 要素</th>
+                        <th>Points / 点数</th>
+                        <th>Criteria / 基準</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Categorical Features</strong><br>カテゴリカル特徴量</td>
+                        <td><strong>20 points</strong></td>
+                        <td>
+                            - Proper one-hot encoding (10 pts)<br>
+                            - Appropriate categories (10 pts)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Text Features</strong><br>テキスト特徴量</td>
+                        <td><strong>40 points</strong></td>
+                        <td>
+                            - Relevant keywords identified (15 pts)<br>
+                            - Correct implementation (15 pts)<br>
+                            - Features align with goal (10 pts)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Feature Quality</strong><br>特徴量品質</td>
+                        <td><strong>20 points</strong></td>
+                        <td>
+                            - All features numeric (5 pts)<br>
+                            - No missing values (5 pts)<br>
+                            - ML-ready (5 pts)<br>
+                            - Reasonable count (5 pts)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Documentation</strong><br>文書化</td>
+                        <td><strong>20 points</strong></td>
+                        <td>
+                            - Clear explanations (10 pts)<br>
+                            - Well-documented process (10 pts)
+                        </td>
+                    </tr>
+                    <tr style="background: var(--primary-color); color: white; font-weight: bold;">
+                        <td><strong>TOTAL</strong><br>合計</td>
+                        <td><strong>100</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Tips for Success / 成功のためのヒント</h2>
+
+            <div class="info-box">
+                <h4>Best Practices / ベストプラクティス:</h4>
+                <ul>
+                    <li>Think about what makes companies interesting to YOU<br>何が企業をあなたにとって興味深くするかを考える</li>
+                    <li>Start with simple keyword features before trying TF-IDF<br>TF-IDFを試す前にシンプルなキーワード特徴量から始める</li>
+                    <li>Use the ML-101 Bot for feature suggestions<br>特徴量の提案にML-101ボットを使用する</li>
+                    <li>Verify all features are numeric<br>すべての特徴量が数値であることを検証する</li>
+                    <li>Document why each feature matters<br>各特徴量がなぜ重要かを文書化する</li>
+                </ul>
+            </div>
+
+            <div class="success-box" style="text-align: center; margin-top: 40px;">
+                <h2>Good luck engineering your features!</h2>
+                <h2>特徴量エンジニアリングを頑張ってください！</h2>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="lecture.html" class="btn btn-primary">View Lecture</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>著作権 &copy; 2025 Yuri Tijerino. 無断転載を禁じます。</p>
+        </div>
+    </footer>
+</body>
+</html>

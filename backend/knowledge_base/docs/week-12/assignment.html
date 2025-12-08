@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 12 Assignment: Model Evaluation | ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .assignment-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .assignment-content h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .assignment-content h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .assignment-content h4 {
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .info-box {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color);
+            margin: 20px 0;
+        }
+        .warning-box {
+            background: #fef3cd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--warning);
+            margin: 20px 0;
+        }
+        .success-box {
+            background: #d1fae5;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--success);
+            margin: 20px 0;
+        }
+        .deliverable-box {
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid var(--border-color);
+        }
+        .rubric-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .rubric-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .rubric-table td {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .rubric-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+        .example-box {
+            background: #f3e8ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--secondary-color);
+            margin: 20px 0;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        code {
+            background: var(--bg-light);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        @media (max-width: 768px) {
+            .assignment-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Week 12 Assignment</h1>
+            <p class="subtitle">Model Evaluation and Making Predictions<br>モデル評価と予測の実行</p>
+            <p class="instructor">Instructor: Yuri Tijerino</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="lecture.html">Lecture Notes</a>
+            <a href="slides.html">Presentation Slides</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="assignment-content">
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="lecture.html" class="btn btn-primary">View Lecture</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+            </div>
+
+            <div class="info-box">
+                <h3>Assignment Overview / 課題概要</h3>
+                <p><strong>Course:</strong> Machine Learning and Intelligence | 機械学習と知能</p>
+                <p><strong>Week:</strong> 12 | 第12週</p>
+                <p><strong>Due Date:</strong> End of Week 12 class session | 第12週授業終了時</p>
+                <p><strong>Weight:</strong> Part of 40% Weekly Activities grade | 週次アクティビティ評価40%の一部</p>
+                <p><strong>Submission:</strong> Through ML-101 Bot Portal | ML-101ボットポータル経由</p>
+                <p><strong>Duration:</strong> 40-60 minutes | 40-60分</p>
+            </div>
+
+            <p>This assignment evaluates your trained model from Week 11 on NEW test data. You'll calculate evaluation metrics, interpret results, and critically analyze your model's performance and limitations.</p>
+            <p>この課題は、新しいテストデータで第11週の訓練済みモデルを評価します。評価メトリクスを計算し、結果を解釈し、モデルのパフォーマンスと限界を批判的に分析します。</p>
+
+            <h2>Learning Objectives / 学習目標</h2>
+
+            <p>By completing this assignment, you will be able to:</p>
+            <p>この課題を完了することで、以下ができるようになります：</p>
+
+            <ul>
+                <li>✅ Test ML models on unseen data and generate predictions<br>
+                    未見のデータでMLモデルをテストし予測を生成する</li>
+                <li>✅ Calculate and interpret evaluation metrics (accuracy, confusion matrix, precision, recall)<br>
+                    評価メトリクス（精度、混同行列、精密度、再現率）を計算し解釈する</li>
+                <li>✅ Analyze model errors and identify patterns in failures<br>
+                    モデルエラーを分析し失敗のパターンを特定する</li>
+                <li>✅ Think critically about AI capabilities, limitations, and ethics<br>
+                    AI能力、限界、倫理について批判的に考える</li>
+                <li>✅ Apply evaluation insights to improve ML systems<br>
+                    評価の洞察を適用してMLシステムを改善する</li>
+            </ul>
+
+            <h2>Prerequisites / 前提条件</h2>
+
+            <ul>
+                <li>✅ Completed Week 11 - Trained classification model<br>
+                    第11週完了 - 訓練済み分類モデル</li>
+                <li>✅ Access to Week 11 trained model<br>
+                    第11週訓練済みモデルへのアクセス</li>
+                <li>✅ Attended Week 12 lecture (or reviewed lecture materials)<br>
+                    第12週講義に出席（または講義資料をレビュー）</li>
+                <li>✅ Access to ML-101 Bot portal<br>
+                    ML-101ボットポータルへのアクセス</li>
+            </ul>
+
+            <h2>Assignment Deliverables / 課題成果物</h2>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 1: Test Dataset</h3>
+                <h4>成果物1：テストデータセット</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Collect and document <strong>5-10 NEW companies</strong> that your model has NEVER seen before.</p>
+                <p>モデルが以前に見たことがない<strong>5-10の新しい企業</strong>を収集し文書化します。</p>
+
+                <h4>Requirements / 要件:</h4>
+                <ul>
+                    <li>Companies must be DIFFERENT from your Week 6-11 training data<br>
+                        企業は第6-11週の訓練データとは異なる必要があります</li>
+                    <li>Same data fields as training data (company name, industry, location, description)<br>
+                        訓練データと同じデータフィールド（企業名、業界、場所、説明）</li>
+                    <li>Same feature engineering applied (keywords, one-hot encoding)<br>
+                        同じ特徴量エンジニアリングを適用（キーワード、ワンホットエンコーディング）</li>
+                    <li>Include a mix: some you'd expect to be "Interested" and some "Not Interested"<br>
+                        混合を含める：「興味あり」と予想されるものと「興味なし」のもの</li>
+                    <li>Document YOUR true labels (what you're actually interested in) for later comparison<br>
+                        後の比較のためにあなたの真のラベル（実際に興味があるもの）を文書化</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li><strong>File format:</strong> CSV file | ファイル形式：CSVファイル</li>
+                        <li><strong>File name:</strong> <code>Week12_[YourName]_TestData.csv</code></li>
+                        <li><strong>Must include:</strong> All feature columns matching training data | 訓練データと一致するすべての特徴量列を含める必要があります</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (20 points) / 採点（20点）:</h4>
+                <ul>
+                    <li>5-10 NEW companies collected: <strong>10 points</strong></li>
+                    <li>Correct feature structure: <strong>5 points</strong></li>
+                    <li>True labels documented: <strong>5 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 2: Model Predictions and Results</h3>
+                <h4>成果物2：モデル予測と結果</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Use your Week 11 trained model to make predictions on all test companies and document results.</p>
+                <p>第11週の訓練済みモデルを使用してすべてのテスト企業で予測を行い、結果を文書化します。</p>
+
+                <h4>Include / 含める:</h4>
+                <ol>
+                    <li><strong>Prediction Table / 予測表</strong>
+                        <p>For each test company, show:</p>
+                        <ul>
+                            <li>Company name | 企業名</li>
+                            <li>Model prediction (0 = Not Interested, 1 = Interested)<br>
+                                モデル予測（0 = 興味なし、1 = 興味あり）</li>
+                            <li>Confidence/probability (if available) | 信頼度/確率（利用可能な場合）</li>
+                            <li>Your true label | あなたの真のラベル</li>
+                            <li>Correct or Incorrect? | 正しいか間違っているか？</li>
+                        </ul>
+                    </li>
+                    <li><strong>Screenshots / スクリーンショット</strong>
+                        <p>Include screenshots of prediction results from your ML platform</p>
+                        <p>MLプラットフォームからの予測結果のスクリーンショットを含める</p>
+                    </li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li>Include in main report document (PDF or Word) | メインレポート文書（PDFまたはWord）に含める</li>
+                        <li>Clear table format | 明確な表形式</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (20 points) / 採点（20点）:</h4>
+                <ul>
+                    <li>Predictions for all test companies: <strong>10 points</strong></li>
+                    <li>Clear comparison table: <strong>5 points</strong></li>
+                    <li>Supporting screenshots: <strong>5 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 3: Evaluation Metrics Report</h3>
+                <h4>成果物3：評価メトリクスレポート</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Calculate and document all evaluation metrics with clear explanations.</p>
+                <p>すべての評価メトリクスを計算し、明確な説明とともに文書化します。</p>
+
+                <h4>Must Include / 含める必要があります:</h4>
+
+                <p><strong>1. Accuracy / 精度</strong></p>
+                <ul>
+                    <li>Formula used | 使用した公式</li>
+                    <li>Calculation with numbers | 数字での計算</li>
+                    <li>Final accuracy percentage | 最終精度パーセンテージ</li>
+                    <li>Brief interpretation (Is this good? Why or why not?) | 簡単な解釈（これは良いか？なぜか？）</li>
+                </ul>
+
+                <p><strong>2. Confusion Matrix / 混同行列</strong></p>
+                <ul>
+                    <li>Complete 2x2 matrix with counts | カウント付きの完全な2x2行列</li>
+                    <li>True Positives (TP), True Negatives (TN), False Positives (FP), False Negatives (FN)</li>
+                    <li>Visual representation (table or diagram) | 視覚的表現（表または図）</li>
+                </ul>
+
+                <p><strong>3. Precision / 精密度</strong></p>
+                <ul>
+                    <li>Formula and calculation | 公式と計算</li>
+                    <li>Interpretation: "Of companies model recommended, X% were actually good matches"<br>
+                        解釈：「モデルが推薦した企業のうち、X%が実際に良いマッチでした」</li>
+                </ul>
+
+                <p><strong>4. Recall / 再現率</strong></p>
+                <ul>
+                    <li>Formula and calculation | 公式と計算</li>
+                    <li>Interpretation: "Of companies I'm interested in, model found X%"<br>
+                        解釈：「興味のある企業のうち、モデルはX%を見つけました」</li>
+                </ul>
+
+                <p><strong>5. Visualizations (Optional but recommended) / 視覚化（オプションだが推奨）</strong></p>
+                <ul>
+                    <li>Charts or graphs showing metrics | メトリクスを示すチャートまたはグラフ</li>
+                    <li>Confusion matrix visualization | 混同行列の視覚化</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li>Section in main report document | メインレポート文書のセクション</li>
+                        <li>Clear headings for each metric | 各メトリクスの明確な見出し</li>
+                        <li>Show your work (calculations) | 作業を示す（計算）</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (30 points) / 採点（30点）:</h4>
+                <ul>
+                    <li>Accuracy correctly calculated: <strong>5 points</strong></li>
+                    <li>Confusion matrix complete: <strong>10 points</strong></li>
+                    <li>Precision and recall calculated: <strong>10 points</strong></li>
+                    <li>Clear interpretations: <strong>5 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 4: Critical Analysis Report</h3>
+                <h4>成果物4：批判的分析レポート</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Write <strong>2-3 pages</strong> critically analyzing your model's performance, errors, and implications.</p>
+                <p>モデルのパフォーマンス、エラー、影響を批判的に分析する<strong>2-3ページ</strong>を書きます。</p>
+
+                <h4>Must Address / 扱う必要があります:</h4>
+
+                <p><strong>Section 1: Error Analysis / エラー分析 (1 page)</strong></p>
+                <ul>
+                    <li>Which specific companies were misclassified? | どの特定の企業が誤分類されたか？</li>
+                    <li>Why do you think the model failed on these cases? | なぜモデルはこれらのケースで失敗したと思いますか？
+                        <ul>
+                            <li>Missing features? | 特徴量の欠落？</li>
+                            <li>Unclear patterns? | 不明確なパターン？</li>
+                            <li>Borderline cases? | 境界線ケース？</li>
+                        </ul>
+                    </li>
+                    <li>Are errors systematic or random? | エラーは体系的かランダムか？</li>
+                    <li>Examples of specific failures with explanations | 説明付きの具体的な失敗の例</li>
+                </ul>
+
+                <p><strong>Section 2: Model Strengths and Capabilities / モデルの強みと能力 (0.5 page)</strong></p>
+                <ul>
+                    <li>What patterns did the model learn correctly? | モデルは何のパターンを正しく学習したか？</li>
+                    <li>Which features seem most important? | どの特徴量が最も重要に見えるか？</li>
+                    <li>What does the model do well? | モデルは何をうまくやるか？</li>
+                </ul>
+
+                <p><strong>Section 3: Limitations and Ethics / 限界と倫理 (0.5-1 page)</strong></p>
+                <ul>
+                    <li><strong>Model Limitations:</strong> What can't this model do? | このモデルは何ができないか？</li>
+                    <li><strong>Bias:</strong> Did training labels introduce any bias? | 訓練ラベルはバイアスを導入したか？</li>
+                    <li><strong>Trust:</strong> Would you use this for real job search decisions? Why or why not? | 実際の就職活動の決定にこれを使用しますか？なぜか、またはなぜしないのか？</li>
+                    <li><strong>Ethics:</strong> If this was used for automated hiring, what ethical concerns arise? | これが自動採用に使用された場合、どのような倫理的懸念が生じるか？</li>
+                </ul>
+
+                <p><strong>Section 4: Improvement Suggestions / 改善提案 (0.5 page)</strong></p>
+                <ul>
+                    <li>How could you improve this model? | このモデルをどのように改善できるか？</li>
+                    <li>What changes would you make to training data? | 訓練データにどのような変更を加えるか？</li>
+                    <li>What features would you add? | どの特徴量を追加するか？</li>
+                    <li>Realistic, specific suggestions | 現実的で具体的な提案</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li>Section in main report document | メインレポート文書のセクション</li>
+                        <li>2-3 pages total | 合計2-3ページ</li>
+                        <li>Use clear section headings | 明確なセクション見出しを使用</li>
+                        <li>Be honest and thoughtful - there are no "wrong" answers for analysis | 正直で思慮深く - 分析に「間違った」答えはありません</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (20 points) / 採点（20点）:</h4>
+                <ul>
+                    <li>Error analysis depth: <strong>6 points</strong></li>
+                    <li>Strengths identification: <strong>3 points</strong></li>
+                    <li>Limitations and ethics discussion: <strong>6 points</strong></li>
+                    <li>Improvement suggestions: <strong>5 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 5: Conversational Assessment Record</h3>
+                <h4>成果物5：会話的評価記録</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Complete the bot-conducted conversational assessment and document the interaction.</p>
+                <p>ボット実施の会話的評価を完了し、インタラクションを文書化します。</p>
+
+                <h4>Include / 含める:</h4>
+                <ul>
+                    <li>Bot's assessment questions | ボットの評価質問</li>
+                    <li>Your responses to each question | 各質問へのあなたの回答</li>
+                    <li>Bot feedback received | 受け取ったボットフィードバック</li>
+                    <li>Screenshot or text transcript | スクリーンショットまたはテキスト転写</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>Important / 重要:</h4>
+                    <p><strong>DO NOT use external AI chatbots during the bot assessment!</strong> Your responses must reflect YOUR understanding.</p>
+                    <p><strong>ボット評価中に外部AIチャットボットを使用しないでください！</strong> あなたの回答はあなた自身の理解を反映する必要があります。</p>
+                </div>
+
+                <h4>Scoring (10 points) / 採点（10点）:</h4>
+                <ul>
+                    <li>Completion of bot assessment: <strong>5 points</strong></li>
+                    <li>Thoughtful, honest responses: <strong>5 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 6: AI Transparency Log (if applicable)</h3>
+                <h4>成果物6：AI透明性ログ（該当する場合）</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>If you used any AI tools (ChatGPT, Claude, Gemini, etc.) during this activity, document ALL interactions.</p>
+                <p>このアクティビティ中に任意のAIツール（ChatGPT、Claude、Geminiなど）を使用した場合、すべてのインタラクションを文書化します。</p>
+
+                <h4>For Each AI Interaction / 各AIインタラクションについて:</h4>
+                <ul>
+                    <li>Your exact prompt/question | あなたの正確なプロンプト/質問</li>
+                    <li>AI's complete response | AIの完全な応答</li>
+                    <li>How you verified the information | 情報をどのように検証したか</li>
+                    <li>How you used it in your work | 作業でどのように使用したか</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>Required Statement / 必要な声明:</h4>
+                    <p>Include: "I confirm that AI was NOT used during the bot conversational assessment. All assessment responses are my own understanding."</p>
+                    <p>含める：「ボットの会話的評価中にAIは使用されませんでした。すべての評価回答は私自身の理解です。」</p>
+                </div>
+
+                <h4>Scoring (10 points if applicable) / 採点（該当する場合10点）:</h4>
+                <ul>
+                    <li>Complete transparency documentation: <strong>10 points</strong></li>
+                </ul>
+            </div>
+
+            <h2>Submission Instructions / 提出指示</h2>
+
+            <div class="success-box">
+                <h3>How to Submit / 提出方法</h3>
+                <ol>
+                    <li><strong>Prepare two files:</strong><br>
+                        2つのファイルを準備：
+                        <ul>
+                            <li>Main report document (PDF or Word) containing Deliverables 2, 3, 4, 5, 6<br>
+                                成果物2、3、4、5、6を含むメインレポート文書（PDFまたはWord）</li>
+                            <li>Test data CSV file (Deliverable 1)<br>
+                                テストデータCSVファイル（成果物1）</li>
+                        </ul>
+                    </li>
+                    <li><strong>Name your files:</strong><br>
+                        ファイル名を付ける：
+                        <ul>
+                            <li><code>Week12_[YourName]_ModelEvaluation.pdf</code> (or .docx)</li>
+                            <li><code>Week12_[YourName]_TestData.csv</code></li>
+                        </ul>
+                    </li>
+                    <li><strong>Upload through ML-101 Bot Portal</strong></li>
+                    <li><strong>Confirm submission</strong> (should receive automated confirmation)</li>
+                </ol>
+            </div>
+
+            <div class="warning-box">
+                <h3>Submission Deadline / 提出期限</h3>
+                <p><strong>Due:</strong> End of Week 12 class session | <strong>期限:</strong> 第12週授業終了時</p>
+
+                <h4>Late Policy / 遅延ポリシー:</h4>
+                <ul>
+                    <li>Up to 24 hours late: <strong>-10%</strong> | 24時間以内の遅延：<strong>-10%</strong></li>
+                    <li>24-48 hours late: <strong>-20%</strong> | 24-48時間の遅延：<strong>-20%</strong></li>
+                    <li>More than 48 hours late: <strong>Not accepted</strong> without prior arrangement<br>
+                        48時間以上の遅延：事前の取り決めなしでは<strong>受理されません</strong></li>
+                </ul>
+            </div>
+
+            <h2>Grading Rubric / 評価ルーブリック</h2>
+
+            <table class="rubric-table">
+                <thead>
+                    <tr>
+                        <th>Deliverable</th>
+                        <th>Points</th>
+                        <th>Criteria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Test Dataset</strong><br>テストデータセット</td>
+                        <td><strong>20</strong></td>
+                        <td>5-10 NEW companies, correct features, true labels<br>5-10の新しい企業、正しい特徴量、真のラベル</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Predictions & Results</strong><br>予測と結果</td>
+                        <td><strong>20</strong></td>
+                        <td>Complete predictions, comparison table, screenshots<br>完全な予測、比較表、スクリーンショット</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Evaluation Metrics</strong><br>評価メトリクス</td>
+                        <td><strong>30</strong></td>
+                        <td>Accuracy, confusion matrix, precision, recall with interpretations<br>解釈付きの精度、混同行列、精密度、再現率</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Critical Analysis</strong><br>批判的分析</td>
+                        <td><strong>20</strong></td>
+                        <td>Error analysis, strengths, limitations, ethics, improvements<br>エラー分析、強み、限界、倫理、改善</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bot Assessment</strong><br>ボット評価</td>
+                        <td><strong>10</strong></td>
+                        <td>Thoughtful completion of conversational assessment<br>会話的評価の思慮深い完了</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI Transparency</strong><br>AI透明性</td>
+                        <td><strong>10*</strong></td>
+                        <td>Complete documentation (if AI used)<br>完全な文書化（AIを使用した場合）</td>
+                    </tr>
+                    <tr style="background: var(--primary-color); color: white; font-weight: bold;">
+                        <td><strong>TOTAL</strong><br>合計</td>
+                        <td><strong>100*</strong></td>
+                        <td>*Adjusted if AI transparency not applicable</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Tips for Success / 成功のためのヒント</h2>
+
+            <h3>Getting Started / 始め方</h3>
+            <ul>
+                <li>✅ <strong>Work with the bot</strong> | ボットと作業する<br>
+                    ML-101 Bot will guide you step-by-step through data collection, predictions, and metrics</li>
+                <li>✅ <strong>Test on truly NEW companies</strong> | 本当に新しい企業でテストする<br>
+                    Double-check that test companies weren't in your training data</li>
+                <li>✅ <strong>Show your calculations</strong> | 計算を示す<br>
+                    Don't just write "70% accuracy" - show how you got that number</li>
+                <li>✅ <strong>Be honest in analysis</strong> | 分析において正直である<br>
+                    It's okay if your model isn't perfect - critical analysis is what matters</li>
+            </ul>
+
+            <h3>Common Mistakes to Avoid / 避けるべきよくある間違い</h3>
+            <ul>
+                <li>❌ <strong>Testing on training data</strong><br>
+                    This defeats the entire purpose of evaluation!</li>
+                <li>❌ <strong>Incomplete confusion matrix</strong><br>
+                    Must include all four values: TP, TN, FP, FN</li>
+                <li>❌ <strong>Calculations without interpretation</strong><br>
+                    Explain what the numbers MEAN, not just what they are</li>
+                <li>❌ <strong>Shallow analysis</strong><br>
+                    "The model is good" is not sufficient. Explain WHY and analyze specific cases</li>
+            </ul>
+
+            <h2>Frequently Asked Questions / よくある質問</h2>
+
+            <div class="info-box">
+                <h4>Q: What if my model accuracy is very low (like 50-60%)?</h4>
+                <h4>Q: モデルの精度が非常に低い場合（50-60%のような）どうなりますか？</h4>
+                <p><strong>A:</strong> That's okay! This is a learning project. What matters is your critical analysis of WHY it's low and how you'd improve it. Low accuracy with good analysis is better than high accuracy with no understanding.</p>
+                <p><strong>A:</strong> それで大丈夫です！これは学習プロジェクトです。重要なのは、なぜ低いかの批判的分析とどのように改善するかです。理解のない高精度よりも、良い分析を伴う低精度の方が良いです。</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Q: Can I use the same test data as my classmates?</h4>
+                <h4>Q: クラスメートと同じテストデータを使用できますか？</h4>
+                <p><strong>A:</strong> No. Each student must collect their own unique test data. You can use the same sources (mynavi.jp), but different specific companies.</p>
+                <p><strong>A:</strong> いいえ。各学生は独自のテストデータを収集する必要があります。同じソース（mynavi.jp）を使用できますが、異なる特定の企業です。</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Q: My model predicted everything as "Not Interested" - is that wrong?</h4>
+                <h4>Q: モデルがすべてを「興味なし」と予測しました - それは間違っていますか？</h4>
+                <p><strong>A:</strong> This is a common issue! It's not "wrong" for the assignment - it's an important finding to analyze. In your critical analysis, discuss WHY this happened (class imbalance? Need more diverse training data?) and how to fix it.</p>
+                <p><strong>A:</strong> これは一般的な問題です！課題にとって「間違っている」わけではありません - それは分析すべき重要な発見です。批判的分析で、なぜこれが起こったか（クラスの不均衡？より多様な訓練データが必要？）とそれを修正する方法を議論してください。</p>
+            </div>
+
+            <h2>Getting Help / ヘルプを得る</h2>
+
+            <div class="success-box">
+                <h4>During Class Activity / 授業アクティビティ中:</h4>
+                <ul>
+                    <li>Work with ML-101 Bot for step-by-step guidance</li>
+                    <li>Raise hand for instructor help</li>
+                    <li>Discuss concepts with classmates (but do your own work)</li>
+                </ul>
+
+                <h4>Outside of Class / 授業外:</h4>
+                <ul>
+                    <li>Use bot portal 24/7</li>
+                    <li>Email instructor</li>
+                    <li>Office hours</li>
+                </ul>
+            </div>
+
+            <div class="success-box" style="text-align: center; margin-top: 40px;">
+                <h2>Good luck evaluating your model!</h2>
+                <h2>モデルの評価を頑張ってください！</h2>
+                <p>Remember: Learning from errors is more valuable than perfect accuracy.</p>
+                <p>覚えておいてください：エラーから学ぶことは完璧な精度よりも価値があります。</p>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="lecture.html" class="btn btn-primary">View Lecture</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>著作権 &copy; 2025 Yuri Tijerino. 無断転載を禁じます。</p>
+        </div>
+    </footer>
+</body>
+</html>

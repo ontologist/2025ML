@@ -1,0 +1,84 @@
+<section id="bot-portal" class="section">
+            <h2>､・2025BlenderUnity3DIntroClass Bot Portal / 繝懊ャ繝医・繝ｼ繧ｿ繝ｫ</h2>
+            
+            <!-- HTTPS Setup Notice -->
+            <div id="bot-https-notice" class="bot-notice" style="display: none;">
+                <p><strong>笞・・Setup Required:</strong> This page uses HTTPS, but the backend API is HTTP. 
+                <a href="docs/HTTPS-SETUP.md" target="_blank">Set up HTTPS for the API</a> to enable the bot.</p>
+            </div>
+            
+            <!-- Chat Interface -->
+            <div id="bot-chat-container" class="bot-chat-container" data-lang="en">
+                <div class="bot-chat-header">
+                    <h3>町 Chat with 2025BlenderUnity3DIntroClass Bot / 2025BlenderUnity3DIntroClass繝懊ャ繝医→繝√Ε繝・ヨ</h3>
+                    <div class="bot-chat-controls">
+                        <label for="bot-language-toggle" style="margin-right: 10px;">
+                            Language / 險隱・
+                            <select id="bot-language-toggle" style="margin-left: 5px; padding: 5px;">
+                                <option value="en">English</option>
+                                <option value="ja">譌･譛ｬ隱・/option>
+                            </select>
+                        </label>
+                        <button onclick="window.ml101BotChat?.clearConversation()" class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.9em;">
+                            Clear / 繧ｯ繝ｪ繧｢
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="bot-messages" class="bot-messages">
+                    <div class="bot-message bot-message-system">
+                        <div class="bot-message-content bot-message-welcome">
+                            <strong>Welcome to 2025BlenderUnity3DIntroClass Bot!</strong><br>
+                            Ask me anything about the course, activities, assignments, or machine learning concepts.<br><br>
+                            <strong>2025BlenderUnity3DIntroClass繝懊ャ繝医∈繧医≧縺薙◎・・/strong><br>
+                            繧ｳ繝ｼ繧ｹ縲√い繧ｯ繝・ぅ繝薙ユ繧｣縲∬ｪｲ鬘後√∪縺溘・讖滓｢ｰ蟄ｦ鄙偵・讎ょｿｵ縺ｫ縺､縺・※菴輔〒繧りｳｪ蝠上＠縺ｦ縺上□縺輔＞縲・                        </div>
+                    </div>
+                </div>
+                
+                <div id="bot-loading" class="bot-loading" style="display: none;">
+                    <div class="bot-loading-indicator">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <span class="bot-loading-text">2025BlenderUnity3DIntroClass Bot is thinking...</span>
+                </div>
+                
+                <div class="bot-chat-input-container">
+                    <textarea 
+                        id="bot-message-input" 
+                        class="bot-message-input" 
+                        placeholder="Type your question here... / 縺薙％縺ｫ雉ｪ蝠上ｒ蜈･蜉帙＠縺ｦ縺上□縺輔＞..."
+                        rows="2"
+                    ></textarea>
+                    <button id="bot-send-btn" class="btn btn-primary bot-send-btn">Send / 騾∽ｿ｡</button>
+                </div>
+                
+                <div class="bot-chat-footer">
+                    <small>
+                        <strong>Powered by:</strong> qwen2.5:72b model with RAG (4,202 course document chunks) | 
+                        <strong>API:</strong> <a href="http://192.218.175.132:8001/docs" target="_blank">View API Docs</a>
+                    </small>
+                </div>
+            </div>
+            
+            <!-- Additional Bot Features -->
+            <div class="guides-grid" style="margin-top: 30px;">
+                <div class="guide-card">
+                    <h3>投 Progress Tracking</h3>
+                    <p>Monitor your completion status and learning analytics</p>
+                    <p>螳御ｺ・憾豕√→蟄ｦ鄙貞・譫舌ｒ逶｣隕・/p>
+                    <p class="coming-soon">Coming Soon / 霑第律蜈ｬ髢・/p>
+                </div>
+                <div class="guide-card">
+                    <h3>笨・Conversational Assessments</h3>
+                    <p>Interview-style quizzes with immediate feedback</p>
+                    <p>蜊ｳ蠎ｧ縺ｮ繝輔ぅ繝ｼ繝峨ヰ繝・け莉倥″繧､繝ｳ繧ｿ繝薙Η繝ｼ蠖｢蠑上け繧､繧ｺ</p>
+                    <p class="coming-soon">Coming Soon / 霑第律蜈ｬ髢・/p>
+                </div>
+                <div class="guide-card">
+                    <h3>当 Bot Quick Start Guide</h3>
+                    <p>Learn how to interact with your AI learning assistant</p>
+                    <p>AI蟄ｦ鄙偵い繧ｷ繧ｹ繧ｿ繝ｳ繝医→縺ｮ繧・ｊ蜿悶ｊ譁ｹ豕輔ｒ蟄ｦ縺ｶ</p>
+                    <a href="resources/week01-materials/bot-portal-quick-start-guide.md" class="btn btn-primary">View Guide</a>
+                </div>
+            </div>
+        </section>

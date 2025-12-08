@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 10: Classification Concepts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            color: #333;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            background: white;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px 80px;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide h1 {
+            font-size: 3em;
+            color: #2563eb;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .slide h2 {
+            font-size: 2.2em;
+            color: #7c3aed;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 10px;
+        }
+
+        .slide h3 {
+            font-size: 1.8em;
+            color: #2563eb;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .slide h4 {
+            font-size: 1.4em;
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .slide p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        .slide ul, .slide ol {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-left: 40px;
+            margin-bottom: 20px;
+        }
+
+        .slide li {
+            margin-bottom: 10px;
+        }
+
+        .bilingual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 20px 0;
+        }
+
+        .english, .japanese {
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .english {
+            background: #dbeafe;
+            border-left: 4px solid #2563eb;
+        }
+
+        .japanese {
+            background: #f3e8ff;
+            border-left: 4px solid #7c3aed;
+        }
+
+        .highlight-box {
+            background: #fef3cd;
+            border-left: 5px solid #f59e0b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .code-box {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: white;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:hover {
+            background: #2563eb;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-number {
+            position: fixed;
+            top: 70px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            color: #2563eb;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .title-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+
+        .title-slide h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .title-slide .subtitle {
+            font-size: 2em;
+            color: #7c3aed;
+            margin-bottom: 40px;
+        }
+
+        .title-slide .info {
+            font-size: 1.3em;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 1024px) {
+            .slide {
+                padding: 40px 50px;
+            }
+
+            .slide h1 {
+                font-size: 2.5em;
+            }
+
+            .slide h2 {
+                font-size: 2em;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .slide-container {
+                padding: 0;
+            }
+
+            .slide {
+                width: 100vw;
+                height: auto;
+                min-height: 100vh;
+                padding: 20px;
+                border-radius: 0;
+            }
+
+            .slide h1 {
+                font-size: 2em;
+            }
+
+            .slide h2 {
+                font-size: 1.6em;
+            }
+
+            .bilingual {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .title-slide h1 {
+                font-size: 2.5em;
+            }
+
+            .title-slide .subtitle {
+                font-size: 1.4em;
+            }
+
+            .navigation {
+                bottom: 15px;
+                gap: 10px;
+            }
+
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 0.95em;
+            }
+        }
+
+        .slides-nav {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+            padding: 10px 20px;
+        }
+
+        .slides-nav .container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .slides-nav a {
+            color: #1f2937;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .slides-nav a:hover {
+            color: #2563eb;
+        }
+
+        body {
+            padding-top: 50px;
+        }
+    </style>
+    <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+    <nav class="slides-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="lecture.html">Lecture Notes</a>
+            <a href="assignment.html">Assignment</a>
+        </div>
+    </nav>
+
+    <div class="slide-number" id="slideNumber">Slide 1 / 11</div>
+
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active title-slide">
+            <h1>Week 10</h1>
+            <p class="subtitle">Classification Concepts<br>分類のコンセプト</p>
+            <p class="info"><strong>Course:</strong> Machine Learning and Intelligence</p>
+            <p class="info"><strong>Instructor:</strong> Yuri Tijerino</p>
+            <p class="info"><strong>Duration:</strong> 15-20 minutes / 15-20分</p>
+        </div>
+
+        <!-- Slide 2: Welcome -->
+        <div class="slide">
+            <h2>Welcome to Week 10!</h2>
+            <h2>第10週へようこそ！</h2>
+            <div class="bilingual">
+                <div class="english">
+                    <h3>Today's Objectives:</h3>
+                    <ul>
+                        <li>Understand what classification means in ML</li>
+                        <li>Learn how supervised learning works</li>
+                        <li>Explore the difference between features and labels</li>
+                        <li>Begin creating your training dataset</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <h3>今日の目標:</h3>
+                    <ul>
+                        <li>MLにおける分類の意味を理解する</li>
+                        <li>教師あり学習の仕組みを学ぶ</li>
+                        <li>特徴量とラベルの違いを探る</li>
+                        <li>訓練データセットの作成を開始する</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: What is Classification? -->
+        <div class="slide">
+            <h2>What is Classification?</h2>
+            <h2>分類とは？</h2>
+            <div class="highlight-box">
+                <h3>Definition / 定義:</h3>
+                <p><strong>Classification = Putting things into categories</strong></p>
+                <p><strong>分類 = 物をカテゴリに入れること</strong></p>
+            </div>
+            <div class="two-column">
+                <div>
+                    <h4>Everyday Examples</h4>
+                    <p><strong>日常の例</strong></p>
+                    <ul>
+                        <li>Email: Spam vs Not Spam<br>メール: スパム vs 非スパム</li>
+                        <li>Fruit: Apple vs Orange<br>果物: リンゴ vs オレンジ</li>
+                        <li>Weather: Rainy vs Sunny<br>天気: 雨 vs 晴れ</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>ML Classification</h4>
+                    <p><strong>ML分類</strong></p>
+                    <ul>
+                        <li>Computer learns from examples<br>コンピュータが例から学習</li>
+                        <li>Finds patterns in data<br>データのパターンを見つける</li>
+                        <li>Makes predictions on new data<br>新しいデータで予測を行う</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Binary vs Multi-Class -->
+        <div class="slide">
+            <h2>Types of Classification</h2>
+            <h2>分類のタイプ</h2>
+            <h3>Binary Classification / 二項分類</h3>
+            <p><strong>Two categories only</strong> / <strong>2つのカテゴリのみ</strong></p>
+            <div class="code-box">Examples / 例:
+• Email: Spam (1) or Not Spam (0)
+  メール: スパム (1) または非スパム (0)
+• Medical: Disease (1) or Healthy (0)
+  医療: 病気 (1) または健康 (0)
+• Our Project: Interested (1) or Not Interested (0)
+  私たちのプロジェクト: 興味あり (1) または興味なし (0)</div>
+
+            <h3>Multi-Class Classification / 多クラス分類</h3>
+            <p><strong>Three or more categories</strong> / <strong>3つ以上のカテゴリ</strong></p>
+            <div class="code-box">Examples / 例:
+• Fruit: Apple, Orange, Banana
+  果物: リンゴ、オレンジ、バナナ
+• Handwriting: Digits 0-9
+  手書き: 数字0-9
+• Sentiment: Positive, Neutral, Negative
+  感情: ポジティブ、中立、ネガティブ</div>
+        </div>
+
+        <!-- Slide 5: Supervised Learning -->
+        <div class="slide">
+            <h2>Supervised Learning</h2>
+            <h2>教師あり学習</h2>
+            <div class="highlight-box">
+                <h3>Key Concept / 重要コンセプト</h3>
+                <p><strong>"Learning from labeled examples"</strong></p>
+                <p><strong>「ラベル付きの例から学習」</strong></p>
+            </div>
+            <h3>How It Works / どのように機能するか</h3>
+            <div class="code-box">Step 1: Provide LABELED data
+ステップ1: ラベル付きデータを提供
+→ Show computer examples with correct answers
+   正しい答えを含む例をコンピュータに示す
+
+Step 2: Computer LEARNS patterns
+ステップ2: コンピュータがパターンを学習
+→ Finds what features predict each label
+   各ラベルを予測する特徴量を見つける
+
+Step 3: Computer PREDICTS on new data
+ステップ3: コンピュータが新しいデータで予測
+→ Uses learned patterns to classify unseen examples
+   学習したパターンを使用して未見の例を分類</div>
+        </div>
+
+        <!-- Slide 6: Features vs Labels -->
+        <div class="slide">
+            <h2>Features vs Labels</h2>
+            <h2>特徴量 vs ラベル</h2>
+            <div class="two-column">
+                <div>
+                    <h3>Features (X)</h3>
+                    <h3>特徴量 (X)</h3>
+                    <p><strong>Input / 入力</strong></p>
+                    <ul>
+                        <li>Characteristics that describe something<br>何かを記述する特性</li>
+                        <li>What the model learns FROM<br>モデルが学習する元</li>
+                        <li>Example: Company size, industry, location<br>例: 企業規模、業界、所在地</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Labels (y)</h3>
+                    <h3>ラベル (y)</h3>
+                    <p><strong>Output / 出力</strong></p>
+                    <ul>
+                        <li>The category we want to predict<br>予測したいカテゴリ</li>
+                        <li>What the model learns TO predict<br>モデルが予測することを学習するもの</li>
+                        <li>Example: Interested (1) or Not Interested (0)<br>例: 興味あり (1) または興味なし (0)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <h4>The ML Goal / MLの目標</h4>
+                <p>Learn the relationship: <strong>Features → Label</strong></p>
+                <p>関係を学習: <strong>特徴量 → ラベル</strong></p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Our Project Example -->
+        <div class="slide">
+            <h2>Our Project: Company Classification</h2>
+            <h2>私たちのプロジェクト: 企業分類</h2>
+            <h3>The Classification Task / 分類タスク</h3>
+            <div class="highlight-box">
+                <p><strong>Goal:</strong> Classify companies as "Interested" or "Not Interested"</p>
+                <p><strong>目標:</strong> 企業を「興味あり」または「興味なし」に分類</p>
+            </div>
+            <h4>Features (What we know about companies) / 特徴量（企業について知っていること）</h4>
+            <ul>
+                <li>Industry type / 業界タイプ</li>
+                <li>Company size / 企業規模</li>
+                <li>Location / 所在地</li>
+                <li>Keywords in description / 説明のキーワード</li>
+                <li>All the features you engineered in Week 9! / 第9週でエンジニアリングしたすべての特徴量！</li>
+            </ul>
+            <h4>Labels (Your decision) / ラベル（あなたの決定）</h4>
+            <ul>
+                <li><strong>1</strong> = Interested in this company / この企業に興味がある</li>
+                <li><strong>0</strong> = Not interested in this company / この企業に興味がない</li>
+            </ul>
+        </div>
+
+        <!-- Slide 8: Training vs Testing -->
+        <div class="slide">
+            <h2>Training Data vs Test Data</h2>
+            <h2>訓練データ vs テストデータ</h2>
+            <div class="two-column">
+                <div>
+                    <h3>Training Data</h3>
+                    <h3>訓練データ</h3>
+                    <p><strong>Used to LEARN</strong></p>
+                    <p><strong>学習に使用</strong></p>
+                    <ul>
+                        <li>Labeled examples / ラベル付き例</li>
+                        <li>Model learns patterns / モデルがパターンを学習</li>
+                        <li>Typically 70-80% of data / 通常データの70-80%</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Test Data</h3>
+                    <h3>テストデータ</h3>
+                    <p><strong>Used to EVALUATE</strong></p>
+                    <p><strong>評価に使用</strong></p>
+                    <ul>
+                        <li>Hidden during training / 訓練中は隠される</li>
+                        <li>Tests model accuracy / モデルの精度をテスト</li>
+                        <li>Typically 20-30% of data / 通常データの20-30%</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <h4>Important! / 重要！</h4>
+                <p>Never train on test data - that's cheating!</p>
+                <p>テストデータで訓練してはいけません - それはズルです！</p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Label Quality Matters -->
+        <div class="slide">
+            <h2>Why Label Quality Matters</h2>
+            <h2>ラベル品質が重要な理由</h2>
+            <div class="highlight-box">
+                <h3>Garbage In, Garbage Out</h3>
+                <h3>ゴミを入れれば、ゴミが出る</h3>
+                <p>Your model is only as good as your labels!</p>
+                <p>モデルはラベルと同じくらい良い程度です！</p>
+            </div>
+            <h3>Good Labels / 良いラベル</h3>
+            <ul>
+                <li><strong>Consistent:</strong> Similar companies get similar labels<br>
+                    <strong>一貫性:</strong> 類似の企業が類似のラベルを取得</li>
+                <li><strong>Thoughtful:</strong> Based on clear criteria<br>
+                    <strong>思慮深い:</strong> 明確な基準に基づく</li>
+                <li><strong>Honest:</strong> Reflect YOUR true preferences<br>
+                    <strong>正直:</strong> あなたの真の好みを反映</li>
+                <li><strong>Balanced:</strong> Not all one category<br>
+                    <strong>バランス:</strong> すべて1つのカテゴリではない</li>
+            </ul>
+            <h3>Bad Labels / 悪いラベル</h3>
+            <ul>
+                <li>Random or careless / ランダムまたは不注意</li>
+                <li>Inconsistent decisions / 不整合な決定</li>
+                <li>Extremely imbalanced (90% one class) / 極端に不均衡（90%が1つのクラス）</li>
+            </ul>
+        </div>
+
+        <!-- Slide 10: Today's Activity -->
+        <div class="slide">
+            <h2>Today's Activity Preview</h2>
+            <h2>今日のアクティビティプレビュー</h2>
+            <h3>What You'll Do / 今日すること</h3>
+            <p><strong>40-60 Minute Hands-On Activity:</strong></p>
+            <ol>
+                <li><strong>Understanding Classification (10 min)</strong><br>
+                    Review concepts with ML-101 Bot / ML-101ボットとコンセプトをレビュー</li>
+                <li><strong>Define Classification Criteria (10 min)</strong><br>
+                    Articulate YOUR preferences for companies / 企業に対するあなたの好みを明確にする</li>
+                <li><strong>Manual Company Classification (20 min)</strong><br>
+                    Label each company as Interested (1) or Not (0) / 各企業を興味あり(1)または興味なし(0)にラベル付け</li>
+                <li><strong>Label Quality Check (12 min)</strong><br>
+                    Analyze label distribution and balance / ラベル分布とバランスを分析</li>
+                <li><strong>Prepare Training Dataset (8 min)</strong><br>
+                    Create final labeled dataset for ML training / ML訓練のための最終ラベル付きデータセットを作成</li>
+            </ol>
+            <div class="highlight-box">
+                <p><strong>The ML-101 Bot will guide you every step!</strong></p>
+                <p><strong>ML-101ボットが各ステップでガイドします！</strong></p>
+            </div>
+        </div>
+
+        <!-- Slide 11: Let's Get Started -->
+        <div class="slide">
+            <h2>Let's Get Started!</h2>
+            <h2>始めましょう！</h2>
+            <div class="highlight-box">
+                <h3>"Now let's create your labeled training dataset!"</h3>
+                <h3>「では、ラベル付き訓練データセットを作成しましょう！」</h3>
+            </div>
+            <h3>Key Takeaways / 重要なポイント</h3>
+            <div class="bilingual">
+                <div class="english">
+                    <ul>
+                        <li>✅ Classification = categorizing data</li>
+                        <li>✅ Supervised learning needs labeled examples</li>
+                        <li>✅ Features (X) describe, Labels (y) categorize</li>
+                        <li>✅ Label quality determines model quality</li>
+                        <li>✅ Your labels teach the model YOUR preferences</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <ul>
+                        <li>✅ 分類 = データの分類</li>
+                        <li>✅ 教師あり学習にはラベル付き例が必要</li>
+                        <li>✅ 特徴量 (X) が記述、ラベル (y) が分類</li>
+                        <li>✅ ラベル品質がモデル品質を決定</li>
+                        <li>✅ あなたのラベルがモデルにあなたの好みを教える</li>
+                    </ul>
+                </div>
+            </div>
+            <h3 style="text-align: center; margin-top: 40px;">Next Steps / 次のステップ</h3>
+            <ol style="font-size: 1.3em;">
+                <li>Open the ML-101 Bot portal / ML-101ボットポータルを開く</li>
+                <li>Begin Week 10 Activity / 第10週アクティビティを開始</li>
+                <li>Create your labeled training dataset / ラベル付き訓練データセットを作成</li>
+            </ol>
+        </div>
+
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">◀ Previous</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next ▶</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+
+            document.getElementById('slideNumber').textContent = `Slide ${currentSlide + 1} / ${totalSlides}`;
+
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (event.key === 'ArrowRight' || event.key === ' ') {
+                event.preventDefault();
+                changeSlide(1);
+            } else if (event.key === 'Home') {
+                showSlide(0);
+            } else if (event.key === 'End') {
+                showSlide(totalSlides - 1);
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>

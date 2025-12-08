@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1: Introduction to Machine Learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            color: #333;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            background: white;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px 80px;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide h1 {
+            font-size: 3em;
+            color: #2563eb;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .slide h2 {
+            font-size: 2.2em;
+            color: #7c3aed;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 10px;
+        }
+
+        .slide h3 {
+            font-size: 1.8em;
+            color: #2563eb;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .slide h4 {
+            font-size: 1.4em;
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .slide p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        .slide ul, .slide ol {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-left: 40px;
+            margin-bottom: 20px;
+        }
+
+        .slide li {
+            margin-bottom: 10px;
+        }
+
+        .bilingual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 20px 0;
+        }
+
+        .english, .japanese {
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .english {
+            background: #dbeafe;
+            border-left: 4px solid #2563eb;
+        }
+
+        .japanese {
+            background: #f3e8ff;
+            border-left: 4px solid #7c3aed;
+        }
+
+        .highlight-box {
+            background: #fef3cd;
+            border-left: 5px solid #f59e0b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .code-box {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: white;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:hover {
+            background: #2563eb;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-number {
+            position: fixed;
+            top: 70px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            color: #2563eb;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .title-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+
+        .title-slide h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .title-slide .subtitle {
+            font-size: 2em;
+            color: #7c3aed;
+            margin-bottom: 40px;
+        }
+
+        .title-slide .info {
+            font-size: 1.3em;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 1024px) {
+            .slide {
+                padding: 40px 50px;
+            }
+
+            .slide h1 {
+                font-size: 2.5em;
+            }
+
+            .slide h2 {
+                font-size: 2em;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .slide-container {
+                padding: 0;
+            }
+
+            .slide {
+                width: 100vw;
+                height: auto;
+                min-height: 100vh;
+                padding: 20px;
+                border-radius: 0;
+            }
+
+            .slide h1 {
+                font-size: 2em;
+            }
+
+            .slide h2 {
+                font-size: 1.6em;
+            }
+
+            .bilingual {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .title-slide h1 {
+                font-size: 2.5em;
+            }
+
+            .title-slide .subtitle {
+                font-size: 1.4em;
+            }
+
+            .navigation {
+                bottom: 15px;
+                gap: 10px;
+            }
+
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 0.95em;
+            }
+        }
+
+        .slides-nav {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+            padding: 10px 20px;
+        }
+
+        .slides-nav .container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .slides-nav a {
+            color: #1f2937;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .slides-nav a:hover {
+            color: #2563eb;
+        }
+
+        body {
+            padding-top: 50px;
+        }
+    </style>
+    <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+    <nav class="slides-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="lecture.html">Lecture Notes</a>
+            <a href="assignment.html">Assignment</a>
+        </div>
+    </nav>
+
+    <div class="slide-number" id="slideNumber">Slide 1 / 13</div>
+
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active title-slide">
+            <h1>Week 1</h1>
+            <p class="subtitle">Introduction to Machine Learning<br>機械学習入門</p>
+            <p class="info"><strong>Course:</strong> Machine Learning and Intelligence</p>
+            <p class="info"><strong>Instructor:</strong> Yuri Tijerino</p>
+            <p class="info"><strong>Duration:</strong> 15-20 minutes / 15-20分</p>
+        </div>
+
+        <!-- Slide 2: Welcome -->
+        <div class="slide">
+            <h2>Welcome to ML-101!</h2>
+            <h2>ML-101へようこそ！</h2>
+            <div class="bilingual">
+                <div class="english">
+                    <h3>Today's Objectives:</h3>
+                    <ul>
+                        <li>Understand what machine learning is</li>
+                        <li>Discover ML in your daily life</li>
+                        <li>Preview our course project</li>
+                        <li>Get started with the ML-101 Bot</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <h3>今日の目標:</h3>
+                    <ul>
+                        <li>機械学習とは何かを理解する</li>
+                        <li>日常生活でMLを発見する</li>
+                        <li>コースプロジェクトをプレビューする</li>
+                        <li>ML-101ボットを使い始める</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: What is Machine Learning? -->
+        <div class="slide">
+            <h2>What is Machine Learning?</h2>
+            <h2>機械学習とは？</h2>
+            <div class="highlight-box">
+                <h3>Definition / 定義:</h3>
+                <p><strong>Machine Learning = Teaching computers to learn from data</strong></p>
+                <p><strong>機械学習 = コンピュータにデータから学習させること</strong></p>
+            </div>
+            <div class="two-column">
+                <div>
+                    <h4>Traditional Programming</h4>
+                    <p><strong>従来のプログラミング</strong></p>
+                    <div class="code-box">Rules + Data → Answer
+ルール + データ → 答え</div>
+                    <p>You tell the computer EXACTLY what to do</p>
+                    <p>コンピュータに正確に何をすべきか指示する</p>
+                </div>
+                <div>
+                    <h4>Machine Learning</h4>
+                    <p><strong>機械学習</strong></p>
+                    <div class="code-box">Data + Answer → Rules (learned)
+データ + 答え → ルール（学習）</div>
+                    <p>The computer LEARNS patterns from examples</p>
+                    <p>コンピュータが例からパターンを学習する</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: ML in Your Life -->
+        <div class="slide">
+            <h2>ML is Already in Your Life!</h2>
+            <h2>MLはすでにあなたの生活に！</h2>
+            <h3>Examples You Use Every Day / 毎日使用する例</h3>
+            <ul>
+                <li><span class="emoji">📱</span> <strong>Face Unlock on Your Phone</strong> - Learns your face from thousands of angles<br>
+                    <strong>スマートフォンの顔認証</strong> - 何千もの角度からあなたの顔を学習</li>
+                <li><span class="emoji">🎬</span> <strong>Netflix Recommendations</strong> - Learns what you like to watch<br>
+                    <strong>Netflix推薦</strong> - あなたが見たいものを学習</li>
+                <li><span class="emoji">🎵</span> <strong>Spotify Playlists</strong> - Learns your music taste<br>
+                    <strong>Spotifyプレイリスト</strong> - あなたの音楽の好みを学習</li>
+                <li><span class="emoji">🔍</span> <strong>Google Search</strong> - Learns which results are most relevant<br>
+                    <strong>Google検索</strong> - どの結果が最も関連性が高いかを学習</li>
+                <li><span class="emoji">🛒</span> <strong>Amazon Recommendations</strong> - Learns from browsing and purchase history<br>
+                    <strong>Amazon推薦</strong> - 閲覧と購入履歴から学習</li>
+            </ul>
+        </div>
+
+        <!-- Slide 5: Three Main Types -->
+        <div class="slide">
+            <h2>Three Main Types of ML</h2>
+            <h2>MLの3つの主なタイプ</h2>
+            <h3>1. Supervised Learning / 教師あり学習</h3>
+            <p><strong>"Learning from examples with answers"</strong> / <strong>「答え付きの例から学習」</strong></p>
+            <p><strong>Example:</strong> Email spam detection - Show computer "This is spam, this is not spam"</p>
+            <p><strong>例:</strong> メールスパム検出 - コンピュータに「これはスパム、これはスパムではない」と示す</p>
+
+            <h3>2. Unsupervised Learning / 教師なし学習</h3>
+            <p><strong>"Finding patterns without labels"</strong> / <strong>「ラベルなしでパターンを見つける」</strong></p>
+            <p><strong>Example:</strong> Customer grouping - Computer finds similar groups</p>
+            <p><strong>例:</strong> 顧客グループ化 - コンピュータが類似したグループを見つける</p>
+
+            <h3>3. Reinforcement Learning / 強化学習</h3>
+            <p><strong>"Learning by trial and error"</strong> / <strong>「試行錯誤による学習」</strong></p>
+            <p><strong>Example:</strong> Game AI - Computer tries actions, gets rewards, learns what works</p>
+            <p><strong>例:</strong> ゲームAI - コンピュータがアクションを試し、報酬を得て、何が有効かを学習</p>
+        </div>
+
+        <!-- Slide 6: Why ML Matters -->
+        <div class="slide">
+            <h2>Why ML Matters Today</h2>
+            <h2>なぜMLが今日重要か</h2>
+            <h3>ML is Transforming Everything / MLはすべてを変革している</h3>
+            <div class="two-column">
+                <div>
+                    <h4>In Business / ビジネスで:</h4>
+                    <ul>
+                        <li><span class="emoji">🎯</span> Personalized marketing / パーソナライズドマーケティング</li>
+                        <li><span class="emoji">🤖</span> Process automation / プロセス自動化</li>
+                        <li><span class="emoji">📊</span> Data-driven decisions / データ駆動型意思決定</li>
+                    </ul>
+                    <h4>In Daily Life / 日常生活で:</h4>
+                    <ul>
+                        <li><span class="emoji">🗣️</span> Voice assistants (Siri, Alexa) / 音声アシスタント</li>
+                        <li><span class="emoji">🌐</span> Real-time translation / リアルタイム翻訳</li>
+                        <li><span class="emoji">🚗</span> Self-driving cars / 自動運転車</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>In Your Career / あなたのキャリアで:</h4>
+                    <ul>
+                        <li><span class="emoji">💼</span> Job matching platforms / 求人マッチングプラットフォーム</li>
+                        <li><span class="emoji">📈</span> Career path recommendations / キャリアパス推薦</li>
+                        <li><span class="emoji">🎓</span> Personalized learning / パーソナライズド学習</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Course Project -->
+        <div class="slide">
+            <h2>Course Project Preview</h2>
+            <h2>コースプロジェクトプレビュー</h2>
+            <div class="highlight-box">
+                <h3><span class="emoji">🏢</span> Company Recommendation System</h3>
+                <h3>企業推薦システム</h3>
+                <p><strong>The Goal:</strong> Build an ML system that recommends companies based on YOUR career interests</p>
+                <p><strong>目標:</strong> あなたのキャリアの興味に基づいて企業を推薦するMLシステムを構築する</p>
+            </div>
+            <h4>How It Works / どのように機能するか:</h4>
+            <ol>
+                <li><strong>Collect Data</strong> → Scrape company information from mynavi.jp<br>
+                    <strong>データ収集</strong> → mynavi.jpから企業情報をスクレイピング</li>
+                <li><strong>Label Data</strong> → You classify companies as "Interested" or "Not Interested"<br>
+                    <strong>データラベル付け</strong> → 企業を「興味あり」または「興味なし」に分類</li>
+                <li><strong>Train Model</strong> → ML learns YOUR preferences<br>
+                    <strong>モデル訓練</strong> → MLがあなたの好みを学習</li>
+                <li><strong>Make Predictions</strong> → System recommends new companies for you<br>
+                    <strong>予測実行</strong> → システムがあなたのために新しい企業を推薦</li>
+            </ol>
+            <p><strong>Real-World Application:</strong> Use this for your actual job search!</p>
+            <p><strong>実世界への応用:</strong> 実際の就職活動に使用！</p>
+        </div>
+
+        <!-- Slide 8: ML Workflow -->
+        <div class="slide">
+            <h2>The ML Workflow</h2>
+            <h2>MLワークフロー</h2>
+            <h3>Four Main Steps / 4つの主なステップ</h3>
+            <div class="code-box">1. COLLECT DATA  →  2. PREPARE DATA  →  3. TRAIN MODEL  →  4. MAKE PREDICTIONS
+   データ収集          データ準備          モデル訓練          予測実行
+
+📊 Gather info    🧹 Clean & organize  🤖 Teach computer  ✨ Get results</div>
+            <div class="highlight-box">
+                <h4>We'll Learn Each Step This Semester / 今学期各ステップを学びます:</h4>
+                <ul>
+                    <li><strong>Weeks 1-5:</strong> Data collection and preparation / データ収集と準備</li>
+                    <li><strong>Weeks 6-9:</strong> Model training basics / モデル訓練基礎</li>
+                    <li><strong>Weeks 10-12:</strong> Advanced ML and final project / 高度なMLと最終プロジェクト</li>
+                    <li><strong>Weeks 13-14:</strong> Presentations and reflection / プレゼンテーションと振り返り</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 9: Meet the Bot -->
+        <div class="slide">
+            <h2>Meet Your ML-101 Bot</h2>
+            <h2>ML-101ボットに会おう</h2>
+            <h3>Your AI Learning Assistant / あなたのAI学習アシスタント</h3>
+            <div class="bilingual">
+                <div class="english">
+                    <h4>What the Bot Does:</h4>
+                    <ul>
+                        <li>✅ Guides hands-on activities step-by-step</li>
+                        <li>✅ Answers questions 24/7 in English or Japanese</li>
+                        <li>✅ Provides feedback on your work</li>
+                        <li>✅ Tracks progress through the course</li>
+                        <li>✅ Assesses understanding through conversations</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <h4>ボットがすること:</h4>
+                    <ul>
+                        <li>✅ ステップバイステップでハンズオンアクティビティをガイド</li>
+                        <li>✅ 24時間365日英語または日本語で質問に答える</li>
+                        <li>✅ あなたの作業にフィードバックを提供</li>
+                        <li>✅ コースを通じて進捗を追跡</li>
+                        <li>✅ 会話を通じて理解を評価</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <p><strong>Important Note:</strong> The bot is a learning tool, not a replacement for thinking!</p>
+                <p><strong>重要な注意:</strong> ボットは学習ツールであり、思考の代替ではありません！</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Course Structure -->
+        <div class="slide">
+            <h2>Course Structure</h2>
+            <h2>コース構造</h2>
+            <h3>How Each Week Works / 各週の進め方</h3>
+            <div class="bilingual">
+                <div class="english">
+                    <h4><span class="emoji">📚</span> Short Lecture (15-20 minutes)</h4>
+                    <ul>
+                        <li>Introduce key concepts</li>
+                        <li>Connect to real-world examples</li>
+                        <li>Preview the activity</li>
+                    </ul>
+                    <h4><span class="emoji">💻</span> Long Hands-On Activity (40-60 minutes)</h4>
+                    <ul>
+                        <li>Work with the ML-101 Bot</li>
+                        <li>Apply concepts through practice</li>
+                        <li>Build your project step-by-step</li>
+                    </ul>
+                    <h4><span class="emoji">📝</span> Weekly Deliverables</h4>
+                    <ul>
+                        <li>Document your work</li>
+                        <li>Submit through bot portal</li>
+                        <li>Receive automated feedback</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <h4><span class="emoji">📚</span> 短い講義 (15-20分)</h4>
+                    <ul>
+                        <li>主要コンセプトを紹介</li>
+                        <li>実世界の例に関連付け</li>
+                        <li>アクティビティをプレビュー</li>
+                    </ul>
+                    <h4><span class="emoji">💻</span> 長いハンズオンアクティビティ (40-60分)</h4>
+                    <ul>
+                        <li>ML-101ボットと作業</li>
+                        <li>実践を通じてコンセプトを適用</li>
+                        <li>プロジェクトをステップバイステップで構築</li>
+                    </ul>
+                    <h4><span class="emoji">📝</span> 週次成果物</h4>
+                    <ul>
+                        <li>作業を文書化</li>
+                        <li>ボットポータルから提出</li>
+                        <li>自動フィードバックを受け取る</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Grading -->
+        <div class="slide">
+            <h2>Grading and Assessment</h2>
+            <h2>評価と査定</h2>
+            <h3>How You'll Be Evaluated / 評価方法</h3>
+            <ul>
+                <li><strong>40% - Weekly Activities / 週次アクティビティ</strong><br>
+                    Hands-on exercises and documentation / ハンズオン演習と文書化</li>
+                <li><strong>15% - Bot Assessments / ボット査定</strong><br>
+                    Conversational quizzes through the bot / ボットを通じた会話形式のクイズ</li>
+                <li><strong>35% - Final Project / 最終プロジェクト</strong><br>
+                    Company recommendation system / 企業推薦システム</li>
+                <li><strong>10% - Participation / 参加</strong><br>
+                    Engagement in activities / アクティビティへの取り組み</li>
+            </ul>
+            <div class="highlight-box">
+                <h3>No Final Exam! / 期末試験なし！</h3>
+                <p>All assessment is practical and project-based</p>
+                <p>すべての評価は実践的でプロジェクトベース</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Today's Activity -->
+        <div class="slide">
+            <h2>Today's Activity Preview</h2>
+            <h2>今日のアクティビティプレビュー</h2>
+            <h3>What You'll Do Today / 今日すること</h3>
+            <p><strong>40-60 Minute Hands-On Activity:</strong></p>
+            <ol>
+                <li><strong>Set Up Bot Portal</strong> (10 min)<br>
+                    Log in to ML-101 Bot system / ボットポータルセットアップ</li>
+                <li><strong>Discover ML in Daily Life</strong> (15 min)<br>
+                    Identify 5-7 ML applications you use / 日常生活でMLを発見</li>
+                <li><strong>Categorize ML Applications</strong> (10 min)<br>
+                    Learn different types of ML tasks / MLアプリケーションを分類</li>
+                <li><strong>Connect to Course Project</strong> (10 min)<br>
+                    Understand how ML applies to career decisions / コースプロジェクトに関連付け</li>
+                <li><strong>Reflect and Document</strong> (10 min)<br>
+                    Write about your discoveries / 振り返りと文書化</li>
+            </ol>
+            <div class="highlight-box">
+                <p><strong>The ML-101 Bot will guide you every step!</strong></p>
+                <p><strong>ML-101ボットが各ステップでガイドします！</strong></p>
+            </div>
+        </div>
+
+        <!-- Slide 13: Let's Get Started -->
+        <div class="slide">
+            <h2>Let's Get Started!</h2>
+            <h2>始めましょう！</h2>
+            <div class="highlight-box">
+                <h3>"Now let's discover ML in your daily life through hands-on exploration!"</h3>
+                <h3>「では、ハンズオン探索を通じて日常生活でMLを発見しましょう！」</h3>
+            </div>
+            <h3>Key Takeaways / 重要なポイント</h3>
+            <div class="bilingual">
+                <div class="english">
+                    <ul>
+                        <li>✅ ML = learning from data</li>
+                        <li>✅ ML is everywhere in modern life</li>
+                        <li>✅ You'll build a real ML system this semester</li>
+                        <li>✅ Short lectures + long activities = hands-on learning</li>
+                        <li>✅ The bot is your guide through the course</li>
+                    </ul>
+                </div>
+                <div class="japanese">
+                    <ul>
+                        <li>✅ 機械学習 = データからの学習</li>
+                        <li>✅ MLは現代生活のどこにでもある</li>
+                        <li>✅ 今学期実際のMLシステムを構築します</li>
+                        <li>✅ 短い講義 + 長いアクティビティ = ハンズオン学習</li>
+                        <li>✅ ボットがコースを通じてあなたのガイドです</li>
+                    </ul>
+                </div>
+            </div>
+            <h3 style="text-align: center; margin-top: 40px;">Next Steps / 次のステップ</h3>
+            <ol style="font-size: 1.3em;">
+                <li>Open the ML-101 Bot portal / ML-101ボットポータルを開く</li>
+                <li>Begin Week 1 Activity / 第1週アクティビティを開始</li>
+                <li>Ask questions anytime! / いつでも質問してください！</li>
+            </ol>
+            <p style="text-align: center; margin-top: 30px; font-size: 1.2em;"><strong>Remember:</strong> Learning happens during the activity, not just the lecture!</p>
+            <p style="text-align: center; font-size: 1.2em;"><strong>覚えておいてください:</strong> 学習は講義だけでなくアクティビティ中に起こります！</p>
+        </div>
+
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">◀ Previous</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next ▶</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+
+            document.getElementById('slideNumber').textContent = `Slide ${currentSlide + 1} / ${totalSlides}`;
+
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (event.key === 'ArrowRight' || event.key === ' ') {
+                event.preventDefault();
+                changeSlide(1);
+            } else if (event.key === 'Home') {
+                showSlide(0);
+            } else if (event.key === 'End') {
+                showSlide(totalSlides - 1);
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>

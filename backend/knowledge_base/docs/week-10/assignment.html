@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 10 Assignment: Manual Classification and Creating Training Labels | ML-101</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .assignment-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .assignment-content h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .assignment-content h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .assignment-content h4 {
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .info-box {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color);
+            margin: 20px 0;
+        }
+        .warning-box {
+            background: #fef3cd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--warning);
+            margin: 20px 0;
+        }
+        .success-box {
+            background: #d1fae5;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--success);
+            margin: 20px 0;
+        }
+        .deliverable-box {
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid var(--border-color);
+        }
+        .rubric-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .rubric-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .rubric-table td {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .rubric-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+        .example-box {
+            background: #f3e8ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--secondary-color);
+            margin: 20px 0;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        code {
+            background: var(--bg-light);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        @media (max-width: 768px) {
+            .assignment-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Week 10 Assignment</h1>
+            <p class="subtitle">Manual Classification and Creating Training Labels<br>手動分類と訓練ラベルの作成</p>
+            <p class="instructor">Instructor: Yuri Tijerino</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="../../index.html">← Course Home</a>
+            <a href="lecture.html">Lecture Notes</a>
+            <a href="slides.html">Presentation Slides</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="assignment-content">
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="lecture.html" class="btn btn-primary">View Lecture</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+            </div>
+
+            <div class="info-box">
+                <h3>Assignment Overview / 課題概要</h3>
+                <p><strong>Course:</strong> Machine Learning and Intelligence | 機械学習と知能</p>
+                <p><strong>Week:</strong> 10 | 第10週</p>
+                <p><strong>Duration:</strong> 40-60 minutes | 40-60分</p>
+                <p><strong>Due Date:</strong> End of Week 10 class session | 第10週授業終了時</p>
+                <p><strong>Weight:</strong> Part of 40% Weekly Activities grade | 週次アクティビティ評価40%の一部</p>
+                <p><strong>Submission:</strong> Through ML-101 Bot Portal | ML-101ボットポータル経由</p>
+            </div>
+
+            <p>This assignment focuses on creating a labeled training dataset by manually classifying companies based on your personal career interests. You'll apply classification concepts learned in lecture to create high-quality labeled data for machine learning.</p>
+            <p>この課題は、個人的なキャリアの興味に基づいて企業を手動で分類することによって、ラベル付き訓練データセットを作成することに焦点を当てています。講義で学んだ分類コンセプトを適用して、機械学習のための高品質のラベル付きデータを作成します。</p>
+
+            <h2>Learning Objectives / 学習目標</h2>
+
+            <p>By completing this assignment, you will be able to:</p>
+            <p>この課題を完了することで、以下ができるようになります：</p>
+
+            <ul>
+                <li>✅ Understand classification concepts in an ML context<br>
+                    MLコンテキストで分類コンセプトを理解する</li>
+                <li>✅ Create clear, consistent classification criteria<br>
+                    明確で一貫性のある分類基準を作成する</li>
+                <li>✅ Manually label data to create a training dataset<br>
+                    訓練データセットを作成するためにデータに手動でラベル付けする</li>
+                <li>✅ Evaluate label quality and distribution<br>
+                    ラベルの品質と分布を評価する</li>
+                <li>✅ Prepare a dataset ready for supervised learning<br>
+                    教師あり学習の準備ができたデータセットを準備する</li>
+            </ul>
+
+            <h2>Prerequisites / 前提条件</h2>
+
+            <ul>
+                <li>✅ Completed Week 9 - Feature Engineering (feature-engineered company dataset)<br>
+                    第9週完了 - 特徴量エンジニアリング（特徴量エンジニアリング済み企業データセット）</li>
+                <li>✅ Attended Week 10 lecture (or reviewed lecture materials)<br>
+                    第10週講義に出席（または講義教材をレビュー）</li>
+                <li>✅ Access to Google Colab or spreadsheet software<br>
+                    Google Colabまたはスプレッドシートソフトウェアへのアクセス</li>
+                <li>✅ Access to ML-101 Bot portal<br>
+                    ML-101ボットポータルへのアクセス</li>
+            </ul>
+
+            <h2>Assignment Deliverables / 課題成果物</h2>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 1: Classification Criteria Document</h3>
+                <h4>成果物1：分類基準文書</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Document your explicit criteria for classifying companies as "Interested" (1) or "Not Interested" (0).</p>
+                <p>企業を「興味あり」(1)または「興味なし」(0)に分類するための明示的な基準を文書化します。</p>
+
+                <h4>Include the following / 以下を含める:</h4>
+
+                <ol>
+                    <li>
+                        <strong>Industry Preferences / 業界の好み</strong>
+                        <p>Which industries do you prefer? Which do you want to avoid?</p>
+                        <p>どの業界を好みますか？どれを避けたいですか？</p>
+                    </li>
+                    <li>
+                        <strong>Company Size Preferences / 企業規模の好み</strong>
+                        <p>Do you prefer large corporations, mid-size companies, or startups?</p>
+                        <p>大企業、中規模企業、またはスタートアップを好みますか？</p>
+                    </li>
+                    <li>
+                        <strong>Location Preferences / 所在地の好み</strong>
+                        <p>Do you have location preferences? Remote work important?</p>
+                        <p>所在地の好みはありますか？リモートワークは重要ですか？</p>
+                    </li>
+                    <li>
+                        <strong>Keyword Indicators / キーワード指標</strong>
+                        <p>What keywords suggest an interesting company to you?</p>
+                        <p>どのキーワードがあなたにとって興味深い企業を示唆しますか？</p>
+                        <p><em>Examples: "innovation", "global", "AI", "sustainability"</em></p>
+                    </li>
+                    <li>
+                        <strong>Other Important Factors / その他の重要な要因</strong>
+                        <p>Any other criteria that matter to you?</p>
+                        <p>あなたにとって重要な他の基準はありますか？</p>
+                    </li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li><strong>Document format:</strong> PDF, Word, or Google Doc</li>
+                        <li><strong>Length:</strong> 1-2 pages</li>
+                        <li><strong>Clear sections</strong> for each criterion type</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (20 points) / 採点（20点）:</h4>
+                <ul>
+                    <li>Clear, specific criteria: <strong>10 points</strong></li>
+                    <li>Personally relevant to career interests: <strong>5 points</strong></li>
+                    <li>Consistently applicable: <strong>5 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 2: Labeled Training Dataset</h3>
+                <h4>成果物2：ラベル付き訓練データセット</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>A CSV file containing your Week 9 feature-engineered dataset with an additional <code>label</code> column.</p>
+                <p>追加の<code>label</code>列を含む第9週の特徴量エンジニアリング済みデータセットを含むCSVファイル。</p>
+
+                <h4>Dataset Requirements / データセット要件:</h4>
+                <ul>
+                    <li>All companies from Week 9 dataset labeled (no missing values)</li>
+                    <li>Label column with values: 1 (Interested) or 0 (Not Interested)</li>
+                    <li>All feature columns from Week 9 preserved</li>
+                    <li>Company names included for reference</li>
+                    <li>File format: CSV</li>
+                </ul>
+
+                <h4>Example Structure / 例の構造:</h4>
+                <div class="example-box">
+                    <code>company_name,industry,company_size,location,keyword_count,label<br>
+                    "TechCorp Inc","Technology",500,"Tokyo",3,1<br>
+                    "Finance Group","Finance",1200,"Osaka",1,0<br>
+                    "Innovation Startup","Technology",50,"Remote",5,1<br>
+                    ...</code>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Important Notes / 重要な注意事項:</h4>
+                    <ul>
+                        <li>Labels must reflect YOUR personal preferences</li>
+                        <li>Be consistent with your stated criteria</li>
+                        <li>Avoid extreme imbalance (e.g., 90% one class)</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (40 points) / 採点（40点）:</h4>
+                <ul>
+                    <li>All companies labeled (no missing values): <strong>15 points</strong></li>
+                    <li>Labels consistent with stated criteria: <strong>15 points</strong></li>
+                    <li>Reasonable label balance: <strong>10 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 3: Label Analysis Report</h3>
+                <h4>成果物3：ラベル分析レポート</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>Analysis of your label distribution and quality checks.</p>
+                <p>ラベル分布と品質チェックの分析。</p>
+
+                <h4>Include the following / 以下を含める:</h4>
+
+                <ol>
+                    <li>
+                        <strong>Label Distribution Statistics / ラベル分布統計</strong>
+                        <ul>
+                            <li>Count of Interested (1) labels</li>
+                            <li>Count of Not Interested (0) labels</li>
+                            <li>Percentage breakdown</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Balance Ratio Analysis / バランス比率分析</strong>
+                        <ul>
+                            <li>Calculate: min(label_counts) / max(label_counts)</li>
+                            <li>Is your dataset reasonably balanced?</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Label Distribution Visualization / ラベル分布の可視化</strong>
+                        <ul>
+                            <li>Include a bar chart showing label counts</li>
+                            <li>Created in Python/Colab or spreadsheet software</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Consistency Check / 一貫性チェック</strong>
+                        <ul>
+                            <li>Review: Do similar companies have similar labels?</li>
+                            <li>Any borderline cases? How did you decide?</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>Format / 形式:</h4>
+                    <ul>
+                        <li>Include in same document as Deliverable 1 OR in Colab notebook</li>
+                        <li>Include visualization image</li>
+                    </ul>
+                </div>
+
+                <h4>Scoring (30 points) / 採点（30点）:</h4>
+                <ul>
+                    <li>Complete statistics: <strong>10 points</strong></li>
+                    <li>Visualization included: <strong>10 points</strong></li>
+                    <li>Thoughtful consistency analysis: <strong>10 points</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-box">
+                <h3>Deliverable 4: AI Transparency Log (if applicable)</h3>
+                <h4>成果物4：AI透明性ログ（該当する場合）</h4>
+
+                <p><strong>Required Content / 必要な内容:</strong></p>
+                <p>If you used external AI chatbots (ChatGPT, Claude, Gemini) for help understanding concepts or generating code:</p>
+                <p>コンセプトの理解やコード生成のために外部AIチャットボット（ChatGPT、Claude、Gemini）を使用した場合：</p>
+
+                <ol>
+                    <li><strong>All prompts used / 使用したすべてのプロンプト</strong></li>
+                    <li><strong>All AI responses / すべてのAI応答</strong></li>
+                    <li><strong>Verification process / 検証プロセス</strong></li>
+                    <li><strong>Statement confirming AI was NOT used for labeling decisions</strong><br>
+                        AIがラベリング決定に使用されなかったことを確認する声明</li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>CRITICAL WARNING / 重要な警告:</h4>
+                    <p><strong>DO NOT</strong> use AI to make labeling decisions for you. Labels must reflect YOUR personal preferences.</p>
+                    <p><strong>使用しないでください</strong> あなたのためにラベリング決定を行うためにAIを。ラベルはあなたの個人的な好みを反映する必要があります。</p>
+                    <p><strong>ALLOWED:</strong> Using AI to explain classification concepts, understand label balance, etc.</p>
+                    <p><strong>許可:</strong> 分類コンセプトの説明、ラベルバランスの理解などにAIを使用すること。</p>
+                </div>
+
+                <h4>Scoring (10 points) / 採点（10点）:</h4>
+                <ul>
+                    <li>Complete documentation: <strong>10 points</strong></li>
+                </ul>
+            </div>
+
+            <h2>Submission Instructions / 提出指示</h2>
+
+            <div class="success-box">
+                <h3>How to Submit / 提出方法</h3>
+                <ol>
+                    <li><strong>Prepare your files:</strong><br>
+                        <ul>
+                            <li>Document with Deliverables 1, 3, and 4 (PDF/Word)</li>
+                            <li>Labeled dataset CSV file (Deliverable 2)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Name your files:</strong><br>
+                        <ul>
+                            <li><code>Week10_[YourName]_Classification.pdf</code></li>
+                            <li><code>Week10_[YourName]_LabeledData.csv</code></li>
+                        </ul>
+                        <em>Example: Week10_YuriTijerino_Classification.pdf</em>
+                    </li>
+                    <li><strong>Upload through ML-101 Bot Portal:</strong><br>
+                        <ul>
+                            <li>Log in to bot portal</li>
+                            <li>Navigate to "Week 10 Assignment Submission"</li>
+                            <li>Upload both files</li>
+                            <li>Click "Submit"</li>
+                        </ul>
+                    </li>
+                    <li><strong>Confirm submission:</strong><br>
+                        You should receive automated confirmation within 5 minutes
+                    </li>
+                </ol>
+            </div>
+
+            <div class="warning-box">
+                <h3>Submission Deadline / 提出期限</h3>
+                <p><strong>Due:</strong> End of Week 10 class session | <strong>期限:</strong> 第10週授業終了時</p>
+
+                <h4>Late Policy / 遅延ポリシー:</h4>
+                <ul>
+                    <li>Up to 24 hours late: <strong>-10%</strong></li>
+                    <li>24-48 hours late: <strong>-20%</strong></li>
+                    <li>More than 48 hours late: <strong>Not accepted</strong> without prior arrangement</li>
+                </ul>
+            </div>
+
+            <h2>Grading Rubric / 評価ルーブリック</h2>
+
+            <table class="rubric-table">
+                <thead>
+                    <tr>
+                        <th>Deliverable</th>
+                        <th>Points</th>
+                        <th>Criteria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Classification Criteria</strong><br>分類基準</td>
+                        <td><strong>20</strong></td>
+                        <td>Clear, specific, personally relevant, applicable<br>明確、具体的、個人的に関連、適用可能</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Labeled Dataset</strong><br>ラベル付きデータセット</td>
+                        <td><strong>40</strong></td>
+                        <td>Complete, consistent with criteria, reasonable balance<br>完全、基準と一貫、合理的なバランス</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Label Analysis</strong><br>ラベル分析</td>
+                        <td><strong>30</strong></td>
+                        <td>Statistics, visualization, consistency check<br>統計、可視化、一貫性チェック</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI Transparency</strong><br>AI透明性</td>
+                        <td><strong>10</strong></td>
+                        <td>Complete documentation (if AI used)<br>完全な文書化（AIを使用した場合）</td>
+                    </tr>
+                    <tr style="background: var(--primary-color); color: white; font-weight: bold;">
+                        <td><strong>TOTAL</strong><br>合計</td>
+                        <td><strong>100</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Tips for Success / 成功のためのヒント</h2>
+
+            <h3>Defining Good Criteria / 良い基準の定義</h3>
+            <ul>
+                <li>✅ Be specific: "Tech companies with AI focus" not just "good companies"</li>
+                <li>✅ Consider multiple factors: industry, size, location, keywords</li>
+                <li>✅ Write criteria BEFORE labeling to maintain consistency</li>
+                <li>✅ Ask yourself: "Can I apply this consistently to all companies?"</li>
+            </ul>
+
+            <h3>Labeling Process / ラベリングプロセス</h3>
+            <ul>
+                <li>✅ Take your time - quality matters more than speed</li>
+                <li>✅ Label in one sitting if possible (for consistency)</li>
+                <li>✅ Trust your gut on borderline cases</li>
+                <li>✅ Document why you're unsure about difficult cases</li>
+            </ul>
+
+            <h3>Achieving Balance / バランスの達成</h3>
+            <ul>
+                <li>✅ Aim for 30-70% split (closer to 50-50 is ideal)</li>
+                <li>✅ If too imbalanced, revisit your criteria</li>
+                <li>✅ Consider: Are you being too picky or too lenient?</li>
+            </ul>
+
+            <h2>Common Issues & Solutions / 一般的な問題と解決策</h2>
+
+            <div class="info-box">
+                <h4>Problem: All companies seem interesting (or all uninteresting)</h4>
+                <p><strong>Solution:</strong> Refine your criteria to be more selective. Compare companies directly: "If I could only work at ONE, which would I choose?" Remember: "not interested" doesn't mean the company is bad.</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Problem: Can't decide on borderline cases</h4>
+                <p><strong>Solution:</strong> Trust your gut feeling. If genuinely unsure after considering criteria, flip a coin! Borderline cases can go either way - consistency matters more than perfection.</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Problem: Labels seem inconsistent when reviewing</h4>
+                <p><strong>Solution:</strong> Review your criteria and adjust if needed. It's okay to relabel companies. If similar companies have different labels, reconsider one of them.</p>
+            </div>
+
+            <div class="info-box">
+                <h4>Problem: Very imbalanced labels (e.g., 22 interested, 3 not)</h4>
+                <p><strong>Solution:</strong> Options: (1) Be more selective, (2) Check if your dataset has enough variety, (3) Proceed with imbalance (ML can still work - just note it). Don't force unnatural labels.</p>
+            </div>
+
+            <h2>Academic Integrity / 学術的誠実性</h2>
+
+            <div class="warning-box">
+                <h4>Permitted / 許可されている:</h4>
+                <ul>
+                    <li>✅ Using ML-101 Bot for guidance</li>
+                    <li>✅ Using AI to understand classification concepts</li>
+                    <li>✅ Discussing labeling strategies with classmates</li>
+                </ul>
+
+                <h4>Not Permitted / 許可されていない:</h4>
+                <ul>
+                    <li>❌ Using AI to decide which companies to label as interested</li>
+                    <li>❌ Copying another student's labels</li>
+                    <li>❌ Random or careless labeling</li>
+                </ul>
+
+                <h4>Remember:</h4>
+                <p>Labels must reflect YOUR genuine preferences. The ML model will learn YOUR interests!</p>
+            </div>
+
+            <div class="success-box" style="text-align: center; margin-top: 40px;">
+                <h2>Ready to create your training dataset!</h2>
+                <h2>訓練データセットを作成する準備ができました！</h2>
+                <p>Your thoughtful labels will teach the ML model to understand YOUR career preferences.</p>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="../../index.html" class="btn btn-secondary">← Back to Curriculum</a>
+                <a href="lecture.html" class="btn btn-primary">View Lecture</a>
+                <a href="slides.html" class="btn btn-primary">View Slides</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yuri Tijerino. All rights reserved.</p>
+            <p>著作権 &copy; 2025 Yuri Tijerino. 無断転載を禁じます。</p>
+        </div>
+    </footer>
+</body>
+</html>

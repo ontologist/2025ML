@@ -1,0 +1,13 @@
+﻿venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.log
+.env
+chroma_db/
+knowledge_base/
+*.db
+*.sqlite
+certificates/
