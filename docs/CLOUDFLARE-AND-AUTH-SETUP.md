@@ -50,7 +50,7 @@ Use the setup script for each course:
     -CourseId "hci" `
     -CourseName "2025HCI" `
     -Port 8002 `
-    -Domain "wittyhead.com" `
+    -Domain "tijerino.ai" `
     -Subdomain "hcibot"
 
 # For 2025BlenderUnity3DIntroClass
@@ -58,7 +58,7 @@ Use the setup script for each course:
     -CourseId "blender" `
     -CourseName "2025BlenderUnity3DIntroClass" `
     -Port 8003 `
-    -Domain "wittyhead.com" `
+    -Domain "tijerino.ai" `
     -Subdomain "blenderbot"
 ```
 
@@ -194,7 +194,7 @@ For new courses, use the complete setup script with Cloudflare:
     -CourseId "blender" `
     -CourseName "2025BlenderUnity3DIntroClass" `
     -Port 8003 `
-    -CloudflareDomain "wittyhead.com" `
+    -CloudflareDomain "tijerino.ai" `
     -CloudflareSubdomain "blenderbot"
 ```
 

@@ -90,7 +90,7 @@ FROM_EMAIL=your.email@gmail.com
     -CourseId "blender" `
     -CourseName "2025BlenderUnity3DIntroClass" `
     -Port 8003 `
-    -CloudflareDomain "wittyhead.com" `
+    -CloudflareDomain "tijerino.ai" `
     -CloudflareSubdomain "blenderbot"
 ```
 
