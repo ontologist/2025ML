@@ -203,10 +203,22 @@ class ML101BotChat {
             });
             
             if (!response.ok) {
-                throw new Error(`API error: ${response.status}`);
+                const errorText = await response.text();
+                throw new Error(`API error: ${response.status} - ${errorText.substring(0, 100)}`);
             }
             
-            const data = await response.json();
+            // Check if response is actually JSON
+            const responseText = await response.text();
+            let data;
+            try {
+                data = JSON.parse(responseText);
+            } catch (parseError) {
+                // Response is not JSON - might be ngrok warning page or HTML
+                if (responseText.includes('ngrok') || responseText.includes('html') || responseText.length === 0) {
+                    throw new Error('Received non-JSON response. This might be an ngrok warning page. Please visit the ngrok URL in your browser first to bypass the warning.');
+                }
+                throw new Error(`Invalid JSON response: ${responseText.substring(0, 200)}`);
+            }
             
             // Add messages to history
             this.conversationHistory.push({ role: 'user', content: message });
