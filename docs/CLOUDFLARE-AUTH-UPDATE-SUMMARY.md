@@ -102,7 +102,7 @@ FROM_EMAIL=your.email@gmail.com
     -CourseName "ML-101" `
     -Port 8001 `
     -Domain "tijerino.ai" `
-    -Subdomain "ml101bot"
+    -Subdomain "2025ml"
 ```
 
 ### Configuring Email OTP:
