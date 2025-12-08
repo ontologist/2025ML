@@ -69,9 +69,9 @@ After running the script, you'll need to create DNS records in Cloudflare:
 1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com)
 2. Select your domain
 3. Go to **DNS → Records → Add record**
-4. Create **CNAME** record:
-   - **Type:** CNAME
-   - **Name:** `ml101bot` (or your subdomain)
+4. Create **CNAME** record (or **A** record):
+   - **Type:** CNAME (or A)
+   - **Name:** `2025ml` (or `@` for root domain)
    - **Target:** `YOUR_TUNNEL_ID.cfargotunnel.com` (from script output)
    - **Proxy:** Proxied (orange cloud) ✅
    - **TTL:** Auto
