@@ -67,8 +67,10 @@ class ML101BotChat {
             if (cloudflareUrl) {
                 return `${cloudflareUrl}/api`;
             }
-            // Fallback: Default to latest ngrok/Cloudflare URL
-            // Update this when tunnel changes
+            // Fallback: Default to Cloudflare Tunnel URL (when configured)
+            // TODO: Once Cloudflare Tunnel is set up, replace ngrok URL below
+            // Cloudflare URL: https://ml101bot.wittyhead.com/api
+            // Currently using ngrok as temporary fallback until Cloudflare is configured
             return 'https://8073b9e974bf.ngrok-free.app/api';
         } else {
             // HTTP page - can use HTTP API with fixed IP
