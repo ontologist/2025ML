@@ -192,6 +192,7 @@ class ML101BotChat {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'ngrok-skip-browser-warning': 'true',  // Bypass ngrok warning page
                 },
                 body: JSON.stringify({
                     user_id: this.currentUserId,
