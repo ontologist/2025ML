@@ -2,22 +2,21 @@
 # Bypasses the parsing error in the main script
 
 param(
-    [string]$Domain = "wittyhead.com",
-    [string]$Subdomain = "ml101bot",
+    [string]$Domain = "tijerino.ai",
+    [string]$Hostname = "2025ml.tijerino.ai",
     [int]$Port = 8001
 )
 
 $tunnelName = "ml101-bot"
-$fullHostname = "${Subdomain}.${Domain}"
+$fullHostname = $Hostname
 
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "Cloudflare Tunnel Setup for ML-101" -ForegroundColor Green
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "Configuration:" -ForegroundColor Cyan
-Write-Host "  Subdomain: $Subdomain" -ForegroundColor White
 Write-Host "  Domain: $Domain" -ForegroundColor White
-Write-Host "  Full Hostname: $fullHostname" -ForegroundColor White
+Write-Host "  Hostname: $fullHostname" -ForegroundColor White
 Write-Host "  Port: $Port" -ForegroundColor White
 Write-Host "  Tunnel Name: $tunnelName" -ForegroundColor White
 Write-Host ""
@@ -94,7 +93,7 @@ if (Test-Path $configPath) {
     $configContent = Get-Content $configPath -Raw
     
     # Check if ML-101 tunnel already configured
-    if ($configContent -match "ml101-bot" -or $configContent -match "ml101bot\.wittyhead\.com") {
+    if ($configContent -match "ml101-bot" -or $configContent -match "2025ml\.tijerino\.ai") {
         Write-Host "ML-101 tunnel already in config" -ForegroundColor Yellow
     } else {
         # Add ML-101 ingress rule
@@ -128,8 +127,8 @@ Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "Next Steps:" -ForegroundColor Cyan
 Write-Host "1. Set up DNS in Cloudflare Dashboard:" -ForegroundColor White
-Write-Host "   - Type: CNAME" -ForegroundColor Gray
-Write-Host "   - Name: $Subdomain" -ForegroundColor Gray
+Write-Host "   - Type: A or CNAME" -ForegroundColor Gray
+Write-Host "   - Name: 2025ml (or @ for root)" -ForegroundColor Gray
 Write-Host "   - Target: $tunnelId.cfargotunnel.com" -ForegroundColor Gray
 Write-Host "   - Proxy: Proxied (orange cloud)" -ForegroundColor Gray
 Write-Host ""
