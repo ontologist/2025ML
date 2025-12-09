@@ -254,6 +254,10 @@ class SiteAuth {
         const sendBtn = document.getElementById('site-send-otp-btn');
         const errorDiv = document.getElementById('site-email-error');
         
+        // Debug: Log API URL
+        console.log('[SiteAuth] API URL:', this.apiUrl);
+        console.log('[SiteAuth] Full endpoint:', `${this.apiUrl}/api/auth/send-otp`);
+        
         if (!email) {
             this.showError(errorDiv, 'Please enter your email address');
             return;
