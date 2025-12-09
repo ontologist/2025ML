@@ -124,6 +124,17 @@ class AuthService:
         if email in self.otp_storage:
             del self.otp_storage[email]
     
+    def _validate_email_domain(self, email: str) -> bool:
+        """
+        Validate that email is from allowed domain (kwansei.ac.jp).
+        
+        Returns:
+            True if email domain is allowed, False otherwise
+        """
+        allowed_domain = "kwansei.ac.jp"
+        email_domain = email.split("@")[-1].lower() if "@" in email else ""
+        return email_domain == allowed_domain
+    
     async def send_otp(self, email: str) -> Dict[str, any]:
         """
         Send OTP code to user's email.
@@ -132,6 +143,13 @@ class AuthService:
             Dict with success status and message
         """
         try:
+            # Validate email domain
+            if not self._validate_email_domain(email):
+                return {
+                    "success": False,
+                    "message": f"Only email addresses from @kwansei.ac.jp are allowed. Your email domain is not authorized."
+                }
+            
             # Generate OTP
             otp_code = self.email_service.generate_otp()
             
@@ -172,6 +190,13 @@ class AuthService:
             Dict with success status, message, and user_id if successful
         """
         try:
+            # Validate email domain (double-check)
+            if not self._validate_email_domain(email):
+                return {
+                    "success": False,
+                    "message": f"Only email addresses from @kwansei.ac.jp are allowed. Your email domain is not authorized."
+                }
+            
             # Get stored OTP
             stored = await self._get_otp(email)
             

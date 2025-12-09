@@ -5,6 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ML-101: Machine Learning and Intelligence - Spring 2025</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* AGGRESSIVE: Hide ALL content by default until authentication is verified */
+        html:not(.auth-verified) body {
+            overflow: hidden !important;
+        }
+        html:not(.auth-verified) body > * {
+            display: none !important;
+            visibility: hidden !important;
+        }
+        /* Show only the auth modal */
+        html:not(.auth-verified) #site-auth-modal {
+            display: flex !important;
+            visibility: visible !important;
+        }
+        /* Hide html/body initially to prevent any flash */
+        html:not(.auth-initialized) {
+            visibility: hidden;
+            opacity: 0;
+        }
+        html.auth-initialized {
+            visibility: visible;
+            opacity: 1;
+        }
+        html.auth-verified body > * {
+            display: revert !important;
+            visibility: revert !important;
+        }
+    </style>
+    <script>
+        // IMMEDIATE: Hide content and check session before page renders
+        (function() {
+            // Immediately hide html to prevent any content flash
+            if (document.documentElement) {
+                document.documentElement.style.visibility = 'hidden';
+            }
+            
+            // Check for valid session immediately
+            let hasValidSession = false;
+            try {
+                const sessionStr = localStorage.getItem('site_auth_session');
+                if (sessionStr) {
+                    const session = JSON.parse(sessionStr);
+                    const now = Date.now();
+                    if (session && session.expiresAt && now < session.expiresAt) {
+                        hasValidSession = true;
+                    }
+                }
+            } catch (e) {
+                // Invalid session
+                hasValidSession = false;
+            }
+            
+            // Initialize when DOM is ready
+            function init() {
+                if (document.documentElement) {
+                    document.documentElement.style.visibility = '';
+                    document.documentElement.classList.add('auth-initialized');
+                    
+                    if (hasValidSession) {
+                        // Valid session exists - show content
+                        document.documentElement.classList.add('auth-verified');
+                    } else {
+                        // No valid session - content stays hidden, auth modal will show
+                        // site-auth.js will handle showing the modal
+                    }
+                }
+            }
+            
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+    <script src="site-auth.js"></script>
     <script src="bot-chat.js" defer></script>
 </head>
 <body>
