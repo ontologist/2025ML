@@ -278,7 +278,7 @@ class SiteAuth {
         errorDiv.style.display = 'none';
         
         try {
-            const response = await fetch(`${this.apiUrl}/auth/send-otp`, {
+            const response = await fetch(`${this.apiUrl}/api/auth/send-otp`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -286,9 +286,26 @@ class SiteAuth {
                 body: JSON.stringify({ email })
             });
             
+            // Check if response is OK before trying to parse JSON
+            if (!response.ok) {
+                // Try to get error message from response
+                let errorMessage = 'Failed to send verification code';
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.message || errorData.detail || errorMessage;
+                } catch (e) {
+                    // If response is not JSON, use status text
+                    errorMessage = `Server error (${response.status}): ${response.statusText}`;
+                }
+                this.showError(errorDiv, errorMessage);
+                sendBtn.disabled = false;
+                sendBtn.textContent = 'Send Verification Code';
+                return;
+            }
+            
             const data = await response.json();
             
-            if (response.ok && data.success) {
+            if (data.success) {
                 this.currentEmail = email;
                 this.showOtpStep(email);
             } else {
@@ -298,7 +315,11 @@ class SiteAuth {
             }
         } catch (error) {
             console.error('Error sending OTP:', error);
-            this.showError(errorDiv, 'Network error. Please check your connection and try again.');
+            let errorMessage = 'Network error. Please check your connection and try again.';
+            if (error.message) {
+                errorMessage = `Connection error: ${error.message}`;
+            }
+            this.showError(errorDiv, errorMessage);
             sendBtn.disabled = false;
             sendBtn.textContent = 'Send Verification Code';
         }
@@ -326,7 +347,7 @@ class SiteAuth {
         errorDiv.style.display = 'none';
         
         try {
-            const response = await fetch(`${this.apiUrl}/auth/verify-otp`, {
+            const response = await fetch(`${this.apiUrl}/api/auth/verify-otp`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
