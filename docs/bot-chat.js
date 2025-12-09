@@ -67,10 +67,9 @@ class ML101BotChat {
             if (cloudflareUrl) {
                 return `${cloudflareUrl}/api`;
             }
-            // Fallback: Default to Cloudflare Tunnel URL (when configured)
+            // Fallback: Default to Cloudflare Tunnel URL
             // Cloudflare URL: https://ml101bot.tijerino.ai/api
-            // Currently using ngrok as temporary fallback until Cloudflare is configured
-            return 'https://8073b9e974bf.ngrok-free.app/api';
+            return 'https://ml101bot.tijerino.ai/api';
         } else {
             // HTTP page - can use HTTP API with fixed IP
             const port = localStorage.getItem('bot_api_port') || '8001';
@@ -215,9 +214,9 @@ class ML101BotChat {
             try {
                 data = JSON.parse(responseText);
             } catch (parseError) {
-                // Response is not JSON - might be ngrok warning page or HTML
+                // Response is not JSON - might be Cloudflare error page, ngrok warning, or HTML
                 if (responseText.includes('ngrok') || responseText.includes('html') || responseText.length === 0) {
-                    throw new Error('Received non-JSON response. This might be an ngrok warning page. Please visit the ngrok URL in your browser first to bypass the warning.');
+                    throw new Error('Received non-JSON response. This might be a Cloudflare error page or service unavailable. Please check if the tunnel is running.');
                 }
                 throw new Error(`Invalid JSON response: ${responseText.substring(0, 200)}`);
             }
